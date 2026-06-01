@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "types": ["node", "bun"],
+    "noEmit": true,
+    // Relax indexed-access and exact-optional checks for non-src code.
+    // Tests, scripts, and examples deal with known fixtures and would
+    // otherwise need a flood of `!` non-null assertions that obscure intent.
+    "noUncheckedIndexedAccess": false,
+    "exactOptionalPropertyTypes": false
+  },
+  "include": ["src/**/*.ts", "scripts/**/*.ts", "test/**/*.ts", "examples/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
+}
