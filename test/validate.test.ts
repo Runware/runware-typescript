@@ -173,8 +173,9 @@ describe('validateTasks', () => {
     const schemaWithDuplicateInnerIds = {
       type: 'object',
       additionalProperties: false,
-      required: ['taskUUID', 'model'],
+      required: ['taskType', 'taskUUID', 'model'],
       properties: {
+        taskType: { type: 'string' },
         taskUUID: { type: 'string' },
         model: { type: 'string' },
         voice: {
