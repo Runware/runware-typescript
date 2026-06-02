@@ -333,6 +333,7 @@ const executeWebSocketAsync = async (
   type AckResult = { ok: true } | { ok: false, errors: Record<string, unknown>[] }
   type PollResult = { items: Record<string, unknown>[], errors: Record<string, unknown>[] }
   const ackResolvers = new Map<string, (result: AckResult) => void>()
+  const ackTimers = new Map<string, ReturnType<typeof setTimeout>>()
   const pendingPolls = new Map<string, (result: PollResult) => void>()
 
   // Stateful subscription: first frame per task is the ACK (or validation
@@ -360,6 +361,8 @@ const executeWebSocketAsync = async (
 
   const cleanup = () => {
     for (const task of tasks) { transport.unsubscribeFromTask(task.taskUUID) }
+    for (const timer of ackTimers.values()) { clearTimeout(timer) }
+    ackTimers.clear()
     ackResolvers.clear()
     pendingPolls.clear()
   }
@@ -370,23 +373,28 @@ const executeWebSocketAsync = async (
     // or the WS context broke (e.g. silent reconnect mid-flight). Don't let
     // the user wait the full `pollTimeout` (20 min) for that.
     const ACK_TIMEOUT_MS = 30_000
-    const ackPromises = tasks.map(async (task) => {
-      const ackPromise = new Promise<AckResult>((resolve) => {
-        ackResolvers.set(task.taskUUID, resolve)
+    const ackPromises = tasks.map(async (task) => new Promise<AckResult>((resolve, reject) => {
+      const timer = setTimeout(() => {
+        ackTimers.delete(task.taskUUID)
+        if (ackResolvers.has(task.taskUUID)) {
+          ackResolvers.delete(task.taskUUID)
+          reject(createRunwareError(
+            'timeout',
+            `ACK not received for task ${task.taskUUID} after ${ACK_TIMEOUT_MS}ms`,
+          ))
+        }
+      }, ACK_TIMEOUT_MS)
+      ackTimers.set(task.taskUUID, timer)
+
+      ackResolvers.set(task.taskUUID, (result) => {
+        const timer = ackTimers.get(task.taskUUID)
+        if (timer) {
+          clearTimeout(timer)
+          ackTimers.delete(task.taskUUID)
+        }
+        resolve(result)
       })
-      const timeoutPromise = new Promise<AckResult>((_, reject) => {
-        setTimeout(() => {
-          if (ackResolvers.has(task.taskUUID)) {
-            ackResolvers.delete(task.taskUUID)
-            reject(createRunwareError(
-              'timeout',
-              `ACK not received for task ${task.taskUUID} after ${ACK_TIMEOUT_MS}ms`,
-            ))
-          }
-        }, ACK_TIMEOUT_MS)
-      })
-      return Promise.race([ackPromise, timeoutPromise])
-    })
+    }))
     await transport.sendRequest(tasks)
     const acks = await Promise.all(ackPromises)
 
