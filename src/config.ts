@@ -36,19 +36,17 @@ export const createBrowserDependencies = (): RuntimeDependencies => ({
 export const createNodeDependencies = async (): Promise<RuntimeDependencies> => {
   const nodeDeps: RuntimeDependencies = { fetch: globalThis.fetch }
 
-  // Node v21+ has native WebSocket; older versions need the ws package
+  // Node v21+ has native WebSocket; older versions need the ws package.
+  // If `ws` isn't installed, leave WebSocket undefined — REST-only users
+  // don't need it, and the WS transport throws `noWebSocketImpl` itself at
+  // connect time when it actually matters.
   if (globalThis.WebSocket) {
     nodeDeps.WebSocket = globalThis.WebSocket as unknown as WebSocketConstructor
   } else {
     try {
       const wsModule = await import('ws')
       nodeDeps.WebSocket = wsModule.default as unknown as WebSocketConstructor
-    } catch (error) {
-      throw createRunwareError(
-        'noWebSocketImpl',
-        'WebSocket implementation not found. If using Node.js v18-20, ensure ws package is installed',
-      )
-    }
+    } catch { }
   }
 
   return nodeDeps
