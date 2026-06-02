@@ -27,6 +27,9 @@ export const parseSseLine = (line: string): TextStreamChunk | null => {
 
   if (payload === '[DONE]') { return null }
 
+  // SSE payload has a polymorphic shape (success delta vs error).
+  // Narrowed per-field below.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let json: any
   try {
     json = JSON.parse(payload)

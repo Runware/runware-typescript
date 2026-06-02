@@ -36,4 +36,12 @@ export default [
       '@typescript-eslint/no-explicit-any': 'off',
     },
   },
+  // Build-time scripts walk arbitrary JSON Schemas — the data is inherently
+  // dynamic and typing every node would just push the same `any` around.
+  {
+    files: ['scripts/**/*.ts'],
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+    },
+  },
 ]

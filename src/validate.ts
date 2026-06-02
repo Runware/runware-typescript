@@ -20,6 +20,9 @@ type ResolveResponse = {
   documentation?: string | null
 }
 
+// AJV is loaded via dynamic import (optional peer dep). Its type isn't
+// statically known at this scope, so we leave the binding as `any`.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let ajvInstance: any = null
 let ajvLoadPromise: Promise<void> | null = null
 // Holds the in-flight compile promise for each model. Storing the promise (not
@@ -143,7 +146,7 @@ export const validateTasks = async (
   config: SDKConfig,
 ): Promise<void> => {
   for (const task of tasks) {
-    const model = (task as any).model
+    const model = task.model as string | undefined
     if (!model) { continue }
 
     const validator = await getValidator(model, config)

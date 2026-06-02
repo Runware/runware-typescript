@@ -4,7 +4,10 @@ export type BaseTransport = {
   type: 'websocket' | 'rest'
 }
 
-// Matches both browser WebSocket and ws package
+// Matches both browser WebSocket and ws package. Event shapes differ per
+// platform (MessageEvent vs ws's own events), so handlers receive `any` and
+// narrow internally where they care about specific fields.
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export type WebSocketLike = {
   close(): void
   send(data: string | ArrayBufferLike | Blob | ArrayBufferView): void
@@ -14,6 +17,7 @@ export type WebSocketLike = {
   onerror: ((this: WebSocketLike, event: any) => void) | null
   readyState: number
 }
+/* eslint-enable @typescript-eslint/no-explicit-any */
 
 export type WebSocketConstructor = {
   new(url: string, protocols?: string | string[]): WebSocketLike

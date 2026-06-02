@@ -4,6 +4,9 @@ import type { ConnectionState, WebSocketTransport, WsResponse } from '../types/t
 import { createRunwareError } from '../errors'
 
 export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport => {
+  // WebSocketLike covers both browser WebSocket and the ws package.
+  // Methods/props are accessed dynamically below.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let ws: any = null
   let connectionState: ConnectionState = {
     connected: false,
@@ -53,6 +56,9 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
       config.log.receive(dataString)
       const response = JSON.parse(dataString) as WsResponse
 
+      // Server sends either `error` (singular) or `errors` (plural).
+      // WsResponse only declares the singular form to avoid a wider union upstream.
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const rawErrors = (response as any).errors ?? response.error
       if (rawErrors) {
         const errors = (Array.isArray(rawErrors)) ? rawErrors : [rawErrors]
@@ -99,7 +105,7 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
       // call (server often returns N items in a single frame for numberResults > 1).
       const itemsByTask = new Map<string, Record<string, unknown>[]>()
       for (const item of response.data as Array<Record<string, unknown>>) {
-        if (item.taskType === 'ping' && (item as any).pong === true) { continue }
+        if (item.taskType === 'ping' && item.pong === true) { continue }
 
         if (item.taskType === 'authentication') {
           if (item.connectionSessionUUID) {
@@ -207,6 +213,9 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
           }
         }
 
+        // Event shape differs between browser WebSocket and ws package.
+        // Narrowed inline below.
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         ws.onerror = (errorEvent: any) => {
           if (ws !== thisSocket) { return }
 
@@ -437,9 +446,9 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
         pingInterval = null
       }
 
-      const disconnectError = { error: [{ code: 'disconnected', message: 'Client disconnected' }] }
+      const disconnectError: WsResponse = { error: [{ code: 'disconnected', message: 'Client disconnected' }] }
       for (const [, callback] of taskCallbacks) {
-        callback(disconnectError as any)
+        callback(disconnectError)
       }
       taskCallbacks.clear()
 

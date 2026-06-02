@@ -272,7 +272,7 @@ const executeWebSocketSync = async (
           cleanup()
           reject(parseApiError(response.error, {
             taskType: task.taskType,
-            model: (task as any).model,
+            model: task.model as string | undefined,
           }))
           return
         }
@@ -340,6 +340,9 @@ const executeWebSocketAsync = async (
   // error). Subsequent frames are getResponse poll responses.
   for (const task of tasks) {
     transport.subscribeToTask(task.taskUUID, (response) => {
+      // Server sends either `error` (singular) or `errors` (plural).
+      // WsResponse only declares the singular form to avoid a wider union upstream.
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const rawErrors = (response as any).errors ?? response.error
       const errors = rawErrors
         ? (Array.isArray(rawErrors) ? rawErrors : [rawErrors])
@@ -405,7 +408,7 @@ const executeWebSocketAsync = async (
       if (!ack.ok) {
         const parsed = parseApiError({ errors: ack.errors }, {
           taskType: task.taskType,
-          model: (task as any).model,
+          model: task.model as string | undefined,
         })
         if (!parsed.taskUUID) { parsed.taskUUID = task.taskUUID }
         throw parsed
@@ -469,7 +472,7 @@ const executeWebSocketAsync = async (
           const origTask = tasksByUUID.get(uuid)
           const parsed = parseApiError({ errors: allErrors }, {
             taskType: origTask?.taskType,
-            model: origTask ? (origTask as any).model : undefined,
+            model: origTask ? origTask.model as string | undefined : undefined,
           })
           if (!parsed.taskUUID) { parsed.taskUUID = uuid }
           throw parsed
@@ -511,6 +514,9 @@ const executeWebSocket = async (
     : executeWebSocketSync(tasks, transport, config, options)
 }
 
+// Accepts multiple polymorphic response shapes (raw array, `{ data: [...] }`,
+// or error envelope). Narrowed by Array.isArray checks below.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const toResultsArray = (response: any): Record<string, unknown>[] => {
   if (Array.isArray(response?.data)) { return response.data }
   if (Array.isArray(response)) { return response }
@@ -596,6 +602,9 @@ const executeRest = async (
 ): Promise<unknown[]> => {
   const signal = options?.signal
 
+  // REST transport returns Promise<unknown>. Shape depends on sync/async
+  // delivery and is narrowed by helpers below.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const response = await transport.sendRequest(tasks, { signal }) as any
 
   const isAsync = tasks.some((task) => task.deliveryMethod === 'async')
@@ -608,7 +617,7 @@ const executeRest = async (
   if (Array.isArray(response?.errors) && response.errors.length > 0) {
     throw parseApiError({ errors: response.errors }, {
       taskType: tasks[0]?.taskType,
-      model: tasks[0] ? (tasks[0] as any).model : undefined,
+      model: tasks[0] ? tasks[0].model as string | undefined : undefined,
     })
   }
 
@@ -653,6 +662,9 @@ const executeRest = async (
     const uuids = Array.from(pending)
     const polled = await Promise.all(uuids.map(async (taskUUID) => {
       const pollTasks = normalizeTasks('getResponse', { taskUUID })
+      // REST poll response shape varies by terminal state.
+      // Narrowed by toResultsArray and error checks downstream.
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const pollResponse = await transport.sendRequest(pollTasks, { signal }) as any
       return { taskUUID, response: pollResponse }
     }))
@@ -678,7 +690,7 @@ const executeRest = async (
         const origTask = restTasksByUUID.get(taskUUID)
         const parsed = parseApiError({ errors }, {
           taskType: origTask?.taskType,
-          model: origTask ? (origTask as any).model : undefined,
+          model: origTask ? origTask.model as string | undefined : undefined,
         })
         if (!parsed.taskUUID) { parsed.taskUUID = taskUUID }
         throw parsed

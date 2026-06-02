@@ -4,12 +4,17 @@ import type { RestTransport, RequestOptions } from '../types/transport'
 import { createRunwareError, isRunwareError, parseApiError } from '../errors'
 import { withRetry } from '../utils/retry'
 
-const createTimeoutError = (message: string) => {
-  const error = new Error(message)
+type TimeoutError = Error & { isTimeoutError: true }
+
+const createTimeoutError = (message: string): TimeoutError => {
+  const error = new Error(message) as TimeoutError
   error.name = 'TimeoutError'
-  ;(error as any).isTimeoutError = true
+  error.isTimeoutError = true
   return error
 }
+
+const isTimeoutError = (error: unknown): error is TimeoutError =>
+  error instanceof Error && (error as Partial<TimeoutError>).isTimeoutError === true
 
 const isAbortError = (error: unknown) => (error instanceof Error && error.name === 'AbortError')
 
@@ -48,7 +53,7 @@ export const createRestTransport = (config: SDKConfig): RestTransport => {
 
       return response
     } catch (error: unknown) {
-      if (error instanceof Error && (error as any).isTimeoutError === true) {
+      if (isTimeoutError(error)) {
         throw createRunwareError(
           'timeout',
           `REST request timed out after ${requestTimeout}ms (gave up after ${config.maxRetries + 1} attempts)`,
@@ -144,7 +149,7 @@ export const createRestTransport = (config: SDKConfig): RestTransport => {
           // Don't retry on user-initiated abort
           if (isRunwareError(error) && error.code === 'aborted') { return false }
           // Retry on timeout
-          if (error instanceof Error && (error as any).isTimeoutError === true) { return true }
+          if (isTimeoutError(error)) { return true }
           // Retry on retryable HTTP status (5xx, 429, 408)
           if (isRunwareError(error) && error.statusCode !== undefined) {
             if (isRetryableStatus(error.statusCode)) { return true }
@@ -155,7 +160,7 @@ export const createRestTransport = (config: SDKConfig): RestTransport => {
         },
         onRetry: (error: unknown, attempt: number, delayMs: number) => {
           const reason = (() => {
-            if (error instanceof Error && (error as any).isTimeoutError) { return 'timeout' }
+            if (isTimeoutError(error)) { return 'timeout' }
             if (isRunwareError(error) && error.statusCode) {
               return `HTTP ${error.statusCode}`
             }

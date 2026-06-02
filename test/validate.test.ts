@@ -222,7 +222,7 @@ describe('validateTasks', () => {
       height: 1024,
     } as TaskPayload))
 
-    await Promise.all(tasks.map((t) => validateTasks([t], config)))
+    await Promise.all(tasks.map(async (t) => validateTasks([t], config)))
 
     expect(fetch).toHaveBeenCalledTimes(1)
   })
