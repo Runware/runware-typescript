@@ -156,8 +156,14 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
 
       try {
         ws = new WebSocketImpl(config.wsBaseUrl)
+        // Capture the current socket so handlers can ignore late events from a
+        // socket that's already been replaced by connect()/reconnect(). Without
+        // this, a stale onclose/onerror could null `ws` after a newer socket
+        // was assigned to it, breaking the live connection.
+        const thisSocket = ws
 
         ws.onopen = async () => {
+          if (ws !== thisSocket) { return }
           connectionState.connected = true
 
           try {
@@ -179,6 +185,8 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
         ws.onmessage = handleMessage
 
         ws.onclose = () => {
+          if (ws !== thisSocket) { return }
+
           connectionState.connected = false
           if (pingInterval) {
             clearInterval(pingInterval)
@@ -188,9 +196,20 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
 
           // Callbacks survive reconnect so server can replay pending messages
           config.log.connection('Connection closed')
+
+          // A clean server-side close still warrants a reconnect — no `error`
+          // event fires for graceful closes, so without this path the
+          // connection would silently die. `shouldReconnect` is false during
+          // user-initiated disconnect; `isReconnecting` is true when a
+          // reconnect is already in flight (e.g., from heartbeat or onerror).
+          if (shouldReconnect && !isReconnecting) {
+            reconnect()
+          }
         }
 
         ws.onerror = (errorEvent: any) => {
+          if (ws !== thisSocket) { return }
+
           const error = errorEvent.error ?? errorEvent
 
           config.log.error('WebSocket error', error)
