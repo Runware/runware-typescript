@@ -17,7 +17,7 @@ describe('Generated task-map.ts', () => {
   })
 
   it('has the auto-generated header', () => {
-    expect(content).toContain('AUTO-GENERATED from @runware/schemas')
+    expect(content).toContain('AUTO-GENERATED from schema-map@')
   })
 
   it('exports SchemaMap type', () => {
@@ -32,7 +32,7 @@ describe('Generated task-map.ts', () => {
     expect(content).toContain('export const models')
     expect(content).toContain('export const architectureTaskTypes')
     expect(content).toContain('export const modalityTaskTypes')
-    expect(content).toContain('export const processingTaskTypes')
+    expect(content).toContain('export const operationTaskTypes')
   })
 
   it('has sdxl in SchemaMap', () => {

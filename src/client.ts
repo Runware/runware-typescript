@@ -17,7 +17,7 @@ import {
   models,
   architectureTaskTypes,
   modalityTaskTypes,
-  processingTaskTypes,
+  operationTaskTypes,
 } from './types/task-map'
 import { createTextStream } from './stream'
 import { createRunwareError, parseApiError } from './errors'
@@ -785,7 +785,7 @@ export const createClient = async (userConfig: ClientConfig): Promise<RunwareCli
     // (schema-slug → taskType) and are looked up through the same code path.
     fallback: {
       models,
-      architectureTaskTypes: { ...architectureTaskTypes, ...processingTaskTypes },
+      architectureTaskTypes: { ...architectureTaskTypes, ...operationTaskTypes },
       modalityTaskTypes,
     },
   })

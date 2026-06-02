@@ -3,7 +3,7 @@ import { describe, it, expect } from 'bun:test'
 import {
   architectureTaskTypes,
   modalityTaskTypes,
-  processingTaskTypes,
+  operationTaskTypes,
 } from '../src/types/task-map'
 
 describe('Generated types: architectureTaskTypes', () => {
@@ -52,7 +52,7 @@ describe('Generated types: modalityTaskTypes', () => {
   })
 })
 
-describe('Generated types: processingTaskTypes', () => {
+describe('Generated types: operationTaskTypes', () => {
   it('maps processing types to correct taskTypes', () => {
     const processingMappings: Record<string, string> = {
       'caption-image': 'caption',
@@ -63,8 +63,8 @@ describe('Generated types: processingTaskTypes', () => {
     }
 
     for (const [key, expected] of Object.entries(processingMappings)) {
-      if (key in processingTaskTypes) {
-        expect(processingTaskTypes[key]).toBe(expected)
+      if (key in operationTaskTypes) {
+        expect(operationTaskTypes[key]).toBe(expected)
       }
     }
   })

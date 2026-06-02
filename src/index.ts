@@ -58,7 +58,7 @@ export {
   models,
   architectureTaskTypes,
   modalityTaskTypes,
-  processingTaskTypes,
+  operationTaskTypes,
 } from './types/task-map'
 export { parseSseLine } from './stream'
 export {
