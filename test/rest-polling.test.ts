@@ -336,4 +336,30 @@ describe('REST polling loop', () => {
       pollDelay: 5,
     })).rejects.toThrow('aborted')
   })
+
+  it('wraps JSON parse failures on 2xx responses in RunwareError', async () => {
+    const fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      status: 200,
+      statusText: 'OK',
+      json: async () => { throw new SyntaxError('Unexpected token < in JSON at position 0') },
+    })
+
+    const transport = createRestTransport(baseConfig(fetch))
+    const tasks: TaskPayload[] = [{ taskType: 'imageInference', taskUUID: 'u1' }]
+
+    let caught: unknown
+    try {
+      await transport.sendRequest(tasks)
+    } catch (error) {
+      caught = error
+    }
+
+    expect(caught).toBeDefined()
+    const err = caught as Error & { code?: string, statusCode?: number }
+    expect(err.name).toBe('RunwareError')
+    expect(err.message).toContain('Failed to parse JSON response')
+    expect(err.message).toContain('HTTP 200')
+    expect(err.statusCode).toBe(200)
+  })
 })

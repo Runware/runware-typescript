@@ -124,7 +124,15 @@ export const createRestTransport = (config: SDKConfig): RestTransport => {
             )
           }
 
-          return await response.json() as T
+          try {
+            return await response.json() as T
+          } catch (parseError) {
+            throw createRunwareError(
+              'parseError',
+              `Failed to parse JSON response (HTTP ${response.status}): ${parseError instanceof Error ? parseError.message : String(parseError)}`,
+              { statusCode: response.status },
+            )
+          }
         } catch (error) {
           if (isAbortError(error)) {
             if (externalSignal?.aborted) {
