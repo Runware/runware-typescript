@@ -978,6 +978,48 @@ describe('WebSocket reconnect after established drop', () => {
 
     await transport.disconnect()
   })
+
+  it('reconnects on clean server-side close (no error event)', async () => {
+    const { createWebSocketTransport } = await import('../src/transport/websocket')
+
+    let connectCount = 0
+    const instances: any[] = []
+
+    const MockWS = function () {
+      const ws: any = {
+        readyState: 1,
+        onopen: null, onclose: null, onmessage: null, onerror: null,
+        close: () => { ws.onclose?.() },
+        send: (data: string) => {
+          const parsed = JSON.parse(data)
+          if (parsed[0]?.taskType === 'authentication') {
+            setTimeout(() => {
+              connectCount += 1
+              ws.onmessage?.({data: JSON.stringify({data: [{ taskType: 'authentication', connectionSessionUUID: `sess-${connectCount}` }]})})
+            }, 1)
+          }
+        },
+      }
+      setTimeout(() => ws.onopen?.(), 1)
+      instances.push(ws)
+      return ws
+    }
+
+    const config = testConfig({ dependencies: { WebSocket: MockWS as any }, retryDelay: 5 })
+    const transport = createWebSocketTransport(config)
+    await transport.connect()
+    expect(connectCount).toBe(1)
+
+    // Simulate clean server-side close — no onerror, only onclose fires
+    instances[0].onclose?.()
+
+    await sleep(60)
+
+    expect(connectCount).toBe(2)
+    expect(instances.length).toBe(2)
+
+    await transport.disconnect()
+  })
 })
 
 describe('WebSocket reconnect circuit breaker', () => {
