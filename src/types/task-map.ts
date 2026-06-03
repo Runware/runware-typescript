@@ -4675,6 +4675,7 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'ideogram:3@2': { taskType: 'imageInference', id: 'ideogram-2-0-remix' },
   'ideogram:3@3': { taskType: 'imageInference', id: 'ideogram-2-0-edit' },
   'ideogram:3@4': { taskType: 'imageInference', id: 'ideogram-2-0-reframe' },
+  'ideogram:4@0': { taskType: 'imageInference', id: 'ideogram-4-0' },
   'ideogram:4@1': { taskType: 'imageInference', id: 'ideogram-3-0' },
   'ideogram:4@2': { taskType: 'imageInference', id: 'ideogram-3-0-remix' },
   'ideogram:4@3': { taskType: 'imageInference', id: 'ideogram-3-0-edit' },
@@ -5031,6 +5032,7 @@ export type ModelResultMap = {
   'ideogram:3@2': ImageInferenceResult
   'ideogram:3@3': ImageInferenceResult
   'ideogram:3@4': ImageInferenceResult
+  'ideogram:4@0': ImageInferenceResult
   'ideogram:4@1': ImageInferenceResult
   'ideogram:4@2': ImageInferenceResult
   'ideogram:4@3': ImageInferenceResult

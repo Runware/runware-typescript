@@ -863,12 +863,7 @@ describe('WebSocket handleMessage routing', () => {
     })
 
     expect(() => {
-      injectMessage({
-        data: [
-          { taskUUID: 'A', imageURL: 'a.jpg' },
-          { taskUUID: 'B', imageURL: 'b.jpg' },
-        ],
-      })
+      injectMessage({data: [{ taskUUID: 'A', imageURL: 'a.jpg' }, { taskUUID: 'B', imageURL: 'b.jpg' }]})
     }).not.toThrow()
 
     expect(received).toEqual(['b.jpg'])
@@ -886,8 +881,7 @@ describe('WebSocket handleMessage routing', () => {
     expect(() => {
       injectMessage({
         error: [
-          { taskUUID: 'A', message: 'errA', code: 'x' },
-          { taskUUID: 'B', message: 'errB', code: 'y' },
+          { taskUUID: 'A', message: 'errA', code: 'x' }, { taskUUID: 'B', message: 'errB', code: 'y' },
         ],
       })
     }).not.toThrow()
@@ -1162,11 +1156,7 @@ describe('connect() resets reconnect counter', () => {
           const parsed = JSON.parse(data)
           if (parsed[0]?.taskType === 'authentication') {
             setTimeout(() => {
-              ws.onmessage?.({
-                data: JSON.stringify({
-                  data: [{ taskType: 'authentication', connectionSessionUUID: 's' }],
-                }),
-              })
+              ws.onmessage?.({data: JSON.stringify({data: [{ taskType: 'authentication', connectionSessionUUID: 's' }]})})
             }, 1)
           }
         },

@@ -7,7 +7,7 @@
  * Source resolution order:
  *   1. `RUNWARE_SCHEMA_MAP_PATH` env var (a path to a local JSON file)
  *   2. `https://schemas.runware.ai/releases/<version>/schema-map.json` over HTTPS
- *   3. `repos/schemas/dist-worker/schema-map.json` local fallback
+ *   3. A local checkout fallback (paired-repo dev setup)
  *
  * Bump the version pin in `src/_schemas-version.ts` to advance the snapshot.
  * Usage:
@@ -22,6 +22,7 @@ import { SCHEMAS_VERSION } from '../src/_schemas-version'
 
 const ROOT = resolve(import.meta.dirname, '..')
 const OUTPUT_PATH = join(ROOT, 'src', 'types', 'task-map.ts')
+// Optional local checkout fallback for offline dev. Real usage hits REMOTE_URL.
 const LOCAL_FALLBACK = resolve(ROOT, '..', 'schemas', 'dist-worker', 'schema-map.json')
 const REMOTE_URL = `https://schemas.runware.ai/releases/${SCHEMAS_VERSION}/schema-map.json`
 
@@ -93,7 +94,7 @@ const loadSchemaMap = async (): Promise<SchemaMap> => {
     console.log(`Fetching ${REMOTE_URL}`)
     return await loadFromUrl(REMOTE_URL)
   } catch (error) {
-    console.warn(`Remote fetch failed (${(error as Error).message}). Falling back to local dist-worker.`)
+    console.warn(`Remote fetch failed (${(error as Error).message}). Falling back to local checkout.`)
   }
 
   if (existsSync(LOCAL_FALLBACK)) {
@@ -102,7 +103,7 @@ const loadSchemaMap = async (): Promise<SchemaMap> => {
   }
 
   throw new Error(`Could not load schema-map. Tried ${REMOTE_URL} and ${LOCAL_FALLBACK}. `
-    + 'Set RUNWARE_SCHEMA_MAP_PATH to a local JSON or build the schemas repo first.')
+    + 'Set RUNWARE_SCHEMA_MAP_PATH to a local schema-map.json.')
 }
 
 // ------------------------------------------------------- JSON schema → TS type

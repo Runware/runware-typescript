@@ -434,8 +434,10 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
           'reconnectionFailed',
           `Permanently disconnected after ${reconnectAttempt} reconnection attempts`,
         )
+        const errorList = [reconnectError as unknown as Record<string, unknown>]
+        const errorFrame: WsResponse = { error: errorList }
         for (const [, callback] of taskCallbacks) {
-          safeCall(callback, { error: [reconnectError as unknown as Record<string, unknown>] } as WsResponse)
+          safeCall(callback, errorFrame)
         }
         taskCallbacks.clear()
         return

@@ -696,13 +696,12 @@ const executeRest = async (
     )
     const polled = await Promise.all(uuids.map(async (taskUUID) => {
       const pollTasks = normalizeTasks('getResponse', { taskUUID })
+      const pollOptions = { signal, timeout: perPollTimeout }
+      const rawResponse = await transport.sendRequest(pollTasks, pollOptions)
       // REST poll response shape varies by terminal state.
       // Narrowed by toResultsArray and error checks downstream.
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const pollResponse = await transport.sendRequest(pollTasks, {
-        signal,
-        timeout: perPollTimeout,
-      }) as any
+      const pollResponse = rawResponse as any
       return { taskUUID, response: pollResponse }
     }))
 
