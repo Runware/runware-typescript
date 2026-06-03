@@ -995,11 +995,7 @@ describe('WebSocket reconnect after established drop', () => {
           if (parsed[0]?.taskType === 'authentication') {
             setTimeout(() => {
               connectCount += 1
-              ws.onmessage?.({
-                data: JSON.stringify({
-                  data: [{ taskType: 'authentication', connectionSessionUUID: `sess-${connectCount}` }],
-                }),
-              })
+              ws.onmessage?.({data: JSON.stringify({data: [{ taskType: 'authentication', connectionSessionUUID: `sess-${connectCount}` }]})})
             }, 1)
           }
         },
