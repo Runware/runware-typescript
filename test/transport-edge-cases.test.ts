@@ -1136,6 +1136,85 @@ describe('WebSocket reconnect circuit breaker', () => {
   })
 })
 
+describe('connect() resets reconnect counter', () => {
+  const sleep = async (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+
+  it('explicit connect() after circuit-breaker fires restores full retry budget', async () => {
+    const { createWebSocketTransport } = await import('../src/transport/websocket')
+
+    // Three phases: initial success → reconnect failures (drain budget) →
+    // manual connect succeeds → second reconnect cycle should also get the
+    // full budget (proves the counter was reset).
+    let phase: 'open' | 'fail' | 'reopen' | 'fail2' = 'open'
+    const constructsPerPhase: Record<string, number> = {}
+    const succeedingSockets: any[] = []
+
+    const MockWS = function () {
+      constructsPerPhase[phase] = (constructsPerPhase[phase] ?? 0) + 1
+      const ws: any = {
+        readyState: 1,
+        onopen: null,
+        onclose: null,
+        onmessage: null,
+        onerror: null,
+        close: () => { ws.onclose?.() },
+        send: (data: string) => {
+          const parsed = JSON.parse(data)
+          if (parsed[0]?.taskType === 'authentication') {
+            setTimeout(() => {
+              ws.onmessage?.({
+                data: JSON.stringify({
+                  data: [{ taskType: 'authentication', connectionSessionUUID: 's' }],
+                }),
+              })
+            }, 1)
+          }
+        },
+      }
+      const currentPhase = phase
+      if (currentPhase === 'open' || currentPhase === 'reopen') {
+        succeedingSockets.push(ws)
+        setTimeout(() => ws.onopen?.(), 1)
+      } else {
+        setTimeout(() => ws.onerror?.({ error: new Error('refused') }), 1)
+      }
+      return ws
+    }
+
+    const config = testConfig({
+      dependencies: { WebSocket: MockWS as any },
+      retryDelay: 2,
+      maxReconnectAttempts: 2,
+    })
+
+    const transport = createWebSocketTransport(config)
+    await transport.connect()
+    expect(constructsPerPhase.open).toBe(1)
+
+    // Phase 1: drop established socket; reconnects all fail until circuit fires.
+    phase = 'fail'
+    succeedingSockets[0].onerror?.({ error: new Error('drop') })
+    await sleep(2500)
+    // Should have tried up to maxReconnectAttempts (2) reconnects.
+    expect(constructsPerPhase.fail).toBe(2)
+
+    // Phase 2: user calls connect() again. The fix ensures the counter resets.
+    phase = 'reopen'
+    await transport.connect()
+    expect(constructsPerPhase.reopen).toBe(1)
+
+    // Phase 3: drop again. Without the fix, the stale counter would re-trip
+    // the breaker after just one failure. With the fix, we get the full
+    // budget of 2 attempts again.
+    phase = 'fail2'
+    succeedingSockets[1].onerror?.({ error: new Error('drop again') })
+    await sleep(2500)
+    expect(constructsPerPhase.fail2).toBe(2)
+
+    await transport.disconnect()
+  }, 15000)
+})
+
 describe('computeReconnectDelay (jitter past cap)', () => {
   it('returns base + jitter for small attempts under the cap', async () => {
     const { computeReconnectDelay } = await import('../src/transport/websocket')

@@ -165,7 +165,7 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
     }
   }
 
-  const connect = async (): Promise<void> => {
+  const establishConnection = async (): Promise<void> => {
     if (!config.dependencies?.WebSocket) {
       throw createRunwareError('noWebSocketImpl', 'WebSocket implementation is required')
     }
@@ -174,17 +174,20 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
 
     const WebSocketImpl = config.dependencies.WebSocket
 
-    // Close previous socket without clearing taskCallbacks (may still be in-flight)
+    // Close previous socket without clearing taskCallbacks (may still be in-flight).
+    // Detach the module-level ref BEFORE close() so the prior onclose handler
+    // sees `ws !== thisSocket` and skips re-entrant reconnect().
     if (ws) {
+      const stale = ws
+      ws = null
       connectionState.connected = false
       if (pingInterval) {
         clearInterval(pingInterval)
         pingInterval = null
       }
       try {
-        if (ws.readyState === 0 || ws.readyState === 1) { ws.close() }
+        if (stale.readyState === 0 || stale.readyState === 1) { stale.close() }
       } catch { }
-      ws = null
     }
 
     return new Promise((resolve, reject) => {
@@ -402,7 +405,7 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
     }
 
     try {
-      await connect()
+      await establishConnection()
       // If the user called disconnect() while connect was in flight, undo the connection
       if (!shouldReconnect) {
         isReconnecting = false
@@ -452,6 +455,14 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
         reconnect()
       }, delay)
     }
+  }
+
+  // Public connect: explicit user calls reset the reconnect counter so the
+  // circuit breaker starts fresh. Reconnects call establishConnection
+  // directly to preserve the in-flight counter.
+  const connect = async (): Promise<void> => {
+    reconnectAttempt = 0
+    return establishConnection()
   }
 
   const disconnect = async (): Promise<void> => {
