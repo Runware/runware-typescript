@@ -541,6 +541,59 @@ describe('createClient surface', () => {
   })
 })
 
+describe('per-poll timeout budget propagation', () => {
+  it('REST: each inner poll respects the remaining pollTimeout budget, not config.timeout', async () => {
+    let callIndex = 0
+    const abortReasons: string[] = []
+    const mockFetch = vi.fn().mockImplementation(async (_url, opts: RequestInit) => {
+      const body = JSON.parse(opts.body as string)
+      callIndex += 1
+      // First call is the submit; the rest are polls.
+      if (body[0]?.taskType !== 'getResponse') {
+        return { ok: true, status: 200, json: async () => ({ data: [{ taskUUID: 't-budget' }] }) }
+      }
+      // Poll calls hang until their per-poll signal aborts. Without the fix
+      // the signal would fire at config.timeout (60s); with the fix it fires
+      // at the remaining pollTimeout (~150ms).
+      return new Promise((_resolve, reject) => {
+        opts.signal?.addEventListener('abort', () => {
+          abortReasons.push('aborted')
+          const err = new Error('aborted')
+          ;(err as any).name = 'AbortError'
+          reject(err)
+        })
+      })
+    })
+
+    const { createClient } = await import('../src/index')
+
+    const client = await createClient({
+      apiKey: 'test',
+      transportType: 'rest',
+      timeout: 60000,
+      pollTimeout: 150,
+      maxRetries: 0,
+      dependencies: { fetch: mockFetch as any },
+    })
+
+    const start = Date.now()
+    await expect(client.run({
+      taskType: 'imageInference',
+      taskUUID: 't-budget',
+      model: 'civitai:1@1',
+      positivePrompt: 'x',
+      deliveryMethod: 'async',
+    } as any)).rejects.toThrow()
+    const elapsed = Date.now() - start
+
+    // Without the fix the inner sendRequest would block ~60s before its own
+    // timeout aborted. With it, the per-poll budget (≤150ms) trips the abort
+    // first and the whole run unwinds well under config.timeout.
+    expect(elapsed).toBeLessThan(2000)
+    expect(abortReasons.length).toBeGreaterThan(0)
+  })
+})
+
 describe('utility method dispatch', () => {
   // All utility methods funnel through the same `execute(utilityName, ...)`
   // path. One parameterized test covers the contract: each method puts its

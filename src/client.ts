@@ -444,6 +444,14 @@ const executeWebSocketAsync = async (
       }
 
       const uuids = Array.from(pending)
+      // Per-poll budget = remaining pollTimeout, capped by config.timeout.
+      // Bounds each inner getResponse round-trip so a single hung poll can't
+      // block the whole batch past the overall pollTimeout.
+      const elapsed = Date.now() - startTime
+      const perPollTimeout = Math.max(
+        1,
+        Math.min(pollTimeout - elapsed, config.timeout),
+      )
       const polled = await Promise.all(uuids.map(async (uuid) => {
         const promise = new Promise<PollResult>((resolve) => {
           pendingPolls.set(uuid, resolve)
@@ -452,7 +460,25 @@ const executeWebSocketAsync = async (
           taskType: 'getResponse',
           taskUUID: uuid,
         }])
-        return { uuid, result: await promise }
+        let timerId: ReturnType<typeof setTimeout> | undefined
+        try {
+          const result = await Promise.race([
+            promise,
+            new Promise<PollResult>((_, reject) => {
+              timerId = setTimeout(
+                () => reject(createRunwareError(
+                  'timeout',
+                  `getResponse poll for task ${uuid} timed out after ${perPollTimeout}ms`,
+                )),
+                perPollTimeout,
+              )
+            }),
+          ])
+          return { uuid, result }
+        } finally {
+          if (timerId) { clearTimeout(timerId) }
+          pendingPolls.delete(uuid)
+        }
       }))
 
       for (const { uuid, result } of polled) {
@@ -660,12 +686,23 @@ const executeRest = async (
     }
 
     const uuids = Array.from(pending)
+    // Per-poll budget = remaining pollTimeout, capped by config.timeout.
+    // Without this, each inner POST could individually take config.timeout and
+    // the batch would exceed the overall pollTimeout by an unbounded amount.
+    const elapsed = Date.now() - startTime
+    const perPollTimeout = Math.max(
+      1,
+      Math.min(pollTimeout - elapsed, config.timeout),
+    )
     const polled = await Promise.all(uuids.map(async (taskUUID) => {
       const pollTasks = normalizeTasks('getResponse', { taskUUID })
       // REST poll response shape varies by terminal state.
       // Narrowed by toResultsArray and error checks downstream.
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const pollResponse = await transport.sendRequest(pollTasks, { signal }) as any
+      const pollResponse = await transport.sendRequest(pollTasks, {
+        signal,
+        timeout: perPollTimeout,
+      }) as any
       return { taskUUID, response: pollResponse }
     }))
 
