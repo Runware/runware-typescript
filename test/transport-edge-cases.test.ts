@@ -1136,6 +1136,43 @@ describe('WebSocket reconnect circuit breaker', () => {
   })
 })
 
+describe('computeReconnectDelay (jitter past cap)', () => {
+  it('returns base + jitter for small attempts under the cap', async () => {
+    const { computeReconnectDelay } = await import('../src/transport/websocket')
+
+    const delay = computeReconnectDelay(1000, 2, () => 0.5)
+    // base = 1000 * 2^1 = 2000, jitter = 500 → 2500
+    expect(delay).toBe(2500)
+  })
+
+  it('caps the base then ADDS jitter so simultaneous reconnects still spread out', async () => {
+    const { computeReconnectDelay } = await import('../src/transport/websocket')
+
+    // attempt 10 → base = 100 * 2^9 = 51200, capped to 30000
+    const low = computeReconnectDelay(100, 10, () => 0)
+    const mid = computeReconnectDelay(100, 10, () => 0.5)
+    const high = computeReconnectDelay(100, 10, () => 0.999)
+
+    expect(low).toBe(30000)
+    expect(mid).toBe(30500)
+    expect(high).toBeCloseTo(30999, 0)
+
+    // The bug: with old `Math.min(base + jitter, 30000)`, all three would
+    // collapse to 30000, defeating the jitter and causing thundering-herd.
+    expect(high - low).toBeGreaterThan(900)
+  })
+
+  it('preserves jitter variance across the cap boundary', async () => {
+    const { computeReconnectDelay } = await import('../src/transport/websocket')
+
+    // Two attempts that both land beyond cap should still have different
+    // delays when the random source differs.
+    const a = computeReconnectDelay(1000, 8, () => 0.1)
+    const b = computeReconnectDelay(1000, 8, () => 0.9)
+    expect(b - a).toBeCloseTo(800, 0)
+  })
+})
+
 describe('parseApiError array handling (WS format)', () => {
   it('extracts message from error array', () => {
     const err = parseApiError([{ message: 'Model not found', code: 'unknownModel', taskUUID: 't1' }])

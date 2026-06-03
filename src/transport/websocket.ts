@@ -3,6 +3,25 @@ import type { ConnectionState, WebSocketTransport, WsResponse } from '../types/t
 
 import { createRunwareError } from '../errors'
 
+const RECONNECT_DELAY_CAP_MS = 30000
+const RECONNECT_JITTER_MS = 1000
+
+/**
+ * Exponential backoff for reconnect. Cap is applied to the base exponent only,
+ * with jitter added on top, so simultaneously-reconnecting clients still spread
+ * out at the upper bound (otherwise they'd all land on the same 30s tick).
+ */
+export const computeReconnectDelay = (
+  retryDelay: number,
+  attempt: number,
+  randomFn: () => number = Math.random,
+): number => {
+  const base = retryDelay * Math.pow(2, attempt - 1)
+  const capped = Math.min(base, RECONNECT_DELAY_CAP_MS)
+  const jitter = randomFn() * RECONNECT_JITTER_MS
+  return capped + jitter
+}
+
 export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport => {
   // WebSocketLike covers both browser WebSocket and the ws package.
   // Methods/props are accessed dynamically below.
@@ -419,9 +438,7 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
         return
       }
 
-      const base = config.retryDelay * Math.pow(2, reconnectAttempt - 1)
-      const jitter = Math.random() * 1000
-      const delay = Math.min(base + jitter, 30000)
+      const delay = computeReconnectDelay(config.retryDelay, reconnectAttempt)
       const max = (config.maxReconnectAttempts === Infinity) ? '∞' : config.maxReconnectAttempts
       config.log.error(
         `Reconnection failed (attempt ${reconnectAttempt}/${max}),`
