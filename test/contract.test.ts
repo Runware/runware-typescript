@@ -13,9 +13,7 @@ import { describe, expect, it } from 'bun:test'
 import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 
-import {
-  buildDocumentationUrl, deriveCode, parseApiError,
-} from '../src/errors'
+import {buildDocumentationUrl, deriveCode, parseApiError} from '../src/errors'
 import { models as bundledModels } from '../src/types/task-map'
 
 const FIXTURES_DIR = join(__dirname, '..', '..', 'schemas', 'fixtures')
@@ -23,9 +21,7 @@ const HAS_FIXTURES = existsSync(FIXTURES_DIR)
 
 const describeIf = HAS_FIXTURES ? describe : describe.skip
 
-const loadFixture = (name: string) => JSON.parse(
-  readFileSync(join(FIXTURES_DIR, name), 'utf-8'),
-)
+const loadFixture = (name: string) => JSON.parse(readFileSync(join(FIXTURES_DIR, name), 'utf-8'))
 
 
 // ----------------------------------------------------------- derive_error_code

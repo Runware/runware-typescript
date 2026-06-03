@@ -47,12 +47,25 @@ const FALLBACK_OPERATION_TASK_TYPES: Record<string, string> = {
 
 type Json = Record<string, unknown>
 
+type InferenceEntry = {
+  slug: string
+  air?: string
+  requestSchema?: Json
+  responseSchema?: Json | null
+}
+
+type UtilityEntry = {
+  slug: string
+  requestSchema?: Json
+  responseSchema?: Json | null
+}
+
 type SchemaMap = {
-  inference?: Array<{ slug: string, air?: string, requestSchema?: Json, responseSchema?: Json | null }>
+  inference?: InferenceEntry[]
   architectures?: Record<string, Json>
   modalities?: Record<string, Json>
   operations?: Record<string, Json>
-  utilities?: Array<{ slug: string, requestSchema?: Json, responseSchema?: Json | null }>
+  utilities?: UtilityEntry[]
   errors?: Record<string, Json>
 }
 
@@ -88,10 +101,8 @@ const loadSchemaMap = async (): Promise<SchemaMap> => {
     return loadFromFile(LOCAL_FALLBACK)
   }
 
-  throw new Error(
-    `Could not load schema-map. Tried ${REMOTE_URL} and ${LOCAL_FALLBACK}. `
-    + 'Set RUNWARE_SCHEMA_MAP_PATH to a local JSON or build the schemas repo first.',
-  )
+  throw new Error(`Could not load schema-map. Tried ${REMOTE_URL} and ${LOCAL_FALLBACK}. `
+    + 'Set RUNWARE_SCHEMA_MAP_PATH to a local JSON or build the schemas repo first.')
 }
 
 // ------------------------------------------------------- JSON schema → TS type
@@ -101,7 +112,7 @@ const toPascalCase = (s: string): string =>
     .replace(/-([a-z0-9])/g, (_, ch) => ch.toUpperCase())
     .replace(/^([a-z])/, (_, ch) => ch.toUpperCase())
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+ 
 const schemaToTs = (schema: any): string => {
   if (!schema || typeof schema !== 'object') { return 'unknown' }
 
@@ -109,15 +120,15 @@ const schemaToTs = (schema: any): string => {
     return typeof schema.const === 'string' ? `'${schema.const}'` : String(schema.const)
   }
   if (schema.enum) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const variants = [...new Set(schema.enum.map((v: any) =>
       typeof v === 'string' ? `'${v}'` : String(v)))]
     return variants.join(' | ')
   }
   if (schema.oneOf || schema.anyOf) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const variants = (schema.oneOf ?? schema.anyOf) as any[]
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const types = [...new Set(variants.map((sub: any) => schemaToTs(sub)))]
     return types.length === 1 ? types[0] : types.join(' | ')
   }
@@ -153,7 +164,7 @@ const schemaToTs = (schema: any): string => {
   return 'unknown'
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+ 
 const objectToTs = (schema: any): string => {
   const props = schema.properties
   if (!props || Object.keys(props).length === 0) {
@@ -161,7 +172,7 @@ const objectToTs = (schema: any): string => {
   }
   const required = new Set<string>(schema.required ?? [])
   const lines: string[] = []
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   for (const [key, sub] of Object.entries(props) as [string, any][]) {
     if (sub.description) { lines.push(`/** ${sub.description} */`) }
     const optional = required.has(key) ? '' : '?'
@@ -170,9 +181,9 @@ const objectToTs = (schema: any): string => {
   return `{\n${lines.map((l) => '  ' + l).join('\n')}\n}`
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+ 
 const mergeAllOf = (allOf: any[]): any => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   const merged: any = { type: 'object', properties: {}, required: [] }
   for (const sub of allOf) {
     if (sub.properties) { Object.assign(merged.properties, sub.properties) }
@@ -190,7 +201,7 @@ type EmitOpts = {
 const emitType = (name: string, schema: Json | undefined, opts?: EmitOpts): string => {
   const lines: string[] = []
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   const s: any = schema ?? {}
   if (opts?.description || s.title) {
     lines.push('/**')
@@ -212,7 +223,7 @@ const emitType = (name: string, schema: Json | undefined, opts?: EmitOpts): stri
 
   const requiredSet = new Set(required)
   const propLines: string[] = []
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   for (const [key, sub] of Object.entries(props) as [string, any][]) {
     if (sub.description) { propLines.push(`  /** ${sub.description} */`) }
     const optional = requiredSet.has(key) ? '' : '?'
@@ -226,7 +237,7 @@ const emitType = (name: string, schema: Json | undefined, opts?: EmitOpts): stri
   return lines.join('\n')
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+ 
 const extractTaskType = (schema: any): string | undefined => {
   const tt = schema?.properties?.taskType?.const
   return typeof tt === 'string' ? tt : undefined
@@ -245,7 +256,8 @@ const main = async () => {
   const schemaMap = await loadSchemaMap()
 
   type EntryKind = 'architecture' | 'modality' | 'operation'
-  const archEntries: Array<{ key: string, typeName: string, taskType: string, kind: EntryKind }> = []
+  type ArchEntry = { key: string, typeName: string, taskType: string, kind: EntryKind }
+  const archEntries: ArchEntry[] = []
   const resultMap = new Map<string, string>()
   const utilEntries: Array<{ taskType: string, paramsType: string }> = []
 
@@ -257,9 +269,9 @@ const main = async () => {
 `)
 
   // ----- architectures -----
-  for (const [key, schema] of Object.entries(schemaMap.architectures ?? {}).sort(
-    ([a], [b]) => a.localeCompare(b),
-  )) {
+  const sortedArchitectures = Object.entries(schemaMap.architectures ?? {})
+    .sort(([a], [b]) => a.localeCompare(b))
+  for (const [key, schema] of sortedArchitectures) {
     const taskType = extractTaskType(schema) ?? 'imageInference'
     const typeName = toPascalCase(key) + 'Params'
     output.push(emitType(typeName, schema, {
@@ -268,7 +280,9 @@ const main = async () => {
       description: `${key} architecture params.`,
     }))
     output.push('')
-    archEntries.push({ key, typeName, taskType, kind: 'architecture' })
+    archEntries.push({
+      key, typeName, taskType, kind: 'architecture', 
+    })
   }
 
   // ----- modalities -----
@@ -285,7 +299,9 @@ const main = async () => {
       description: `${toPascalCase(key)} inference params.`,
     }))
     output.push('')
-    archEntries.push({ key, typeName, taskType, kind: 'modality' })
+    archEntries.push({
+      key, typeName, taskType, kind: 'modality', 
+    })
   }
 
   // ----- operations -----
@@ -310,12 +326,16 @@ const main = async () => {
       description: `${key} operation params.`,
     }))
     output.push('')
-    archEntries.push({ key, typeName, taskType, kind: 'operation' })
+    archEntries.push({
+      key, typeName, taskType, kind: 'operation', 
+    })
   }
 
   // ----- utilities -----
   const skipUtils = new Set(['authentication', 'ping'])
-  for (const entry of (schemaMap.utilities ?? []).slice().sort((a, b) => a.slug.localeCompare(b.slug))) {
+  const sortedUtilities = (schemaMap.utilities ?? []).slice()
+    .sort((a, b) => a.slug.localeCompare(b.slug))
+  for (const entry of sortedUtilities) {
     const taskType = extractTaskType(entry.requestSchema)
     if (!taskType || skipUtils.has(taskType)) { continue }
     const typeName = toPascalCase(taskType) + 'Params'

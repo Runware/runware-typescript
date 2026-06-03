@@ -99,7 +99,7 @@ The SDK ships generics for:
 
 - **Modalities** — `image`, `video`, `audio`, `text`, `3d`
 - **Image architectures** — `sdxl`, `sdxl-lcm`, `sdxl-turbo`, `sdxl-hyper`, `sdxl-lightning`, `sdxl-distilled`, `sd-1-5`, `sd-1-5-lcm`, `sd-1-5-hyper`, `sd-1-5-distilled`, `sd-2-1`, `sd3`, `flux-1-dev`, `flux-1-schnell`, `flux-1-kontext-dev`, `pony`, `illustrious`, `noobai`, `z-image`, `z-image-turbo`, `exactly-illustrative`
-- **Processing operations** — `caption`, `upscale-image`, `remove-background`, `image-masking`, `controlnet-preprocess`, `prompt-enhance`, `get-task-details`, `vectorize`
+- **Operations** — `caption`, `caption-image`, `caption-video`, `upscale`, `upscale-image`, `upscale-video`, `remove-background`, `remove-background-image`, `remove-background-video`, `masking`, `controlnet-preprocess`, `prompt-enhance`, `vectorize`, `training`
 
 To discover the full list in your IDE, hover the alias:
 
@@ -126,6 +126,18 @@ const images = await client.run<'exactly-illustrative'>({
 - `<'exactly-illustrative'>` — TypeScript types (compile-time only, erased at runtime)
 - `taskType` — tells the SDK which API endpoint to use
 - Validation (when enabled) automatically picks the right schema for the AIR — no extra option needed
+
+### Curated-model slugs
+
+The registry indexes every curated model under both its AIR (`runware:101@1`) and its slug (`flux-1-dev`). You can pass either:
+
+```typescript
+// Both call the same model.
+await client.run({ model: 'runware:101@1', positivePrompt: '...' })
+await client.run({ model: 'flux-1-dev',     positivePrompt: '...' })
+```
+
+The SDK rewrites slugs to canonical AIRs before sending. Non-curated identifiers (custom fine-tunes, unknown strings) pass through unchanged.
 
 ## LLM Streaming
 
@@ -345,35 +357,43 @@ if (error.code === 'validation') {
 
 Validation failures from the optional client-side `validate: true` flag come back as `code: 'validation'`, with an `error.validationErrors` array of AJV error objects.
 
-## Configuration
+### Raising your own RunwareError
+
+If you're wrapping the SDK behind another layer and want to surface errors with the same shape, build one with `createRunwareError`:
 
 ```typescript
-const client = await createClient({
-  // Required
-  apiKey: process.env.RUNWARE_API_KEY ?? 'your-api-key',
+import { createRunwareError } from '@runware/sdk'
 
-  // Transport (default: 'websocket')
-  transportType: 'websocket', // or 'rest'
-
-  // Timeouts and retries
-  timeout: 1_200_000,          // ms per individual HTTP call (one POST, one getResponse poll), default: 1_200_000 (20 min)
-  pollTimeout: 1_200_000,      // ms for the WHOLE polling loop end-to-end — even if individual polls succeed, the SDK gives up after this, default: 1_200_000 (20 min)
-  authTimeout: 15000,          // ms for WebSocket auth handshake, default: 15000
-  maxRetries: 3,               // default: 3
-  retryDelay: 1000,            // ms between retries, default: 1000
-  retryStrategy: 'exponential', // or 'linear'
-
-  // Reconnection (WebSocket only)
-  maxReconnectAttempts: Infinity, // default: Infinity
-
-  // Validation — validate params against JSON schemas before sending
-  validate: false, // default: false
-
-  // Debugging
-  debug: false,  // Log transport events
-  logSink: undefined, // (entry) => void — custom destination for log entries
-})
+throw createRunwareError(
+  'invalidParameter',
+  'Width must be a multiple of 64',
+  { parameter: 'width', taskType: 'imageInference' },
+)
 ```
+
+The constructor derives `code` and the `documentation` URL from the raw code + model/parameter context — same logic the SDK uses internally.
+
+## Configuration
+
+`createClient({...})` accepts an `SDKConfig` object:
+
+| Field | Default | Notes |
+|---|---|---|
+| `apiKey` | from `RUNWARE_API_KEY` | required |
+| `transportType` | `'websocket'` | or `'rest'` |
+| `httpBaseUrl` | `https://api.runware.ai/v1` | include the version path |
+| `wsBaseUrl` | `wss://ws-api.runware.ai/v1` | include the version path |
+| `timeout` | `1_200_000` (ms) | per-HTTP-call (one POST, one `getResponse` poll) |
+| `pollTimeout` | `1_200_000` (ms) | end-to-end polling budget on either transport |
+| `authTimeout` | `15_000` (ms) | WebSocket auth handshake |
+| `maxRetries` | `3` | REST retries |
+| `retryDelay` | `1_000` (ms) | base backoff |
+| `retryStrategy` | `'exponential'` | or `'linear'` |
+| `maxReconnectAttempts` | `Infinity` | WebSocket reconnect cap |
+| `debug` | `false` | enable structured debug logs |
+| `validate` | `false` | enable client-side schema validation |
+| `dependencies` | `undefined` | inject a custom `WebSocket` and/or `fetch` |
+| `logSink` | `undefined` | pluggable destination for log entries |
 
 ### Custom log sink
 
@@ -563,6 +583,34 @@ await client.modelUpload({
 
 `getTaskDetails` vs `getResponse`: use `getTaskDetails` for "look up something I ran before" — it queries the task archive. `getResponse` is the polling mechanism the SDK uses internally during async `.run()`; you generally don't need to call it directly.
 
+## File helpers
+
+`fileToDataURI` encodes a local file or in-memory buffer as a `data:` URI for passing as input:
+
+```typescript
+import { fileToDataURI } from '@runware/sdk'
+import { readFile } from 'node:fs/promises'
+
+const dataUri = await fileToDataURI(await readFile('photo.jpg'))
+await client.imageUpload({ image: dataUri })
+```
+
+## Custom dependencies
+
+For testing, proxies, or environments with non-standard runtimes, inject your own `WebSocket` constructor and/or `fetch` implementation:
+
+```typescript
+const client = await createClient({
+  apiKey: process.env.RUNWARE_API_KEY ?? 'your-api-key',
+  dependencies: {
+    WebSocket: CustomWebSocketClass,
+    fetch: customFetchFunction,
+  },
+})
+```
+
+The SDK works in Node.js 18+ and modern browsers with no polyfills.
+
 ## TypeScript
 
 Types are generated from Runware's canonical JSON schemas and ship with the SDK:
@@ -591,22 +639,6 @@ const images = await client.run<'sdxl'>({
 
 // images is typed as ImageInferenceResult[]
 const url: string = images[0].imageURL
-```
-
-## Browser Support
-
-The SDK works in Node.js 18+ and modern browsers with no polyfills.
-
-For environments with custom implementations:
-
-```typescript
-const client = await createClient({
-  apiKey: process.env.RUNWARE_API_KEY ?? 'your-api-key',
-  dependencies: {
-    WebSocket: CustomWebSocketClass,
-    fetch: customFetchFunction,
-  },
-})
 ```
 
 ## License

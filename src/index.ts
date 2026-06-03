@@ -30,7 +30,7 @@ export type {
   GetResponseParams, GetResponseResult,
   GetTaskDetailsParams, GetTaskDetailsResult,
   ImageInferenceParams,
-  ImageMaskingParams,
+  MaskingParams,
 } from './types/task-map'
 export type { TextStream, TextStreamResult, TextStreamChunk } from './types/stream'
 export type { ErrorCode } from './errors'
