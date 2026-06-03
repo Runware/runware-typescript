@@ -26,9 +26,21 @@ jobs:
 
       - run: bun run typecheck
 
-      - run: bun test --run
+      - run: bun test
 
       - run: bun run build
+
+      - name: Verify generated task-map.ts is up to date
+        # `bun run build` regenerates task-map.ts via scripts/generate-types.ts.
+        # If the committed file differs from a fresh regen against the pinned
+        # schemas version, fail — refusing to ship out-of-sync types.
+        run: |
+          if [ -n "$(git status --porcelain src/types/task-map.ts)" ]; then
+            echo "::error::src/types/task-map.ts is out of sync with the pinned schemas version."
+            echo "Run \`bun run scripts/generate-types.ts\` locally and commit the result."
+            git diff src/types/task-map.ts | head -80
+            exit 1
+          fi
 
       - run: npm publish --access public
         env:
