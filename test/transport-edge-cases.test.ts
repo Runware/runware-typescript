@@ -849,6 +849,51 @@ describe('WebSocket handleMessage routing', () => {
 
     await transport.disconnect()
   })
+
+  it('isolates per-task callback exceptions so later callbacks still fire', async () => {
+    // A throwing user callback must not kill the dispatch loop or prevent
+    // sibling callbacks (different taskUUIDs in the same frame) from being
+    // delivered — and must not leak out of onmessage.
+    const { transport, injectMessage } = await createWsWithMessageInjector()
+
+    const received: string[] = []
+    transport.subscribeToTask('A', () => { throw new Error('user callback exploded') })
+    transport.subscribeToTask('B', (r) => {
+      if (r.data) { received.push((r.data[0] as any).imageURL as string) }
+    })
+
+    expect(() => {
+      injectMessage({
+        data: [
+          { taskUUID: 'A', imageURL: 'a.jpg' },
+          { taskUUID: 'B', imageURL: 'b.jpg' },
+        ],
+      })
+    }).not.toThrow()
+
+    expect(received).toEqual(['b.jpg'])
+
+    await transport.disconnect()
+  })
+
+  it('isolates per-task callback exceptions on error frames too', async () => {
+    const { transport, injectMessage } = await createWsWithMessageInjector()
+
+    const received: unknown[] = []
+    transport.subscribeToTask('A', () => { throw new Error('explode') })
+    transport.subscribeToTask('B', (r) => { if (r.error) { received.push(r.error) } })
+
+    expect(() => {
+      injectMessage({
+        error: [
+          { taskUUID: 'A', message: 'errA', code: 'x' },
+          { taskUUID: 'B', message: 'errB', code: 'y' },
+        ],
+      })
+    }).not.toThrow()
+
+    expect(received).toHaveLength(1)
+  })
 })
 
 describe('WebSocket reconnect after established drop', () => {

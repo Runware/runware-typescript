@@ -48,6 +48,17 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
     }, 30000)
   }
 
+  // Wrap every per-task callback invocation so a throwing user callback can't
+  // kill the dispatch loop (which would prevent later tasks in the same frame
+  // from being delivered) or leak as an unhandled exception out of onmessage.
+  const safeCall = (cb: ResponseCallback<WsResponse>, frame: WsResponse): void => {
+    try {
+      cb(frame)
+    } catch (error) {
+      config.log.error('task callback raised in dispatch', error)
+    }
+  }
+
   const handleMessage = (event: { data: string | Buffer | ArrayBuffer | Buffer[] }): void => {
     connectionState.lastActivity = Date.now()
 
@@ -83,14 +94,14 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
           const callback = taskCallbacks.get(taskUUID)
           if (callback) {
             delivered = true
-            callback({ error: taskErrors } as WsResponse)
+            safeCall(callback, { error: taskErrors } as WsResponse)
           }
         }
 
         if (unrouted.length > 0 || !delivered) {
           config.log.error('Unroutable WebSocket error', errors)
           for (const [, callback] of taskCallbacks) {
-            callback({ error: errors } as WsResponse)
+            safeCall(callback, { error: errors } as WsResponse)
           }
         }
         return
@@ -125,7 +136,7 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
       for (const [taskUUID, items] of itemsByTask) {
         const callback = taskCallbacks.get(taskUUID)
         if (callback) {
-          callback({ data: items } as WsResponse)
+          safeCall(callback, { data: items } as WsResponse)
         } else {
           config.log.warn(`No callback for taskUUID: ${taskUUID}`)
         }
@@ -402,7 +413,7 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
           `Permanently disconnected after ${reconnectAttempt} reconnection attempts`,
         )
         for (const [, callback] of taskCallbacks) {
-          callback({ error: [reconnectError as unknown as Record<string, unknown>] })
+          safeCall(callback, { error: [reconnectError as unknown as Record<string, unknown>] } as WsResponse)
         }
         taskCallbacks.clear()
         return
@@ -448,7 +459,7 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
 
       const disconnectError: WsResponse = { error: [{ code: 'disconnected', message: 'Client disconnected' }] }
       for (const [, callback] of taskCallbacks) {
-        callback(disconnectError)
+        safeCall(callback, disconnectError)
       }
       taskCallbacks.clear()
 
