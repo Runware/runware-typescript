@@ -1,5 +1,5 @@
 /**
- * AUTO-GENERATED from schema-map@latest — do not edit manually.
+ * AUTO-GENERATED from schema-map@20260607152954 — do not edit manually.
  * Run: bun run scripts/generate-types.ts
  */
 
