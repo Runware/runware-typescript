@@ -1,8 +1,11 @@
 /**
  * Pinned schemas bundle version consumed by the type generator.
  *
- * Set to `'latest'` to pick up the most recent bundle on every regen — fine for
- * development. Pin to a specific timestamp (e.g. `'20260603141522'`) to freeze
- * the SDK against that bundle for reproducible builds and release branches.
+ * Managed by `scripts/bump-schemas.sh` — run that to advance to the current
+ * latest release. Don't edit by hand except when intentionally rolling back to
+ * an older pin (historical reference, hotfix branch, debugging a regression).
+ *
+ * Read at build time only — runtime schema validation hits the live
+ * `/resolve/<model>` endpoint and doesn't consult this constant.
  */
 export const SCHEMAS_VERSION = '20260607152954'
