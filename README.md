@@ -28,7 +28,7 @@ const client = await createClient({ apiKey: process.env.RUNWARE_API_KEY ?? 'your
 await client.connect() // required for the default WebSocket transport — skip for REST
 
 const images = await client.run({
-  model: 'runware:101@1',
+  model: 'runware:400@1',
   positivePrompt: 'A serene mountain landscape at sunset',
   width: 1024,
   height: 1024,
@@ -37,7 +37,7 @@ const images = await client.run({
 console.log('Image URL:', images[0].imageURL)
 ```
 
-The SDK automatically resolves `runware:101@1` to the correct task type and generates fully typed responses.
+The SDK automatically resolves `runware:400@1` to the correct task type and generates fully typed responses.
 
 More runnable patterns in [`examples/`](./examples/) — curated models, community fine-tunes, streaming with abort, and the modelSearch → run flow.
 
@@ -50,7 +50,7 @@ Every inference task goes through `.run()`. The SDK determines the task type fro
 ```typescript
 // Image generation
 const images = await client.run({
-  model: 'runware:101@1',
+  model: 'runware:400@1',
   positivePrompt: 'Abstract digital art',
   width: 1024,
   height: 1024,
@@ -58,21 +58,22 @@ const images = await client.run({
 
 // Video generation
 const videos = await client.run({
-  model: 'klingai:5@3',
+  model: 'google:3@3',
   positivePrompt: 'Ocean waves at sunset',
-  duration: 10,
+  duration: 8,
 })
 
 // Text inference (LLM)
 const responses = await client.run({
-  model: 'openai:o1@0',
+  model: 'google:gemma@4-31b',
   messages: [{ role: 'user', content: 'Explain quantum computing' }],
 })
 
-// Audio generation
+// Audio generation (designs a voice from the prompt, then speaks the text)
 const audio = await client.run({
-  model: 'alibaba:qwen@3-tts-1.7b-base',
-  text: 'Hello world',
+  model: 'alibaba:qwen@3-tts-1.7b-voicedesign',
+  positivePrompt: 'A calm, friendly young woman with a soft tone',
+  speech: { text: 'Hello world', voice: 'design' },
 })
 ```
 
@@ -82,7 +83,7 @@ When you know the model architecture, use a schema generic to get full type safe
 
 ```typescript
 const images = await client.run<'sdxl'>({
-  model: 'civitai:101055@128078',
+  model: 'civitai:133005@782002',
   positivePrompt: 'A professional headshot portrait',
   negativePrompt: 'blurry, distorted',
   width: 1024,
@@ -129,12 +130,12 @@ const images = await client.run<'exactly-illustrative'>({
 
 ### Curated-model slugs
 
-The registry indexes every curated model under both its AIR (`runware:101@1`) and its slug (`flux-1-dev`). You can pass either:
+The registry indexes every curated model under both its AIR (`runware:400@1`) and its slug (`bfl-flux-2-dev`). You can pass either:
 
 ```typescript
 // Both call the same model.
-await client.run({ model: 'runware:101@1', positivePrompt: '...' })
-await client.run({ model: 'flux-1-dev',     positivePrompt: '...' })
+await client.run({ model: 'runware:400@1', positivePrompt: '...' })
+await client.run({ model: 'bfl-flux-2-dev', positivePrompt: '...' })
 ```
 
 The SDK rewrites slugs to canonical AIRs before sending. Non-curated identifiers (custom fine-tunes, unknown strings) pass through unchanged.
@@ -145,7 +146,7 @@ For text models, `.stream()` delivers tokens as they're generated:
 
 ```typescript
 const stream = await client.stream({
-  model: 'minimax:m2.7@0',
+  model: 'google:gemma@4-31b',
   messages: [{ role: 'user', content: 'Tell me a story about a robot' }],
 })
 
@@ -159,7 +160,7 @@ The `.stream()` method returns a `TextStream` object with multiple ways to consu
 
 ```typescript
 const stream = await client.stream({
-  model: 'minimax:m2.7@0',
+  model: 'google:gemma@4-31b',
   messages: [{ role: 'user', content: 'Explain gravity' }],
 })
 
@@ -201,8 +202,8 @@ const client = await createClient({
 await client.connect()
 
 // Persistent connection — low latency for multiple operations
-const images = await client.run({ model: 'runware:101@1', positivePrompt: '...' })
-const videos = await client.run({ model: 'klingai:5@3', positivePrompt: '...' })
+const images = await client.run({ model: 'runware:400@1', positivePrompt: '...' })
+const videos = await client.run({ model: 'google:3@3', positivePrompt: '...' })
 
 await client.disconnect()
 ```
@@ -223,7 +224,7 @@ const client = await createClient({
 
 // No connect() needed — each request is a standalone HTTP call
 const images = await client.run({
-  model: 'runware:101@1',
+  model: 'runware:400@1',
   positivePrompt: 'A landscape painting',
   width: 1024,
   height: 1024,
@@ -237,7 +238,7 @@ Run multiple tasks simultaneously:
 ```typescript
 const [images, upscaled, caption] = await Promise.all([
   client.run({
-    model: 'runware:101@1',
+    model: 'runware:400@1',
     positivePrompt: 'Abstract art',
     numberResults: 3,
   }),
@@ -266,7 +267,7 @@ setTimeout(() => controller.abort(), 5000)
 
 try {
   const images = await client.run({
-    model: 'runware:101@1',
+    model: 'runware:400@1',
     positivePrompt: 'A detailed scene',
   }, { signal: controller.signal })
 } catch (error) {
@@ -280,7 +281,7 @@ For streams, abort closes the SSE connection cleanly:
 
 ```typescript
 const stream = await client.stream({
-  model: 'minimax:m2.7@0',
+  model: 'google:gemma@4-31b',
   messages: [{ role: 'user', content: 'Tell me a long story' }],
 }, { signal: controller.signal })
 
@@ -299,7 +300,7 @@ Two callbacks let you observe a task as it unfolds:
 
 ```typescript
 const images = await client.run({
-  model: 'klingai:5@3',
+  model: 'google:3@3',
   positivePrompt: 'Ocean waves at sunset',
   numberResults: 3,
 }, {
@@ -327,7 +328,7 @@ import { RunwareError } from '@runware/sdk'
 
 try {
   const images = await client.run({
-    model: 'runware:101@1',
+    model: 'runware:400@1',
     positivePrompt: 'A detailed rendering',
   })
 } catch (error) {
@@ -442,7 +443,7 @@ Or per-call via `RunOptions`:
 
 ```typescript
 const videos = await client.run({
-  model: 'klingai:5@3',
+  model: 'google:3@3',
   positivePrompt: 'Ocean waves',
 }, { timeout: 600000 })
 ```
@@ -453,7 +454,7 @@ For tasks that complete quickly (text inference, fast image generation, captioni
 
 ```typescript
 const responses = await client.run({
-  model: 'openai:gpt-5@0',
+  model: 'google:gemma@4-31b',
   messages: [{ role: 'user', content: 'Hello' }],
   deliveryMethod: 'sync',
 })
@@ -470,7 +471,7 @@ The second argument to `client.run()` / `client.stream()` and the utility method
 
 ```typescript
 await client.run({
-  model: 'runware:101@1',
+  model: 'runware:400@1',
   positivePrompt: 'A landscape',
 }, {
   timeout: 600_000,                 // ms — override config.pollTimeout for this call
@@ -501,7 +502,7 @@ const client = await createClient({
 
 // Throws a RunwareError (code: 'validation') with details before sending
 await client.run({
-  model: 'runware:101@1',
+  model: 'runware:400@1',
   positivePrompt: 'A landscape',
   width: -1, // ← caught locally
 })
@@ -631,7 +632,7 @@ type SdxlResult = SchemaMap['sdxl']['result']
 
 // Type-safe run call
 const images = await client.run<'sdxl'>({
-  model: 'civitai:101055@128078',
+  model: 'civitai:133005@782002',
   positivePrompt: 'test',
   width: 1024,
   height: 1024,
