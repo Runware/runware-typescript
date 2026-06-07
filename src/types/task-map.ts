@@ -4718,6 +4718,7 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'klingai:kling@o1-standard': { taskType: 'videoInference', id: 'klingai-video-o1-standard' },
   'krea:krea@2-large': { taskType: 'imageInference', id: 'krea-2-large' },
   'krea:krea@2-medium': { taskType: 'imageInference', id: 'krea-2-medium' },
+  'krea:krea@2-turbo': { taskType: 'imageInference', id: 'krea-2-turbo' },
   'lightricks:2@0': { taskType: 'videoInference', id: 'lightricks-ltx-2-pro' },
   'lightricks:2@1': { taskType: 'videoInference', id: 'lightricks-ltx-2-fast' },
   'lightricks:3@1': { taskType: 'videoInference', id: 'lightricks-ltx-2-retake' },
@@ -4774,6 +4775,7 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'prunaai:p-video@0': { taskType: 'videoInference', id: 'prunaai-p-video' },
   'prunaai:p-video@animate': { taskType: 'videoInference', id: 'prunaai-p-video-animate' },
   'prunaai:p-video@avatar': { taskType: 'videoInference', id: 'prunaai-p-video-avatar' },
+  'prunaai:p-video@replace': { taskType: 'videoInference', id: 'prunaai-p-video-replace' },
   'recraft:1@1': { taskType: 'vectorize', id: 'recraft-vectorize' },
   'recraft:v4-pro@0': { taskType: 'imageInference', id: 'recraft-v4-pro' },
   'recraft:v4-pro@vector': { taskType: 'vectorize', id: 'recraft-v4-pro-vector' },
@@ -4891,6 +4893,8 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'sourceful:2@3': { taskType: 'imageInference', id: 'sourceful-riverflow-2-preview-max' },
   'sourceful:riverflow-2.0@fast': { taskType: 'imageInference', id: 'sourceful-riverflow-2-0-fast' },
   'sourceful:riverflow-2.0@pro': { taskType: 'imageInference', id: 'sourceful-riverflow-2-0-pro' },
+  'sourceful:riverflow-2.5@fast': { taskType: 'imageInference', id: 'sourceful-riverflow-2-5-fast' },
+  'sourceful:riverflow-2.5@pro': { taskType: 'imageInference', id: 'sourceful-riverflow-2-5-pro' },
   'sync:lipsync-2-pro@1': { taskType: 'videoInference', id: 'sync-lipsync-2-pro' },
   'sync:lipsync-2@1': { taskType: 'videoInference', id: 'sync-lipsync-2' },
   'sync:lipsync@3': { taskType: 'videoInference', id: 'sync-3' },
@@ -5075,6 +5079,7 @@ export type ModelResultMap = {
   'klingai:kling@o1-standard': VideoInferenceResult
   'krea:krea@2-large': ImageInferenceResult
   'krea:krea@2-medium': ImageInferenceResult
+  'krea:krea@2-turbo': ImageInferenceResult
   'lightricks:2@0': VideoInferenceResult
   'lightricks:2@1': VideoInferenceResult
   'lightricks:3@1': VideoInferenceResult
@@ -5131,6 +5136,7 @@ export type ModelResultMap = {
   'prunaai:p-video@0': VideoInferenceResult
   'prunaai:p-video@animate': VideoInferenceResult
   'prunaai:p-video@avatar': VideoInferenceResult
+  'prunaai:p-video@replace': VideoInferenceResult
   'recraft:1@1': VectorizeResult
   'recraft:v4-pro@0': ImageInferenceResult
   'recraft:v4-pro@vector': VectorizeResult
@@ -5248,6 +5254,8 @@ export type ModelResultMap = {
   'sourceful:2@3': ImageInferenceResult
   'sourceful:riverflow-2.0@fast': ImageInferenceResult
   'sourceful:riverflow-2.0@pro': ImageInferenceResult
+  'sourceful:riverflow-2.5@fast': ImageInferenceResult
+  'sourceful:riverflow-2.5@pro': ImageInferenceResult
   'sync:lipsync-2-pro@1': VideoInferenceResult
   'sync:lipsync-2@1': VideoInferenceResult
   'sync:lipsync@3': VideoInferenceResult
