@@ -49,7 +49,12 @@ const loadAjv = async (): Promise<void> => {
   if (!ajvLoadPromise) {
     ajvLoadPromise = (async () => {
       try {
-        const ajvModule = 'ajv/dist/2019'
+        // Node ESM requires the `.js` extension on subpath imports. Without
+        // it, `await import('ajv/dist/2019')` throws ERR_MODULE_NOT_FOUND
+        // (Node helpfully suggests adding `.js`). Bundlers tolerate the
+        // extensionless form, so this worked in dev but broke for npm
+        // consumers running plain Node ESM.
+        const ajvModule = 'ajv/dist/2019.js'
         const ajvMod = await import(ajvModule)
         const Ajv = ajvMod.default
         ajvInstance = new Ajv({ allErrors: true, strict: false, validateFormats: false })
