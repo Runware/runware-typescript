@@ -91,32 +91,6 @@ const fetchModelSchema = async (
   }
 }
 
-/**
- * Drop `$id` from every non-root subschema. The `/resolve` payload comes fully
- * dereferenced — every `$ref` is already inlined — so inner `$id`s no longer
- * resolve any reference. They only cause harm: AJV registers each `$id` it
- * encounters into its shared instance, and an inlined sub-schema reused at two
- * call sites carries the same `$id` twice, triggering "reference resolves to
- * more than one schema" at compile time.
- */
-const stripInnerIds = (schema: unknown): unknown => {
-  const walk = (node: unknown, isRoot: boolean): unknown => {
-    if (Array.isArray(node)) {
-      return node.map((item) => walk(item, false))
-    }
-    if (node && typeof node === 'object') {
-      const out: Record<string, unknown> = {}
-      for (const [key, value] of Object.entries(node as Record<string, unknown>)) {
-        if (key === '$id' && !isRoot) { continue }
-        out[key] = walk(value, false)
-      }
-      return out
-    }
-    return node
-  }
-  return walk(schema, true)
-}
-
 const getValidator = async (
   model: string,
   config: SDKConfig,
@@ -128,8 +102,7 @@ const getValidator = async (
     await loadAjv()
     const schema = await fetchModelSchema(model, config)
     if (!schema) { return null }
-    const sanitized = stripInnerIds(schema) as Record<string, unknown>
-    return ajvInstance.compile(sanitized) as ValidateFunction
+    return ajvInstance.compile(schema) as ValidateFunction
   })()
 
   validatorCache.set(model, promise)

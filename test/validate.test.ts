@@ -168,45 +168,6 @@ describe('validateTasks', () => {
     expect(fetch).toHaveBeenCalledTimes(1)
   })
 
-  it('compiles a dereferenced schema that contains the same inner $id at two paths', async () => {
-    const VOICE_ID = 'https://schemas.runware.ai/test/voice.json'
-    const schemaWithDuplicateInnerIds = {
-      type: 'object',
-      additionalProperties: false,
-      required: ['taskType', 'taskUUID', 'model'],
-      properties: {
-        taskType: { type: 'string' },
-        taskUUID: { type: 'string' },
-        model: { type: 'string' },
-        voice: {
-          $id: VOICE_ID,
-          type: 'object',
-          properties: { id: { type: 'string' } },
-        },
-        voices: {
-          type: 'array',
-          items: {
-            $id: VOICE_ID,
-            type: 'object',
-            properties: { id: { type: 'string' } },
-          },
-        },
-      },
-    }
-
-    const fetch = vi.fn().mockResolvedValue(mockResolveResponse(schemaWithDuplicateInnerIds))
-
-    const task: TaskPayload = {
-      taskType: 'audioInference',
-      taskUUID: 'u-dup-id',
-      model: 'civitai:dup@1',
-      voice: { id: 'a' },
-    }
-
-    await validateTasks([task], baseConfig(fetch))
-    expect(fetch).toHaveBeenCalledTimes(1)
-  })
-
   it('dedupes concurrent first-hits for the same model into one fetch+compile', async () => {
     const fetch = vi.fn().mockImplementation(async () => {
       await new Promise((resolve) => { setTimeout(resolve, 5) })
