@@ -1,5 +1,5 @@
 /**
- * AUTO-GENERATED from schema-map@20260607152954 — do not edit manually.
+ * AUTO-GENERATED from schema-map@20260608132636 — do not edit manually.
  * Run: bun run scripts/generate-types.ts
  */
 
@@ -4792,7 +4792,7 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'runware:100@1': { taskType: 'imageInference', id: 'bfl-flux-1-schnell' },
   'runware:101@1': { taskType: 'imageInference', id: 'bfl-flux-1-dev' },
   'runware:106@1': { taskType: 'imageInference', id: 'bfl-flux-1-kontext-dev' },
-  'runware:107@1': { taskType: 'imageInference', id: 'flux-krea' },
+  'runware:107@1': { taskType: 'imageInference', id: 'krea-flux-1-krea-dev' },
   'runware:108@1': { taskType: 'imageInference', id: 'alibaba-qwen-image' },
   'runware:108@20': { taskType: 'imageInference', id: 'alibaba-qwen-image-edit' },
   'runware:108@22': { taskType: 'imageInference', id: 'alibaba-qwen-image-edit-plus' },
