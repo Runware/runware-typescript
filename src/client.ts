@@ -31,6 +31,7 @@ import {
 import { createTransport } from './transport'
 import { createRegistry } from './registry'
 import { SCHEMAS_BASE_URL } from './constants'
+import { createContentClient, type ContentClient } from './content'
 
 export type RunwareClient = {
   connect: () => Promise<void>
@@ -146,6 +147,13 @@ export type RunwareClient = {
     params: UtilityMap['accountManagement']['params'],
     options?: RunOptions,
   ) => Promise<UtilityMap['accountManagement']['result'][]>
+
+  /**
+   * Public read-only metadata about Runware's curated model catalog —
+   * listings, single model details, examples, pricing, capabilities, creators.
+   * Backed by the content service, separate from the inference API.
+   */
+  content: ContentClient
 }
 
 const generateUUID = (): string => {
@@ -950,6 +958,8 @@ export const createClient = async (userConfig: ClientConfig): Promise<RunwareCli
 
   const refreshRegistry = async (): Promise<void> => registry.refresh()
 
+  const content = createContentClient(fullConfig)
+
   return {
     connect,
     disconnect,
@@ -963,5 +973,6 @@ export const createClient = async (userConfig: ClientConfig): Promise<RunwareCli
     modelUpload: modelUpload as RunwareClient['modelUpload'],
     imageUpload: imageUpload as RunwareClient['imageUpload'],
     accountManagement: accountManagement as RunwareClient['accountManagement'],
+    content,
   }
 }

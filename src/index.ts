@@ -52,6 +52,24 @@ export type {
   WebSocketTransport,
   RestTransport,
 } from './types/transport'
+export type { ContentClient } from './content'
+export type {
+  ModelMetadata,
+  ArchitectureMetadata,
+  Creator,
+  Capability,
+  CollectionMetadata,
+  CollectionWithModels,
+  CreatorWithModels,
+  ExampleMetadata,
+  PricingExample,
+  PricingModelListItem,
+  GuideMetadata,
+  PaginatedResponse,
+  ListModelsOptions,
+  ListCollectionsOptions,
+  GetModelExamplesOptions,
+} from './types/content'
 
 export { createClient } from './client'
 export {

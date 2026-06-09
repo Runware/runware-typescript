@@ -584,6 +584,44 @@ await client.modelUpload({
 
 `getTaskDetails` vs `getResponse`: use `getTaskDetails` for "look up something I ran before" — it queries the task archive. `getResponse` is the polling mechanism the SDK uses internally during async `.run()`; you generally don't need to call it directly.
 
+## Content metadata
+
+`client.content.*` exposes Runware's curated model catalog as read-only metadata — names, AIRs, headlines, capabilities, pricing, examples. Public information, no extra cost.
+
+```typescript
+// List curated models, optionally filtered
+const models = await client.content.listModels({
+  capability: 'io:text-to-image',
+  category: 'image',
+  creator: 'black-forest-labs',
+  search: 'flux',
+})
+
+// Single curated model by id
+const model = await client.content.getModel('alibaba-z-image-turbo')
+
+// Sample input/output pairs the model can produce
+const examples = await client.content.getModelExamples('flux-1-dev')
+
+// Pricing summary and per-configuration examples
+const pricing = await client.content.getModelPricing('flux-1-dev')
+
+// Discover the capability taxonomy (io:*, op:*, form:*)
+const capabilities = await client.content.listCapabilities()
+
+// Collections (Runware-defined model groupings) with full model objects inlined
+const collections = await client.content.listCollections({ category: 'image' })
+
+// Creators with their curated models inlined
+const creators = await client.content.listCreators()
+const google = await client.content.getCreator('google')
+
+// Pagination — pass paginate: true to get { total, limit, offset, items }
+const page = await client.content.listModels({ paginate: true, limit: 25, offset: 0 })
+```
+
+`creator`, `capabilities`, and `architecture` on each model are returned as id strings — resolve them against `listCreators`, `listCapabilities`, and the architecture id respectively when you need the human-readable label. Collections and creators are the only endpoints that resolve their inner `models` array to full objects.
+
 ## File helpers
 
 `fileToDataURI` encodes a local file or in-memory buffer as a `data:` URI for passing as input:
