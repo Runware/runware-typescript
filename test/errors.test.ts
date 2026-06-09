@@ -114,6 +114,7 @@ describe('deriveCode', () => {
     ['notConnected', 'connection'],
     ['notOpen', 'connection'],
     ['reconnectionFailed', 'connection'],
+    ['disconnected', 'connection'],
 
     // aborted (SDK-only)
     ['aborted', 'aborted'],

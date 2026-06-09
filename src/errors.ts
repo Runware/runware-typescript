@@ -128,7 +128,7 @@ export const isRetryable = (code: ErrorCode): boolean => RETRYABLE_CODES.has(cod
  */
 export const deriveCode = (raw: string): ErrorCode => {
   if (raw === 'aborted') { return 'aborted' }
-  if (raw === 'connectionFailed' || raw === 'notConnected' || raw === 'notOpen' || raw === 'reconnectionFailed') { return 'connection' }
+  if (raw === 'connectionFailed' || raw === 'notConnected' || raw === 'notOpen' || raw === 'reconnectionFailed' || raw === 'disconnected') { return 'connection' }
 
   if (raw.includes('Credits') || raw.includes('Quota') || raw.includes('Balance') || raw === 'quotaExceeded' || raw === 'paymentRequired') { return 'quota' }
   if (raw.includes('RateLimit') || raw === 'rateLimitExceeded') { return 'rateLimit' }
