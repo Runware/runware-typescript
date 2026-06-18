@@ -25,11 +25,11 @@ const UTILITY_DOC_PATHS: Record<string, string> = {
   modelSearch: 'platform/model-search',
   modelUpload: 'platform/model-upload',
   imageUpload: 'platform/image-upload',
-  getResponse: 'platform/get-response',
+  getResponse: 'platform/task-polling',
   accountManagement: 'platform/account-management',
 }
 
-const SDK_ERROR_DOC_PATH = 'getting-started/errors'
+const SDK_ERROR_DOC_PATH = 'platform/errors'
 
 const SDK_ONLY_RAW_CODES = new Set([
   'aborted',
