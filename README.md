@@ -2,7 +2,7 @@
 
 The official Runware SDK for TypeScript and JavaScript. A unified API for image, video, audio, text, and 3D generation — powered by the [Runware inference platform](https://runware.ai).
 
-[Documentation](https://runware.ai/docs) · [npm](https://www.npmjs.com/package/@runware/sdk) · [Report a bug](https://github.com/Runware/sdk-typescript/issues)
+[Documentation](https://runware.ai/docs) · [npm](https://www.npmjs.com/package/@runware/sdk) · [Report a bug](https://github.com/runware/runware-typescript/issues)
 
 - **One method for everything** — `.run()` handles every model type
 - **Schema-driven types** — generated from Runware's canonical JSON schemas, always accurate
