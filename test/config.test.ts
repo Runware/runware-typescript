@@ -21,7 +21,7 @@ describe('Configuration module', () => {
     const userConfig = {
       apiKey: 'test-key',
       httpBaseUrl: 'https://example.com',
-      transportType: 'rest' as const,
+      transport: 'rest' as const,
       debug: true,
     }
 

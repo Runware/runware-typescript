@@ -327,7 +327,7 @@ describe('REST transport sendRequest', () => {
       apiKey: 'test-key',
       wsBaseUrl: 'wss://ws.test.com',
       httpBaseUrl: 'https://api.test.com',
-      transportType: 'rest',
+      transport: 'rest',
       timeout: 5000,
       pollTimeout: 5000,
       authTimeout: 5000,
@@ -373,7 +373,7 @@ describe('REST transport sendRequest', () => {
       apiKey: 'bad-key',
       wsBaseUrl: 'wss://ws.test.com',
       httpBaseUrl: 'https://api.test.com',
-      transportType: 'rest',
+      transport: 'rest',
       timeout: 5000,
       pollTimeout: 5000,
       authTimeout: 5000,
@@ -409,7 +409,7 @@ describe('REST transport sendRequest', () => {
       apiKey: 'k',
       wsBaseUrl: 'wss://ws.test.com',
       httpBaseUrl: 'https://api.test.com',
-      transportType: 'rest',
+      transport: 'rest',
       timeout: 5000,
       pollTimeout: 5000,
       authTimeout: 5000,
@@ -443,7 +443,7 @@ describe('REST transport sendRequest', () => {
       apiKey: 'k',
       wsBaseUrl: 'wss://ws.test.com',
       httpBaseUrl: 'https://api.test.com',
-      transportType: 'rest',
+      transport: 'rest',
       timeout: 5000,
       pollTimeout: 5000,
       authTimeout: 5000,
@@ -480,7 +480,7 @@ describe('REST transport sendRequest', () => {
       apiKey: 'k',
       wsBaseUrl: 'wss://ws.test.com',
       httpBaseUrl: 'https://api.test.com',
-      transportType: 'rest',
+      transport: 'rest',
       timeout: 5000,
       pollTimeout: 5000,
       authTimeout: 5000,
@@ -511,7 +511,7 @@ describe('createClient surface', () => {
     const mockFetch = vi.fn().mockResolvedValue({ ok: true, json: async () => ({ data: [] }) })
     const client = await createClient({
       apiKey: 'test',
-      transportType: 'rest',
+      transport: 'rest',
       dependencies: { fetch: mockFetch as any },
     })
 
@@ -529,7 +529,7 @@ describe('createClient surface', () => {
 
     const client = await createClient({
       apiKey: 'test',
-      transportType: 'rest',
+      transport: 'rest',
       dependencies: { fetch: mockFetch as any },
     })
 
@@ -569,7 +569,7 @@ describe('per-poll timeout budget propagation', () => {
 
     const client = await createClient({
       apiKey: 'test',
-      transportType: 'rest',
+      transport: 'rest',
       timeout: 60000,
       pollTimeout: 150,
       maxRetries: 0,
@@ -616,7 +616,7 @@ describe('utility method dispatch', () => {
       const { createClient } = await import('../src/index')
       const client = await createClient({
         apiKey: 'test',
-        transportType: 'rest',
+        transport: 'rest',
         dependencies: { fetch: mockFetch as any },
       })
 

@@ -4,7 +4,7 @@ import { createClient } from '../src/index'
 const main = async () => {
   const client = await createClient({
     apiKey: process.env.RUNWARE_API_KEY ?? 'your-api-key',
-    transportType: 'websocket',
+    transport: 'websocket',
   })
 
   await client.connect()

@@ -796,7 +796,7 @@ type ClientConfig = Partial<SDKConfig> & { apiKey: string }
  * `.run()`, `.stream()`, and utility methods like `.modelSearch()`.
  *
  * The only required field is `apiKey`. Everything else has sensible defaults:
- *   - `transportType`: `'websocket'` (use `'rest'` for stateless serverless)
+ *   - `transport`: `'websocket'` (use `'rest'` for stateless serverless)
  *   - `timeout`/`pollTimeout`: 20 min (covers video, 3D, large upscale)
  *   - `retry`/`reconnect`: built-in with exponential backoff
  *
@@ -817,7 +817,7 @@ export const createClient = async (userConfig: ClientConfig): Promise<RunwareCli
     ...userConfig,
     dependencies: { ...deps, ...userConfig.dependencies },
   })
-  const transport = createTransport(fullConfig.transportType, fullConfig)
+  const transport = createTransport(fullConfig.transport, fullConfig)
 
   const registry = createRegistry({
     url: `${SCHEMAS_BASE_URL}/registry.json`,

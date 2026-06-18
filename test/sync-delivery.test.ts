@@ -35,7 +35,7 @@ describe('REST + deliveryMethod=sync via client.run', () => {
 
     const client = await createClient({
       apiKey: 'test',
-      transportType: 'rest',
+      transport: 'rest',
       dependencies: { fetch: mockFetch as any },
     })
 
@@ -64,7 +64,7 @@ describe('REST + deliveryMethod=sync via client.run', () => {
 
     const client = await createClient({
       apiKey: 'test',
-      transportType: 'rest',
+      transport: 'rest',
       dependencies: { fetch: mockFetch as any },
     })
 

@@ -37,7 +37,7 @@ const TEXT_PARAMS = {
 
 describeIf('Integration: WebSocket', () => {
   it('numberResults=1 returns one image', async () => {
-    const client = await createClient({ apiKey: apiKey!, transportType: 'websocket' })
+    const client = await createClient({ apiKey: apiKey!, transport: 'websocket' })
     await client.connect()
     try {
       const images = await client.run(IMAGE_PARAMS)
@@ -49,7 +49,7 @@ describeIf('Integration: WebSocket', () => {
   }, 120_000)
 
   it('numberResults=2 returns two images', async () => {
-    const client = await createClient({ apiKey: apiKey!, transportType: 'websocket' })
+    const client = await createClient({ apiKey: apiKey!, transport: 'websocket' })
     await client.connect()
     try {
       const images = await client.run({ ...IMAGE_PARAMS, numberResults: 2 })
@@ -65,14 +65,14 @@ describeIf('Integration: WebSocket', () => {
 
 describeIf('Integration: REST', () => {
   it('numberResults=1 returns one image', async () => {
-    const client = await createClient({ apiKey: apiKey!, transportType: 'rest' })
+    const client = await createClient({ apiKey: apiKey!, transport: 'rest' })
     const images = await client.run(IMAGE_PARAMS)
     expect(images).toHaveLength(1)
     expect(typeof (images[0] as any).imageURL).toBe('string')
   }, 120_000)
 
   it('numberResults=2 returns two images', async () => {
-    const client = await createClient({ apiKey: apiKey!, transportType: 'rest' })
+    const client = await createClient({ apiKey: apiKey!, transport: 'rest' })
     const images = await client.run({ ...IMAGE_PARAMS, numberResults: 2 })
     expect(images).toHaveLength(2)
     for (const img of images) {
@@ -83,7 +83,7 @@ describeIf('Integration: REST', () => {
 
 describeIf('Integration: REST + deliveryMethod=sync', () => {
   it('returns the result in a single response, no polling', async () => {
-    const client = await createClient({ apiKey: apiKey!, transportType: 'rest' })
+    const client = await createClient({ apiKey: apiKey!, transport: 'rest' })
     const images = await client.run({ ...IMAGE_PARAMS, deliveryMethod: 'sync' } as any)
     expect(images).toHaveLength(1)
     expect(typeof (images[0] as any).imageURL).toBe('string')
@@ -92,7 +92,7 @@ describeIf('Integration: REST + deliveryMethod=sync', () => {
 
 describeIf('Integration: WebSocket + deliveryMethod=sync', () => {
   it('receives the pushed result on the same subscription, no polling', async () => {
-    const client = await createClient({ apiKey: apiKey!, transportType: 'websocket' })
+    const client = await createClient({ apiKey: apiKey!, transport: 'websocket' })
     await client.connect()
     try {
       const images = await client.run({ ...IMAGE_PARAMS, deliveryMethod: 'sync' } as any)
@@ -122,7 +122,7 @@ describeIf('Integration: Stream', () => {
 
 describeIf('Integration: utilities and errors', () => {
   it('modelSearch finds Civitai checkpoints', async () => {
-    const client = await createClient({ apiKey: apiKey!, transportType: 'websocket' })
+    const client = await createClient({ apiKey: apiKey!, transport: 'websocket' })
     await client.connect()
     try {
       const [response] = await client.modelSearch({
@@ -137,7 +137,7 @@ describeIf('Integration: utilities and errors', () => {
   }, 60_000)
 
   it('invalid params throw a typed RunwareError', async () => {
-    const client = await createClient({ apiKey: apiKey!, transportType: 'websocket' })
+    const client = await createClient({ apiKey: apiKey!, transport: 'websocket' })
     await client.connect()
     try {
       await client.run({

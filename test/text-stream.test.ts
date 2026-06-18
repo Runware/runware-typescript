@@ -14,7 +14,7 @@ const baseConfig = (fetchImpl: unknown): SDKConfig => ({
   apiKey: 'test-key',
   wsBaseUrl: 'wss://ws.test.com',
   httpBaseUrl: 'https://api.test.com',
-  transportType: 'rest',
+  transport: 'rest',
   timeout: 5000,
   pollTimeout: 5000,
   authTimeout: 5000,

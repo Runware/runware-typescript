@@ -15,7 +15,7 @@ const testConfig = (overrides?: Partial<SDKConfig>): SDKConfig => ({
   apiKey: 'test-key',
   wsBaseUrl: 'wss://ws-api.runware.ai',
   httpBaseUrl: 'https://api.runware.ai',
-  transportType: 'websocket',
+  transport: 'websocket',
   timeout: 5000,
   pollTimeout: 5000,
   authTimeout: 5000,

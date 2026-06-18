@@ -6,7 +6,7 @@ const main = async () => {
   // standalone HTTP call.
   const client = await createClient({
     apiKey: process.env.RUNWARE_API_KEY ?? 'your-api-key',
-    transportType: 'rest',
+    transport: 'rest',
   })
 
   // Curated model AIR → the SDK auto-resolves the taskType and narrows

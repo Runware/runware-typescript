@@ -5,7 +5,7 @@ import { createLogger } from './logger'
 import { createRunwareError } from './errors'
 
 export const DEFAULT_CONFIG: Partial<SDKConfig> = {
-  transportType: 'websocket',
+  transport: 'websocket',
   wsBaseUrl: 'wss://ws-api.runware.ai/v1',
   httpBaseUrl: 'https://api.runware.ai/v1',
   timeout: 1_200_000,

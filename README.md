@@ -196,7 +196,7 @@ Best for applications making multiple requests or needing real-time feedback:
 ```typescript
 const client = await createClient({
   apiKey: process.env.RUNWARE_API_KEY ?? 'your-api-key',
-  transportType: 'websocket', // default
+  transport: 'websocket', // default
 })
 
 await client.connect()
@@ -219,7 +219,7 @@ Best for serverless functions or simple one-off requests:
 ```typescript
 const client = await createClient({
   apiKey: process.env.RUNWARE_API_KEY ?? 'your-api-key',
-  transportType: 'rest',
+  transport: 'rest',
 })
 
 // No connect() needed — each request is a standalone HTTP call
@@ -381,7 +381,7 @@ The constructor derives `code` and the `documentation` URL from the raw code + m
 | Field | Default | Notes |
 |---|---|---|
 | `apiKey` | from `RUNWARE_API_KEY` | required |
-| `transportType` | `'websocket'` | or `'rest'` |
+| `transport` | `'websocket'` | or `'rest'` |
 | `httpBaseUrl` | `https://api.runware.ai/v1` | include the version path |
 | `wsBaseUrl` | `wss://ws-api.runware.ai/v1` | include the version path |
 | `timeout` | `1_200_000` (ms) | per-HTTP-call (one POST, one `getResponse` poll) |

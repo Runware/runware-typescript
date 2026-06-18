@@ -20,7 +20,7 @@ export type SDKConfig = {
   /** REST endpoint, including API version path. Default: `https://api.runware.ai/v1`. */
   httpBaseUrl: string
   /** Transport to use. Default: `websocket`. */
-  transportType: TransportType
+  transport: TransportType
   /**
    * Per-individual-HTTP-call timeout in ms (one POST or one `getResponse`
    * poll). Default: 1_200_000 (20 min).
