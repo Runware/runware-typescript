@@ -1,5 +1,5 @@
 /**
- * AUTO-GENERATED from schema-map@20260608132636 — do not edit manually.
+ * AUTO-GENERATED from schema-map@20260618151239 — do not edit manually.
  * Run: bun run scripts/generate-types.ts
  */
 
@@ -52,10 +52,8 @@ export type ExactlyIllustrativeParams = {
   deliveryMethod?: 'sync' | 'async'
   /** Content safety checking configuration for image generation. */
   safety?: {
-  /** Enable or disable content safety checking. When enabled, defaults to `fast` mode. */
+  /** Enable or disable content safety checking. */
   checkContent?: boolean
-  /** Safety checking mode for image generation. */
-  mode?: 'none' | 'fast'
 }
   [key: string]: unknown
 }
@@ -120,8 +118,8 @@ export type Flux1DevParams = {
   /** Controls how many steps to skip between cache refreshes. Higher values skip more steps for faster generation at the cost of quality. */
   dbCacheSkipInterval?: number
 }
-  /** Pixel extensions for each boundary direction of the source image. */
-  outpaint?: Record<string, unknown>
+  /** Pixel extensions for each boundary direction of the source image. At least one direction is required. */
+  outpaint?: unknown
   /** Configuration for Low-Rank Adaptation models. */
   lora?: ({
   /** LoRA model identifier. */
@@ -134,7 +132,7 @@ export type Flux1DevParams = {
   /** Configuration for identifying and applying ControlNet models. */
   controlNet?: ({
   /** ControlNet model identifier. */
-  model: string
+  model: 'runware:25@1' | 'runware:26@1' | 'runware:27@1' | 'runware:28@1' | 'runware:29@1' | 'runware:30@1' | 'runware:31@1' | 'runware:98@1'
   /** Strength of the ControlNet influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the guide image. */
   weight?: number
   /** Reference image for ControlNet guidance (UUID, URL, Data URI, or Base64). */
@@ -153,7 +151,7 @@ export type Flux1DevParams = {
   /** Configuration for IP-Adapter image-prompted generation. */
   ipAdapters?: ({
   /** IP-Adapter model identifier. */
-  model: string
+  model: 'runware:56@1' | 'runware:56@2' | 'runware:56@3' | 'runware:56@4'
   /** Strength of the IP-Adapter influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the reference. */
   weight?: number
   /** Images to guide the IP-Adapter (UUID, URL, Data URI, or Base64). */
@@ -249,10 +247,8 @@ export type Flux1DevParams = {
   deliveryMethod?: 'sync' | 'async'
   /** Content safety checking configuration for image generation. */
   safety?: {
-  /** Enable or disable content safety checking. When enabled, defaults to `fast` mode. */
+  /** Enable or disable content safety checking. */
   checkContent?: boolean
-  /** Safety checking mode for image generation. */
-  mode?: 'none' | 'fast'
 }
   [key: string]: unknown
 }
@@ -271,9 +267,9 @@ export type Flux1KontextDevParams = {
   /** Prompt to guide what to exclude from generation. Ignored when guidance is disabled (CFGScale ≤ 1). */
   negativePrompt?: string
   /** Width of the generated media in pixels. */
-  width: number
+  width?: number
   /** Height of the generated media in pixels. */
-  height: number
+  height?: number
   /** Random seed for reproducible generation. When not provided, a random seed is generated in the unsigned 32-bit range. */
   seed?: number
   /** Total number of denoising steps. Higher values generally produce more detailed results but take longer. */
@@ -317,23 +313,6 @@ export type Flux1KontextDevParams = {
   weight?: number
   /** Transformer stages to apply LoRA. Some video models use separate high-noise and low-noise processing stages, and LoRAs can be selectively applied to optimize their effectiveness. */
   transformer?: 'high' | 'low' | 'both'
-})[]
-  /** Configuration for IP-Adapter image-prompted generation. */
-  ipAdapters?: ({
-  /** IP-Adapter model identifier. */
-  model: string
-  /** Strength of the IP-Adapter influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the reference. */
-  weight?: number
-  /** Images to guide the IP-Adapter (UUID, URL, Data URI, or Base64). */
-  guideImages: unknown[]
-  /** Controls how multiple reference images are combined. */
-  combineMethod?: 'concat' | 'add' | 'subtract' | 'average' | 'norm_average'
-  /** Determines which embedding components are used and their strength. */
-  embedScaling?: 'only_v' | 'kv' | 'kv_penalty_c' | 'k_mean_v_penalty_c'
-  /** Shapes how influence evolves during generation. */
-  weightType?: 'normal' | 'ease_in' | 'ease_out' | 'ease_in_out' | 'weak_input' | 'weak_output' | 'weak_middle' | 'strong_middle' | 'style_transfer' | 'composition' | 'strong_style_transfer' | 'style_and_composition' | 'strong_style_and_composition'
-  /** Controls composition/layout influence specifically. */
-  weightComposition?: number
 })[]
   /** True Classifier-Free Guidance scale. Higher values increase prompt adherence at the cost of quality. */
   trueCFGScale?: number
@@ -380,10 +359,8 @@ export type Flux1KontextDevParams = {
   deliveryMethod?: 'sync' | 'async'
   /** Content safety checking configuration for image generation. */
   safety?: {
-  /** Enable or disable content safety checking. When enabled, defaults to `fast` mode. */
+  /** Enable or disable content safety checking. */
   checkContent?: boolean
-  /** Safety checking mode for image generation. */
-  mode?: 'none' | 'fast'
 }
   [key: string]: unknown
 }
@@ -448,8 +425,8 @@ export type Flux1SchnellParams = {
   /** Controls how many steps to skip between cache refreshes. Higher values skip more steps for faster generation at the cost of quality. */
   dbCacheSkipInterval?: number
 }
-  /** Pixel extensions for each boundary direction of the source image. */
-  outpaint?: Record<string, unknown>
+  /** Pixel extensions for each boundary direction of the source image. At least one direction is required. */
+  outpaint?: unknown
   /** Configuration for Low-Rank Adaptation models. */
   lora?: ({
   /** LoRA model identifier. */
@@ -458,42 +435,6 @@ export type Flux1SchnellParams = {
   weight?: number
   /** Transformer stages to apply LoRA. Some video models use separate high-noise and low-noise processing stages, and LoRAs can be selectively applied to optimize their effectiveness. */
   transformer?: 'high' | 'low' | 'both'
-})[]
-  /** Configuration for identifying and applying ControlNet models. */
-  controlNet?: ({
-  /** ControlNet model identifier. */
-  model: string
-  /** Strength of the ControlNet influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the guide image. */
-  weight?: number
-  /** Reference image for ControlNet guidance (UUID, URL, Data URI, or Base64). */
-  guideImage: unknown
-  /** ControlNet guidance mode. */
-  controlMode?: 'balanced' | 'controlnet' | 'prompt'
-  /** Absolute step number to end ControlNet influence. Must be greater than `startStep` and less than or equal to `steps`. */
-  endStep?: number
-  /** Percentage of steps to end ControlNet influence. Must be greater than `startStepPercentage`. */
-  endStepPercentage?: number
-  /** Absolute step number to start ControlNet influence. Must be less than `endStep`. */
-  startStep?: number
-  /** Percentage of steps to start ControlNet influence. Must be less than `endStepPercentage`. */
-  startStepPercentage?: number
-})[]
-  /** Configuration for IP-Adapter image-prompted generation. */
-  ipAdapters?: ({
-  /** IP-Adapter model identifier. */
-  model: string
-  /** Strength of the IP-Adapter influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the reference. */
-  weight?: number
-  /** Images to guide the IP-Adapter (UUID, URL, Data URI, or Base64). */
-  guideImages: unknown[]
-  /** Controls how multiple reference images are combined. */
-  combineMethod?: 'concat' | 'add' | 'subtract' | 'average' | 'norm_average'
-  /** Determines which embedding components are used and their strength. */
-  embedScaling?: 'only_v' | 'kv' | 'kv_penalty_c' | 'k_mean_v_penalty_c'
-  /** Shapes how influence evolves during generation. */
-  weightType?: 'normal' | 'ease_in' | 'ease_out' | 'ease_in_out' | 'weak_input' | 'weak_output' | 'weak_middle' | 'strong_middle' | 'style_transfer' | 'composition' | 'strong_style_transfer' | 'style_and_composition' | 'strong_style_and_composition'
-  /** Controls composition/layout influence specifically. */
-  weightComposition?: number
 })[]
   /** Two-stage generation for improved resolution. Can be enabled with `true` for default settings, or configured as an object for fine-grained control. */
   hiresFix?: true | {
@@ -551,10 +492,8 @@ export type Flux1SchnellParams = {
   deliveryMethod?: 'sync' | 'async'
   /** Content safety checking configuration for image generation. */
   safety?: {
-  /** Enable or disable content safety checking. When enabled, defaults to `fast` mode. */
+  /** Enable or disable content safety checking. */
   checkContent?: boolean
-  /** Safety checking mode for image generation. */
-  mode?: 'none' | 'fast'
 }
   [key: string]: unknown
 }
@@ -617,8 +556,8 @@ export type IllustriousParams = {
   /** Branch ID for DeepCache acceleration. Determines which U-Net layers are skipped. */
   deepCacheBranchId?: number
 }
-  /** Pixel extensions for each boundary direction of the source image. */
-  outpaint?: Record<string, unknown>
+  /** Pixel extensions for each boundary direction of the source image. At least one direction is required. */
+  outpaint?: unknown
   /** Configuration for Low-Rank Adaptation models. */
   lora?: ({
   /** LoRA model identifier. */
@@ -631,7 +570,7 @@ export type IllustriousParams = {
   /** Configuration for identifying and applying ControlNet models. */
   controlNet?: ({
   /** ControlNet model identifier. */
-  model: string
+  model: 'runware:20@1' | 'runware:3@1'
   /** Strength of the ControlNet influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the guide image. */
   weight?: number
   /** Reference image for ControlNet guidance (UUID, URL, Data URI, or Base64). */
@@ -650,7 +589,7 @@ export type IllustriousParams = {
   /** Configuration for IP-Adapter image-prompted generation. */
   ipAdapters?: ({
   /** IP-Adapter model identifier. */
-  model: string
+  model: 'runware:55@1' | 'runware:55@2' | 'runware:55@3' | 'runware:55@4'
   /** Strength of the IP-Adapter influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the reference. */
   weight?: number
   /** Images to guide the IP-Adapter (UUID, URL, Data URI, or Base64). */
@@ -664,6 +603,15 @@ export type IllustriousParams = {
   /** Controls composition/layout influence specifically. */
   weightComposition?: number
 })[]
+  /** Configuration for running a refiner model on top of the base model output. */
+  refiner?: {
+  /** Refiner model identifier. */
+  model: 'runware:101055@128080'
+  /** Absolute step number to switch from the base model to the refiner. */
+  startStep?: number
+  /** Percentage of total steps at which to switch from the base model to the refiner. */
+  startStepPercentage?: number
+}
   /** Two-stage generation for improved resolution. Can be enabled with `true` for default settings, or configured as an object for fine-grained control. */
   hiresFix?: true | {
   /** The upscaling model to use for hires fix. */
@@ -718,10 +666,8 @@ export type IllustriousParams = {
   deliveryMethod?: 'sync' | 'async'
   /** Content safety checking configuration for image generation. */
   safety?: {
-  /** Enable or disable content safety checking. When enabled, defaults to `fast` mode. */
+  /** Enable or disable content safety checking. */
   checkContent?: boolean
-  /** Safety checking mode for image generation. */
-  mode?: 'none' | 'fast'
 }
   [key: string]: unknown
 }
@@ -784,8 +730,8 @@ export type NoobaiParams = {
   /** Branch ID for DeepCache acceleration. Determines which U-Net layers are skipped. */
   deepCacheBranchId?: number
 }
-  /** Pixel extensions for each boundary direction of the source image. */
-  outpaint?: Record<string, unknown>
+  /** Pixel extensions for each boundary direction of the source image. At least one direction is required. */
+  outpaint?: unknown
   /** Configuration for Low-Rank Adaptation models. */
   lora?: ({
   /** LoRA model identifier. */
@@ -798,7 +744,7 @@ export type NoobaiParams = {
   /** Configuration for identifying and applying ControlNet models. */
   controlNet?: ({
   /** ControlNet model identifier. */
-  model: string
+  model: 'runware:20@1' | 'runware:3@1'
   /** Strength of the ControlNet influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the guide image. */
   weight?: number
   /** Reference image for ControlNet guidance (UUID, URL, Data URI, or Base64). */
@@ -817,7 +763,7 @@ export type NoobaiParams = {
   /** Configuration for IP-Adapter image-prompted generation. */
   ipAdapters?: ({
   /** IP-Adapter model identifier. */
-  model: string
+  model: 'runware:55@1' | 'runware:55@2' | 'runware:55@3' | 'runware:55@4'
   /** Strength of the IP-Adapter influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the reference. */
   weight?: number
   /** Images to guide the IP-Adapter (UUID, URL, Data URI, or Base64). */
@@ -831,6 +777,15 @@ export type NoobaiParams = {
   /** Controls composition/layout influence specifically. */
   weightComposition?: number
 })[]
+  /** Configuration for running a refiner model on top of the base model output. */
+  refiner?: {
+  /** Refiner model identifier. */
+  model: 'runware:101055@128080'
+  /** Absolute step number to switch from the base model to the refiner. */
+  startStep?: number
+  /** Percentage of total steps at which to switch from the base model to the refiner. */
+  startStepPercentage?: number
+}
   /** Two-stage generation for improved resolution. Can be enabled with `true` for default settings, or configured as an object for fine-grained control. */
   hiresFix?: true | {
   /** The upscaling model to use for hires fix. */
@@ -885,10 +840,8 @@ export type NoobaiParams = {
   deliveryMethod?: 'sync' | 'async'
   /** Content safety checking configuration for image generation. */
   safety?: {
-  /** Enable or disable content safety checking. When enabled, defaults to `fast` mode. */
+  /** Enable or disable content safety checking. */
   checkContent?: boolean
-  /** Safety checking mode for image generation. */
-  mode?: 'none' | 'fast'
 }
   [key: string]: unknown
 }
@@ -951,8 +904,8 @@ export type PonyParams = {
   /** Branch ID for DeepCache acceleration. Determines which U-Net layers are skipped. */
   deepCacheBranchId?: number
 }
-  /** Pixel extensions for each boundary direction of the source image. */
-  outpaint?: Record<string, unknown>
+  /** Pixel extensions for each boundary direction of the source image. At least one direction is required. */
+  outpaint?: unknown
   /** Configuration for Low-Rank Adaptation models. */
   lora?: ({
   /** LoRA model identifier. */
@@ -965,7 +918,7 @@ export type PonyParams = {
   /** Configuration for identifying and applying ControlNet models. */
   controlNet?: ({
   /** ControlNet model identifier. */
-  model: string
+  model: 'runware:20@1' | 'runware:3@1'
   /** Strength of the ControlNet influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the guide image. */
   weight?: number
   /** Reference image for ControlNet guidance (UUID, URL, Data URI, or Base64). */
@@ -984,7 +937,7 @@ export type PonyParams = {
   /** Configuration for IP-Adapter image-prompted generation. */
   ipAdapters?: ({
   /** IP-Adapter model identifier. */
-  model: string
+  model: 'runware:55@1' | 'runware:55@2' | 'runware:55@3' | 'runware:55@4'
   /** Strength of the IP-Adapter influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the reference. */
   weight?: number
   /** Images to guide the IP-Adapter (UUID, URL, Data URI, or Base64). */
@@ -998,6 +951,15 @@ export type PonyParams = {
   /** Controls composition/layout influence specifically. */
   weightComposition?: number
 })[]
+  /** Configuration for running a refiner model on top of the base model output. */
+  refiner?: {
+  /** Refiner model identifier. */
+  model: 'runware:101055@128080'
+  /** Absolute step number to switch from the base model to the refiner. */
+  startStep?: number
+  /** Percentage of total steps at which to switch from the base model to the refiner. */
+  startStepPercentage?: number
+}
   /** Two-stage generation for improved resolution. Can be enabled with `true` for default settings, or configured as an object for fine-grained control. */
   hiresFix?: true | {
   /** The upscaling model to use for hires fix. */
@@ -1052,10 +1014,8 @@ export type PonyParams = {
   deliveryMethod?: 'sync' | 'async'
   /** Content safety checking configuration for image generation. */
   safety?: {
-  /** Enable or disable content safety checking. When enabled, defaults to `fast` mode. */
+  /** Enable or disable content safety checking. */
   checkContent?: boolean
-  /** Safety checking mode for image generation. */
-  mode?: 'none' | 'fast'
 }
   [key: string]: unknown
 }
@@ -1118,8 +1078,8 @@ export type Sd15Params = {
   /** Branch ID for DeepCache acceleration. Determines which U-Net layers are skipped. */
   deepCacheBranchId?: number
 }
-  /** Pixel extensions for each boundary direction of the source image. */
-  outpaint?: Record<string, unknown>
+  /** Pixel extensions for each boundary direction of the source image. At least one direction is required. */
+  outpaint?: unknown
   /** Configuration for Low-Rank Adaptation models. */
   lora?: ({
   /** LoRA model identifier. */
@@ -1132,7 +1092,7 @@ export type Sd15Params = {
   /** Configuration for identifying and applying ControlNet models. */
   controlNet?: ({
   /** ControlNet model identifier. */
-  model: string
+  model: 'runware:11@1' | 'runware:12@1' | 'runware:13@1' | 'runware:142@0' | 'runware:17@1' | 'runware:6@1' | 'runware:6@2'
   /** Strength of the ControlNet influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the guide image. */
   weight?: number
   /** Reference image for ControlNet guidance (UUID, URL, Data URI, or Base64). */
@@ -1151,7 +1111,7 @@ export type Sd15Params = {
   /** Configuration for IP-Adapter image-prompted generation. */
   ipAdapters?: ({
   /** IP-Adapter model identifier. */
-  model: string
+  model: 'runware:55@10' | 'runware:55@5' | 'runware:55@6' | 'runware:55@7' | 'runware:55@8' | 'runware:55@9'
   /** Strength of the IP-Adapter influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the reference. */
   weight?: number
   /** Images to guide the IP-Adapter (UUID, URL, Data URI, or Base64). */
@@ -1219,10 +1179,8 @@ export type Sd15Params = {
   deliveryMethod?: 'sync' | 'async'
   /** Content safety checking configuration for image generation. */
   safety?: {
-  /** Enable or disable content safety checking. When enabled, defaults to `fast` mode. */
+  /** Enable or disable content safety checking. */
   checkContent?: boolean
-  /** Safety checking mode for image generation. */
-  mode?: 'none' | 'fast'
 }
   [key: string]: unknown
 }
@@ -1285,8 +1243,8 @@ export type Sd15DistilledParams = {
   /** Branch ID for DeepCache acceleration. Determines which U-Net layers are skipped. */
   deepCacheBranchId?: number
 }
-  /** Pixel extensions for each boundary direction of the source image. */
-  outpaint?: Record<string, unknown>
+  /** Pixel extensions for each boundary direction of the source image. At least one direction is required. */
+  outpaint?: unknown
   /** Configuration for Low-Rank Adaptation models. */
   lora?: ({
   /** LoRA model identifier. */
@@ -1299,7 +1257,7 @@ export type Sd15DistilledParams = {
   /** Configuration for identifying and applying ControlNet models. */
   controlNet?: ({
   /** ControlNet model identifier. */
-  model: string
+  model: 'runware:11@1' | 'runware:12@1' | 'runware:13@1' | 'runware:142@0' | 'runware:17@1' | 'runware:6@1' | 'runware:6@2'
   /** Strength of the ControlNet influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the guide image. */
   weight?: number
   /** Reference image for ControlNet guidance (UUID, URL, Data URI, or Base64). */
@@ -1318,7 +1276,7 @@ export type Sd15DistilledParams = {
   /** Configuration for IP-Adapter image-prompted generation. */
   ipAdapters?: ({
   /** IP-Adapter model identifier. */
-  model: string
+  model: 'runware:55@10' | 'runware:55@5' | 'runware:55@6' | 'runware:55@7' | 'runware:55@8' | 'runware:55@9'
   /** Strength of the IP-Adapter influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the reference. */
   weight?: number
   /** Images to guide the IP-Adapter (UUID, URL, Data URI, or Base64). */
@@ -1386,10 +1344,8 @@ export type Sd15DistilledParams = {
   deliveryMethod?: 'sync' | 'async'
   /** Content safety checking configuration for image generation. */
   safety?: {
-  /** Enable or disable content safety checking. When enabled, defaults to `fast` mode. */
+  /** Enable or disable content safety checking. */
   checkContent?: boolean
-  /** Safety checking mode for image generation. */
-  mode?: 'none' | 'fast'
 }
   [key: string]: unknown
 }
@@ -1452,8 +1408,8 @@ export type Sd15HyperParams = {
   /** Branch ID for DeepCache acceleration. Determines which U-Net layers are skipped. */
   deepCacheBranchId?: number
 }
-  /** Pixel extensions for each boundary direction of the source image. */
-  outpaint?: Record<string, unknown>
+  /** Pixel extensions for each boundary direction of the source image. At least one direction is required. */
+  outpaint?: unknown
   /** Configuration for Low-Rank Adaptation models. */
   lora?: ({
   /** LoRA model identifier. */
@@ -1466,7 +1422,7 @@ export type Sd15HyperParams = {
   /** Configuration for identifying and applying ControlNet models. */
   controlNet?: ({
   /** ControlNet model identifier. */
-  model: string
+  model: 'runware:11@1' | 'runware:12@1' | 'runware:13@1' | 'runware:142@0' | 'runware:17@1' | 'runware:6@1' | 'runware:6@2'
   /** Strength of the ControlNet influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the guide image. */
   weight?: number
   /** Reference image for ControlNet guidance (UUID, URL, Data URI, or Base64). */
@@ -1485,7 +1441,7 @@ export type Sd15HyperParams = {
   /** Configuration for IP-Adapter image-prompted generation. */
   ipAdapters?: ({
   /** IP-Adapter model identifier. */
-  model: string
+  model: 'runware:55@10' | 'runware:55@5' | 'runware:55@6' | 'runware:55@7' | 'runware:55@8' | 'runware:55@9'
   /** Strength of the IP-Adapter influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the reference. */
   weight?: number
   /** Images to guide the IP-Adapter (UUID, URL, Data URI, or Base64). */
@@ -1553,10 +1509,8 @@ export type Sd15HyperParams = {
   deliveryMethod?: 'sync' | 'async'
   /** Content safety checking configuration for image generation. */
   safety?: {
-  /** Enable or disable content safety checking. When enabled, defaults to `fast` mode. */
+  /** Enable or disable content safety checking. */
   checkContent?: boolean
-  /** Safety checking mode for image generation. */
-  mode?: 'none' | 'fast'
 }
   [key: string]: unknown
 }
@@ -1619,8 +1573,8 @@ export type Sd15LcmParams = {
   /** Branch ID for DeepCache acceleration. Determines which U-Net layers are skipped. */
   deepCacheBranchId?: number
 }
-  /** Pixel extensions for each boundary direction of the source image. */
-  outpaint?: Record<string, unknown>
+  /** Pixel extensions for each boundary direction of the source image. At least one direction is required. */
+  outpaint?: unknown
   /** Configuration for Low-Rank Adaptation models. */
   lora?: ({
   /** LoRA model identifier. */
@@ -1633,7 +1587,7 @@ export type Sd15LcmParams = {
   /** Configuration for identifying and applying ControlNet models. */
   controlNet?: ({
   /** ControlNet model identifier. */
-  model: string
+  model: 'runware:11@1' | 'runware:12@1' | 'runware:13@1' | 'runware:142@0' | 'runware:17@1' | 'runware:6@1' | 'runware:6@2'
   /** Strength of the ControlNet influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the guide image. */
   weight?: number
   /** Reference image for ControlNet guidance (UUID, URL, Data URI, or Base64). */
@@ -1652,7 +1606,7 @@ export type Sd15LcmParams = {
   /** Configuration for IP-Adapter image-prompted generation. */
   ipAdapters?: ({
   /** IP-Adapter model identifier. */
-  model: string
+  model: 'runware:55@10' | 'runware:55@5' | 'runware:55@6' | 'runware:55@7' | 'runware:55@8' | 'runware:55@9'
   /** Strength of the IP-Adapter influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the reference. */
   weight?: number
   /** Images to guide the IP-Adapter (UUID, URL, Data URI, or Base64). */
@@ -1720,10 +1674,8 @@ export type Sd15LcmParams = {
   deliveryMethod?: 'sync' | 'async'
   /** Content safety checking configuration for image generation. */
   safety?: {
-  /** Enable or disable content safety checking. When enabled, defaults to `fast` mode. */
+  /** Enable or disable content safety checking. */
   checkContent?: boolean
-  /** Safety checking mode for image generation. */
-  mode?: 'none' | 'fast'
 }
   [key: string]: unknown
 }
@@ -1786,8 +1738,8 @@ export type Sd21Params = {
   /** Branch ID for DeepCache acceleration. Determines which U-Net layers are skipped. */
   deepCacheBranchId?: number
 }
-  /** Pixel extensions for each boundary direction of the source image. */
-  outpaint?: Record<string, unknown>
+  /** Pixel extensions for each boundary direction of the source image. At least one direction is required. */
+  outpaint?: unknown
   /** Configuration for Low-Rank Adaptation models. */
   lora?: ({
   /** LoRA model identifier. */
@@ -1796,42 +1748,6 @@ export type Sd21Params = {
   weight?: number
   /** Transformer stages to apply LoRA. Some video models use separate high-noise and low-noise processing stages, and LoRAs can be selectively applied to optimize their effectiveness. */
   transformer?: 'high' | 'low' | 'both'
-})[]
-  /** Configuration for identifying and applying ControlNet models. */
-  controlNet?: ({
-  /** ControlNet model identifier. */
-  model: string
-  /** Strength of the ControlNet influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the guide image. */
-  weight?: number
-  /** Reference image for ControlNet guidance (UUID, URL, Data URI, or Base64). */
-  guideImage: unknown
-  /** ControlNet guidance mode. */
-  controlMode?: 'balanced' | 'controlnet' | 'prompt'
-  /** Absolute step number to end ControlNet influence. Must be greater than `startStep` and less than or equal to `steps`. */
-  endStep?: number
-  /** Percentage of steps to end ControlNet influence. Must be greater than `startStepPercentage`. */
-  endStepPercentage?: number
-  /** Absolute step number to start ControlNet influence. Must be less than `endStep`. */
-  startStep?: number
-  /** Percentage of steps to start ControlNet influence. Must be less than `endStepPercentage`. */
-  startStepPercentage?: number
-})[]
-  /** Configuration for IP-Adapter image-prompted generation. */
-  ipAdapters?: ({
-  /** IP-Adapter model identifier. */
-  model: string
-  /** Strength of the IP-Adapter influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the reference. */
-  weight?: number
-  /** Images to guide the IP-Adapter (UUID, URL, Data URI, or Base64). */
-  guideImages: unknown[]
-  /** Controls how multiple reference images are combined. */
-  combineMethod?: 'concat' | 'add' | 'subtract' | 'average' | 'norm_average'
-  /** Determines which embedding components are used and their strength. */
-  embedScaling?: 'only_v' | 'kv' | 'kv_penalty_c' | 'k_mean_v_penalty_c'
-  /** Shapes how influence evolves during generation. */
-  weightType?: 'normal' | 'ease_in' | 'ease_out' | 'ease_in_out' | 'weak_input' | 'weak_output' | 'weak_middle' | 'strong_middle' | 'style_transfer' | 'composition' | 'strong_style_transfer' | 'style_and_composition' | 'strong_style_and_composition'
-  /** Controls composition/layout influence specifically. */
-  weightComposition?: number
 })[]
   /** Two-stage generation for improved resolution. Can be enabled with `true` for default settings, or configured as an object for fine-grained control. */
   hiresFix?: true | {
@@ -1887,168 +1803,8 @@ export type Sd21Params = {
   deliveryMethod?: 'sync' | 'async'
   /** Content safety checking configuration for image generation. */
   safety?: {
-  /** Enable or disable content safety checking. When enabled, defaults to `fast` mode. */
+  /** Enable or disable content safety checking. */
   checkContent?: boolean
-  /** Safety checking mode for image generation. */
-  mode?: 'none' | 'fast'
-}
-  [key: string]: unknown
-}
-
-/**
- * sd3 architecture params.
- */
-export type Sd3Params = {
-  /** The unified payload wrapper for complex media assets dictating image, video or audio inference constraints. */
-  inputs?: {
-  /** Image used as a starting point for the generation (UUID, URL, Data URI, or Base64). */
-  seedImage?: unknown
-  /** Image used to specify which areas of the seed image should be edited (UUID, URL, Data URI, or Base64). */
-  maskImage?: unknown
-}
-  /** Text prompt describing elements to include in the generated output. */
-  positivePrompt: string
-  /** Prompt to guide what to exclude from generation. Ignored when guidance is disabled (CFGScale ≤ 1). */
-  negativePrompt?: string
-  /** Width of the generated media in pixels. */
-  width: number
-  /** Height of the generated media in pixels. */
-  height: number
-  /** Random seed for reproducible generation. When not provided, a random seed is generated in the unsigned 32-bit range. */
-  seed?: number
-  /** Total number of denoising steps. Higher values generally produce more detailed results but take longer. */
-  steps?: number
-  /** Scheduler to use for the diffusion process. */
-  scheduler?: 'DDIM' | 'DDIMScheduler' | 'DDPMScheduler' | 'DEISMultistepScheduler' | 'Default' | 'DPM++' | 'DPM++ 2M' | 'DPM++ 2M Beta' | 'DPM++ 2M Exponential' | 'DPM++ 2M Karras' | 'DPM++ 2M SDE' | 'DPM++ 2M SDE Beta' | 'DPM++ 2M SDE Exponential' | 'DPM++ 2M SDE Karras' | 'DPM++ 2M SDE Uniform' | 'DPM++ 2M Uniform' | 'DPM++ 3M' | 'DPM++ 3M Beta' | 'DPM++ 3M Exponential' | 'DPM++ 3M Karras' | 'DPM++ 3M SDE Uniform' | 'DPM++ 3M Uniform' | 'DPM++ Beta' | 'DPM++ Exponential' | 'DPM++ Karras' | 'DPM++ SDE' | 'DPM++ SDE Beta' | 'DPM++ SDE Exponential' | 'DPM++ SDE Karras' | 'DPM++ Uniform' | 'DPM++ Uniform Beta' | 'DPM++ Uniform Exponential' | 'DPM++ Uniform Karras' | 'DPMSolverMultistepInverse' | 'DPMSolverMultistepScheduler' | 'DPMSolverSinglestepScheduler' | 'EDMDPMSolverMultistepScheduler' | 'EDMEulerScheduler' | 'Euler' | 'Euler a' | 'Euler Beta' | 'Euler DiscreteScheduler' | 'Euler Exponential' | 'Euler Karras' | 'EulerAncestralDiscreteScheduler' | 'FlowMatchEulerDiscreteScheduler' | 'Heun' | 'HeunDiscreteScheduler' | 'Heun Karras' | 'IPNDMScheduler' | 'IPNDM Uniform' | 'IPNDM Uniform Beta' | 'IPNDM Uniform Exponential' | 'IPNDM Uniform Karras' | 'KDPM2AncestralDiscreteScheduler' | 'KDPM2DiscreteScheduler' | 'LCM' | 'LCMScheduler' | 'LMS' | 'LMSDiscreteScheduler' | 'LMS Karras' | 'PNDMScheduler' | 'TCDScheduler' | 'UniPC' | 'UniPC 2M' | 'UniPC 2M Karras' | 'UniPC 2M Uniform' | 'UniPC 3M' | 'UniPC 3M Karras' | 'UniPC 3M Uniform' | 'UniPC Karras' | 'UniPC Uniform' | 'UniPC Uniform Beta' | 'UniPC Uniform Exponential' | 'UniPC Uniform Karras'
-  /** Guidance scale representing how closely the output will resemble the prompt. Higher values produce results more aligned with the prompt. */
-  CFGScale?: number
-  /** Strength of the transformation. Lower values result in more influence from the original input. */
-  strength?: number
-  /** Extra context pixels around the masked region during inpainting. The model zooms into the masked area with these additional pixels for better integration. */
-  maskMargin?: number
-  /** Number of layers to skip in the CLIP model. */
-  clipSkip?: number
-  /** Advanced caching mechanisms to speed up generation. */
-  acceleratorOptions?: {
-  /** Absolute step number to end caching. Must be greater than `cacheStartStep` and less than or equal to `steps`. */
-  cacheEndStep?: number
-  /** Percentage of steps to end caching. Alternative to `cacheEndStep`. Must be greater than `cacheStartStepPercentage`. */
-  cacheEndStepPercentage?: number
-  /** Limits the maximum number of consecutive steps that can use cached computations before forcing a fresh computation. */
-  cacheMaxConsecutiveSteps?: number
-  /** Absolute step number to start caching. Must be less than `cacheEndStep`. */
-  cacheStartStep?: number
-  /** Percentage of steps to start caching. Alternative to `cacheStartStep`. Must be less than `cacheEndStepPercentage`. */
-  cacheStartStepPercentage?: number
-  /** First Block Cache (FBCache) acceleration. Reuses feature block computations across steps. */
-  fbCache?: boolean
-  /** Controls the sensitivity threshold for determining when to reuse cached computations. Lower values reuse more aggressively. */
-  fbCacheThreshold?: number
-  /** TeaCache acceleration for transformer-based models. Estimates step differences to skip redundant computations. */
-  teaCache?: boolean
-  /** Controls the aggressiveness of the TeaCache feature. Lower values prioritize quality, higher values prioritize speed. */
-  teaCacheDistance?: number
-  /** DB Cache (CacheDiT) acceleration. Caches and reuses intermediate transformer block outputs to skip redundant computations. */
-  dbCache?: boolean
-  /** Controls the sensitivity threshold for DB Cache. Lower values reuse cached blocks more aggressively, higher values prioritize quality. */
-  dbCacheThreshold?: number
-  /** Controls how many steps to skip between cache refreshes. Higher values skip more steps for faster generation at the cost of quality. */
-  dbCacheSkipInterval?: number
-}
-  /** Pixel extensions for each boundary direction of the source image. */
-  outpaint?: Record<string, unknown>
-  /** Configuration for Low-Rank Adaptation models. */
-  lora?: ({
-  /** LoRA model identifier. */
-  model: string
-  /** Strength of the LoRA influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the LoRA's style. */
-  weight?: number
-  /** Transformer stages to apply LoRA. Some video models use separate high-noise and low-noise processing stages, and LoRAs can be selectively applied to optimize their effectiveness. */
-  transformer?: 'high' | 'low' | 'both'
-})[]
-  /** Configuration for identifying and applying ControlNet models. */
-  controlNet?: ({
-  /** ControlNet model identifier. */
-  model: string
-  /** Strength of the ControlNet influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the guide image. */
-  weight?: number
-  /** Reference image for ControlNet guidance (UUID, URL, Data URI, or Base64). */
-  guideImage: unknown
-  /** ControlNet guidance mode. */
-  controlMode?: 'balanced' | 'controlnet' | 'prompt'
-  /** Absolute step number to end ControlNet influence. Must be greater than `startStep` and less than or equal to `steps`. */
-  endStep?: number
-  /** Percentage of steps to end ControlNet influence. Must be greater than `startStepPercentage`. */
-  endStepPercentage?: number
-  /** Absolute step number to start ControlNet influence. Must be less than `endStep`. */
-  startStep?: number
-  /** Percentage of steps to start ControlNet influence. Must be less than `endStepPercentage`. */
-  startStepPercentage?: number
-})[]
-  /** Configuration for IP-Adapter image-prompted generation. */
-  ipAdapters?: ({
-  /** IP-Adapter model identifier. */
-  model: string
-  /** Strength of the IP-Adapter influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the reference. */
-  weight?: number
-  /** Images to guide the IP-Adapter (UUID, URL, Data URI, or Base64). */
-  guideImages: unknown[]
-  /** Controls how multiple reference images are combined. */
-  combineMethod?: 'concat' | 'add' | 'subtract' | 'average' | 'norm_average'
-  /** Determines which embedding components are used and their strength. */
-  embedScaling?: 'only_v' | 'kv' | 'kv_penalty_c' | 'k_mean_v_penalty_c'
-  /** Shapes how influence evolves during generation. */
-  weightType?: 'normal' | 'ease_in' | 'ease_out' | 'ease_in_out' | 'weak_input' | 'weak_output' | 'weak_middle' | 'strong_middle' | 'style_transfer' | 'composition' | 'strong_style_transfer' | 'style_and_composition' | 'strong_style_and_composition'
-  /** Controls composition/layout influence specifically. */
-  weightComposition?: number
-})[]
-  /** Configuration for Ultralytics face enhancement. */
-  ultralytics?: {
-  /** Face refinement guidance scale. */
-  CFGScale?: number
-  /** Confidence threshold for detection. */
-  confidence?: number
-  /** Image size (in pixels) to use for each inpainting region. YOLO detects faces, crops the region, and scales it to this size before running diffusion. Set so most faces land in the 2–4× range of their original pixel size. Going beyond 8× may degrade identity resemblance. */
-  inpaintSize?: number
-  /** Mask feathering amount. Higher values create softer transitions between the enhanced face region and surrounding areas. */
-  maskBlur?: number
-  /** Padding around detected face in pixels. Expands the refinement area to include surrounding context like hair and neck. */
-  maskPadding?: number
-  /** Negative prompt for detection. */
-  negativePrompt?: string
-  /** Positive prompt for detection. */
-  positivePrompt?: string
-  /** Number of face refinement steps. */
-  steps?: number
-  /** Refinement strength. Lower values preserve more of the original, higher values allow more aggressive reconstruction. */
-  strength?: number
-}
-  /** Specifies a webhook URL where JSON responses will be sent via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
-  webhookURL?: string
-  /** Include task cost in the response. */
-  includeCost?: boolean
-  /** Identifier of the model to use for generation. */
-  model: string
-  /** Number of results to generate. Each result uses a different seed, producing variations of the same parameters. */
-  numberResults?: number
-  /** URL to upload content via HTTP PUT. The request body will contain the raw binary data. */
-  uploadEndpoint?: string
-  /** Time-to-live (TTL) in seconds for generated content. Only applies when `outputType` is `URL`. */
-  ttl?: number
-  /** Image output type. */
-  outputType?: 'URL' | 'base64Data' | 'dataURI'
-  /** File format for the generated image. */
-  outputFormat?: 'JPG' | 'PNG' | 'WEBP'
-  /** Compression quality of the output. Higher values preserve quality but increase file size. */
-  outputQuality?: number
-  /** Determines how the API delivers task results. */
-  deliveryMethod?: 'sync' | 'async'
-  /** Content safety checking configuration for image generation. */
-  safety?: {
-  /** Enable or disable content safety checking. When enabled, defaults to `fast` mode. */
-  checkContent?: boolean
-  /** Safety checking mode for image generation. */
-  mode?: 'none' | 'fast'
 }
   [key: string]: unknown
 }
@@ -2111,8 +1867,8 @@ export type SdxlParams = {
   /** Branch ID for DeepCache acceleration. Determines which U-Net layers are skipped. */
   deepCacheBranchId?: number
 }
-  /** Pixel extensions for each boundary direction of the source image. */
-  outpaint?: Record<string, unknown>
+  /** Pixel extensions for each boundary direction of the source image. At least one direction is required. */
+  outpaint?: unknown
   /** Configuration for Low-Rank Adaptation models. */
   lora?: ({
   /** LoRA model identifier. */
@@ -2125,7 +1881,7 @@ export type SdxlParams = {
   /** Configuration for identifying and applying ControlNet models. */
   controlNet?: ({
   /** ControlNet model identifier. */
-  model: string
+  model: 'runware:20@1' | 'runware:3@1'
   /** Strength of the ControlNet influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the guide image. */
   weight?: number
   /** Reference image for ControlNet guidance (UUID, URL, Data URI, or Base64). */
@@ -2144,7 +1900,7 @@ export type SdxlParams = {
   /** Configuration for IP-Adapter image-prompted generation. */
   ipAdapters?: ({
   /** IP-Adapter model identifier. */
-  model: string
+  model: 'runware:55@1' | 'runware:55@2' | 'runware:55@3' | 'runware:55@4'
   /** Strength of the IP-Adapter influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the reference. */
   weight?: number
   /** Images to guide the IP-Adapter (UUID, URL, Data URI, or Base64). */
@@ -2158,6 +1914,15 @@ export type SdxlParams = {
   /** Controls composition/layout influence specifically. */
   weightComposition?: number
 })[]
+  /** Configuration for running a refiner model on top of the base model output. */
+  refiner?: {
+  /** Refiner model identifier. */
+  model: 'runware:101055@128080'
+  /** Absolute step number to switch from the base model to the refiner. */
+  startStep?: number
+  /** Percentage of total steps at which to switch from the base model to the refiner. */
+  startStepPercentage?: number
+}
   /** Two-stage generation for improved resolution. Can be enabled with `true` for default settings, or configured as an object for fine-grained control. */
   hiresFix?: true | {
   /** The upscaling model to use for hires fix. */
@@ -2221,10 +1986,8 @@ export type SdxlParams = {
   deliveryMethod?: 'sync' | 'async'
   /** Content safety checking configuration for image generation. */
   safety?: {
-  /** Enable or disable content safety checking. When enabled, defaults to `fast` mode. */
+  /** Enable or disable content safety checking. */
   checkContent?: boolean
-  /** Safety checking mode for image generation. */
-  mode?: 'none' | 'fast'
 }
   [key: string]: unknown
 }
@@ -2287,8 +2050,8 @@ export type SdxlDistilledParams = {
   /** Branch ID for DeepCache acceleration. Determines which U-Net layers are skipped. */
   deepCacheBranchId?: number
 }
-  /** Pixel extensions for each boundary direction of the source image. */
-  outpaint?: Record<string, unknown>
+  /** Pixel extensions for each boundary direction of the source image. At least one direction is required. */
+  outpaint?: unknown
   /** Configuration for Low-Rank Adaptation models. */
   lora?: ({
   /** LoRA model identifier. */
@@ -2301,7 +2064,7 @@ export type SdxlDistilledParams = {
   /** Configuration for identifying and applying ControlNet models. */
   controlNet?: ({
   /** ControlNet model identifier. */
-  model: string
+  model: 'runware:20@1' | 'runware:3@1'
   /** Strength of the ControlNet influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the guide image. */
   weight?: number
   /** Reference image for ControlNet guidance (UUID, URL, Data URI, or Base64). */
@@ -2320,7 +2083,7 @@ export type SdxlDistilledParams = {
   /** Configuration for IP-Adapter image-prompted generation. */
   ipAdapters?: ({
   /** IP-Adapter model identifier. */
-  model: string
+  model: 'runware:55@1' | 'runware:55@2' | 'runware:55@3' | 'runware:55@4'
   /** Strength of the IP-Adapter influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the reference. */
   weight?: number
   /** Images to guide the IP-Adapter (UUID, URL, Data URI, or Base64). */
@@ -2334,6 +2097,15 @@ export type SdxlDistilledParams = {
   /** Controls composition/layout influence specifically. */
   weightComposition?: number
 })[]
+  /** Configuration for running a refiner model on top of the base model output. */
+  refiner?: {
+  /** Refiner model identifier. */
+  model: 'runware:101055@128080'
+  /** Absolute step number to switch from the base model to the refiner. */
+  startStep?: number
+  /** Percentage of total steps at which to switch from the base model to the refiner. */
+  startStepPercentage?: number
+}
   /** Two-stage generation for improved resolution. Can be enabled with `true` for default settings, or configured as an object for fine-grained control. */
   hiresFix?: true | {
   /** The upscaling model to use for hires fix. */
@@ -2388,10 +2160,8 @@ export type SdxlDistilledParams = {
   deliveryMethod?: 'sync' | 'async'
   /** Content safety checking configuration for image generation. */
   safety?: {
-  /** Enable or disable content safety checking. When enabled, defaults to `fast` mode. */
+  /** Enable or disable content safety checking. */
   checkContent?: boolean
-  /** Safety checking mode for image generation. */
-  mode?: 'none' | 'fast'
 }
   [key: string]: unknown
 }
@@ -2454,8 +2224,8 @@ export type SdxlHyperParams = {
   /** Branch ID for DeepCache acceleration. Determines which U-Net layers are skipped. */
   deepCacheBranchId?: number
 }
-  /** Pixel extensions for each boundary direction of the source image. */
-  outpaint?: Record<string, unknown>
+  /** Pixel extensions for each boundary direction of the source image. At least one direction is required. */
+  outpaint?: unknown
   /** Configuration for Low-Rank Adaptation models. */
   lora?: ({
   /** LoRA model identifier. */
@@ -2468,7 +2238,7 @@ export type SdxlHyperParams = {
   /** Configuration for identifying and applying ControlNet models. */
   controlNet?: ({
   /** ControlNet model identifier. */
-  model: string
+  model: 'runware:20@1' | 'runware:3@1'
   /** Strength of the ControlNet influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the guide image. */
   weight?: number
   /** Reference image for ControlNet guidance (UUID, URL, Data URI, or Base64). */
@@ -2487,7 +2257,7 @@ export type SdxlHyperParams = {
   /** Configuration for IP-Adapter image-prompted generation. */
   ipAdapters?: ({
   /** IP-Adapter model identifier. */
-  model: string
+  model: 'runware:55@1' | 'runware:55@2' | 'runware:55@3' | 'runware:55@4'
   /** Strength of the IP-Adapter influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the reference. */
   weight?: number
   /** Images to guide the IP-Adapter (UUID, URL, Data URI, or Base64). */
@@ -2501,6 +2271,15 @@ export type SdxlHyperParams = {
   /** Controls composition/layout influence specifically. */
   weightComposition?: number
 })[]
+  /** Configuration for running a refiner model on top of the base model output. */
+  refiner?: {
+  /** Refiner model identifier. */
+  model: 'runware:101055@128080'
+  /** Absolute step number to switch from the base model to the refiner. */
+  startStep?: number
+  /** Percentage of total steps at which to switch from the base model to the refiner. */
+  startStepPercentage?: number
+}
   /** Two-stage generation for improved resolution. Can be enabled with `true` for default settings, or configured as an object for fine-grained control. */
   hiresFix?: true | {
   /** The upscaling model to use for hires fix. */
@@ -2555,10 +2334,8 @@ export type SdxlHyperParams = {
   deliveryMethod?: 'sync' | 'async'
   /** Content safety checking configuration for image generation. */
   safety?: {
-  /** Enable or disable content safety checking. When enabled, defaults to `fast` mode. */
+  /** Enable or disable content safety checking. */
   checkContent?: boolean
-  /** Safety checking mode for image generation. */
-  mode?: 'none' | 'fast'
 }
   [key: string]: unknown
 }
@@ -2621,8 +2398,8 @@ export type SdxlLcmParams = {
   /** Branch ID for DeepCache acceleration. Determines which U-Net layers are skipped. */
   deepCacheBranchId?: number
 }
-  /** Pixel extensions for each boundary direction of the source image. */
-  outpaint?: Record<string, unknown>
+  /** Pixel extensions for each boundary direction of the source image. At least one direction is required. */
+  outpaint?: unknown
   /** Configuration for Low-Rank Adaptation models. */
   lora?: ({
   /** LoRA model identifier. */
@@ -2635,7 +2412,7 @@ export type SdxlLcmParams = {
   /** Configuration for identifying and applying ControlNet models. */
   controlNet?: ({
   /** ControlNet model identifier. */
-  model: string
+  model: 'runware:20@1' | 'runware:3@1'
   /** Strength of the ControlNet influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the guide image. */
   weight?: number
   /** Reference image for ControlNet guidance (UUID, URL, Data URI, or Base64). */
@@ -2654,7 +2431,7 @@ export type SdxlLcmParams = {
   /** Configuration for IP-Adapter image-prompted generation. */
   ipAdapters?: ({
   /** IP-Adapter model identifier. */
-  model: string
+  model: 'runware:55@1' | 'runware:55@2' | 'runware:55@3' | 'runware:55@4'
   /** Strength of the IP-Adapter influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the reference. */
   weight?: number
   /** Images to guide the IP-Adapter (UUID, URL, Data URI, or Base64). */
@@ -2668,6 +2445,15 @@ export type SdxlLcmParams = {
   /** Controls composition/layout influence specifically. */
   weightComposition?: number
 })[]
+  /** Configuration for running a refiner model on top of the base model output. */
+  refiner?: {
+  /** Refiner model identifier. */
+  model: 'runware:101055@128080'
+  /** Absolute step number to switch from the base model to the refiner. */
+  startStep?: number
+  /** Percentage of total steps at which to switch from the base model to the refiner. */
+  startStepPercentage?: number
+}
   /** Two-stage generation for improved resolution. Can be enabled with `true` for default settings, or configured as an object for fine-grained control. */
   hiresFix?: true | {
   /** The upscaling model to use for hires fix. */
@@ -2722,10 +2508,8 @@ export type SdxlLcmParams = {
   deliveryMethod?: 'sync' | 'async'
   /** Content safety checking configuration for image generation. */
   safety?: {
-  /** Enable or disable content safety checking. When enabled, defaults to `fast` mode. */
+  /** Enable or disable content safety checking. */
   checkContent?: boolean
-  /** Safety checking mode for image generation. */
-  mode?: 'none' | 'fast'
 }
   [key: string]: unknown
 }
@@ -2788,8 +2572,8 @@ export type SdxlLightningParams = {
   /** Branch ID for DeepCache acceleration. Determines which U-Net layers are skipped. */
   deepCacheBranchId?: number
 }
-  /** Pixel extensions for each boundary direction of the source image. */
-  outpaint?: Record<string, unknown>
+  /** Pixel extensions for each boundary direction of the source image. At least one direction is required. */
+  outpaint?: unknown
   /** Configuration for Low-Rank Adaptation models. */
   lora?: ({
   /** LoRA model identifier. */
@@ -2802,7 +2586,7 @@ export type SdxlLightningParams = {
   /** Configuration for identifying and applying ControlNet models. */
   controlNet?: ({
   /** ControlNet model identifier. */
-  model: string
+  model: 'runware:20@1' | 'runware:3@1'
   /** Strength of the ControlNet influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the guide image. */
   weight?: number
   /** Reference image for ControlNet guidance (UUID, URL, Data URI, or Base64). */
@@ -2821,7 +2605,7 @@ export type SdxlLightningParams = {
   /** Configuration for IP-Adapter image-prompted generation. */
   ipAdapters?: ({
   /** IP-Adapter model identifier. */
-  model: string
+  model: 'runware:55@1' | 'runware:55@2' | 'runware:55@3' | 'runware:55@4'
   /** Strength of the IP-Adapter influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the reference. */
   weight?: number
   /** Images to guide the IP-Adapter (UUID, URL, Data URI, or Base64). */
@@ -2835,6 +2619,15 @@ export type SdxlLightningParams = {
   /** Controls composition/layout influence specifically. */
   weightComposition?: number
 })[]
+  /** Configuration for running a refiner model on top of the base model output. */
+  refiner?: {
+  /** Refiner model identifier. */
+  model: 'runware:101055@128080'
+  /** Absolute step number to switch from the base model to the refiner. */
+  startStep?: number
+  /** Percentage of total steps at which to switch from the base model to the refiner. */
+  startStepPercentage?: number
+}
   /** Two-stage generation for improved resolution. Can be enabled with `true` for default settings, or configured as an object for fine-grained control. */
   hiresFix?: true | {
   /** The upscaling model to use for hires fix. */
@@ -2889,10 +2682,8 @@ export type SdxlLightningParams = {
   deliveryMethod?: 'sync' | 'async'
   /** Content safety checking configuration for image generation. */
   safety?: {
-  /** Enable or disable content safety checking. When enabled, defaults to `fast` mode. */
+  /** Enable or disable content safety checking. */
   checkContent?: boolean
-  /** Safety checking mode for image generation. */
-  mode?: 'none' | 'fast'
 }
   [key: string]: unknown
 }
@@ -2955,8 +2746,8 @@ export type SdxlTurboParams = {
   /** Branch ID for DeepCache acceleration. Determines which U-Net layers are skipped. */
   deepCacheBranchId?: number
 }
-  /** Pixel extensions for each boundary direction of the source image. */
-  outpaint?: Record<string, unknown>
+  /** Pixel extensions for each boundary direction of the source image. At least one direction is required. */
+  outpaint?: unknown
   /** Configuration for Low-Rank Adaptation models. */
   lora?: ({
   /** LoRA model identifier. */
@@ -2969,7 +2760,7 @@ export type SdxlTurboParams = {
   /** Configuration for identifying and applying ControlNet models. */
   controlNet?: ({
   /** ControlNet model identifier. */
-  model: string
+  model: 'runware:20@1' | 'runware:3@1'
   /** Strength of the ControlNet influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the guide image. */
   weight?: number
   /** Reference image for ControlNet guidance (UUID, URL, Data URI, or Base64). */
@@ -2988,7 +2779,7 @@ export type SdxlTurboParams = {
   /** Configuration for IP-Adapter image-prompted generation. */
   ipAdapters?: ({
   /** IP-Adapter model identifier. */
-  model: string
+  model: 'runware:55@1' | 'runware:55@2' | 'runware:55@3' | 'runware:55@4'
   /** Strength of the IP-Adapter influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the reference. */
   weight?: number
   /** Images to guide the IP-Adapter (UUID, URL, Data URI, or Base64). */
@@ -3002,6 +2793,15 @@ export type SdxlTurboParams = {
   /** Controls composition/layout influence specifically. */
   weightComposition?: number
 })[]
+  /** Configuration for running a refiner model on top of the base model output. */
+  refiner?: {
+  /** Refiner model identifier. */
+  model: 'runware:101055@128080'
+  /** Absolute step number to switch from the base model to the refiner. */
+  startStep?: number
+  /** Percentage of total steps at which to switch from the base model to the refiner. */
+  startStepPercentage?: number
+}
   /** Two-stage generation for improved resolution. Can be enabled with `true` for default settings, or configured as an object for fine-grained control. */
   hiresFix?: true | {
   /** The upscaling model to use for hires fix. */
@@ -3056,10 +2856,8 @@ export type SdxlTurboParams = {
   deliveryMethod?: 'sync' | 'async'
   /** Content safety checking configuration for image generation. */
   safety?: {
-  /** Enable or disable content safety checking. When enabled, defaults to `fast` mode. */
+  /** Enable or disable content safety checking. */
   checkContent?: boolean
-  /** Safety checking mode for image generation. */
-  mode?: 'none' | 'fast'
 }
   [key: string]: unknown
 }
@@ -3122,8 +2920,8 @@ export type ZImageParams = {
   /** Controls how many steps to skip between cache refreshes. Higher values skip more steps for faster generation at the cost of quality. */
   dbCacheSkipInterval?: number
 }
-  /** Pixel extensions for each boundary direction of the source image. */
-  outpaint?: Record<string, unknown>
+  /** Pixel extensions for each boundary direction of the source image. At least one direction is required. */
+  outpaint?: unknown
   /** Configuration for Low-Rank Adaptation models. */
   lora?: ({
   /** LoRA model identifier. */
@@ -3132,25 +2930,6 @@ export type ZImageParams = {
   weight?: number
   /** Transformer stages to apply LoRA. Some video models use separate high-noise and low-noise processing stages, and LoRAs can be selectively applied to optimize their effectiveness. */
   transformer?: 'high' | 'low' | 'both'
-})[]
-  /** Configuration for identifying and applying ControlNet models. */
-  controlNet?: ({
-  /** ControlNet model identifier. */
-  model: string
-  /** Strength of the ControlNet influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the guide image. */
-  weight?: number
-  /** Reference image for ControlNet guidance (UUID, URL, Data URI, or Base64). */
-  guideImage: unknown
-  /** ControlNet guidance mode. */
-  controlMode?: 'balanced' | 'controlnet' | 'prompt'
-  /** Absolute step number to end ControlNet influence. Must be greater than `startStep` and less than or equal to `steps`. */
-  endStep?: number
-  /** Percentage of steps to end ControlNet influence. Must be greater than `startStepPercentage`. */
-  endStepPercentage?: number
-  /** Absolute step number to start ControlNet influence. Must be less than `endStep`. */
-  startStep?: number
-  /** Percentage of steps to start ControlNet influence. Must be less than `endStepPercentage`. */
-  startStepPercentage?: number
 })[]
   /** Configuration for Ultralytics face enhancement. */
   ultralytics?: {
@@ -3195,10 +2974,8 @@ export type ZImageParams = {
   deliveryMethod?: 'sync' | 'async'
   /** Content safety checking configuration for image generation. */
   safety?: {
-  /** Enable or disable content safety checking. When enabled, defaults to `fast` mode. */
+  /** Enable or disable content safety checking. */
   checkContent?: boolean
-  /** Safety checking mode for image generation. */
-  mode?: 'none' | 'fast'
 }
   [key: string]: unknown
 }
@@ -3261,8 +3038,8 @@ export type ZImageTurboParams = {
   /** Controls how many steps to skip between cache refreshes. Higher values skip more steps for faster generation at the cost of quality. */
   dbCacheSkipInterval?: number
 }
-  /** Pixel extensions for each boundary direction of the source image. */
-  outpaint?: Record<string, unknown>
+  /** Pixel extensions for each boundary direction of the source image. At least one direction is required. */
+  outpaint?: unknown
   /** Configuration for Low-Rank Adaptation models. */
   lora?: ({
   /** LoRA model identifier. */
@@ -3275,7 +3052,7 @@ export type ZImageTurboParams = {
   /** Configuration for identifying and applying ControlNet models. */
   controlNet?: ({
   /** ControlNet model identifier. */
-  model: string
+  model: 'runware:z-image@turbo-controlnet'
   /** Strength of the ControlNet influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the guide image. */
   weight?: number
   /** Reference image for ControlNet guidance (UUID, URL, Data URI, or Base64). */
@@ -3334,10 +3111,8 @@ export type ZImageTurboParams = {
   deliveryMethod?: 'sync' | 'async'
   /** Content safety checking configuration for image generation. */
   safety?: {
-  /** Enable or disable content safety checking. When enabled, defaults to `fast` mode. */
+  /** Enable or disable content safety checking. */
   checkContent?: boolean
-  /** Safety checking mode for image generation. */
-  mode?: 'none' | 'fast'
 }
   [key: string]: unknown
 }
@@ -3427,10 +3202,8 @@ export type ImageInferenceParams = {
   deliveryMethod?: 'sync' | 'async'
   /** Content safety checking configuration for image generation. */
   safety?: {
-  /** Enable or disable content safety checking. When enabled, defaults to `fast` mode. */
+  /** Enable or disable content safety checking. */
   checkContent?: boolean
-  /** Safety checking mode for image generation. */
-  mode?: 'none' | 'fast'
 }
   [key: string]: unknown
 }
@@ -3491,7 +3264,7 @@ export type VideoInferenceParams = {
   deliveryMethod?: 'async'
   /** Content safety checking configuration for video generation. */
   safety?: {
-  /** Enable or disable content safety checking. When enabled, defaults to `fast` mode. */
+  /** Enable or disable content safety checking. */
   checkContent?: boolean
   /** Safety checking mode for video generation. */
   mode?: 'none' | 'fast' | 'full'
@@ -3921,7 +3694,7 @@ export type ModelUploadParams = {
   /** Category of the model. */
   category: 'checkpoint' | 'lora' | 'lycoris' | 'vae' | 'embeddings'
   /** Type of the model (specific to category). */
-  type?: 'base' | 'inpainting' | 'refiner' | 'positive' | 'negative'
+  type?: 'base' | 'inpainting' | 'positive' | 'negative'
   /** Architecture of the model. */
   architecture: string
   /** Format of the model file. */
@@ -3961,62 +3734,26 @@ export type ModelUploadParams = {
 }
 
 /**
- * Video Response
+ * Prompt Enhance Response
  */
-export type VideoInferenceResult = {
-  /** Type of the task. */
-  taskType: 'videoInference'
-  /** UUID of the task. */
+export type PromptEnhanceResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'promptEnhance'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
   taskUUID: string
   /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
   cost?: number
-  /** UUID of the output video. */
-  videoUUID: string
-  /** URL of the output video. */
-  videoURL?: string
-  /** Base64-encoded video data. */
-  videoBase64Data?: string
-  /** Data URI of the output video. */
-  videoDataURI?: string
-  /** The seed used for generation. If none was provided, shows the randomly generated seed. */
-  seed?: number
-  /** Flag indicating if NSFW content was detected. */
-  NSFWContent?: boolean
-}
-
-export type TextInferenceResult = {
-  /** Type of the task. */
-  taskType: 'textInference'
-  /** UUID of the task. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** Generated text content. */
+  /** Enhanced prompt text. */
   text: string
-  /** The reason why the model stopped generating tokens. */
-  finishReason: 'stop' | 'length' | 'content_filter' | 'unknown'
-  /** Token usage statistics for the request. */
-  usage: {
-  /** Number of tokens in the input prompt. */
-  promptTokens: number
-  /** Number of tokens generated in the response. */
-  completionTokens: number
-  /** Total number of tokens used (prompt + completion). */
-  totalTokens: number
-  /** Number of tokens used for internal reasoning. Billed separately. */
-  thinkingTokens?: number
-}
-  /** The model's internal reasoning content, separated from the main response. Only present when `settings.splitThinking` is enabled. */
-  reasoningContent?: string
 }
 
 /**
  * Audio Response
  */
 export type AudioInferenceResult = {
-  /** Type of the task. */
+  /** Identifier for the type of task this response belongs to. */
   taskType: 'audioInference'
-  /** UUID of the task. */
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
   taskUUID: string
   /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
   cost?: number
@@ -4033,12 +3770,78 @@ export type AudioInferenceResult = {
 }
 
 /**
+ * Remove Background Image Response
+ */
+export type RemoveBackgroundResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'removeBackground'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** UUID of the output image. */
+  imageUUID: string
+  /** URL of the output image. */
+  imageURL?: string
+  /** Base64-encoded image data. */
+  imageBase64Data?: string
+  /** Data URI of the output image. */
+  imageDataURI?: string
+}
+
+/**
+ * ControlNet Preprocess Response
+ */
+export type ControlNetPreprocessResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'controlNetPreprocess'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** UUID of the output guide image. */
+  guideImageUUID: string
+  /** URL of the output guide image. */
+  guideImageURL?: string
+  /** Base64-encoded guide image data. */
+  guideImageBase64Data?: string
+  /** Data URI of the output guide image. */
+  guideImageDataURI?: string
+  /** UUID of the input image used for preprocessing. */
+  inputImageUUID: string
+}
+
+/**
+ * Video Response
+ */
+export type VideoInferenceResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'videoInference'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** UUID of the output video. */
+  videoUUID: string
+  /** URL of the output video. */
+  videoURL?: string
+  /** Base64-encoded video data. */
+  videoBase64Data?: string
+  /** Data URI of the output video. */
+  videoDataURI?: string
+  /** The seed used for generation. If none was provided, shows the randomly generated seed. */
+  seed?: number
+  /** Flag indicating if NSFW content was detected. */
+  NSFWContent?: boolean
+}
+
+/**
  * Image Response
  */
 export type ImageInferenceResult = {
-  /** Type of the task. */
+  /** Identifier for the type of task this response belongs to. */
   taskType: 'imageInference'
-  /** UUID of the task. */
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
   taskUUID: string
   /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
   cost?: number
@@ -4057,122 +3860,12 @@ export type ImageInferenceResult = {
 }
 
 /**
- * Vectorize Response
- */
-export type VectorizeResult = {
-  /** Type of the task. */
-  taskType: 'vectorize'
-  /** UUID of the task. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** UUID of the output image. */
-  imageUUID: string
-  /** URL of the output image. */
-  imageURL?: string
-  /** Base64-encoded image data. */
-  imageBase64Data?: string
-  /** Data URI of the output image. */
-  imageDataURI?: string
-}
-
-/**
- * Training Response
- */
-export type TrainingResult = {
-  /** Type of the task. */
-  taskType: 'training'
-  /** UUID of the task. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** Artificial Intelligence Resource identifier. Format: `provider:model@version`. */
-  air: string
-}
-
-/**
- * Upscale Video Response
- */
-export type UpscaleResult = {
-  /** Type of the task. */
-  taskType: 'upscale'
-  /** UUID of the task. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** UUID of the output video. */
-  videoUUID: string
-  /** URL of the output video. */
-  videoURL?: string
-  /** Base64-encoded video data. */
-  videoBase64Data?: string
-  /** Data URI of the output video. */
-  videoDataURI?: string
-}
-
-/**
- * Caption Text Response
- */
-export type CaptionResult = {
-  /** Type of the task. */
-  taskType: 'caption'
-  /** UUID of the task. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** Generated caption text describing the input. */
-  text: string
-}
-
-/**
- * 3D Response
- */
-export type ThreeDInferenceResult = {
-  /** Type of the task. */
-  taskType: '3dInference'
-  /** UUID of the task. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** UUID of the output 3D model file. */
-  modelUUID: string
-  /** URL of the output 3D model file. */
-  modelURL?: string
-  /** Base64-encoded 3D model file data. */
-  modelBase64Data?: string
-  /** Data URI of the output 3D model file. */
-  modelDataURI?: string
-  /** The seed used for generation. If none was provided, shows the randomly generated seed. */
-  seed?: number
-}
-
-/**
- * Remove Background Image Response
- */
-export type RemoveBackgroundResult = {
-  /** Type of the task. */
-  taskType: 'removeBackground'
-  /** UUID of the task. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** UUID of the output image. */
-  imageUUID: string
-  /** URL of the output image. */
-  imageURL?: string
-  /** Base64-encoded image data. */
-  imageBase64Data?: string
-  /** Data URI of the output image. */
-  imageDataURI?: string
-}
-
-/**
  * Image Masking Response
  */
 export type ImageMaskingResult = {
-  /** Type of the task. */
+  /** Identifier for the type of task this response belongs to. */
   taskType: 'imageMasking'
-  /** UUID of the task. */
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
   taskUUID: string
   /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
   cost?: number
@@ -4200,48 +3893,136 @@ export type ImageMaskingResult = {
 }
 
 /**
- * ControlNet Preprocess Response
+ * Age Classification Response
  */
-export type ControlNetPreprocessResult = {
-  /** Type of the task. */
-  taskType: 'controlNetPreprocess'
-  /** UUID of the task. */
+export type CaptionResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'caption'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
   taskUUID: string
   /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
   cost?: number
-  /** UUID of the output guide image. */
-  guideImageUUID: string
-  /** URL of the output guide image. */
-  guideImageURL?: string
-  /** Base64-encoded guide image data. */
-  guideImageBase64Data?: string
-  /** Data URI of the output guide image. */
-  guideImageDataURI?: string
-  /** UUID of the input image used for preprocessing. */
-  inputImageUUID: string
+  /** Machine-readable age classification data. */
+  structuredData: {
+  /** Predicted age range of the subject (e.g. `13-20`). */
+  ageGroup: string
+  /** Confidence score as a percentage. */
+  confidence: number
+}
 }
 
 /**
- * Prompt Enhance Response
+ * Upscale Image Response
  */
-export type PromptEnhanceResult = {
-  /** Type of the task. */
-  taskType: 'promptEnhance'
-  /** UUID of the task. */
+export type UpscaleResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'upscale'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
   taskUUID: string
   /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
   cost?: number
-  /** Enhanced prompt text. */
+  /** UUID of the output image. */
+  imageUUID: string
+  /** URL of the output image. */
+  imageURL?: string
+  /** Base64-encoded image data. */
+  imageBase64Data?: string
+  /** Data URI of the output image. */
+  imageDataURI?: string
+}
+
+/**
+ * Text Inference Response
+ */
+export type TextInferenceResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'textInference'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** Generated text content. */
   text: string
+  /** The reason why the model stopped generating tokens. */
+  finishReason: 'stop' | 'length' | 'content_filter' | 'unknown'
+  /** Token usage statistics for the request. */
+  usage: {
+  /** Number of tokens in the input prompt. */
+  promptTokens: number
+  /** Number of tokens generated in the response. */
+  completionTokens: number
+  /** Total number of tokens used (prompt + completion). */
+  totalTokens: number
+  /** Number of tokens used for internal reasoning. Billed separately. */
+  thinkingTokens?: number
+}
+}
+
+/**
+ * Vectorize Response
+ */
+export type VectorizeResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'vectorize'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** UUID of the output image. */
+  imageUUID: string
+  /** URL of the output image. */
+  imageURL?: string
+  /** Base64-encoded image data. */
+  imageBase64Data?: string
+  /** Data URI of the output image. */
+  imageDataURI?: string
+}
+
+/**
+ * 3D Response
+ */
+export type ThreeDInferenceResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: '3dInference'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** Generated output artifacts. */
+  outputs: {
+  /** Generated output files. */
+  files: {
+  /** UUID of the output file. */
+  uuid: string
+  /** URL of the output file. */
+  url: string
+}[]
+}
+  /** The seed used for generation. If none was provided, shows the randomly generated seed. */
+  seed?: number
+}
+
+/**
+ * Training Response
+ */
+export type TrainingResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'training'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** Artificial Intelligence Resource identifier. Format: `provider:model@version`. */
+  air: string
 }
 
 /**
  * Get Task Details Response
  */
 export type GetTaskDetailsResult = {
-  /** Identifier for the type of task being performed */
+  /** Identifier for the type of task this response belongs to. */
   taskType: 'getTaskDetails'
-  /** UUID v4 identifier for tracking tasks and matching async responses. Must be unique per task. */
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
   taskUUID: string
   /** The original request array sent for this task. The structure of each object depends on the task type. */
   request: Record<string, unknown>[]
@@ -4250,12 +4031,28 @@ export type GetTaskDetailsResult = {
 }
 
 /**
+ * Model Upload Response
+ */
+export type ModelUploadResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType?: 'modelUpload'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Status of the upload operation phase. */
+  status: 'validated' | 'downloaded' | 'optimized' | 'stored' | 'ready' | 'failed'
+  /** Status message or error details. */
+  message: string
+  /** The AIR identifier of the uploaded model. */
+  air?: string
+}
+
+/**
  * Task Response
  */
 export type GetResponseResult = {
-  /** Type of the task. */
+  /** Identifier for the type of task this response belongs to. */
   taskType: 'getResponse'
-  /** UUID of the task. */
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
   taskUUID: string
   /** Current status of the task. */
   status: 'processing' | 'success' | 'error'
@@ -4271,30 +4068,14 @@ export type GetResponseResult = {
 }
 
 /**
- * Model Upload Response
- */
-export type ModelUploadResult = {
-  /** Identifier for the type of task being performed */
-  taskType?: 'modelUpload'
-  /** UUID v4 identifier for tracking tasks and matching async responses. Must be unique per task. */
-  taskUUID: string
-  /** Status of the upload operation phase. */
-  status: 'validated' | 'downloaded' | 'optimized' | 'stored' | 'ready' | 'failed'
-  /** Status message or error details. */
-  message: string
-  /** The AIR identifier of the uploaded model. */
-  air?: string
-}
-
-/**
  * Image Upload Response
  */
 export type ImageUploadResult = {
-  /** Identifier for the type of task being performed */
+  /** Identifier for the type of task this response belongs to. */
   taskType: 'imageUpload'
-  /** UUID v4 identifier for tracking tasks and matching async responses. Must be unique per task. */
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
   taskUUID: string
-  /** Unique identifier for the uploaded image */
+  /** UUID of the output image. */
   imageUUID: string
 }
 
@@ -4302,9 +4083,9 @@ export type ImageUploadResult = {
  * Account Management Response
  */
 export type AccountManagementResult = {
-  /** Identifier for the type of task being performed */
+  /** Identifier for the type of task this response belongs to. */
   taskType: 'accountManagement'
-  /** UUID v4 identifier for tracking tasks and matching async responses. Must be unique per task. */
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
   taskUUID: string
   /** The name of the organization. */
   organizationName: string
@@ -4384,9 +4165,9 @@ export type AccountManagementResult = {
  * Model Search Response
  */
 export type ModelSearchResult = {
-  /** Identifier for the type of task being performed */
+  /** Identifier for the type of task this response belongs to. */
   taskType: 'modelSearch'
-  /** UUID v4 identifier for tracking tasks and matching async responses. Must be unique per task. */
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
   taskUUID: string
   /** Total number of models matching the search criteria. */
   totalResults: number
@@ -4456,7 +4237,6 @@ export type SchemaMap = {
   'sd-1-5-hyper': { params: Sd15HyperParams, result: ImageInferenceResult }
   'sd-1-5-lcm': { params: Sd15LcmParams, result: ImageInferenceResult }
   'sd-2-1': { params: Sd21Params, result: ImageInferenceResult }
-  sd3: { params: Sd3Params, result: ImageInferenceResult }
   sdxl: { params: SdxlParams, result: ImageInferenceResult }
   'sdxl-distilled': { params: SdxlDistilledParams, result: ImageInferenceResult }
   'sdxl-hyper': { params: SdxlHyperParams, result: ImageInferenceResult }
@@ -4517,7 +4297,6 @@ export const architectureTaskTypes: Record<string, string> = {
   'sd-1-5-hyper': 'imageInference',
   'sd-1-5-lcm': 'imageInference',
   'sd-2-1': 'imageInference',
-  sd3: 'imageInference',
   sdxl: 'imageInference',
   'sdxl-distilled': 'imageInference',
   'sdxl-hyper': 'imageInference',
@@ -4584,6 +4363,7 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'alibaba:wan@2.7': { taskType: 'videoInference', id: 'alibaba-wan2-7' },
   'alibaba:wan@2.7-image': { taskType: 'imageInference', id: 'alibaba-wan2-7-image' },
   'alibaba:wan@2.7-image-pro': { taskType: 'imageInference', id: 'alibaba-wan2-7-image-pro' },
+  'anthropic:claude@fable-5': { taskType: 'textInference', id: 'anthropic-claude-fable-5' },
   'anthropic:claude@haiku-4.5': { taskType: 'textInference', id: 'anthropic-claude-haiku-4-5' },
   'anthropic:claude@opus-4.7': { taskType: 'textInference', id: 'anthropic-claude-opus-4-7' },
   'anthropic:claude@opus-4.8': { taskType: 'textInference', id: 'anthropic-claude-opus-4-8' },
@@ -4628,12 +4408,7 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'creatify:aurora@0': { taskType: 'videoInference', id: 'creatify-aurora-v1' },
   'creatify:aurora@fast': { taskType: 'videoInference', id: 'creatify-aurora-v1-fast' },
   'deepseek:v4@flash': { taskType: 'textInference', id: 'deepseek-v4-flash' },
-  'elevenlabs:1@1': { taskType: 'audioInference', id: 'elevenlabs-music-v1' },
-  'elevenlabs:22@1': { taskType: 'audioInference', id: 'elevenlabs-flash-v2' },
-  'elevenlabs:24@1': { taskType: 'audioInference', id: 'elevenlabs-flash-v2-5' },
-  'elevenlabs:25@1': { taskType: 'audioInference', id: 'elevenlabs-turbo-v2-5' },
-  'elevenlabs:26@1': { taskType: 'audioInference', id: 'elevenlabs-multilingual-v2' },
-  'elevenlabs:27@1': { taskType: 'audioInference', id: 'elevenlabs-v3' },
+  'deepseek:v4@pro': { taskType: 'textInference', id: 'deepseek-v4-pro' },
   'exactly:illustrative@training': { taskType: 'training', id: 'exactly-illustrative-training' },
   'exactly:photo@bright-pulse': { taskType: 'imageInference', id: 'exactly-photo-bright-pulse' },
   'exactly:photo@distant-reality': { taskType: 'imageInference', id: 'exactly-photo-distant-reality' },
@@ -4665,7 +4440,6 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'heygen:avatar@4': { taskType: 'videoInference', id: 'heygen-avatar-iv' },
   'heygen:avatar@5': { taskType: 'videoInference', id: 'heygen-avatar-v' },
   'heygen:video-agent@0': { taskType: 'videoInference', id: 'heygen-video-agent' },
-  'hyper3d:rodin@gen-1': { taskType: '3dInference', id: 'hyper3d-rodin-gen-1' },
   'hyper3d:rodin@gen-2': { taskType: '3dInference', id: 'hyper3d-rodin-gen-2' },
   'ideogram:1@1': { taskType: 'imageInference', id: 'ideogram-1-0' },
   'ideogram:1@2': { taskType: 'imageInference', id: 'ideogram-1-0-remix' },
@@ -4711,6 +4485,7 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'klingai:kling-video@3-4k': { taskType: 'videoInference', id: 'klingai-video-3-0-4k' },
   'klingai:kling-video@3-pro': { taskType: 'videoInference', id: 'klingai-video-3-0-pro' },
   'klingai:kling-video@3-standard': { taskType: 'videoInference', id: 'klingai-video-3-0-standard' },
+  'klingai:kling-video@3.0-turbo': { taskType: 'videoInference', id: 'klingai-video-3-0-turbo' },
   'klingai:kling-video@o3-4k': { taskType: 'videoInference', id: 'klingai-video-o3-4k' },
   'klingai:kling-video@o3-pro': { taskType: 'videoInference', id: 'klingai-video-o3-pro' },
   'klingai:kling-video@o3-standard': { taskType: 'videoInference', id: 'klingai-video-o3-standard' },
@@ -4725,6 +4500,7 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'lightricks:ltx@2': { taskType: 'videoInference', id: 'lightricks-ltx-2' },
   'lightricks:ltx@2.3': { taskType: 'videoInference', id: 'lightricks-ltx-2-3' },
   'lightricks:ltx@2.3-fast': { taskType: 'videoInference', id: 'lightricks-ltx-2-3-fast' },
+  'luma:ray@3.2': { taskType: 'videoInference', id: 'luma-ray3-2' },
   'luma:uni@1': { taskType: 'imageInference', id: 'luma-uni-1' },
   'luma:uni@1-max': { taskType: 'imageInference', id: 'luma-uni-1-max' },
   'memories:1@1': { taskType: 'caption', id: 'memories-video-captioning' },
@@ -4771,6 +4547,7 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'pixverse:modify@0': { taskType: 'videoInference', id: 'pixverse-modify' },
   'prunaai:1@1': { taskType: 'imageInference', id: 'prunaai-p-image' },
   'prunaai:2@1': { taskType: 'imageInference', id: 'prunaai-p-image-edit' },
+  'prunaai:p-image@try-on': { taskType: 'imageInference', id: 'prunaai-p-image-try-on' },
   'prunaai:p-image@upscale': { taskType: 'upscale', id: 'prunaai-p-image-upscale' },
   'prunaai:p-video@0': { taskType: 'videoInference', id: 'prunaai-p-video' },
   'prunaai:p-video@animate': { taskType: 'videoInference', id: 'prunaai-p-video-animate' },
@@ -4818,7 +4595,7 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'runware:180@1': { taskType: 'imageInference', id: 'tencent-hunyuanimage-3-0' },
   'runware:190@1': { taskType: 'videoInference', id: 'ovi' },
   'runware:200@6': { taskType: 'videoInference', id: 'alibaba-wan2-2-a14b' },
-  'runware:200@8': { taskType: 'videoInference', id: 'alibaba-wan2-2-a14b-turbo' },
+  'runware:200@8': { taskType: 'videoInference', id: 'alibaba-wan2-2-animate' },
   'runware:201@1': { taskType: 'videoInference', id: 'alibaba-wan2-5-preview' },
   'runware:201@10': { taskType: 'imageInference', id: 'alibaba-wan2-5-preview-image' },
   'runware:210@1': { taskType: 'videoInference', id: 'kandinsky-5-0-lite' },
@@ -4945,6 +4722,7 @@ export type ModelResultMap = {
   'alibaba:wan@2.7': VideoInferenceResult
   'alibaba:wan@2.7-image': ImageInferenceResult
   'alibaba:wan@2.7-image-pro': ImageInferenceResult
+  'anthropic:claude@fable-5': TextInferenceResult
   'anthropic:claude@haiku-4.5': TextInferenceResult
   'anthropic:claude@opus-4.7': TextInferenceResult
   'anthropic:claude@opus-4.8': TextInferenceResult
@@ -4989,12 +4767,7 @@ export type ModelResultMap = {
   'creatify:aurora@0': VideoInferenceResult
   'creatify:aurora@fast': VideoInferenceResult
   'deepseek:v4@flash': TextInferenceResult
-  'elevenlabs:1@1': AudioInferenceResult
-  'elevenlabs:22@1': AudioInferenceResult
-  'elevenlabs:24@1': AudioInferenceResult
-  'elevenlabs:25@1': AudioInferenceResult
-  'elevenlabs:26@1': AudioInferenceResult
-  'elevenlabs:27@1': AudioInferenceResult
+  'deepseek:v4@pro': TextInferenceResult
   'exactly:illustrative@training': TrainingResult
   'exactly:photo@bright-pulse': ImageInferenceResult
   'exactly:photo@distant-reality': ImageInferenceResult
@@ -5026,7 +4799,6 @@ export type ModelResultMap = {
   'heygen:avatar@4': VideoInferenceResult
   'heygen:avatar@5': VideoInferenceResult
   'heygen:video-agent@0': VideoInferenceResult
-  'hyper3d:rodin@gen-1': ThreeDInferenceResult
   'hyper3d:rodin@gen-2': ThreeDInferenceResult
   'ideogram:1@1': ImageInferenceResult
   'ideogram:1@2': ImageInferenceResult
@@ -5072,6 +4844,7 @@ export type ModelResultMap = {
   'klingai:kling-video@3-4k': VideoInferenceResult
   'klingai:kling-video@3-pro': VideoInferenceResult
   'klingai:kling-video@3-standard': VideoInferenceResult
+  'klingai:kling-video@3.0-turbo': VideoInferenceResult
   'klingai:kling-video@o3-4k': VideoInferenceResult
   'klingai:kling-video@o3-pro': VideoInferenceResult
   'klingai:kling-video@o3-standard': VideoInferenceResult
@@ -5086,6 +4859,7 @@ export type ModelResultMap = {
   'lightricks:ltx@2': VideoInferenceResult
   'lightricks:ltx@2.3': VideoInferenceResult
   'lightricks:ltx@2.3-fast': VideoInferenceResult
+  'luma:ray@3.2': VideoInferenceResult
   'luma:uni@1': ImageInferenceResult
   'luma:uni@1-max': ImageInferenceResult
   'memories:1@1': CaptionResult
@@ -5132,6 +4906,7 @@ export type ModelResultMap = {
   'pixverse:modify@0': VideoInferenceResult
   'prunaai:1@1': ImageInferenceResult
   'prunaai:2@1': ImageInferenceResult
+  'prunaai:p-image@try-on': ImageInferenceResult
   'prunaai:p-image@upscale': UpscaleResult
   'prunaai:p-video@0': VideoInferenceResult
   'prunaai:p-video@animate': VideoInferenceResult

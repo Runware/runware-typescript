@@ -8,4 +8,4 @@
  * Read at build time only — runtime schema validation hits the live
  * `/resolve/<model>` endpoint and doesn't consult this constant.
  */
-export const SCHEMAS_VERSION = '20260608132636'
+export const SCHEMAS_VERSION = '20260618151239'
