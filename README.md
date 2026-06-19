@@ -60,6 +60,8 @@ const images = await client.run({
 const videos = await client.run({
   model: 'google:3@3',
   positivePrompt: 'Ocean waves at sunset',
+  width: 1280,
+  height: 720,
   duration: 8,
 })
 
@@ -203,7 +205,7 @@ await client.connect()
 
 // Persistent connection — low latency for multiple operations
 const images = await client.run({ model: 'runware:400@1', positivePrompt: '...' })
-const videos = await client.run({ model: 'google:3@3', positivePrompt: '...' })
+const videos = await client.run({ model: 'google:3@3', positivePrompt: '...', width: 1280, height: 720 })
 
 await client.disconnect()
 ```
@@ -302,6 +304,8 @@ Two callbacks let you observe a task as it unfolds:
 const images = await client.run({
   model: 'google:3@3',
   positivePrompt: 'Ocean waves at sunset',
+  width: 1280,
+  height: 720,
   numberResults: 3,
 }, {
   onResult: (item) => {
@@ -445,6 +449,8 @@ Or per-call via `RunOptions`:
 const videos = await client.run({
   model: 'google:3@3',
   positivePrompt: 'Ocean waves',
+  width: 1280,
+  height: 720,
 }, { timeout: 600000 })
 ```
 
