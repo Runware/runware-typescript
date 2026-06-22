@@ -626,6 +626,8 @@ const google = await client.content.getCreator('google')
 const page = await client.content.listModels({ paginate: true, limit: 25, offset: 0 })
 ```
 
+The per-model methods (`getModel`, `getModelExamples`, `getModelPricing`) accept either the model's AIR or its catalog slug (the `model` field returned by `listModels`).
+
 `creator`, `capabilities`, and `architecture` on each model are returned as id strings — resolve them against `listCreators`, `listCapabilities`, and the architecture id respectively when you need the human-readable label. Collections and creators are the only endpoints that resolve their inner `models` array to full objects.
 
 ## File helpers
