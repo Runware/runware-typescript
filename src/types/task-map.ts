@@ -1,5 +1,5 @@
 /**
- * AUTO-GENERATED from schema-map@20260619230808 — do not edit manually.
+ * AUTO-GENERATED from schema-map@20260622170117 — do not edit manually.
  * Run: bun run scripts/generate-types.ts
  */
 
@@ -4311,6 +4311,7 @@ export const operationTaskTypes: Record<string, string> = {
  */
 export const models: Record<string, { taskType: string, id: string }> = {
   'alibaba:happyhorse@1.0': { taskType: 'videoInference', id: 'alibaba-happyhorse-1-0' },
+  'alibaba:happyhorse@1.1': { taskType: 'videoInference', id: 'alibaba-happyhorse-1-1' },
   'alibaba:qwen-image@2.0': { taskType: 'imageInference', id: 'alibaba-qwen-image-2-0' },
   'alibaba:qwen-image@2.0-pro': { taskType: 'imageInference', id: 'alibaba-qwen-image-2-0-pro' },
   'alibaba:qwen-image@2512': { taskType: 'imageInference', id: 'alibaba-qwen-image-2512' },
@@ -4418,6 +4419,7 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'ideogram:4@3': { taskType: 'imageInference', id: 'ideogram-3-0-edit' },
   'ideogram:4@4': { taskType: 'imageInference', id: 'ideogram-3-0-reframe' },
   'ideogram:4@5': { taskType: 'imageInference', id: 'ideogram-3-0-replace-background' },
+  'ideogram:4@remix': { taskType: 'imageInference', id: 'ideogram-4-0-remix' },
   'ideogram:layerize-text@0': { taskType: 'imageInference', id: 'ideogram-layerize-text' },
   'imagineart:1.5-pro@0': { taskType: 'imageInference', id: 'imagineart-1-5-pro' },
   'imagineart:1@5': { taskType: 'imageInference', id: 'imagineart-1-5' },
@@ -4492,6 +4494,8 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'openai:3@2': { taskType: 'videoInference', id: 'openai-sora-2-pro' },
   'openai:4@1': { taskType: 'imageInference', id: 'openai-gpt-image-1-5' },
   'openai:gpt-image@2': { taskType: 'imageInference', id: 'openai-gpt-image-2' },
+  'openai:gpt@5-mini': { taskType: 'textInference', id: 'openai-gpt-5-mini' },
+  'openai:gpt@5-nano': { taskType: 'textInference', id: 'openai-gpt-5-nano' },
   'openai:gpt@5.4': { taskType: 'textInference', id: 'openai-gpt-5-4' },
   'openai:gpt@5.4-mini': { taskType: 'textInference', id: 'openai-gpt-5-4-mini' },
   'openai:gpt@5.4-nano': { taskType: 'textInference', id: 'openai-gpt-5-4-nano' },
@@ -4671,6 +4675,7 @@ export const models: Record<string, { taskType: string, id: string }> = {
  */
 export type ModelResultMap = {
   'alibaba:happyhorse@1.0': VideoInferenceResult
+  'alibaba:happyhorse@1.1': VideoInferenceResult
   'alibaba:qwen-image@2.0': ImageInferenceResult
   'alibaba:qwen-image@2.0-pro': ImageInferenceResult
   'alibaba:qwen-image@2512': ImageInferenceResult
@@ -4778,6 +4783,7 @@ export type ModelResultMap = {
   'ideogram:4@3': ImageInferenceResult
   'ideogram:4@4': ImageInferenceResult
   'ideogram:4@5': ImageInferenceResult
+  'ideogram:4@remix': ImageInferenceResult
   'ideogram:layerize-text@0': ImageInferenceResult
   'imagineart:1.5-pro@0': ImageInferenceResult
   'imagineart:1@5': ImageInferenceResult
@@ -4852,6 +4858,8 @@ export type ModelResultMap = {
   'openai:3@2': VideoInferenceResult
   'openai:4@1': ImageInferenceResult
   'openai:gpt-image@2': ImageInferenceResult
+  'openai:gpt@5-mini': TextInferenceResult
+  'openai:gpt@5-nano': TextInferenceResult
   'openai:gpt@5.4': TextInferenceResult
   'openai:gpt@5.4-mini': TextInferenceResult
   'openai:gpt@5.4-nano': TextInferenceResult
