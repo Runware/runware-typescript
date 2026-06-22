@@ -1,5 +1,5 @@
 /**
- * AUTO-GENERATED from schema-map@20260622170117 — do not edit manually.
+ * AUTO-GENERATED from schema-map@20260622171558 — do not edit manually.
  * Run: bun run scripts/generate-types.ts
  */
 
@@ -4451,9 +4451,9 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'klingai:kling-video@3-pro': { taskType: 'videoInference', id: 'klingai-video-3-0-pro' },
   'klingai:kling-video@3-standard': { taskType: 'videoInference', id: 'klingai-video-3-0-standard' },
   'klingai:kling-video@3.0-turbo': { taskType: 'videoInference', id: 'klingai-video-3-0-turbo' },
-  'klingai:kling-video@o3-4k': { taskType: 'videoInference', id: 'klingai-video-o3-4k' },
-  'klingai:kling-video@o3-pro': { taskType: 'videoInference', id: 'klingai-video-o3-pro' },
-  'klingai:kling-video@o3-standard': { taskType: 'videoInference', id: 'klingai-video-o3-standard' },
+  'klingai:kling-video@o3-4k': { taskType: 'videoInference', id: 'klingai-video-3-0-omni-4k' },
+  'klingai:kling-video@o3-pro': { taskType: 'videoInference', id: 'klingai-video-3-0-omni-pro' },
+  'klingai:kling-video@o3-standard': { taskType: 'videoInference', id: 'klingai-video-3-0-omni-standard' },
   'klingai:kling@o1': { taskType: 'videoInference', id: 'klingai-video-o1-pro' },
   'klingai:kling@o1-standard': { taskType: 'videoInference', id: 'klingai-video-o1-standard' },
   'krea:krea@2-large': { taskType: 'imageInference', id: 'krea-2-large' },
