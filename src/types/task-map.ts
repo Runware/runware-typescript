@@ -1,5 +1,5 @@
 /**
- * AUTO-GENERATED from schema-map@20260623105208 — do not edit manually.
+ * AUTO-GENERATED from schema-map@20260623192341 — do not edit manually.
  * Run: bun run scripts/generate-types.ts
  */
 
@@ -4374,7 +4374,7 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'creatify:aurora@fast': { taskType: 'videoInference', id: 'creatify-aurora-v1-fast' },
   'deepseek:v4@flash': { taskType: 'textInference', id: 'deepseek-v4-flash' },
   'deepseek:v4@pro': { taskType: 'textInference', id: 'deepseek-v4-pro' },
-  'exactly:illustrative@training': { taskType: 'modelUpload', id: 'exactly-illustrative-training' },
+  'exactly:illustrative@training': { taskType: 'training', id: 'exactly-illustrative-training' },
   'exactly:photo@bright-pulse': { taskType: 'imageInference', id: 'exactly-photo-bright-pulse' },
   'exactly:photo@distant-reality': { taskType: 'imageInference', id: 'exactly-photo-distant-reality' },
   'exactly:photo@extreme-contrast': { taskType: 'imageInference', id: 'exactly-photo-extreme-contrast' },
@@ -4739,7 +4739,7 @@ export type ModelResultMap = {
   'creatify:aurora@fast': VideoInferenceResult
   'deepseek:v4@flash': TextInferenceResult
   'deepseek:v4@pro': TextInferenceResult
-  'exactly:illustrative@training': ModelUploadResult
+  'exactly:illustrative@training': TrainingResult
   'exactly:photo@bright-pulse': ImageInferenceResult
   'exactly:photo@distant-reality': ImageInferenceResult
   'exactly:photo@extreme-contrast': ImageInferenceResult
