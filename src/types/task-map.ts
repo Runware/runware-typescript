@@ -1,5 +1,5 @@
 /**
- * AUTO-GENERATED from schema-map@20260622171558 — do not edit manually.
+ * AUTO-GENERATED from schema-map@20260623105208 — do not edit manually.
  * Run: bun run scripts/generate-types.ts
  */
 
@@ -4366,6 +4366,7 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'bytedance:seedance@1.5-pro': { taskType: 'videoInference', id: 'bytedance-seedance-1-5-pro' },
   'bytedance:seedance@2.0': { taskType: 'videoInference', id: 'bytedance-seedance-2-0' },
   'bytedance:seedance@2.0-fast': { taskType: 'videoInference', id: 'bytedance-seedance-2-0-fast' },
+  'bytedance:seedance@2.0-mini': { taskType: 'videoInference', id: 'bytedance-seedance-2-0-mini' },
   'bytedance:seedream@4.5': { taskType: 'imageInference', id: 'bytedance-seedream-4-5' },
   'bytedance:seedream@5.0-lite': { taskType: 'imageInference', id: 'bytedance-seedream-5-0-lite' },
   'civitai:101055@128078': { taskType: 'imageInference', id: 'stabilityai-stable-diffusion-xl-v1-0-vae-fix' },
@@ -4730,6 +4731,7 @@ export type ModelResultMap = {
   'bytedance:seedance@1.5-pro': VideoInferenceResult
   'bytedance:seedance@2.0': VideoInferenceResult
   'bytedance:seedance@2.0-fast': VideoInferenceResult
+  'bytedance:seedance@2.0-mini': VideoInferenceResult
   'bytedance:seedream@4.5': ImageInferenceResult
   'bytedance:seedream@5.0-lite': ImageInferenceResult
   'civitai:101055@128078': ImageInferenceResult
