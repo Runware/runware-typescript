@@ -32,6 +32,7 @@ import { createTransport } from './transport'
 import { createRegistry } from './registry'
 import { SCHEMAS_BASE_URL } from './constants'
 import { createContentClient, type ContentClient } from './content'
+import { encodeLocalFiles } from './utils/file'
 
 export type RunwareClient = {
   connect: () => Promise<void>
@@ -871,7 +872,8 @@ export const createClient = async (userConfig: ClientConfig): Promise<RunwareCli
     params: Record<string, unknown>,
     options?: RunOptions,
   ): Promise<unknown[]> => {
-    const normalized = await normalizeModelParam(params)
+    const encoded = await encodeLocalFiles(params) as Record<string, unknown>
+    const normalized = await normalizeModelParam(encoded)
     const taskType = await resolveTaskType(undefined, normalized, registry)
     return execute(taskType, { deliveryMethod: 'async', ...normalized }, transport, fullConfig, options)
   }
@@ -949,7 +951,10 @@ export const createClient = async (userConfig: ClientConfig): Promise<RunwareCli
   const imageUpload = async (
     params: Record<string, unknown>,
     options?: RunOptions,
-  ) => execute('imageUpload', params, transport, fullConfig, options)
+  ) => {
+    const encoded = await encodeLocalFiles(params) as Record<string, unknown>
+    return execute('imageUpload', encoded, transport, fullConfig, options)
+  }
 
   const accountManagement = async (
     params: Record<string, unknown>,

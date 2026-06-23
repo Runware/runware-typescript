@@ -642,6 +642,13 @@ const dataUri = await fileToDataURI(await readFile('photo.jpg'))
 await client.imageUpload({ image: dataUri })
 ```
 
+In Node you usually don't need this for inputs: `run()` and `imageUpload` auto-encode local file paths. Any string value (recursively, including nested objects and arrays) that points to an existing file on disk is read and replaced with its base64 before the request is sent. URLs, UUIDs, data URIs, existing base64, and prompts pass through untouched. In the browser there's no filesystem, so this step is a no-op.
+
+```typescript
+await client.run({ model: '...', seedImage: './photo.jpg' })
+await client.run({ model: '...', referenceImages: ['./a.jpg', './b.jpg'] })
+```
+
 ## Custom dependencies
 
 For testing, proxies, or environments with non-standard runtimes, inject your own `WebSocket` constructor and/or `fetch` implementation:
