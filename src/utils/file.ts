@@ -63,9 +63,8 @@ export const encodeLocalFiles = async (value: unknown): Promise<unknown> => {
     if (typeof node === 'string') { return encodeString(node) }
     if (Array.isArray(node)) { return Promise.all(node.map(walk)) }
     if (node !== null && typeof node === 'object') {
-      const entries = await Promise.all(
-        Object.entries(node).map(async ([k, v]) => [k, await walk(v)] as const),
-      )
+      const entryPromises = Object.entries(node).map(async ([k, v]) => [k, await walk(v)] as const)
+      const entries = await Promise.all(entryPromises)
       return Object.fromEntries(entries)
     }
     return node

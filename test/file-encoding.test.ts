@@ -33,9 +33,15 @@ afterEach(() => {
 
 describe('encodeLocalFiles', () => {
   it('encodes an existing file to raw base64 (no data: prefix)', async () => {
-    const path = makeFile('a.jpg', Buffer.from([0xff, 0xd8, 0xff, 0xe0]))
+    const path = makeFile('a.jpg', Buffer.from([0xff,
+      0xd8,
+      0xff,
+      0xe0]))
     const out = await encodeLocalFiles(path)
-    expect(out).toBe(Buffer.from([0xff, 0xd8, 0xff, 0xe0]).toString('base64'))
+    expect(out).toBe(Buffer.from([0xff,
+      0xd8,
+      0xff,
+      0xe0]).toString('base64'))
     expect(out as string).not.toStartWith('data:')
   })
 
@@ -72,7 +78,11 @@ describe('client.run auto-encodes local file paths', () => {
   it('sends base64 for a local seedImage, passes a URL through', async () => {
     const path = makeFile('seed.jpg', Buffer.from('PNG seed bytes'))
     const responseBody = { data: [{ taskUUID: 'enc-1', imageURL: 'https://result.jpg' }] }
-    const mockFetch = vi.fn().mockResolvedValue({ ok: true, status: 200, json: async () => responseBody })
+    const mockFetch = vi.fn().mockResolvedValue({
+      ok: true,
+      status: 200,
+      json: async () => responseBody,
+    })
 
     const client = await createClient({
       apiKey: 'test',
