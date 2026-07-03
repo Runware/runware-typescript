@@ -2,6 +2,7 @@ import type { SDKConfig, ResponseCallback, TaskPayload } from '../types/sdk'
 import type { ConnectionState, WebSocketTransport, WsResponse } from '../types/transport'
 
 import { createRunwareError } from '../errors'
+import { userAgent } from '../user-agent'
 
 const RECONNECT_DELAY_CAP_MS = 30000
 const RECONNECT_JITTER_MS = 1000
@@ -194,7 +195,11 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
       let settled = false
 
       try {
-        ws = new WebSocketImpl(config.wsBaseUrl)
+        // Pass the client identifier as a handshake header. The `ws` package
+        // sends it; native WebSocket (browser / Node global) ignores the third
+        // arg, so browser connections simply omit it (accepted gap).
+        const wsOptions = { headers: { 'User-Agent': userAgent(config.userAgentPrefix) } }
+        ws = new WebSocketImpl(config.wsBaseUrl, [], wsOptions)
         // Capture the current socket so handlers can ignore late events from a
         // socket that's already been replaced by connect()/reconnect(). Without
         // this, a stale onclose/onerror could null `ws` after a newer socket

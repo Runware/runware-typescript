@@ -20,7 +20,14 @@ export type WebSocketLike = {
 /* eslint-enable @typescript-eslint/no-explicit-any */
 
 export type WebSocketConstructor = {
-  new(url: string, protocols?: string | string[]): WebSocketLike
+  // The third `options` arg carries handshake headers (e.g. User-Agent). The
+  // `ws` package honours it; native WebSocket (browser / Node global) follows
+  // the WHATWG `(url, protocols)` signature and silently ignores it.
+  new(
+    url: string,
+    protocols?: string | string[],
+    options?: { headers?: Record<string, string> },
+  ): WebSocketLike
   readonly CONNECTING: number
   readonly OPEN: number
   readonly CLOSING: number

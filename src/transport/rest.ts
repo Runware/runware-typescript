@@ -2,6 +2,7 @@ import type { SDKConfig, TaskPayload } from '../types/sdk'
 import type { RestTransport, RequestOptions } from '../types/transport'
 
 import { createRunwareError, isRunwareError, parseApiError } from '../errors'
+import { userAgent } from '../user-agent'
 import { withRetry } from '../utils/retry'
 
 type TimeoutError = Error & { isTimeoutError: true }
@@ -44,6 +45,7 @@ export const createRestTransport = (config: SDKConfig): RestTransport => {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${config.apiKey}`,
+            'User-Agent': userAgent(config.userAgentPrefix),
           },
           body: JSON.stringify(payload),
         },

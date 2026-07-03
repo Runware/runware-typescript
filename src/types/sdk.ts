@@ -49,6 +49,12 @@ export type SDKConfig = {
   dependencies?: RuntimeDependencies
   /** Custom log sink. Defaults to a plain-text sink that writes to `console`. */
   logSink?: LogSink
+  /**
+   * Prepended to the `User-Agent` sent on requests, so wrappers (MCP servers,
+   * apps built on the SDK) identify themselves ahead of the SDK token — e.g.
+   * `runware-mcp/1.1.1 runware-typescript/1.4.1 (node/…) schemas/…`. Optional.
+   */
+  userAgentPrefix?: string
   /** Internal: populated by `createConfig`. */
   log: Logger
 }

@@ -49,21 +49,26 @@ describe('createNodeDependencies', () => {
     }
   })
 
-  it('uses globalThis.WebSocket when available (Node 21+)', async () => {
+  it('prefers the ws package on Node so the handshake can set a User-Agent', async () => {
     originalWS = (globalThis as any).WebSocket
+    // Even with a native global present, ws must win: native WebSocket ignores
+    // handshake headers, so the client can't be identified over it.
     const fakeWS = function () {} as unknown
     ;(globalThis as any).WebSocket = fakeWS
 
     const deps = await createNodeDependencies()
-    expect(deps.WebSocket).toBe(fakeWS as never)
+    expect(deps.WebSocket).toBeDefined()
+    expect(deps.WebSocket).not.toBe(fakeWS as never)
+    expect(typeof deps.WebSocket).toBe('function')
   })
 
-  it('falls back to the ws package when globalThis.WebSocket is undefined', async () => {
+  it('resolves the ws package even when native WebSocket is unavailable', async () => {
     originalWS = (globalThis as any).WebSocket
     delete (globalThis as any).WebSocket
 
     const deps = await createNodeDependencies()
-    // ws package is installed as devDep; the function should import it successfully
+    // ws is a peer dep (installed here as devDep); older Node without a native
+    // global still gets a working WebSocket implementation.
     expect(deps.WebSocket).toBeDefined()
     expect(typeof deps.WebSocket).toBe('function')
   })

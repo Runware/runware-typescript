@@ -2,6 +2,7 @@ import type { SDKConfig, TaskPayload } from './types/sdk'
 import type { TextStream, TextStreamChunk, TextStreamResult } from './types/stream'
 
 import { createRunwareError, parseApiError } from './errors'
+import { userAgent } from './user-agent'
 
 export type { TextStream, TextStreamChunk, TextStreamResult }
 
@@ -98,6 +99,7 @@ const createChunkIterator = (
           headers: {
             'Authorization': `Bearer ${config.apiKey}`,
             'Content-Type': 'application/json',
+            'User-Agent': userAgent(config.userAgentPrefix),
           },
           body,
           signal: controller.signal,

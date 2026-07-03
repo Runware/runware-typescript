@@ -36,17 +36,20 @@ export const createBrowserDependencies = (): RuntimeDependencies => ({
 export const createNodeDependencies = async (): Promise<RuntimeDependencies> => {
   const nodeDeps: RuntimeDependencies = { fetch: globalThis.fetch }
 
-  // Node v21+ has native WebSocket; older versions need the ws package.
-  // If `ws` isn't installed, leave WebSocket undefined — REST-only users
-  // don't need it, and the WS transport throws `noWebSocketImpl` itself at
-  // connect time when it actually matters.
-  if (globalThis.WebSocket) {
-    nodeDeps.WebSocket = globalThis.WebSocket as unknown as WebSocketConstructor
-  } else {
-    try {
-      const wsModule = await import('ws')
-      nodeDeps.WebSocket = wsModule.default as unknown as WebSocketConstructor
-    } catch { }
+  // Prefer the `ws` package on Node: it lets us set a `User-Agent` header on
+  // the WebSocket handshake (per-connection client identification). Node's
+  // native global WebSocket follows the WHATWG `(url, protocols)` constructor
+  // and silently drops handshake headers, so fall back to it only when `ws`
+  // isn't installed. If neither is available, leave WebSocket undefined —
+  // REST-only users don't need it, and the WS transport throws
+  // `noWebSocketImpl` itself at connect time when it actually matters.
+  try {
+    const wsModule = await import('ws')
+    nodeDeps.WebSocket = wsModule.default as unknown as WebSocketConstructor
+  } catch {
+    if (globalThis.WebSocket) {
+      nodeDeps.WebSocket = globalThis.WebSocket as unknown as WebSocketConstructor
+    }
   }
 
   return nodeDeps
