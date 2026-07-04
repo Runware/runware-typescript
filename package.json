@@ -1,6 +1,6 @@
 {
   "name": "@runware/sdk",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Runware SDK — unified API for image, video, audio, text, and 3D generation. Schema-driven types, WebSocket and REST transports, LLM streaming.",
   "type": "module",
   "main": "dist/index.js",
