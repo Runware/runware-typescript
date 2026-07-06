@@ -116,6 +116,15 @@ const fetchJson = async <T>(
   return await response.json() as T
 }
 
+// Models whose status marks them reachable only through the OpenAI-compatible
+// endpoint — not the native Runware API — are hidden from the SDK's model listing
+// by default, since the SDK can't run them. A caller can still surface them by
+// passing the matching `status` filter explicitly.
+const NON_NATIVE_STATUSES = new Set(['openai-compatible'])
+
+const excludeNonNative = <T extends { status?: string }>(models: T[]): T[] =>
+  models.filter((model) => !NON_NATIVE_STATUSES.has(model.status ?? ''))
+
 export const createContentClient = (config: SDKConfig): ContentClient => {
   const fetchImpl: FetchImpl = config.dependencies?.fetch ?? globalThis.fetch
 
@@ -144,7 +153,15 @@ export const createContentClient = (config: SDKConfig): ContentClient => {
     })
     const url = `${baseUrl}/models${query}`
     type Result = ModelMetadata[] | PaginatedResponse<ModelMetadata>
-    return fetchJson<Result>(url, fetchImpl, false)
+    const result = await fetchJson<Result>(url, fetchImpl, false)
+
+    // An explicit `status` filter is an intentional opt-in, so trust the service
+    // result. Otherwise hide non-native (OpenAI-only) models from the listing.
+    if (opts.status || result === null) { return result }
+
+    return Array.isArray(result)
+      ? excludeNonNative(result)
+      : { ...result, items: excludeNonNative(result.items) }
   }
 
   const getModel = async (modelId: string): Promise<ModelMetadata | null> =>
