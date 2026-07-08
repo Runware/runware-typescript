@@ -5,4 +5,4 @@
  * test runs work without a build; kept in sync with package.json at publish
  * time so the User-Agent never reports a stale version.
  */
-export const SDK_VERSION = '1.5.3'
+export const SDK_VERSION = '1.5.4'
