@@ -204,6 +204,21 @@ export class RunwareError extends Error {
 const paramAnchor = (parameter: string): string =>
   '#request-' + parameter.replace(/\./g, '-').toLowerCase()
 
+// Cross-field constraint violations (e.g. product of width and height out of
+// range) surface with `parameter` as an array of the fields involved. Take the
+// first entry so downstream consumers still see a plain string.
+const normalizeParameter = (value: unknown): string | undefined => {
+  if (typeof value === 'string') {
+    return value
+  }
+
+  if (Array.isArray(value) && typeof value[0] === 'string') {
+    return value[0]
+  }
+
+  return undefined
+}
+
 export const buildDocumentationUrl = (
   taskType: string | undefined,
   model: string | undefined,
@@ -316,7 +331,7 @@ export const parseApiError = (raw: unknown, context?: ErrorContext): RunwareErro
     (first.code as string) ?? 'unknown',
     (first.message as string) ?? 'An unknown API error occurred',
     {
-      parameter: first.parameter as string | undefined,
+      parameter: normalizeParameter(first.parameter),
       taskType: (first.taskType as string | undefined) ?? context?.taskType,
       taskUUID: first.taskUUID as string | undefined,
       model: (first.model as string | undefined) ?? context?.model,
