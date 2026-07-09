@@ -230,7 +230,7 @@ const emitType = (name: string, schema: Json | undefined, opts?: EmitOpts): stri
     const optional = requiredSet.has(key) ? '' : '?'
     propLines.push(`  ${key}${optional}: ${schemaToTs(sub)}`)
   }
-  if (opts?.indexSignature) { propLines.push('  [key: string]: unknown') }
+  if (opts?.indexSignature || s.additionalProperties === true) { propLines.push('  [key: string]: unknown') }
 
   lines.push(`export type ${name} = {`)
   lines.push(propLines.join('\n'))
@@ -365,7 +365,7 @@ const main = async () => {
   }
   for (const entry of schemaMap.utilities ?? []) {
     if (!entry.responseSchema) { continue }
-    const taskType = extractTaskType(entry.responseSchema)
+    const taskType = extractTaskType(entry.responseSchema) ?? extractTaskType(entry.requestSchema)
     if (!taskType || seenResult.has(taskType) || skipUtilityResp.has(taskType)) { continue }
     seenResult.add(taskType)
     const typeName = toPascalCase(taskType) + 'Result'
