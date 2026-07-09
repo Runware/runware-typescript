@@ -1,5 +1,5 @@
 /**
- * AUTO-GENERATED from schema-map@20260709125048 — do not edit manually.
+ * AUTO-GENERATED from schema-map@20260709212957 — do not edit manually.
  * Run: bun run scripts/generate-types.ts
  */
 
@@ -2563,22 +2563,22 @@ export type MediaStorageParams = {
 export type ModelSearchParams = {
   /** Search query to find models by name, description or AIR ID. */
   search: string
-  /** Filter models by specific tags. */
-  tags?: string[]
+  /** Filter by model source. */
+  source?: 'featured' | 'community'
   /** Filter models by category. */
   category?: 'checkpoint' | 'lora' | 'lycoris' | 'vae' | 'embeddings'
-  /** Filter checkpoint models by type. Only applicable when category is `checkpoint`. */
-  type?: 'base' | 'inpainting' | 'refiner'
   /** Filter by model architecture. */
   architecture?: string
-  /** Filter ControlNet models by their conditioning type. */
-  conditioning?: 'blur' | 'canny' | 'depth' | 'gray' | 'hed' | 'inpaint' | 'inpaintdepth' | 'lineart' | 'lowquality' | 'normal' | 'openmlsd' | 'openpose' | 'outfit' | 'pix2pix' | 'qrcode' | 'scribble' | 'seg' | 'shuffle' | 'sketch' | 'softedge' | 'tile'
-  /** Filter by visibility status (e.g., public, private, all). */
-  visibility?: 'public' | 'private' | 'all'
+  /** Filter by model capabilities. */
+  capabilities?: string[]
+  /** Filter by visibility status. */
+  visibility?: 'public' | 'private' | 'favorite' | 'owned'
   /** Maximum number of results to return. */
   limit?: number
   /** Number of results to skip for pagination. */
   offset?: number
+  /** Sort order for results. A bare field name sorts ascending and a `-` prefix sorts descending, except `popularity`, whose bare value is already descending (most popular first). */
+  sort?: 'popularity' | '-popularity' | 'name' | '-name' | 'addedUnixTimestamp' | '-addedUnixTimestamp' | 'updatedDateUnixTimestamp' | '-updatedDateUnixTimestamp'
 }
 
 /**
@@ -2621,6 +2621,8 @@ export type ModelUploadParams = {
   tags?: string[]
   /** List of positive trigger words. */
   positiveTriggerWords?: string
+  /** List of negative trigger words. */
+  negativeTriggerWords?: string
   /** Short description of the model. */
   shortDescription?: string
   /** Additional comments or notes. */
@@ -2955,7 +2957,7 @@ export type ModelUploadResult = {
  */
 export type GetResponseResult = {
   /** Identifier for the type of task this response belongs to. */
-  taskType: 'getResponse'
+  taskType: 'authentication' | 'imageInference' | 'videoInference' | 'audioInference' | 'textInference' | 'modelSearch' | 'modelUpload' | 'accountManagement' | 'imageUpload' | 'mediaStorage' | 'getResponse' | 'caption' | 'controlNetPreprocess' | 'imageMasking' | 'promptEnhance' | 'removeBackground' | 'upscale' | 'vectorize' | 'training' | 'ping'
   /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
   taskUUID: string
   /** Current status of the task. */
@@ -2969,6 +2971,7 @@ export type GetResponseResult = {
   /** Error message description. */
   message?: string
 }
+  [key: string]: unknown
 }
 
 /**
@@ -2979,10 +2982,21 @@ export type MediaStorageResult = {
   taskType: 'mediaStorage'
   /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
   taskUUID: string
+  /** The media storage operation that produced this response. */
+  operation: 'upload'
   /** UUID of the stored media. */
   mediaUUID: string
   /** URL where the stored media is accessible. */
   mediaURL: string
+} | {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'mediaStorage'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** The media storage operation that produced this response. */
+  operation: 'delete'
+  /** UUID of the stored media. */
+  mediaUUID: string
 }
 
 /**
@@ -2995,6 +3009,8 @@ export type ImageUploadResult = {
   taskUUID: string
   /** UUID of the output image. */
   imageUUID: string
+  /** URL of the output image. */
+  imageURL: string
 }
 
 /**
@@ -3255,30 +3271,35 @@ export type ModelSearchResult = {
   /** Total number of models matching the search criteria. */
   totalResults: number
   /** List of models found. */
-  results: {
+  results: ({
   /** Artificial Intelligence Resource identifier. */
   air: string
-  /** Name of the model. */
+  /** Model name. */
   name: string
-  /** Version of the model. */
-  version: string
-  /** Category of the model (e.g., checkpoint, lora). */
-  category: string
-  /** Model architecture (e.g., sdxl, flux). */
-  architecture?: string
-  /** URL of the model's representative image. */
-  imageURL: string
-  /** URL of the model's thumbnail image. */
-  thumbnailURL: string
-  /** List of tags associated with the model. */
-  tags?: string[]
+  /** Model category. */
+  category: 'checkpoint' | 'lora' | 'lycoris' | 'vae' | 'embeddings'
+  /** Model architecture. */
+  architecture: string | null
+  /** Model capabilities. */
+  capabilities: string[]
+  /** Model source. */
+  source: 'featured' | 'community'
+  /** Representative image URL. */
+  heroImage: string | null
   /** Whether the model is private. */
-  private?: boolean
-  /** Whether this is the primary version of the model. */
-  primary?: boolean
-  /** The base model this model is derived from. */
-  baseModel?: string
-}[]
+  private: boolean
+  /** Whether the model is favorited. */
+  isFavorite?: boolean
+  /** Model provider. */
+  provider?: string
+  /** Short description. */
+  shortDescription?: string
+  /** Positive trigger words. */
+  positiveTriggerWords?: string
+  /** Negative trigger words. */
+  negativeTriggerWords?: string
+})[]
+  [key: string]: unknown
 }
 
 /**
