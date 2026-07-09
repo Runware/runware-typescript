@@ -25,6 +25,7 @@ export type {
   // Utility params and results — for typing direct calls to client.modelSearch, etc.
   ModelSearchParams, ModelSearchResult,
   ImageUploadParams, ImageUploadResult,
+  MediaStorageParams, MediaStorageResult,
   ModelUploadParams, ModelUploadResult,
   AccountManagementParams, AccountManagementResult,
   GetResponseParams, GetResponseResult,

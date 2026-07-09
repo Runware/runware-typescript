@@ -24,7 +24,8 @@ const DOCS_BASE = 'https://runware.ai/docs'
 const UTILITY_DOC_PATHS: Record<string, string> = {
   modelSearch: 'platform/model-search',
   modelUpload: 'platform/model-upload',
-  imageUpload: 'platform/image-upload',
+  imageUpload: 'platform/media-storage',
+  mediaStorage: 'platform/media-storage',
   getResponse: 'platform/task-polling',
   accountManagement: 'platform/account-management',
 }

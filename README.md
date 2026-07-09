@@ -563,10 +563,15 @@ const models = await client.modelSearch({
   limit: 10,
 })
 
-// Upload an image for use as input
-const uploaded = await client.imageUpload({
-  image: 'https://example.com/photo.jpg', // URL, Data URI, or Base64
+// Store media (image, video, or audio) for reuse as input. Returns a mediaUUID.
+// Supersedes the deprecated, image-only imageUpload.
+const uploaded = await client.mediaStorage({
+  operation: 'upload',
+  media: 'https://example.com/photo.jpg', // URL, Data URI, or Base64
 })
+
+// Delete stored media by its mediaUUID
+await client.mediaStorage({ operation: 'delete', media: uploaded[0].mediaUUID })
 
 // Get account details
 const account = await client.accountManagement({
@@ -639,10 +644,10 @@ import { fileToDataURI } from '@runware/sdk'
 import { readFile } from 'node:fs/promises'
 
 const dataUri = await fileToDataURI(await readFile('photo.jpg'))
-await client.imageUpload({ image: dataUri })
+await client.mediaStorage({ operation: 'upload', media: dataUri })
 ```
 
-In Node you usually don't need this for inputs: `run()` and `imageUpload` auto-encode local file paths. Any string value (recursively, including nested objects and arrays) that points to an existing file on disk is read and replaced with its base64 before the request is sent. URLs, UUIDs, data URIs, existing base64, and prompts pass through untouched. In the browser there's no filesystem, so this step is a no-op.
+In Node you usually don't need this for inputs: `run()` and `mediaStorage` auto-encode local file paths. Any string value (recursively, including nested objects and arrays) that points to an existing file on disk is read and replaced with its base64 before the request is sent. URLs, UUIDs, data URIs, existing base64, and prompts pass through untouched. In the browser there's no filesystem, so this step is a no-op.
 
 ```typescript
 await client.run({ model: '...', seedImage: './photo.jpg' })

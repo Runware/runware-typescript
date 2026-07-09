@@ -602,6 +602,7 @@ describe('utility method dispatch', () => {
     ['modelSearch', 'modelSearch'],
     ['modelUpload', 'modelUpload'],
     ['imageUpload', 'imageUpload'],
+    ['mediaStorage', 'mediaStorage'],
     ['accountManagement', 'accountManagement'],
     ['getResponse', 'getResponse'],
     ['getTaskDetails', 'getTaskDetails'],

@@ -135,11 +135,21 @@ export type RunwareClient = {
 
   /**
    * Upload an image.
+   *
+   * @deprecated Use `mediaStorage` instead, which handles any media type and supports deletion.
    */
   imageUpload: (
     params: UtilityMap['imageUpload']['params'],
     options?: RunOptions,
   ) => Promise<UtilityMap['imageUpload']['result'][]>
+
+  /**
+   * Store or delete media in your Runware account.
+   */
+  mediaStorage: (
+    params: UtilityMap['mediaStorage']['params'],
+    options?: RunOptions,
+  ) => Promise<UtilityMap['mediaStorage']['result'][]>
 
   /**
    * Manage account settings.
@@ -956,6 +966,14 @@ export const createClient = async (userConfig: ClientConfig): Promise<RunwareCli
     return execute('imageUpload', encoded, transport, fullConfig, options)
   }
 
+  const mediaStorage = async (
+    params: Record<string, unknown>,
+    options?: RunOptions,
+  ) => {
+    const encoded = await encodeLocalFiles(params) as Record<string, unknown>
+    return execute('mediaStorage', encoded, transport, fullConfig, options)
+  }
+
   const accountManagement = async (
     params: Record<string, unknown>,
     options?: RunOptions,
@@ -977,6 +995,7 @@ export const createClient = async (userConfig: ClientConfig): Promise<RunwareCli
     modelSearch: modelSearch as RunwareClient['modelSearch'],
     modelUpload: modelUpload as RunwareClient['modelUpload'],
     imageUpload: imageUpload as RunwareClient['imageUpload'],
+    mediaStorage: mediaStorage as RunwareClient['mediaStorage'],
     accountManagement: accountManagement as RunwareClient['accountManagement'],
     content,
   }
