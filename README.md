@@ -563,7 +563,7 @@ const models = await client.modelSearch({
   limit: 10,
 })
 
-// Store media (image, video, or audio) for reuse as input. Returns a mediaUUID.
+// Store media (images, video, audio, 3D models) for reuse as input. Returns a mediaUUID.
 // Supersedes the deprecated, image-only imageUpload.
 const uploaded = await client.mediaStorage({
   operation: 'upload',
