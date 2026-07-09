@@ -210,6 +210,14 @@ const emitType = (name: string, schema: Json | undefined, opts?: EmitOpts): stri
     lines.push(' */')
   }
 
+  // Discriminated union (oneOf/anyOf of closed variants): these schemas have no
+  // top-level properties, so delegate to schemaToTs, which renders each object
+  // variant and joins them with `|`.
+  if (s.oneOf || s.anyOf) {
+    lines.push(`export type ${name} = ${schemaToTs(s)}`)
+    return lines.join('\n')
+  }
+
   const props = { ...(s.properties ?? {}) }
   const required: string[] = [...(s.required ?? [])]
 
