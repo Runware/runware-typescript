@@ -1,5 +1,5 @@
 /**
- * AUTO-GENERATED from schema-map@20260709212957 — do not edit manually.
+ * AUTO-GENERATED from schema-map@20260722152433 — do not edit manually.
  * Run: bun run scripts/generate-types.ts
  */
 
@@ -2630,84 +2630,6 @@ export type ModelUploadParams = {
 }
 
 /**
- * Prompt Enhance Response
- */
-export type PromptEnhanceResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'promptEnhance'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** Enhanced prompt text. */
-  text: string
-}
-
-/**
- * Audio Response
- */
-export type AudioInferenceResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'audioInference'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** UUID of the output audio. */
-  audioUUID: string
-  /** URL of the output audio. */
-  audioURL?: string
-  /** Base64-encoded audio data. */
-  audioBase64Data?: string
-  /** Data URI of the output audio. */
-  audioDataURI?: string
-  /** The seed used for generation. If none was provided, shows the randomly generated seed. */
-  seed?: number
-}
-
-/**
- * Remove Background Image Response
- */
-export type RemoveBackgroundResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'removeBackground'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** UUID of the output image. */
-  imageUUID: string
-  /** URL of the output image. */
-  imageURL?: string
-  /** Base64-encoded image data. */
-  imageBase64Data?: string
-  /** Data URI of the output image. */
-  imageDataURI?: string
-}
-
-/**
- * ControlNet Preprocess Response
- */
-export type ControlNetPreprocessResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'controlNetPreprocess'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** UUID of the output guide image. */
-  guideImageUUID: string
-  /** URL of the output guide image. */
-  guideImageURL?: string
-  /** Base64-encoded guide image data. */
-  guideImageBase64Data?: string
-  /** Data URI of the output guide image. */
-  guideImageDataURI?: string
-  /** UUID of the input image used for preprocessing. */
-  inputImageUUID: string
-}
-
-/**
  * Video Response
  */
 export type VideoInferenceResult = {
@@ -2755,6 +2677,176 @@ export type ImageInferenceResult = {
   NSFWContent?: boolean
 }
 
+export type CaptionResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'caption'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** Segmented video caption. The video is split into 6-second intervals, each formatted as [segment_index] (start-end): description text. */
+  text: string
+}
+
+/**
+ * Text Inference Response
+ */
+export type TextInferenceResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'textInference'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** Generated text content. */
+  text: string
+  /** The reason why the model stopped generating tokens. */
+  finishReason: 'stop' | 'length' | 'content_filter' | 'unknown'
+  /** Token usage statistics for the request. */
+  usage: {
+  /** Number of tokens in the input prompt. */
+  promptTokens: number
+  /** Number of tokens generated in the response. */
+  completionTokens: number
+  /** Total number of tokens used (prompt + completion). */
+  totalTokens: number
+  /** Number of tokens used for internal reasoning. Billed separately. */
+  thinkingTokens?: number
+}
+}
+
+/**
+ * Audio Response
+ */
+export type AudioInferenceResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'audioInference'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** UUID of the output audio. */
+  audioUUID: string
+  /** URL of the output audio. */
+  audioURL?: string
+  /** Base64-encoded audio data. */
+  audioBase64Data?: string
+  /** Data URI of the output audio. */
+  audioDataURI?: string
+  /** The seed used for generation. If none was provided, shows the randomly generated seed. */
+  seed?: number
+}
+
+/**
+ * 3D Response
+ */
+export type ThreeDInferenceResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: '3dInference'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** Generated output artifacts. */
+  outputs: {
+  /** Generated output files. */
+  files: {
+  /** UUID of the output file. */
+  uuid: string
+  /** URL of the output file. */
+  url: string
+}[]
+}
+  /** The seed used for generation. If none was provided, shows the randomly generated seed. */
+  seed?: number
+}
+
+/**
+ * Vectorize Response
+ */
+export type VectorizeResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'vectorize'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** UUID of the output image. */
+  imageUUID: string
+  /** URL of the output image. */
+  imageURL?: string
+  /** Base64-encoded image data. */
+  imageBase64Data?: string
+  /** Data URI of the output image. */
+  imageDataURI?: string
+}
+
+/**
+ * Upscale Video Response
+ */
+export type UpscaleResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'upscale'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** UUID of the output video. */
+  videoUUID: string
+  /** URL of the output video. */
+  videoURL?: string
+  /** Base64-encoded video data. */
+  videoBase64Data?: string
+  /** Data URI of the output video. */
+  videoDataURI?: string
+}
+
+/**
+ * Training Response
+ */
+export type TrainingResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'training'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** AIR of the trained model produced by this run. Use it to run inference with the trained model. */
+  air: string
+  /** The trained model produced by the training run. */
+  outputs: {
+  /** The file or files that make up the trained model. */
+  files: {
+  /** UUID of the output file. */
+  uuid: string
+  /** URL of the output file. */
+  url: string
+}[]
+}
+}
+
+/**
+ * ControlNet Preprocess Response
+ */
+export type ControlNetPreprocessResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'controlNetPreprocess'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** UUID of the output guide image. */
+  guideImageUUID: string
+  /** URL of the output guide image. */
+  guideImageURL?: string
+  /** Base64-encoded guide image data. */
+  guideImageBase64Data?: string
+  /** Data URI of the output guide image. */
+  guideImageDataURI?: string
+  /** UUID of the input image used for preprocessing. */
+  inputImageUUID: string
+}
+
 /**
  * Image Masking Response
  */
@@ -2789,54 +2881,11 @@ export type ImageMaskingResult = {
 }
 
 /**
- * Age Classification Response
+ * Remove Background Image Response
  */
-export type CaptionResult = {
+export type RemoveBackgroundResult = {
   /** Identifier for the type of task this response belongs to. */
-  taskType: 'caption'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** Machine-readable age classification data. */
-  structuredData: {
-  /** Predicted age range of the subject (e.g. `13-20`). */
-  ageGroup: string
-  /** Confidence score as a percentage. */
-  confidence: number
-}
-}
-
-/**
- * Training Response
- */
-export type TrainingResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'training'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** AIR of the trained model produced by this run. Use it to run inference with the trained model. */
-  air: string
-  /** The trained model produced by the training run. */
-  outputs: {
-  /** The file or files that make up the trained model. */
-  files: {
-  /** UUID of the output file. */
-  uuid: string
-  /** URL of the output file. */
-  url: string
-}[]
-}
-}
-
-/**
- * Upscale Image Response
- */
-export type UpscaleResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'upscale'
+  taskType: 'removeBackground'
   /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
   taskUUID: string
   /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
@@ -2852,74 +2901,17 @@ export type UpscaleResult = {
 }
 
 /**
- * Text Inference Response
+ * Prompt Enhance Response
  */
-export type TextInferenceResult = {
+export type PromptEnhanceResult = {
   /** Identifier for the type of task this response belongs to. */
-  taskType: 'textInference'
+  taskType: 'promptEnhance'
   /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
   taskUUID: string
   /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
   cost?: number
-  /** Generated text content. */
+  /** Enhanced prompt text. */
   text: string
-  /** The reason why the model stopped generating tokens. */
-  finishReason: 'stop' | 'length' | 'content_filter' | 'unknown'
-  /** Token usage statistics for the request. */
-  usage: {
-  /** Number of tokens in the input prompt. */
-  promptTokens: number
-  /** Number of tokens generated in the response. */
-  completionTokens: number
-  /** Total number of tokens used (prompt + completion). */
-  totalTokens: number
-  /** Number of tokens used for internal reasoning. Billed separately. */
-  thinkingTokens?: number
-}
-}
-
-/**
- * Vectorize Response
- */
-export type VectorizeResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'vectorize'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** UUID of the output image. */
-  imageUUID: string
-  /** URL of the output image. */
-  imageURL?: string
-  /** Base64-encoded image data. */
-  imageBase64Data?: string
-  /** Data URI of the output image. */
-  imageDataURI?: string
-}
-
-/**
- * 3D Response
- */
-export type ThreeDInferenceResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: '3dInference'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** Generated output artifacts. */
-  outputs: {
-  /** Generated output files. */
-  files: {
-  /** UUID of the output file. */
-  uuid: string
-  /** URL of the output file. */
-  url: string
-}[]
-}
-  /** The seed used for generation. If none was provided, shows the randomly generated seed. */
-  seed?: number
 }
 
 /**
@@ -2934,83 +2926,6 @@ export type GetTaskDetailsResult = {
   request: Record<string, unknown>[]
   /** The original API response for this task. Contains a `data` array when the task completed successfully, or an `errors` array when the task failed. */
   response: Record<string, unknown>
-}
-
-/**
- * Model Upload Response
- */
-export type ModelUploadResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType?: 'modelUpload'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Status of the upload operation phase. */
-  status: 'validated' | 'downloaded' | 'optimized' | 'stored' | 'ready' | 'failed'
-  /** Status message or error details. */
-  message: string
-  /** The AIR identifier of the uploaded model. */
-  air?: string
-}
-
-/**
- * Task Response
- */
-export type GetResponseResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'authentication' | 'imageInference' | 'videoInference' | 'audioInference' | 'textInference' | 'modelSearch' | 'modelUpload' | 'accountManagement' | 'imageUpload' | 'mediaStorage' | 'getResponse' | 'caption' | 'controlNetPreprocess' | 'imageMasking' | 'promptEnhance' | 'removeBackground' | 'upscale' | 'vectorize' | 'training' | 'ping'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Current status of the task. */
-  status: 'processing' | 'success' | 'error'
-  /** Task progress as a percentage from 0 to 100. Returned while `status` is `processing`, and only for tasks that support progress reporting. */
-  progress?: number
-  /** Error details if the task failed. */
-  error?: {
-  /** Error code. */
-  code?: string
-  /** Error message description. */
-  message?: string
-}
-  [key: string]: unknown
-}
-
-/**
- * Media Storage Response
- */
-export type MediaStorageResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'mediaStorage'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** The media storage operation that produced this response. */
-  operation: 'upload'
-  /** UUID of the stored media. */
-  mediaUUID: string
-  /** URL where the stored media is accessible. */
-  mediaURL: string
-} | {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'mediaStorage'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** The media storage operation that produced this response. */
-  operation: 'delete'
-  /** UUID of the stored media. */
-  mediaUUID: string
-}
-
-/**
- * Image Upload Response
- */
-export type ImageUploadResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'imageUpload'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** UUID of the output image. */
-  imageUUID: string
-  /** URL of the output image. */
-  imageURL: string
 }
 
 /**
@@ -3261,6 +3176,67 @@ export type AccountManagementResult = {
 }
 
 /**
+ * Task Response
+ */
+export type GetResponseResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'authentication' | 'imageInference' | 'videoInference' | 'audioInference' | 'textInference' | 'modelSearch' | 'modelUpload' | 'accountManagement' | 'imageUpload' | 'mediaStorage' | 'getResponse' | 'caption' | 'controlNetPreprocess' | 'imageMasking' | 'promptEnhance' | 'removeBackground' | 'upscale' | 'vectorize' | 'training' | 'ping'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Current status of the task. */
+  status: 'processing' | 'success' | 'error'
+  /** Task progress as a percentage from 0 to 100. Returned while `status` is `processing`, and only for tasks that support progress reporting. */
+  progress?: number
+  /** Error details if the task failed. */
+  error?: {
+  /** Error code. */
+  code?: string
+  /** Error message description. */
+  message?: string
+}
+  [key: string]: unknown
+}
+
+/**
+ * Image Upload Response
+ */
+export type ImageUploadResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'imageUpload'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** UUID of the output image. */
+  imageUUID: string
+  /** URL of the output image. */
+  imageURL: string
+}
+
+/**
+ * Media Storage Response
+ */
+export type MediaStorageResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'mediaStorage'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** The media storage operation that produced this response. */
+  operation: 'upload'
+  /** UUID of the stored media. */
+  mediaUUID: string
+  /** URL where the stored media is accessible. */
+  mediaURL: string
+} | {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'mediaStorage'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** The media storage operation that produced this response. */
+  operation: 'delete'
+  /** UUID of the stored media. */
+  mediaUUID: string
+}
+
+/**
  * Model Search Response
  */
 export type ModelSearchResult = {
@@ -3300,6 +3276,22 @@ export type ModelSearchResult = {
   negativeTriggerWords?: string
 })[]
   [key: string]: unknown
+}
+
+/**
+ * Model Upload Response
+ */
+export type ModelUploadResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType?: 'modelUpload'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Status of the upload operation phase. */
+  status: 'validated' | 'downloaded' | 'optimized' | 'stored' | 'ready' | 'failed'
+  /** Status message or error details. */
+  message: string
+  /** The AIR identifier of the uploaded model. */
+  air?: string
 }
 
 /**
@@ -3443,6 +3435,7 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'alibaba:qwen-image@2.0': { taskType: 'imageInference', id: 'alibaba-qwen-image-2-0' },
   'alibaba:qwen-image@2.0-pro': { taskType: 'imageInference', id: 'alibaba-qwen-image-2-0-pro' },
   'alibaba:qwen-image@2512': { taskType: 'imageInference', id: 'alibaba-qwen-image-2512' },
+  'alibaba:qwen-image@3.0': { taskType: 'imageInference', id: 'alibaba-qwen-image-3-0' },
   'alibaba:qwen-image@layered': { taskType: 'imageInference', id: 'alibaba-qwen-image-layered' },
   'alibaba:qwen@3-tts-1.7b-base': { taskType: 'audioInference', id: 'alibaba-qwen3-tts-1-7b-base' },
   'alibaba:qwen@3-tts-1.7b-customvoice': { taskType: 'audioInference', id: 'alibaba-qwen3-tts-1-7b-customvoice' },
@@ -3542,6 +3535,7 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'ideogram:4@3': { taskType: 'imageInference', id: 'ideogram-3-0-edit' },
   'ideogram:4@4': { taskType: 'imageInference', id: 'ideogram-3-0-reframe' },
   'ideogram:4@5': { taskType: 'imageInference', id: 'ideogram-3-0-replace-background' },
+  'ideogram:4@q': { taskType: 'imageInference', id: 'ideogram-4-0q' },
   'ideogram:4@remix': { taskType: 'imageInference', id: 'ideogram-4-0-remix' },
   'ideogram:layerize-text@0': { taskType: 'imageInference', id: 'ideogram-layerize-text' },
   'imagineart:1.5-pro@0': { taskType: 'imageInference', id: 'imagineart-1-5-pro' },
@@ -3653,6 +3647,7 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'recraft:v4.1@0': { taskType: 'imageInference', id: 'recraft-v4-1' },
   'recraft:v4@0': { taskType: 'imageInference', id: 'recraft-v4' },
   'recraft:v4@vector': { taskType: 'vectorize', id: 'recraft-v4-vector' },
+  'reve:2@1': { taskType: 'imageInference', id: 'reve-2-1' },
   'rundiffusion:110@101': { taskType: 'imageInference', id: 'rundiffusion-juggernaut-lightning-flux' },
   'rundiffusion:120@100': { taskType: 'imageInference', id: 'rundiffusion-juggernaut-base-flux' },
   'rundiffusion:130@100': { taskType: 'imageInference', id: 'rundiffusion-juggernaut-pro-flux' },
@@ -3739,6 +3734,8 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'runware:dia@1.6b': { taskType: 'audioInference', id: 'dia-1-6b' },
   'runware:dia2@2b': { taskType: 'audioInference', id: 'dia2-2b' },
   'runware:flux-1-dev@style-lora-training': { taskType: 'training', id: 'runware-flux-1-dev-style-lora-training' },
+  'runware:flux-2-klein-4b@style-lora-training': { taskType: 'training', id: 'runware-flux-2-klein-4b-style-lora-training' },
+  'runware:flux-2-klein-9b@style-lora-training': { taskType: 'training', id: 'runware-flux-2-klein-9b-style-lora-training' },
   'runware:kandinsky-5.0-image-lite@1': { taskType: 'imageInference', id: 'kandinsky-5-0-image-lite' },
   'runware:llama-3-1-8b@prompt-enhancer': { taskType: 'promptEnhance', id: 'llama-3-1-8b-prompt-enhancer' },
   'runware:qwen-image@style-lora-training': { taskType: 'training', id: 'runware-qwen-image-style-lora-training' },
@@ -3796,6 +3793,7 @@ export type ModelResultMap = {
   'alibaba:qwen-image@2.0': ImageInferenceResult
   'alibaba:qwen-image@2.0-pro': ImageInferenceResult
   'alibaba:qwen-image@2512': ImageInferenceResult
+  'alibaba:qwen-image@3.0': ImageInferenceResult
   'alibaba:qwen-image@layered': ImageInferenceResult
   'alibaba:qwen@3-tts-1.7b-base': AudioInferenceResult
   'alibaba:qwen@3-tts-1.7b-customvoice': AudioInferenceResult
@@ -3895,6 +3893,7 @@ export type ModelResultMap = {
   'ideogram:4@3': ImageInferenceResult
   'ideogram:4@4': ImageInferenceResult
   'ideogram:4@5': ImageInferenceResult
+  'ideogram:4@q': ImageInferenceResult
   'ideogram:4@remix': ImageInferenceResult
   'ideogram:layerize-text@0': ImageInferenceResult
   'imagineart:1.5-pro@0': ImageInferenceResult
@@ -4006,6 +4005,7 @@ export type ModelResultMap = {
   'recraft:v4.1@0': ImageInferenceResult
   'recraft:v4@0': ImageInferenceResult
   'recraft:v4@vector': VectorizeResult
+  'reve:2@1': ImageInferenceResult
   'rundiffusion:110@101': ImageInferenceResult
   'rundiffusion:120@100': ImageInferenceResult
   'rundiffusion:130@100': ImageInferenceResult
@@ -4092,6 +4092,8 @@ export type ModelResultMap = {
   'runware:dia@1.6b': AudioInferenceResult
   'runware:dia2@2b': AudioInferenceResult
   'runware:flux-1-dev@style-lora-training': TrainingResult
+  'runware:flux-2-klein-4b@style-lora-training': TrainingResult
+  'runware:flux-2-klein-9b@style-lora-training': TrainingResult
   'runware:kandinsky-5.0-image-lite@1': ImageInferenceResult
   'runware:llama-3-1-8b@prompt-enhancer': PromptEnhanceResult
   'runware:qwen-image@style-lora-training': TrainingResult
