@@ -8,6 +8,7 @@ import {
 import {
   createConfig,
   createNodeDependencies,
+  isNodeJS,
   DEFAULT_CONFIG,
 } from '../src/config'
 
@@ -34,6 +35,23 @@ describe('Configuration module', () => {
     expect(config.log).toBeDefined()
     expect(typeof config.log.connection).toBe('function')
     expect(typeof config.log.error).toBe('function')
+  })
+})
+
+describe('isNodeJS', () => {
+  afterEach(() => {
+    delete (globalThis as any).window
+  })
+
+  it('detects Node when no browser globals are present', () => {
+    expect(isNodeJS()).toBe(true)
+  })
+
+  it('is false in a browser even when a bundler shims process', () => {
+    // esm.sh / webpack / vite define a `process` shim in the browser; taking
+    // the Node path there resolves the `ws` stub, which throws at connect.
+    ;(globalThis as any).window = { document: {} }
+    expect(isNodeJS()).toBe(false)
   })
 })
 

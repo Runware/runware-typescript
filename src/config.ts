@@ -58,4 +58,8 @@ export const createNodeDependencies = async (): Promise<RuntimeDependencies> => 
 export const isNodeJS = (): boolean => (
   typeof process !== 'undefined'
   && typeof process.versions?.node === 'string'
+  // Bundlers and CDN loaders (esm.sh, webpack, vite) shim `process` in the
+  // browser, where the `ws` package can't run. A window with a document is
+  // a real browser regardless of shims, so never take the Node path there.
+  && !(typeof window !== 'undefined' && typeof window.document !== 'undefined')
 )
