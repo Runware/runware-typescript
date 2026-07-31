@@ -1,5 +1,5 @@
 /**
- * AUTO-GENERATED from schema-map@20260722152433 — do not edit manually.
+ * AUTO-GENERATED from schema-map@20260730181327 — do not edit manually.
  * Run: bun run scripts/generate-types.ts
  */
 
@@ -55,8 +55,11 @@ export type ExactlyIllustrativeParams = {
   /** Enable or disable content safety checking. */
   checkContent?: boolean
 }
+  /** Model-specific advanced configuration options. */
+  advancedFeatures?: {
   /** Watermark configuration. */
   watermark?: unknown
+}
   [key: string]: unknown
 }
 
@@ -68,7 +71,7 @@ export type Flux1DevParams = {
   inputs?: {
   /** Image used as a starting point for the generation (UUID, URL, Data URI, or Base64). */
   seedImage?: unknown
-  /** Image used to specify which areas of the seed image should be edited (UUID, URL, Data URI, or Base64). */
+  /** Image used to specify which areas of the input image should be edited (UUID, URL, Data URI, or Base64). White marks the area to edit, black is preserved. */
   maskImage?: unknown
 }
   /** Text prompt describing elements to include in the generated output. */
@@ -227,8 +230,11 @@ export type Flux1DevParams = {
   /** Enable or disable content safety checking. */
   checkContent?: boolean
 }
+  /** Model-specific advanced configuration options. */
+  advancedFeatures?: {
   /** Watermark configuration. */
   watermark?: unknown
+}
   [key: string]: unknown
 }
 
@@ -339,8 +345,11 @@ export type Flux1KontextDevParams = {
   /** Enable or disable content safety checking. */
   checkContent?: boolean
 }
+  /** Model-specific advanced configuration options. */
+  advancedFeatures?: {
   /** Watermark configuration. */
   watermark?: unknown
+}
   [key: string]: unknown
 }
 
@@ -352,7 +361,7 @@ export type Flux1SchnellParams = {
   inputs?: {
   /** Image used as a starting point for the generation (UUID, URL, Data URI, or Base64). */
   seedImage?: unknown
-  /** Image used to specify which areas of the seed image should be edited (UUID, URL, Data URI, or Base64). */
+  /** Image used to specify which areas of the input image should be edited (UUID, URL, Data URI, or Base64). White marks the area to edit, black is preserved. */
   maskImage?: unknown
 }
   /** Text prompt describing elements to include in the generated output. */
@@ -472,8 +481,11 @@ export type Flux1SchnellParams = {
   /** Enable or disable content safety checking. */
   checkContent?: boolean
 }
+  /** Model-specific advanced configuration options. */
+  advancedFeatures?: {
   /** Watermark configuration. */
   watermark?: unknown
+}
   [key: string]: unknown
 }
 
@@ -485,7 +497,7 @@ export type IllustriousParams = {
   inputs?: {
   /** Image used as a starting point for the generation (UUID, URL, Data URI, or Base64). */
   seedImage?: unknown
-  /** Image used to specify which areas of the seed image should be edited (UUID, URL, Data URI, or Base64). */
+  /** Image used to specify which areas of the input image should be edited (UUID, URL, Data URI, or Base64). White marks the area to edit, black is preserved. */
   maskImage?: unknown
 }
   /** Text prompt describing elements to include in the generated output. */
@@ -655,8 +667,11 @@ export type IllustriousParams = {
   /** Enable or disable content safety checking. */
   checkContent?: boolean
 }
+  /** Model-specific advanced configuration options. */
+  advancedFeatures?: {
   /** Watermark configuration. */
   watermark?: unknown
+}
   [key: string]: unknown
 }
 
@@ -668,7 +683,7 @@ export type NoobaiParams = {
   inputs?: {
   /** Image used as a starting point for the generation (UUID, URL, Data URI, or Base64). */
   seedImage?: unknown
-  /** Image used to specify which areas of the seed image should be edited (UUID, URL, Data URI, or Base64). */
+  /** Image used to specify which areas of the input image should be edited (UUID, URL, Data URI, or Base64). White marks the area to edit, black is preserved. */
   maskImage?: unknown
 }
   /** Text prompt describing elements to include in the generated output. */
@@ -838,8 +853,11 @@ export type NoobaiParams = {
   /** Enable or disable content safety checking. */
   checkContent?: boolean
 }
+  /** Model-specific advanced configuration options. */
+  advancedFeatures?: {
   /** Watermark configuration. */
   watermark?: unknown
+}
   [key: string]: unknown
 }
 
@@ -851,7 +869,7 @@ export type PonyParams = {
   inputs?: {
   /** Image used as a starting point for the generation (UUID, URL, Data URI, or Base64). */
   seedImage?: unknown
-  /** Image used to specify which areas of the seed image should be edited (UUID, URL, Data URI, or Base64). */
+  /** Image used to specify which areas of the input image should be edited (UUID, URL, Data URI, or Base64). White marks the area to edit, black is preserved. */
   maskImage?: unknown
 }
   /** Text prompt describing elements to include in the generated output. */
@@ -1021,8 +1039,11 @@ export type PonyParams = {
   /** Enable or disable content safety checking. */
   checkContent?: boolean
 }
+  /** Model-specific advanced configuration options. */
+  advancedFeatures?: {
   /** Watermark configuration. */
   watermark?: unknown
+}
   [key: string]: unknown
 }
 
@@ -1034,7 +1055,7 @@ export type Sd15Params = {
   inputs?: {
   /** Image used as a starting point for the generation (UUID, URL, Data URI, or Base64). */
   seedImage?: unknown
-  /** Image used to specify which areas of the seed image should be edited (UUID, URL, Data URI, or Base64). */
+  /** Image used to specify which areas of the input image should be edited (UUID, URL, Data URI, or Base64). White marks the area to edit, black is preserved. */
   maskImage?: unknown
 }
   /** Text prompt describing elements to include in the generated output. */
@@ -1195,8 +1216,11 @@ export type Sd15Params = {
   /** Enable or disable content safety checking. */
   checkContent?: boolean
 }
+  /** Model-specific advanced configuration options. */
+  advancedFeatures?: {
   /** Watermark configuration. */
   watermark?: unknown
+}
   [key: string]: unknown
 }
 
@@ -1208,7 +1232,7 @@ export type SdxlParams = {
   inputs?: {
   /** Image used as a starting point for the generation (UUID, URL, Data URI, or Base64). */
   seedImage?: unknown
-  /** Image used to specify which areas of the seed image should be edited (UUID, URL, Data URI, or Base64). */
+  /** Image used to specify which areas of the input image should be edited (UUID, URL, Data URI, or Base64). White marks the area to edit, black is preserved. */
   maskImage?: unknown
 }
   /** Text prompt describing elements to include in the generated output. */
@@ -1387,8 +1411,11 @@ export type SdxlParams = {
   /** Enable or disable content safety checking. */
   checkContent?: boolean
 }
+  /** Model-specific advanced configuration options. */
+  advancedFeatures?: {
   /** Watermark configuration. */
   watermark?: unknown
+}
   [key: string]: unknown
 }
 
@@ -1400,7 +1427,7 @@ export type SdxlLightningParams = {
   inputs?: {
   /** Image used as a starting point for the generation (UUID, URL, Data URI, or Base64). */
   seedImage?: unknown
-  /** Image used to specify which areas of the seed image should be edited (UUID, URL, Data URI, or Base64). */
+  /** Image used to specify which areas of the input image should be edited (UUID, URL, Data URI, or Base64). White marks the area to edit, black is preserved. */
   maskImage?: unknown
 }
   /** Text prompt describing elements to include in the generated output. */
@@ -1570,8 +1597,11 @@ export type SdxlLightningParams = {
   /** Enable or disable content safety checking. */
   checkContent?: boolean
 }
+  /** Model-specific advanced configuration options. */
+  advancedFeatures?: {
   /** Watermark configuration. */
   watermark?: unknown
+}
   [key: string]: unknown
 }
 
@@ -1583,7 +1613,7 @@ export type SdxlTurboParams = {
   inputs?: {
   /** Image used as a starting point for the generation (UUID, URL, Data URI, or Base64). */
   seedImage?: unknown
-  /** Image used to specify which areas of the seed image should be edited (UUID, URL, Data URI, or Base64). */
+  /** Image used to specify which areas of the input image should be edited (UUID, URL, Data URI, or Base64). White marks the area to edit, black is preserved. */
   maskImage?: unknown
 }
   /** Text prompt describing elements to include in the generated output. */
@@ -1753,8 +1783,11 @@ export type SdxlTurboParams = {
   /** Enable or disable content safety checking. */
   checkContent?: boolean
 }
+  /** Model-specific advanced configuration options. */
+  advancedFeatures?: {
   /** Watermark configuration. */
   watermark?: unknown
+}
   [key: string]: unknown
 }
 
@@ -1766,7 +1799,7 @@ export type ZImageParams = {
   inputs?: {
   /** Image used as a starting point for the generation (UUID, URL, Data URI, or Base64). */
   seedImage?: unknown
-  /** Image used to specify which areas of the seed image should be edited (UUID, URL, Data URI, or Base64). */
+  /** Image used to specify which areas of the input image should be edited (UUID, URL, Data URI, or Base64). White marks the area to edit, black is preserved. */
   maskImage?: unknown
 }
   /** Text prompt describing elements to include in the generated output. */
@@ -1871,8 +1904,11 @@ export type ZImageParams = {
   /** Enable or disable content safety checking. */
   checkContent?: boolean
 }
+  /** Model-specific advanced configuration options. */
+  advancedFeatures?: {
   /** Watermark configuration. */
   watermark?: unknown
+}
   [key: string]: unknown
 }
 
@@ -1884,7 +1920,7 @@ export type ZImageTurboParams = {
   inputs?: {
   /** Image used as a starting point for the generation (UUID, URL, Data URI, or Base64). */
   seedImage?: unknown
-  /** Image used to specify which areas of the seed image should be edited (UUID, URL, Data URI, or Base64). */
+  /** Image used to specify which areas of the input image should be edited (UUID, URL, Data URI, or Base64). White marks the area to edit, black is preserved. */
   maskImage?: unknown
 }
   /** Text prompt describing elements to include in the generated output. */
@@ -2008,8 +2044,11 @@ export type ZImageTurboParams = {
   /** Enable or disable content safety checking. */
   checkContent?: boolean
 }
+  /** Model-specific advanced configuration options. */
+  advancedFeatures?: {
   /** Watermark configuration. */
   watermark?: unknown
+}
   [key: string]: unknown
 }
 
@@ -2101,8 +2140,11 @@ export type ImageInferenceParams = {
   /** Enable or disable content safety checking. */
   checkContent?: boolean
 }
+  /** Model-specific advanced configuration options. */
+  advancedFeatures?: {
   /** Watermark configuration. */
   watermark?: unknown
+}
   [key: string]: unknown
 }
 
@@ -2165,7 +2207,7 @@ export type VideoInferenceParams = {
   /** Enable or disable content safety checking. */
   checkContent?: boolean
   /** Safety checking mode for video generation. */
-  mode?: 'none' | 'fast' | 'full'
+  mode?: 'fast' | 'full'
 }
   [key: string]: unknown
 }
@@ -2630,30 +2672,6 @@ export type ModelUploadParams = {
 }
 
 /**
- * Video Response
- */
-export type VideoInferenceResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'videoInference'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** UUID of the output video. */
-  videoUUID: string
-  /** URL of the output video. */
-  videoURL?: string
-  /** Base64-encoded video data. */
-  videoBase64Data?: string
-  /** Data URI of the output video. */
-  videoDataURI?: string
-  /** The seed used for generation. If none was provided, shows the randomly generated seed. */
-  seed?: number
-  /** Flag indicating if NSFW content was detected. */
-  NSFWContent?: boolean
-}
-
-/**
  * Image Response
  */
 export type ImageInferenceResult = {
@@ -2675,17 +2693,6 @@ export type ImageInferenceResult = {
   seed?: number
   /** Flag indicating if NSFW content was detected. */
   NSFWContent?: boolean
-}
-
-export type CaptionResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'caption'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** Segmented video caption. The video is split into 6-second intervals, each formatted as [segment_index] (start-end): description text. */
-  text: string
 }
 
 /**
@@ -2716,6 +2723,44 @@ export type TextInferenceResult = {
 }
 
 /**
+ * Video Response
+ */
+export type VideoInferenceResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'videoInference'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** UUID of the output video. */
+  videoUUID: string
+  /** URL of the output video. */
+  videoURL?: string
+  /** Base64-encoded video data. */
+  videoBase64Data?: string
+  /** Data URI of the output video. */
+  videoDataURI?: string
+  /** The seed used for generation. If none was provided, shows the randomly generated seed. */
+  seed?: number
+  /** Flag indicating if NSFW content was detected. */
+  NSFWContent?: boolean
+}
+
+/**
+ * Caption Text Response
+ */
+export type CaptionResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'caption'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** Generated caption text describing the input. */
+  text: string
+}
+
+/**
  * Audio Response
  */
 export type AudioInferenceResult = {
@@ -2735,70 +2780,6 @@ export type AudioInferenceResult = {
   audioDataURI?: string
   /** The seed used for generation. If none was provided, shows the randomly generated seed. */
   seed?: number
-}
-
-/**
- * 3D Response
- */
-export type ThreeDInferenceResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: '3dInference'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** Generated output artifacts. */
-  outputs: {
-  /** Generated output files. */
-  files: {
-  /** UUID of the output file. */
-  uuid: string
-  /** URL of the output file. */
-  url: string
-}[]
-}
-  /** The seed used for generation. If none was provided, shows the randomly generated seed. */
-  seed?: number
-}
-
-/**
- * Vectorize Response
- */
-export type VectorizeResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'vectorize'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** UUID of the output image. */
-  imageUUID: string
-  /** URL of the output image. */
-  imageURL?: string
-  /** Base64-encoded image data. */
-  imageBase64Data?: string
-  /** Data URI of the output image. */
-  imageDataURI?: string
-}
-
-/**
- * Upscale Video Response
- */
-export type UpscaleResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'upscale'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** UUID of the output video. */
-  videoUUID: string
-  /** URL of the output video. */
-  videoURL?: string
-  /** Base64-encoded video data. */
-  videoBase64Data?: string
-  /** Data URI of the output video. */
-  videoDataURI?: string
 }
 
 /**
@@ -2826,25 +2807,43 @@ export type TrainingResult = {
 }
 
 /**
- * ControlNet Preprocess Response
+ * Remove Background Image Response
  */
-export type ControlNetPreprocessResult = {
+export type RemoveBackgroundResult = {
   /** Identifier for the type of task this response belongs to. */
-  taskType: 'controlNetPreprocess'
+  taskType: 'removeBackground'
   /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
   taskUUID: string
   /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
   cost?: number
-  /** UUID of the output guide image. */
-  guideImageUUID: string
-  /** URL of the output guide image. */
-  guideImageURL?: string
-  /** Base64-encoded guide image data. */
-  guideImageBase64Data?: string
-  /** Data URI of the output guide image. */
-  guideImageDataURI?: string
-  /** UUID of the input image used for preprocessing. */
-  inputImageUUID: string
+  /** UUID of the output image. */
+  imageUUID: string
+  /** URL of the output image. */
+  imageURL?: string
+  /** Base64-encoded image data. */
+  imageBase64Data?: string
+  /** Data URI of the output image. */
+  imageDataURI?: string
+}
+
+/**
+ * Upscale Image Response
+ */
+export type UpscaleResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'upscale'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** UUID of the output image. */
+  imageUUID: string
+  /** URL of the output image. */
+  imageURL?: string
+  /** Base64-encoded image data. */
+  imageBase64Data?: string
+  /** Data URI of the output image. */
+  imageDataURI?: string
 }
 
 /**
@@ -2881,23 +2880,25 @@ export type ImageMaskingResult = {
 }
 
 /**
- * Remove Background Image Response
+ * ControlNet Preprocess Response
  */
-export type RemoveBackgroundResult = {
+export type ControlNetPreprocessResult = {
   /** Identifier for the type of task this response belongs to. */
-  taskType: 'removeBackground'
+  taskType: 'controlNetPreprocess'
   /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
   taskUUID: string
   /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
   cost?: number
-  /** UUID of the output image. */
-  imageUUID: string
-  /** URL of the output image. */
-  imageURL?: string
-  /** Base64-encoded image data. */
-  imageBase64Data?: string
-  /** Data URI of the output image. */
-  imageDataURI?: string
+  /** UUID of the output guide image. */
+  guideImageUUID: string
+  /** URL of the output guide image. */
+  guideImageURL?: string
+  /** Base64-encoded guide image data. */
+  guideImageBase64Data?: string
+  /** Data URI of the output guide image. */
+  guideImageDataURI?: string
+  /** UUID of the input image used for preprocessing. */
+  inputImageUUID: string
 }
 
 /**
@@ -2915,17 +2916,72 @@ export type PromptEnhanceResult = {
 }
 
 /**
- * Get Task Details Response
+ * Vectorize Response
  */
-export type GetTaskDetailsResult = {
+export type VectorizeResult = {
   /** Identifier for the type of task this response belongs to. */
-  taskType: 'getTaskDetails'
+  taskType: 'vectorize'
   /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
   taskUUID: string
-  /** The original request array sent for this task. The structure of each object depends on the task type. */
-  request: Record<string, unknown>[]
-  /** The original API response for this task. Contains a `data` array when the task completed successfully, or an `errors` array when the task failed. */
-  response: Record<string, unknown>
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** UUID of the output image. */
+  imageUUID: string
+  /** URL of the output image. */
+  imageURL?: string
+  /** Base64-encoded image data. */
+  imageBase64Data?: string
+  /** Data URI of the output image. */
+  imageDataURI?: string
+}
+
+/**
+ * 3D Response
+ */
+export type ThreeDInferenceResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: '3dInference'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** Generated output artifacts. */
+  outputs: {
+  /** Generated output files. */
+  files: {
+  /** UUID of the output file. */
+  uuid: string
+  /** URL of the output file. */
+  url: string
+}[]
+}
+  /** The seed used for generation. If none was provided, shows the randomly generated seed. */
+  seed?: number
+}
+
+/**
+ * Media Storage Response
+ */
+export type MediaStorageResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'mediaStorage'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** The media storage operation that produced this response. */
+  operation: 'upload'
+  /** UUID of the stored media. */
+  mediaUUID: string
+  /** URL where the stored media is accessible. */
+  mediaURL: string
+} | {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'mediaStorage'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** The media storage operation that produced this response. */
+  operation: 'delete'
+  /** UUID of the stored media. */
+  mediaUUID: string
 }
 
 /**
@@ -3176,28 +3232,6 @@ export type AccountManagementResult = {
 }
 
 /**
- * Task Response
- */
-export type GetResponseResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'authentication' | 'imageInference' | 'videoInference' | 'audioInference' | 'textInference' | 'modelSearch' | 'modelUpload' | 'accountManagement' | 'imageUpload' | 'mediaStorage' | 'getResponse' | 'caption' | 'controlNetPreprocess' | 'imageMasking' | 'promptEnhance' | 'removeBackground' | 'upscale' | 'vectorize' | 'training' | 'ping'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Current status of the task. */
-  status: 'processing' | 'success' | 'error'
-  /** Task progress as a percentage from 0 to 100. Returned while `status` is `processing`, and only for tasks that support progress reporting. */
-  progress?: number
-  /** Error details if the task failed. */
-  error?: {
-  /** Error code. */
-  code?: string
-  /** Error message description. */
-  message?: string
-}
-  [key: string]: unknown
-}
-
-/**
  * Image Upload Response
  */
 export type ImageUploadResult = {
@@ -3212,28 +3246,19 @@ export type ImageUploadResult = {
 }
 
 /**
- * Media Storage Response
+ * Model Upload Response
  */
-export type MediaStorageResult = {
+export type ModelUploadResult = {
   /** Identifier for the type of task this response belongs to. */
-  taskType: 'mediaStorage'
+  taskType?: 'modelUpload'
   /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
   taskUUID: string
-  /** The media storage operation that produced this response. */
-  operation: 'upload'
-  /** UUID of the stored media. */
-  mediaUUID: string
-  /** URL where the stored media is accessible. */
-  mediaURL: string
-} | {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'mediaStorage'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** The media storage operation that produced this response. */
-  operation: 'delete'
-  /** UUID of the stored media. */
-  mediaUUID: string
+  /** Status of the upload operation phase. */
+  status: 'validated' | 'downloaded' | 'optimized' | 'stored' | 'ready' | 'failed'
+  /** Status message or error details. */
+  message: string
+  /** The AIR identifier of the uploaded model. */
+  air?: string
 }
 
 /**
@@ -3279,19 +3304,39 @@ export type ModelSearchResult = {
 }
 
 /**
- * Model Upload Response
+ * Task Response
  */
-export type ModelUploadResult = {
+export type GetResponseResult = {
   /** Identifier for the type of task this response belongs to. */
-  taskType?: 'modelUpload'
+  taskType: 'authentication' | 'imageInference' | 'videoInference' | 'audioInference' | 'textInference' | 'modelSearch' | 'modelUpload' | 'accountManagement' | 'imageUpload' | 'mediaStorage' | 'getResponse' | 'caption' | 'controlNetPreprocess' | 'imageMasking' | 'promptEnhance' | 'removeBackground' | 'upscale' | 'vectorize' | 'training' | 'ping'
   /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
   taskUUID: string
-  /** Status of the upload operation phase. */
-  status: 'validated' | 'downloaded' | 'optimized' | 'stored' | 'ready' | 'failed'
-  /** Status message or error details. */
-  message: string
-  /** The AIR identifier of the uploaded model. */
-  air?: string
+  /** Current status of the task. */
+  status: 'processing' | 'success' | 'error'
+  /** Task progress as a percentage from 0 to 100. Returned while `status` is `processing`, and only for tasks that support progress reporting. */
+  progress?: number
+  /** Error details if the task failed. */
+  error?: {
+  /** Error code. */
+  code?: string
+  /** Error message description. */
+  message?: string
+}
+  [key: string]: unknown
+}
+
+/**
+ * Get Task Details Response
+ */
+export type GetTaskDetailsResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'getTaskDetails'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** The original request array sent for this task. The structure of each object depends on the task type. */
+  request: Record<string, unknown>[]
+  /** The original API response for this task. Contains a `data` array when the task completed successfully, or an `errors` array when the task failed. */
+  response: Record<string, unknown>
 }
 
 /**
@@ -3435,13 +3480,10 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'alibaba:qwen-image@2.0': { taskType: 'imageInference', id: 'alibaba-qwen-image-2-0' },
   'alibaba:qwen-image@2.0-pro': { taskType: 'imageInference', id: 'alibaba-qwen-image-2-0-pro' },
   'alibaba:qwen-image@2512': { taskType: 'imageInference', id: 'alibaba-qwen-image-2512' },
-  'alibaba:qwen-image@3.0': { taskType: 'imageInference', id: 'alibaba-qwen-image-3-0' },
   'alibaba:qwen-image@layered': { taskType: 'imageInference', id: 'alibaba-qwen-image-layered' },
   'alibaba:qwen@3-tts-1.7b-base': { taskType: 'audioInference', id: 'alibaba-qwen3-tts-1-7b-base' },
   'alibaba:qwen@3-tts-1.7b-customvoice': { taskType: 'audioInference', id: 'alibaba-qwen3-tts-1-7b-customvoice' },
   'alibaba:qwen@3-tts-1.7b-voicedesign': { taskType: 'audioInference', id: 'alibaba-qwen3-tts-1-7b-voicedesign' },
-  'alibaba:qwen@3.5-27b': { taskType: 'textInference', id: 'alibaba-qwen3-5-27b' },
-  'alibaba:qwen@3.5-397b': { taskType: 'textInference', id: 'alibaba-qwen3-5-397b' },
   'alibaba:wan@2.6': { taskType: 'videoInference', id: 'alibaba-wan2-6' },
   'alibaba:wan@2.6-flash': { taskType: 'videoInference', id: 'alibaba-wan2-6-flash' },
   'alibaba:wan@2.6-image': { taskType: 'imageInference', id: 'alibaba-wan2-6-image' },
@@ -3538,6 +3580,7 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'ideogram:4@q': { taskType: 'imageInference', id: 'ideogram-4-0q' },
   'ideogram:4@remix': { taskType: 'imageInference', id: 'ideogram-4-0-remix' },
   'ideogram:layerize-text@0': { taskType: 'imageInference', id: 'ideogram-layerize-text' },
+  'ideogram:object-remover@0': { taskType: 'imageInference', id: 'ideogram-object-remover' },
   'imagineart:1.5-pro@0': { taskType: 'imageInference', id: 'imagineart-1-5-pro' },
   'imagineart:1@5': { taskType: 'imageInference', id: 'imagineart-1-5' },
   'imagineart:2.0@0': { taskType: 'imageInference', id: 'imagineart-2-0' },
@@ -3575,6 +3618,8 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'klingai:kling@o1-standard': { taskType: 'videoInference', id: 'klingai-video-o1-standard' },
   'krea:krea@2-large': { taskType: 'imageInference', id: 'krea-2-large' },
   'krea:krea@2-medium': { taskType: 'imageInference', id: 'krea-2-medium' },
+  'krea:krea@2-medium-turbo': { taskType: 'imageInference', id: 'krea-2-medium-turbo' },
+  'krea:krea@2-raw': { taskType: 'imageInference', id: 'krea-2-raw' },
   'krea:krea@2-turbo': { taskType: 'imageInference', id: 'krea-2-turbo' },
   'lightricks:2@0': { taskType: 'videoInference', id: 'lightricks-ltx-2-pro' },
   'lightricks:2@1': { taskType: 'videoInference', id: 'lightricks-ltx-2-fast' },
@@ -3596,7 +3641,6 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'minimax:3@1': { taskType: 'videoInference', id: 'minimax-hailuo-02' },
   'minimax:4@1': { taskType: 'videoInference', id: 'minimax-hailuo-2-3' },
   'minimax:4@2': { taskType: 'videoInference', id: 'minimax-hailuo-2-3-fast' },
-  'minimax:m2.5@0': { taskType: 'textInference', id: 'minimax-m2-5' },
   'minimax:m2.7@0': { taskType: 'textInference', id: 'minimax-m2-7' },
   'minimax:m2.7@highspeed': { taskType: 'textInference', id: 'minimax-m2-7-highspeed' },
   'minimax:m3@0': { taskType: 'textInference', id: 'minimax-m3' },
@@ -3679,8 +3723,6 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'runware:152@50': { taskType: 'caption', id: 'qwen2-5-vl-7b-age-detector' },
   'runware:153@1': { taskType: 'caption', id: 'vit-age-classifier' },
   'runware:154@1': { taskType: 'caption', id: 'open-age-detection' },
-  'runware:180@1': { taskType: 'imageInference', id: 'tencent-hunyuanimage-3-0' },
-  'runware:190@1': { taskType: 'videoInference', id: 'ovi' },
   'runware:201@1': { taskType: 'videoInference', id: 'alibaba-wan2-5-preview' },
   'runware:201@10': { taskType: 'imageInference', id: 'alibaba-wan2-5-preview-image' },
   'runware:300@1': { taskType: 'imageInference', id: 'object-eraser' },
@@ -3719,6 +3761,7 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'runware:ace-step@v1.5-xl-base': { taskType: 'audioInference', id: 'ace-step-v1-5-xl-base' },
   'runware:ace-step@v1.5-xl-sft': { taskType: 'audioInference', id: 'ace-step-v1-5-xl-sft' },
   'runware:ace-step@v1.5-xl-turbo': { taskType: 'audioInference', id: 'ace-step-v1-5-xl-turbo' },
+  'runware:content-safety@1': { taskType: 'caption', id: 'content-safety' },
   'runware:controlnet-preprocess@canny': { taskType: 'controlNetPreprocess', id: 'controlnet-preprocess-canny' },
   'runware:controlnet-preprocess@depth': { taskType: 'controlNetPreprocess', id: 'controlnet-preprocess-depth' },
   'runware:controlnet-preprocess@lineart': { taskType: 'controlNetPreprocess', id: 'controlnet-preprocess-lineart' },
@@ -3731,7 +3774,6 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'runware:controlnet-preprocess@shuffle': { taskType: 'controlNetPreprocess', id: 'controlnet-preprocess-shuffle' },
   'runware:controlnet-preprocess@softedge': { taskType: 'controlNetPreprocess', id: 'controlnet-preprocess-softedge' },
   'runware:controlnet-preprocess@tile': { taskType: 'controlNetPreprocess', id: 'controlnet-preprocess-tile' },
-  'runware:dia@1.6b': { taskType: 'audioInference', id: 'dia-1-6b' },
   'runware:dia2@2b': { taskType: 'audioInference', id: 'dia2-2b' },
   'runware:flux-1-dev@style-lora-training': { taskType: 'training', id: 'runware-flux-1-dev-style-lora-training' },
   'runware:flux-2-klein-4b@style-lora-training': { taskType: 'training', id: 'runware-flux-2-klein-4b-style-lora-training' },
@@ -3778,7 +3820,6 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'xai:grok-imagine@video-1.5': { taskType: 'videoInference', id: 'xai-grok-imagine-video-1-5' },
   'xai:grok@4.3': { taskType: 'textInference', id: 'xai-grok-4-3' },
   'xai:tts@0': { taskType: 'audioInference', id: 'xai-tts' },
-  'zai:glm@4.7': { taskType: 'textInference', id: 'zai-glm-4-7' },
   'zai:glm@5.1': { taskType: 'textInference', id: 'zai-glm-5-1' }
 }
 
@@ -3793,13 +3834,10 @@ export type ModelResultMap = {
   'alibaba:qwen-image@2.0': ImageInferenceResult
   'alibaba:qwen-image@2.0-pro': ImageInferenceResult
   'alibaba:qwen-image@2512': ImageInferenceResult
-  'alibaba:qwen-image@3.0': ImageInferenceResult
   'alibaba:qwen-image@layered': ImageInferenceResult
   'alibaba:qwen@3-tts-1.7b-base': AudioInferenceResult
   'alibaba:qwen@3-tts-1.7b-customvoice': AudioInferenceResult
   'alibaba:qwen@3-tts-1.7b-voicedesign': AudioInferenceResult
-  'alibaba:qwen@3.5-27b': TextInferenceResult
-  'alibaba:qwen@3.5-397b': TextInferenceResult
   'alibaba:wan@2.6': VideoInferenceResult
   'alibaba:wan@2.6-flash': VideoInferenceResult
   'alibaba:wan@2.6-image': ImageInferenceResult
@@ -3896,6 +3934,7 @@ export type ModelResultMap = {
   'ideogram:4@q': ImageInferenceResult
   'ideogram:4@remix': ImageInferenceResult
   'ideogram:layerize-text@0': ImageInferenceResult
+  'ideogram:object-remover@0': ImageInferenceResult
   'imagineart:1.5-pro@0': ImageInferenceResult
   'imagineart:1@5': ImageInferenceResult
   'imagineart:2.0@0': ImageInferenceResult
@@ -3933,6 +3972,8 @@ export type ModelResultMap = {
   'klingai:kling@o1-standard': VideoInferenceResult
   'krea:krea@2-large': ImageInferenceResult
   'krea:krea@2-medium': ImageInferenceResult
+  'krea:krea@2-medium-turbo': ImageInferenceResult
+  'krea:krea@2-raw': ImageInferenceResult
   'krea:krea@2-turbo': ImageInferenceResult
   'lightricks:2@0': VideoInferenceResult
   'lightricks:2@1': VideoInferenceResult
@@ -3954,7 +3995,6 @@ export type ModelResultMap = {
   'minimax:3@1': VideoInferenceResult
   'minimax:4@1': VideoInferenceResult
   'minimax:4@2': VideoInferenceResult
-  'minimax:m2.5@0': TextInferenceResult
   'minimax:m2.7@0': TextInferenceResult
   'minimax:m2.7@highspeed': TextInferenceResult
   'minimax:m3@0': TextInferenceResult
@@ -4037,8 +4077,6 @@ export type ModelResultMap = {
   'runware:152@50': CaptionResult
   'runware:153@1': CaptionResult
   'runware:154@1': CaptionResult
-  'runware:180@1': ImageInferenceResult
-  'runware:190@1': VideoInferenceResult
   'runware:201@1': VideoInferenceResult
   'runware:201@10': ImageInferenceResult
   'runware:300@1': ImageInferenceResult
@@ -4077,6 +4115,7 @@ export type ModelResultMap = {
   'runware:ace-step@v1.5-xl-base': AudioInferenceResult
   'runware:ace-step@v1.5-xl-sft': AudioInferenceResult
   'runware:ace-step@v1.5-xl-turbo': AudioInferenceResult
+  'runware:content-safety@1': CaptionResult
   'runware:controlnet-preprocess@canny': ControlNetPreprocessResult
   'runware:controlnet-preprocess@depth': ControlNetPreprocessResult
   'runware:controlnet-preprocess@lineart': ControlNetPreprocessResult
@@ -4089,7 +4128,6 @@ export type ModelResultMap = {
   'runware:controlnet-preprocess@shuffle': ControlNetPreprocessResult
   'runware:controlnet-preprocess@softedge': ControlNetPreprocessResult
   'runware:controlnet-preprocess@tile': ControlNetPreprocessResult
-  'runware:dia@1.6b': AudioInferenceResult
   'runware:dia2@2b': AudioInferenceResult
   'runware:flux-1-dev@style-lora-training': TrainingResult
   'runware:flux-2-klein-4b@style-lora-training': TrainingResult
@@ -4136,7 +4174,6 @@ export type ModelResultMap = {
   'xai:grok-imagine@video-1.5': VideoInferenceResult
   'xai:grok@4.3': TextInferenceResult
   'xai:tts@0': AudioInferenceResult
-  'zai:glm@4.7': TextInferenceResult
   'zai:glm@5.1': TextInferenceResult
 }
 
