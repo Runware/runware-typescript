@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      # Mints the OIDC token npm exchanges for publish rights (trusted publishing).
+      id-token: write
     steps:
       - uses: actions/checkout@v4
 
@@ -18,7 +20,12 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
+          node-version: 24
           registry-url: 'https://registry.npmjs.org'
+
+      # Trusted publishing needs npm 11.5.1 or newer, which is ahead of the npm
+      # bundled with the runner's Node.
+      - run: npm install -g npm@latest
 
       - run: bun install
 
@@ -42,6 +49,6 @@ jobs:
             exit 1
           fi
 
+      # Authenticates over OIDC via the trusted publisher configured on npm, so
+      # no token is involved.
       - run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
