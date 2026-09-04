@@ -1,5 +1,5 @@
 /**
- * AUTO-GENERATED from schema-map@20260730181327 — do not edit manually.
+ * AUTO-GENERATED from schema-map@20260903174949 — do not edit manually.
  * Run: bun run scripts/generate-types.ts
  */
 
@@ -52,7 +52,7 @@ export type ExactlyIllustrativeParams = {
   deliveryMethod?: 'sync' | 'async'
   /** Content safety checking configuration for image generation. */
   safety?: {
-  /** Enable or disable content safety checking. */
+  /** Enable or disable content safety checking. Increases total generation time. */
   checkContent?: boolean
 }
   /** Model-specific advanced configuration options. */
@@ -227,7 +227,7 @@ export type Flux1DevParams = {
   deliveryMethod?: 'sync' | 'async'
   /** Content safety checking configuration for image generation. */
   safety?: {
-  /** Enable or disable content safety checking. */
+  /** Enable or disable content safety checking. Increases total generation time. */
   checkContent?: boolean
 }
   /** Model-specific advanced configuration options. */
@@ -342,7 +342,7 @@ export type Flux1KontextDevParams = {
   deliveryMethod?: 'sync' | 'async'
   /** Content safety checking configuration for image generation. */
   safety?: {
-  /** Enable or disable content safety checking. */
+  /** Enable or disable content safety checking. Increases total generation time. */
   checkContent?: boolean
 }
   /** Model-specific advanced configuration options. */
@@ -478,7 +478,7 @@ export type Flux1SchnellParams = {
   deliveryMethod?: 'sync' | 'async'
   /** Content safety checking configuration for image generation. */
   safety?: {
-  /** Enable or disable content safety checking. */
+  /** Enable or disable content safety checking. Increases total generation time. */
   checkContent?: boolean
 }
   /** Model-specific advanced configuration options. */
@@ -664,7 +664,7 @@ export type IllustriousParams = {
   deliveryMethod?: 'sync' | 'async'
   /** Content safety checking configuration for image generation. */
   safety?: {
-  /** Enable or disable content safety checking. */
+  /** Enable or disable content safety checking. Increases total generation time. */
   checkContent?: boolean
 }
   /** Model-specific advanced configuration options. */
@@ -850,7 +850,7 @@ export type NoobaiParams = {
   deliveryMethod?: 'sync' | 'async'
   /** Content safety checking configuration for image generation. */
   safety?: {
-  /** Enable or disable content safety checking. */
+  /** Enable or disable content safety checking. Increases total generation time. */
   checkContent?: boolean
 }
   /** Model-specific advanced configuration options. */
@@ -1036,7 +1036,7 @@ export type PonyParams = {
   deliveryMethod?: 'sync' | 'async'
   /** Content safety checking configuration for image generation. */
   safety?: {
-  /** Enable or disable content safety checking. */
+  /** Enable or disable content safety checking. Increases total generation time. */
   checkContent?: boolean
 }
   /** Model-specific advanced configuration options. */
@@ -1213,7 +1213,7 @@ export type Sd15Params = {
   deliveryMethod?: 'sync' | 'async'
   /** Content safety checking configuration for image generation. */
   safety?: {
-  /** Enable or disable content safety checking. */
+  /** Enable or disable content safety checking. Increases total generation time. */
   checkContent?: boolean
 }
   /** Model-specific advanced configuration options. */
@@ -1408,7 +1408,7 @@ export type SdxlParams = {
   deliveryMethod?: 'sync' | 'async'
   /** Content safety checking configuration for image generation. */
   safety?: {
-  /** Enable or disable content safety checking. */
+  /** Enable or disable content safety checking. Increases total generation time. */
   checkContent?: boolean
 }
   /** Model-specific advanced configuration options. */
@@ -1594,7 +1594,7 @@ export type SdxlLightningParams = {
   deliveryMethod?: 'sync' | 'async'
   /** Content safety checking configuration for image generation. */
   safety?: {
-  /** Enable or disable content safety checking. */
+  /** Enable or disable content safety checking. Increases total generation time. */
   checkContent?: boolean
 }
   /** Model-specific advanced configuration options. */
@@ -1780,7 +1780,7 @@ export type SdxlTurboParams = {
   deliveryMethod?: 'sync' | 'async'
   /** Content safety checking configuration for image generation. */
   safety?: {
-  /** Enable or disable content safety checking. */
+  /** Enable or disable content safety checking. Increases total generation time. */
   checkContent?: boolean
 }
   /** Model-specific advanced configuration options. */
@@ -1901,7 +1901,7 @@ export type ZImageParams = {
   deliveryMethod?: 'sync' | 'async'
   /** Content safety checking configuration for image generation. */
   safety?: {
-  /** Enable or disable content safety checking. */
+  /** Enable or disable content safety checking. Increases total generation time. */
   checkContent?: boolean
 }
   /** Model-specific advanced configuration options. */
@@ -2041,7 +2041,7 @@ export type ZImageTurboParams = {
   deliveryMethod?: 'sync' | 'async'
   /** Content safety checking configuration for image generation. */
   safety?: {
-  /** Enable or disable content safety checking. */
+  /** Enable or disable content safety checking. Increases total generation time. */
   checkContent?: boolean
 }
   /** Model-specific advanced configuration options. */
@@ -2137,7 +2137,7 @@ export type ImageInferenceParams = {
   deliveryMethod?: 'sync' | 'async'
   /** Content safety checking configuration for image generation. */
   safety?: {
-  /** Enable or disable content safety checking. */
+  /** Enable or disable content safety checking. Increases total generation time. */
   checkContent?: boolean
 }
   /** Model-specific advanced configuration options. */
@@ -2204,7 +2204,7 @@ export type VideoInferenceParams = {
   deliveryMethod?: 'async'
   /** Content safety checking configuration for video generation. */
   safety?: {
-  /** Enable or disable content safety checking. */
+  /** Enable or disable content safety checking. Increases total generation time. */
   checkContent?: boolean
   /** Safety checking mode for video generation. */
   mode?: 'fast' | 'full'
@@ -2390,7 +2390,7 @@ export type RemoveBackgroundImageParams = {
   outputQuality?: number
   /** Image output type. */
   outputType?: 'URL' | 'base64Data' | 'dataURI'
-  /** File format for the generated image. */
+  /** File format for the generated image. PNG and WEBP preserve the alpha channel left by the cut-out. */
   outputFormat?: 'JPG' | 'PNG' | 'WEBP'
   /** Determines how the API delivers task results. */
   deliveryMethod?: 'sync' | 'async'
@@ -2421,7 +2421,7 @@ export type RemoveBackgroundVideoParams = {
   /** Video output type. */
   outputType?: 'URL'
   /** File format for the generated video. */
-  outputFormat?: 'MP4' | 'WEBM' | 'MOV'
+  outputFormat?: 'WEBM' | 'MOV'
   /** Determines how the API delivers task results. */
   deliveryMethod?: 'async'
   /** The unified payload wrapper for complex media assets dictating image, video or audio inference constraints. */
@@ -2672,27 +2672,49 @@ export type ModelUploadParams = {
 }
 
 /**
- * Image Response
+ * Video Response
  */
-export type ImageInferenceResult = {
+export type VideoInferenceResult = {
   /** Identifier for the type of task this response belongs to. */
-  taskType: 'imageInference'
+  taskType: 'videoInference'
   /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
   taskUUID: string
   /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
   cost?: number
-  /** UUID of the output image. */
-  imageUUID: string
-  /** URL of the output image. */
-  imageURL?: string
-  /** Base64-encoded image data. */
-  imageBase64Data?: string
-  /** Data URI of the output image. */
-  imageDataURI?: string
+  /** UUID of the output video. */
+  videoUUID: string
+  /** URL of the output video. */
+  videoURL?: string
+  /** Base64-encoded video data. */
+  videoBase64Data?: string
+  /** Data URI of the output video. */
+  videoDataURI?: string
   /** The seed used for generation. If none was provided, shows the randomly generated seed. */
   seed?: number
   /** Flag indicating if NSFW content was detected. */
   NSFWContent?: boolean
+}
+
+/**
+ * Audio Response
+ */
+export type AudioInferenceResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'audioInference'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** UUID of the output audio. */
+  audioUUID: string
+  /** URL of the output audio. */
+  audioURL?: string
+  /** Base64-encoded audio data. */
+  audioBase64Data?: string
+  /** Data URI of the output audio. */
+  audioDataURI?: string
+  /** The seed used for generation. If none was provided, shows the randomly generated seed. */
+  seed?: number
 }
 
 /**
@@ -2723,87 +2745,27 @@ export type TextInferenceResult = {
 }
 
 /**
- * Video Response
+ * Image Response
  */
-export type VideoInferenceResult = {
+export type ImageInferenceResult = {
   /** Identifier for the type of task this response belongs to. */
-  taskType: 'videoInference'
+  taskType: 'imageInference'
   /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
   taskUUID: string
   /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
   cost?: number
-  /** UUID of the output video. */
-  videoUUID: string
-  /** URL of the output video. */
-  videoURL?: string
-  /** Base64-encoded video data. */
-  videoBase64Data?: string
-  /** Data URI of the output video. */
-  videoDataURI?: string
+  /** UUID of the output image. */
+  imageUUID: string
+  /** URL of the output image. */
+  imageURL?: string
+  /** Base64-encoded image data. */
+  imageBase64Data?: string
+  /** Data URI of the output image. */
+  imageDataURI?: string
   /** The seed used for generation. If none was provided, shows the randomly generated seed. */
   seed?: number
   /** Flag indicating if NSFW content was detected. */
   NSFWContent?: boolean
-}
-
-/**
- * Caption Text Response
- */
-export type CaptionResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'caption'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** Generated caption text describing the input. */
-  text: string
-}
-
-/**
- * Audio Response
- */
-export type AudioInferenceResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'audioInference'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** UUID of the output audio. */
-  audioUUID: string
-  /** URL of the output audio. */
-  audioURL?: string
-  /** Base64-encoded audio data. */
-  audioBase64Data?: string
-  /** Data URI of the output audio. */
-  audioDataURI?: string
-  /** The seed used for generation. If none was provided, shows the randomly generated seed. */
-  seed?: number
-}
-
-/**
- * Training Response
- */
-export type TrainingResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'training'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** AIR of the trained model produced by this run. Use it to run inference with the trained model. */
-  air: string
-  /** The trained model produced by the training run. */
-  outputs: {
-  /** The file or files that make up the trained model. */
-  files: {
-  /** UUID of the output file. */
-  uuid: string
-  /** URL of the output file. */
-  url: string
-}[]
-}
 }
 
 /**
@@ -2824,59 +2786,6 @@ export type RemoveBackgroundResult = {
   imageBase64Data?: string
   /** Data URI of the output image. */
   imageDataURI?: string
-}
-
-/**
- * Upscale Image Response
- */
-export type UpscaleResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'upscale'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** UUID of the output image. */
-  imageUUID: string
-  /** URL of the output image. */
-  imageURL?: string
-  /** Base64-encoded image data. */
-  imageBase64Data?: string
-  /** Data URI of the output image. */
-  imageDataURI?: string
-}
-
-/**
- * Image Masking Response
- */
-export type ImageMaskingResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'imageMasking'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** UUID of the output mask image. */
-  maskImageUUID: string
-  /** URL of the output mask image. */
-  maskImageURL?: string
-  /** Base64-encoded mask image data. */
-  maskImageBase64Data?: string
-  /** Data URI of the output mask image. */
-  maskImageDataURI?: string
-  /** An array of objects containing the coordinates of each detected element in the image. Each object provides the bounding box coordinates of a detected face, hand, or person (depending on the model used). */
-  detections: {
-  /** Leftmost coordinate of the detected area. */
-  x_min: number
-  /** Topmost coordinate of the detected area. */
-  y_min: number
-  /** Rightmost coordinate of the detected area. */
-  x_max: number
-  /** Bottommost coordinate of the detected area. */
-  y_max: number
-}[]
-  /** UUID of the input image used for masking. */
-  inputImageUUID: string
 }
 
 /**
@@ -2916,8 +2825,101 @@ export type PromptEnhanceResult = {
 }
 
 /**
- * Vectorize Response
+ * Age Classification Response
  */
+export type CaptionResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'caption'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** Machine-readable age classification data. */
+  structuredData: {
+  /** Predicted age range of the subject (e.g. `13-20`). */
+  ageGroup: string
+  /** Confidence score as a percentage. */
+  confidence: number
+}
+}
+
+/**
+ * Image Masking Response
+ */
+export type ImageMaskingResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'imageMasking'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** UUID of the output mask image. */
+  maskImageUUID: string
+  /** URL of the output mask image. */
+  maskImageURL?: string
+  /** Base64-encoded mask image data. */
+  maskImageBase64Data?: string
+  /** Data URI of the output mask image. */
+  maskImageDataURI?: string
+  /** An array of objects containing the coordinates of each detected element in the image. Each object provides the bounding box coordinates of a detected face, hand, or person (depending on the model used). */
+  detections: {
+  /** Leftmost coordinate of the detected area. */
+  x_min: number
+  /** Topmost coordinate of the detected area. */
+  y_min: number
+  /** Rightmost coordinate of the detected area. */
+  x_max: number
+  /** Bottommost coordinate of the detected area. */
+  y_max: number
+}[]
+  /** UUID of the input image used for masking. */
+  inputImageUUID: string
+}
+
+/**
+ * Training Response
+ */
+export type TrainingResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'training'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** AIR of the trained model produced by this run. Use it to run inference with the trained model. */
+  air: string
+  /** The trained model produced by the training run. */
+  outputs: {
+  /** The file or files that make up the trained model. */
+  files: {
+  /** UUID of the output file. */
+  uuid: string
+  /** URL of the output file. */
+  url: string
+}[]
+}
+}
+
+/**
+ * Upscale Image Response
+ */
+export type UpscaleResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'upscale'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** UUID of the output image. */
+  imageUUID: string
+  /** URL of the output image. */
+  imageURL?: string
+  /** Base64-encoded image data. */
+  imageBase64Data?: string
+  /** Data URI of the output image. */
+  imageDataURI?: string
+}
+
 export type VectorizeResult = {
   /** Identifier for the type of task this response belongs to. */
   taskType: 'vectorize'
@@ -2933,6 +2935,11 @@ export type VectorizeResult = {
   imageBase64Data?: string
   /** Data URI of the output image. */
   imageDataURI?: string
+  /** Generated output artifacts. */
+  outputs?: {
+  /** The ID of the style applied to the generation. Can be used to reuse the style in later requests. */
+  styleId?: string
+}
 }
 
 /**
@@ -2960,28 +2967,17 @@ export type ThreeDInferenceResult = {
 }
 
 /**
- * Media Storage Response
+ * Image Upload Response
  */
-export type MediaStorageResult = {
+export type ImageUploadResult = {
   /** Identifier for the type of task this response belongs to. */
-  taskType: 'mediaStorage'
+  taskType: 'imageUpload'
   /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
   taskUUID: string
-  /** The media storage operation that produced this response. */
-  operation: 'upload'
-  /** UUID of the stored media. */
-  mediaUUID: string
-  /** URL where the stored media is accessible. */
-  mediaURL: string
-} | {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'mediaStorage'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** The media storage operation that produced this response. */
-  operation: 'delete'
-  /** UUID of the stored media. */
-  mediaUUID: string
+  /** UUID of the output image. */
+  imageUUID: string
+  /** URL of the output image. */
+  imageURL: string
 }
 
 /**
@@ -3232,36 +3228,6 @@ export type AccountManagementResult = {
 }
 
 /**
- * Image Upload Response
- */
-export type ImageUploadResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'imageUpload'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** UUID of the output image. */
-  imageUUID: string
-  /** URL of the output image. */
-  imageURL: string
-}
-
-/**
- * Model Upload Response
- */
-export type ModelUploadResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType?: 'modelUpload'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Status of the upload operation phase. */
-  status: 'validated' | 'downloaded' | 'optimized' | 'stored' | 'ready' | 'failed'
-  /** Status message or error details. */
-  message: string
-  /** The AIR identifier of the uploaded model. */
-  air?: string
-}
-
-/**
  * Model Search Response
  */
 export type ModelSearchResult = {
@@ -3323,6 +3289,47 @@ export type GetResponseResult = {
   message?: string
 }
   [key: string]: unknown
+}
+
+/**
+ * Model Upload Response
+ */
+export type ModelUploadResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType?: 'modelUpload'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Status of the upload operation phase. */
+  status: 'validated' | 'downloaded' | 'optimized' | 'stored' | 'ready' | 'failed'
+  /** Status message or error details. */
+  message: string
+  /** The AIR identifier of the uploaded model. */
+  air?: string
+}
+
+/**
+ * Media Storage Response
+ */
+export type MediaStorageResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'mediaStorage'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** The media storage operation that produced this response. */
+  operation: 'upload'
+  /** UUID of the stored media. */
+  mediaUUID: string
+  /** URL where the stored media is accessible. */
+  mediaURL: string
+} | {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'mediaStorage'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** The media storage operation that produced this response. */
+  operation: 'delete'
+  /** UUID of the stored media. */
+  mediaUUID: string
 }
 
 /**
@@ -3477,9 +3484,12 @@ export const operationTaskTypes: Record<string, string> = {
 export const models: Record<string, { taskType: string, id: string }> = {
   'alibaba:happyhorse@1.0': { taskType: 'videoInference', id: 'alibaba-happyhorse-1-0' },
   'alibaba:happyhorse@1.1': { taskType: 'videoInference', id: 'alibaba-happyhorse-1-1' },
+  'alibaba:qwen-image-edit@2511': { taskType: 'imageInference', id: 'alibaba-qwen-image-edit-2511' },
   'alibaba:qwen-image@2.0': { taskType: 'imageInference', id: 'alibaba-qwen-image-2-0' },
   'alibaba:qwen-image@2.0-pro': { taskType: 'imageInference', id: 'alibaba-qwen-image-2-0-pro' },
   'alibaba:qwen-image@2512': { taskType: 'imageInference', id: 'alibaba-qwen-image-2512' },
+  'alibaba:qwen-image@3.0': { taskType: 'imageInference', id: 'alibaba-qwen-image-3-0' },
+  'alibaba:qwen-image@3.0-pro': { taskType: 'imageInference', id: 'alibaba-qwen-image-3-0-pro' },
   'alibaba:qwen-image@layered': { taskType: 'imageInference', id: 'alibaba-qwen-image-layered' },
   'alibaba:qwen@3-tts-1.7b-base': { taskType: 'audioInference', id: 'alibaba-qwen3-tts-1-7b-base' },
   'alibaba:qwen@3-tts-1.7b-customvoice': { taskType: 'audioInference', id: 'alibaba-qwen3-tts-1-7b-customvoice' },
@@ -3490,6 +3500,8 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'alibaba:wan@2.7': { taskType: 'videoInference', id: 'alibaba-wan2-7' },
   'alibaba:wan@2.7-image': { taskType: 'imageInference', id: 'alibaba-wan2-7-image' },
   'alibaba:wan@2.7-image-pro': { taskType: 'imageInference', id: 'alibaba-wan2-7-image-pro' },
+  'alibaba:wan@3.0': { taskType: 'videoInference', id: 'alibaba-wan3-0' },
+  'alibaba:wan@3.0-prime': { taskType: 'videoInference', id: 'alibaba-wan3-0-prime' },
   'anthropic:claude@fable-5': { taskType: 'textInference', id: 'anthropic-claude-fable-5' },
   'anthropic:claude@haiku-4.5': { taskType: 'textInference', id: 'anthropic-claude-haiku-4-5' },
   'anthropic:claude@opus-4.7': { taskType: 'textInference', id: 'anthropic-claude-opus-4-7' },
@@ -3506,8 +3518,10 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'bfl:5@1': { taskType: 'imageInference', id: 'bfl-flux-2-pro' },
   'bfl:6@1': { taskType: 'imageInference', id: 'bfl-flux-2-flex' },
   'bfl:7@1': { taskType: 'imageInference', id: 'bfl-flux-2-max' },
+  'bfl:flux@3-video': { taskType: 'videoInference', id: 'bfl-flux-3-video' },
   'bfl:flux@erase': { taskType: 'imageInference', id: 'bfl-flux-erase' },
   'bfl:flux@outpainting': { taskType: 'imageInference', id: 'bfl-flux-outpainting' },
+  'bfl:flux@video-upscale': { taskType: 'upscale', id: 'bfl-flux-video-upscale' },
   'bfl:flux@vto': { taskType: 'imageInference', id: 'bfl-flux-virtual-try-on' },
   'bria:10@1': { taskType: 'imageInference', id: 'bria-3-2' },
   'bria:11@1': { taskType: 'imageInference', id: 'bria-image-replace-background' },
@@ -3531,6 +3545,7 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'bytedance:seedance@2.0': { taskType: 'videoInference', id: 'bytedance-seedance-2-0' },
   'bytedance:seedance@2.0-fast': { taskType: 'videoInference', id: 'bytedance-seedance-2-0-fast' },
   'bytedance:seedance@2.0-mini': { taskType: 'videoInference', id: 'bytedance-seedance-2-0-mini' },
+  'bytedance:seedance@2.5': { taskType: 'videoInference', id: 'bytedance-seedance-2-5' },
   'bytedance:seedream@4.5': { taskType: 'imageInference', id: 'bytedance-seedream-4-5' },
   'bytedance:seedream@5.0-lite': { taskType: 'imageInference', id: 'bytedance-seedream-5-0-lite' },
   'bytedance:seedream@5.0-pro': { taskType: 'imageInference', id: 'bytedance-seedream-5-0-pro' },
@@ -3540,7 +3555,6 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'creatify:aurora@0': { taskType: 'videoInference', id: 'creatify-aurora-v1' },
   'creatify:aurora@fast': { taskType: 'videoInference', id: 'creatify-aurora-v1-fast' },
   'deepseek:v4@flash': { taskType: 'textInference', id: 'deepseek-v4-flash' },
-  'deepseek:v4@pro': { taskType: 'textInference', id: 'deepseek-v4-pro' },
   'exactly:illustrative@training': { taskType: 'training', id: 'exactly-illustrative-training' },
   'exactly:photo@bright-pulse': { taskType: 'imageInference', id: 'exactly-photo-bright-pulse' },
   'exactly:photo@distant-reality': { taskType: 'imageInference', id: 'exactly-photo-distant-reality' },
@@ -3560,6 +3574,7 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'google:gemini@3.1-pro': { taskType: 'textInference', id: 'google-gemini-3-1-pro' },
   'google:gemini@3.5-flash': { taskType: 'textInference', id: 'google-gemini-3-5-flash' },
   'google:gemini@omni-flash': { taskType: 'videoInference', id: 'google-gemini-omni-flash' },
+  'google:gemini@omni-flash-1.1': { taskType: 'videoInference', id: 'google-gemini-omni-flash-1-1' },
   'google:gemma@4-31b': { taskType: 'textInference', id: 'google-gemma-4-31b' },
   'google:nano-banana@2-lite': { taskType: 'imageInference', id: 'google-nano-banana-2-lite' },
   'google:veo@3.1-lite': { taskType: 'videoInference', id: 'google-veo-3-1-lite' },
@@ -3581,6 +3596,7 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'ideogram:4@remix': { taskType: 'imageInference', id: 'ideogram-4-0-remix' },
   'ideogram:layerize-text@0': { taskType: 'imageInference', id: 'ideogram-layerize-text' },
   'ideogram:object-remover@0': { taskType: 'imageInference', id: 'ideogram-object-remover' },
+  'ideogram:remove-background@0': { taskType: 'removeBackground', id: 'ideogram-remove-background' },
   'imagineart:1.5-pro@0': { taskType: 'imageInference', id: 'imagineart-1-5-pro' },
   'imagineart:1@5': { taskType: 'imageInference', id: 'imagineart-1-5' },
   'imagineart:2.0@0': { taskType: 'imageInference', id: 'imagineart-2-0' },
@@ -3621,18 +3637,16 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'krea:krea@2-medium-turbo': { taskType: 'imageInference', id: 'krea-2-medium-turbo' },
   'krea:krea@2-raw': { taskType: 'imageInference', id: 'krea-2-raw' },
   'krea:krea@2-turbo': { taskType: 'imageInference', id: 'krea-2-turbo' },
-  'lightricks:2@0': { taskType: 'videoInference', id: 'lightricks-ltx-2-pro' },
-  'lightricks:2@1': { taskType: 'videoInference', id: 'lightricks-ltx-2-fast' },
-  'lightricks:3@1': { taskType: 'videoInference', id: 'lightricks-ltx-2-retake' },
   'lightricks:ltx@2': { taskType: 'videoInference', id: 'lightricks-ltx-2' },
   'lightricks:ltx@2.3': { taskType: 'videoInference', id: 'lightricks-ltx-2-3' },
   'lightricks:ltx@2.3-fast': { taskType: 'videoInference', id: 'lightricks-ltx-2-3-fast' },
+  'lightricks:ltx@2.5-fast': { taskType: 'videoInference', id: 'lightricks-ltx-2-5-fast' },
+  'lightricks:ltx@2.5-pro': { taskType: 'videoInference', id: 'lightricks-ltx-2-5-pro' },
   'luma:ray@3.2': { taskType: 'videoInference', id: 'luma-ray3-2' },
   'luma:uni@1': { taskType: 'imageInference', id: 'luma-uni-1' },
   'luma:uni@1-max': { taskType: 'imageInference', id: 'luma-uni-1-max' },
-  'memories:1@1': { taskType: 'caption', id: 'memories-video-captioning' },
-  'memories:2@1': { taskType: 'caption', id: 'memories-video-age-detection' },
   'meshy:meshy@6': { taskType: '3dInference', id: 'meshy-6' },
+  'meta:muse@image': { taskType: 'imageInference', id: 'meta-muse-image' },
   'meta:sam@3d': { taskType: '3dInference', id: 'meta-sam-3d-objects' },
   'microsoft:trellis-2@4b': { taskType: '3dInference', id: 'microsoft-trellis-2' },
   'minimax:1@1': { taskType: 'videoInference', id: 'minimax-01' },
@@ -3641,6 +3655,8 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'minimax:3@1': { taskType: 'videoInference', id: 'minimax-hailuo-02' },
   'minimax:4@1': { taskType: 'videoInference', id: 'minimax-hailuo-2-3' },
   'minimax:4@2': { taskType: 'videoInference', id: 'minimax-hailuo-2-3-fast' },
+  'minimax:h3@0': { taskType: 'videoInference', id: 'minimax-h3' },
+  'minimax:h3@max': { taskType: 'videoInference', id: 'minimax-h3-max' },
   'minimax:m2.7@0': { taskType: 'textInference', id: 'minimax-m2-7' },
   'minimax:m2.7@highspeed': { taskType: 'textInference', id: 'minimax-m2-7-highspeed' },
   'minimax:m3@0': { taskType: 'textInference', id: 'minimax-m3' },
@@ -3649,7 +3665,6 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'minimax:speech@2.8': { taskType: 'audioInference', id: 'minimax-speech-2-8' },
   'mirelo:1@1': { taskType: 'audioInference', id: 'mirelo-sfx-1-5' },
   'mirelo:sfx@1.6': { taskType: 'audioInference', id: 'mirelo-sfx-1-6' },
-  'moonshotai:kimi@k2.6': { taskType: 'textInference', id: 'moonshotai-kimi-k2-6' },
   'openai:1@1': { taskType: 'imageInference', id: 'openai-gpt-image-1' },
   'openai:1@2': { taskType: 'imageInference', id: 'openai-gpt-image-1-mini' },
   'openai:3@1': { taskType: 'videoInference', id: 'openai-sora-2' },
@@ -3676,11 +3691,13 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'pixverse:modify@0': { taskType: 'videoInference', id: 'pixverse-modify' },
   'prunaai:1@1': { taskType: 'imageInference', id: 'prunaai-p-image' },
   'prunaai:2@1': { taskType: 'imageInference', id: 'prunaai-p-image-edit' },
+  'prunaai:p-image@ideogram': { taskType: 'imageInference', id: 'prunaai-p-image-ideogram' },
   'prunaai:p-image@try-on': { taskType: 'imageInference', id: 'prunaai-p-image-try-on' },
   'prunaai:p-image@upscale': { taskType: 'upscale', id: 'prunaai-p-image-upscale' },
   'prunaai:p-video@0': { taskType: 'videoInference', id: 'prunaai-p-video' },
   'prunaai:p-video@animate': { taskType: 'videoInference', id: 'prunaai-p-video-animate' },
   'prunaai:p-video@avatar': { taskType: 'videoInference', id: 'prunaai-p-video-avatar' },
+  'prunaai:p-video@edit': { taskType: 'videoInference', id: 'prunaai-p-video-edit' },
   'prunaai:p-video@replace': { taskType: 'videoInference', id: 'prunaai-p-video-replace' },
   'recraft:1@1': { taskType: 'vectorize', id: 'recraft-vectorize' },
   'recraft:v4-pro@0': { taskType: 'imageInference', id: 'recraft-v4-pro' },
@@ -3690,12 +3707,16 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'recraft:v4.1-utility@0': { taskType: 'imageInference', id: 'recraft-v4-1-utility' },
   'recraft:v4.1@0': { taskType: 'imageInference', id: 'recraft-v4-1' },
   'recraft:v4@0': { taskType: 'imageInference', id: 'recraft-v4' },
+  'recraft:v4@styles': { taskType: 'imageInference', id: 'recraft-v4-styles' },
+  'recraft:v4@styles-pro': { taskType: 'imageInference', id: 'recraft-v4-styles-pro' },
+  'recraft:v4@styles-pro-vector': { taskType: 'vectorize', id: 'recraft-v4-styles-pro-vector' },
+  'recraft:v4@styles-vector': { taskType: 'vectorize', id: 'recraft-v4-styles-vector' },
   'recraft:v4@vector': { taskType: 'vectorize', id: 'recraft-v4-vector' },
-  'reve:2@1': { taskType: 'imageInference', id: 'reve-2-1' },
   'rundiffusion:110@101': { taskType: 'imageInference', id: 'rundiffusion-juggernaut-lightning-flux' },
   'rundiffusion:120@100': { taskType: 'imageInference', id: 'rundiffusion-juggernaut-base-flux' },
   'rundiffusion:130@100': { taskType: 'imageInference', id: 'rundiffusion-juggernaut-pro-flux' },
   'rundiffusion:200@100': { taskType: 'imageInference', id: 'rundiffusion-juggernaut-z' },
+  'rundiffusion:300@100': { taskType: 'imageInference', id: 'rundiffusion-juggernaut-z-fast' },
   'runware:100@1': { taskType: 'imageInference', id: 'bfl-flux-1-schnell' },
   'runware:101@1': { taskType: 'imageInference', id: 'bfl-flux-1-dev' },
   'runware:102@1': { taskType: 'imageInference', id: 'bfl-flux-1-fill-dev' },
@@ -3787,7 +3808,6 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'runware:z-image@turbo': { taskType: 'imageInference', id: 'alibaba-z-image-turbo' },
   'runway:1@1': { taskType: 'videoInference', id: 'runway-gen-4-turbo' },
   'runway:1@2': { taskType: 'videoInference', id: 'runway-gen-4-5' },
-  'runway:2@1': { taskType: 'videoInference', id: 'runway-aleph' },
   'runway:4@1': { taskType: 'imageInference', id: 'runway-gen-4-image' },
   'runway:4@2': { taskType: 'imageInference', id: 'runway-gen-4-image-turbo' },
   'runway:aleph@2.0': { taskType: 'videoInference', id: 'runway-aleph-2-0' },
@@ -3796,18 +3816,19 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'sourceful:riverflow-2.0@pro': { taskType: 'imageInference', id: 'sourceful-riverflow-2-0-pro' },
   'sourceful:riverflow-2.5@fast': { taskType: 'imageInference', id: 'sourceful-riverflow-2-5-fast' },
   'sourceful:riverflow-2.5@pro': { taskType: 'imageInference', id: 'sourceful-riverflow-2-5-pro' },
+  'sync:3@0': { taskType: 'videoInference', id: 'sync-3' },
   'sync:lipsync-2-pro@1': { taskType: 'videoInference', id: 'sync-lipsync-2-pro' },
   'sync:lipsync-2@1': { taskType: 'videoInference', id: 'sync-lipsync-2' },
-  'sync:lipsync@3': { taskType: 'videoInference', id: 'sync-3' },
   'sync:react-1@1': { taskType: 'videoInference', id: 'sync-react-1' },
   'tencent:hunyuan-3d@3.1-pro': { taskType: '3dInference', id: 'tencent-hunyuan-3d-3-1-pro' },
   'tencent:hunyuan-3d@3.1-rapid': { taskType: '3dInference', id: 'tencent-hunyuan-3d-3-1-rapid' },
+  'topazlabs:proteus@4': { taskType: 'upscale', id: 'topazlabs-proteus-4' },
   'topazlabs:starlight-precise@2.5': { taskType: 'upscale', id: 'topazlabs-starlight-precise-2-5' },
+  'topazlabs:wonder@3.5': { taskType: 'upscale', id: 'topazlabs-wonder-3-5' },
   'tripo:v3.1@0': { taskType: '3dInference', id: 'tripo-v3-1' },
   'veed:fabric@1.0-hosted': { taskType: 'videoInference', id: 'veed-fabric-1-0-hosted' },
   'vidu:1@0': { taskType: 'videoInference', id: 'vidu-q1-classic' },
   'vidu:1@1': { taskType: 'videoInference', id: 'vidu-q1' },
-  'vidu:1@5': { taskType: 'videoInference', id: 'vidu-1-5' },
   'vidu:2@0': { taskType: 'videoInference', id: 'vidu-2-0' },
   'vidu:3@1': { taskType: 'videoInference', id: 'vidu-q2-pro' },
   'vidu:3@2': { taskType: 'videoInference', id: 'vidu-q2-turbo' },
@@ -3815,6 +3836,7 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'vidu:4@2': { taskType: 'videoInference', id: 'vidu-q3-turbo' },
   'vidu:q1@image': { taskType: 'imageInference', id: 'vidu-q1-image' },
   'xai:grok-imagine@image': { taskType: 'imageInference', id: 'xai-grok-imagine-image' },
+  'xai:grok-imagine@image-2.0': { taskType: 'imageInference', id: 'xai-grok-imagine-image-2-0' },
   'xai:grok-imagine@image-quality': { taskType: 'imageInference', id: 'xai-grok-imagine-image-quality' },
   'xai:grok-imagine@video': { taskType: 'videoInference', id: 'xai-grok-imagine-video' },
   'xai:grok-imagine@video-1.5': { taskType: 'videoInference', id: 'xai-grok-imagine-video-1-5' },
@@ -3831,9 +3853,12 @@ export const models: Record<string, { taskType: string, id: string }> = {
 export type ModelResultMap = {
   'alibaba:happyhorse@1.0': VideoInferenceResult
   'alibaba:happyhorse@1.1': VideoInferenceResult
+  'alibaba:qwen-image-edit@2511': ImageInferenceResult
   'alibaba:qwen-image@2.0': ImageInferenceResult
   'alibaba:qwen-image@2.0-pro': ImageInferenceResult
   'alibaba:qwen-image@2512': ImageInferenceResult
+  'alibaba:qwen-image@3.0': ImageInferenceResult
+  'alibaba:qwen-image@3.0-pro': ImageInferenceResult
   'alibaba:qwen-image@layered': ImageInferenceResult
   'alibaba:qwen@3-tts-1.7b-base': AudioInferenceResult
   'alibaba:qwen@3-tts-1.7b-customvoice': AudioInferenceResult
@@ -3844,6 +3869,8 @@ export type ModelResultMap = {
   'alibaba:wan@2.7': VideoInferenceResult
   'alibaba:wan@2.7-image': ImageInferenceResult
   'alibaba:wan@2.7-image-pro': ImageInferenceResult
+  'alibaba:wan@3.0': VideoInferenceResult
+  'alibaba:wan@3.0-prime': VideoInferenceResult
   'anthropic:claude@fable-5': TextInferenceResult
   'anthropic:claude@haiku-4.5': TextInferenceResult
   'anthropic:claude@opus-4.7': TextInferenceResult
@@ -3860,8 +3887,10 @@ export type ModelResultMap = {
   'bfl:5@1': ImageInferenceResult
   'bfl:6@1': ImageInferenceResult
   'bfl:7@1': ImageInferenceResult
+  'bfl:flux@3-video': VideoInferenceResult
   'bfl:flux@erase': ImageInferenceResult
   'bfl:flux@outpainting': ImageInferenceResult
+  'bfl:flux@video-upscale': UpscaleResult
   'bfl:flux@vto': ImageInferenceResult
   'bria:10@1': ImageInferenceResult
   'bria:11@1': ImageInferenceResult
@@ -3885,6 +3914,7 @@ export type ModelResultMap = {
   'bytedance:seedance@2.0': VideoInferenceResult
   'bytedance:seedance@2.0-fast': VideoInferenceResult
   'bytedance:seedance@2.0-mini': VideoInferenceResult
+  'bytedance:seedance@2.5': VideoInferenceResult
   'bytedance:seedream@4.5': ImageInferenceResult
   'bytedance:seedream@5.0-lite': ImageInferenceResult
   'bytedance:seedream@5.0-pro': ImageInferenceResult
@@ -3894,7 +3924,6 @@ export type ModelResultMap = {
   'creatify:aurora@0': VideoInferenceResult
   'creatify:aurora@fast': VideoInferenceResult
   'deepseek:v4@flash': TextInferenceResult
-  'deepseek:v4@pro': TextInferenceResult
   'exactly:illustrative@training': TrainingResult
   'exactly:photo@bright-pulse': ImageInferenceResult
   'exactly:photo@distant-reality': ImageInferenceResult
@@ -3914,6 +3943,7 @@ export type ModelResultMap = {
   'google:gemini@3.1-pro': TextInferenceResult
   'google:gemini@3.5-flash': TextInferenceResult
   'google:gemini@omni-flash': VideoInferenceResult
+  'google:gemini@omni-flash-1.1': VideoInferenceResult
   'google:gemma@4-31b': TextInferenceResult
   'google:nano-banana@2-lite': ImageInferenceResult
   'google:veo@3.1-lite': VideoInferenceResult
@@ -3935,6 +3965,7 @@ export type ModelResultMap = {
   'ideogram:4@remix': ImageInferenceResult
   'ideogram:layerize-text@0': ImageInferenceResult
   'ideogram:object-remover@0': ImageInferenceResult
+  'ideogram:remove-background@0': RemoveBackgroundResult
   'imagineart:1.5-pro@0': ImageInferenceResult
   'imagineart:1@5': ImageInferenceResult
   'imagineart:2.0@0': ImageInferenceResult
@@ -3975,18 +4006,16 @@ export type ModelResultMap = {
   'krea:krea@2-medium-turbo': ImageInferenceResult
   'krea:krea@2-raw': ImageInferenceResult
   'krea:krea@2-turbo': ImageInferenceResult
-  'lightricks:2@0': VideoInferenceResult
-  'lightricks:2@1': VideoInferenceResult
-  'lightricks:3@1': VideoInferenceResult
   'lightricks:ltx@2': VideoInferenceResult
   'lightricks:ltx@2.3': VideoInferenceResult
   'lightricks:ltx@2.3-fast': VideoInferenceResult
+  'lightricks:ltx@2.5-fast': VideoInferenceResult
+  'lightricks:ltx@2.5-pro': VideoInferenceResult
   'luma:ray@3.2': VideoInferenceResult
   'luma:uni@1': ImageInferenceResult
   'luma:uni@1-max': ImageInferenceResult
-  'memories:1@1': CaptionResult
-  'memories:2@1': CaptionResult
   'meshy:meshy@6': ThreeDInferenceResult
+  'meta:muse@image': ImageInferenceResult
   'meta:sam@3d': ThreeDInferenceResult
   'microsoft:trellis-2@4b': ThreeDInferenceResult
   'minimax:1@1': VideoInferenceResult
@@ -3995,6 +4024,8 @@ export type ModelResultMap = {
   'minimax:3@1': VideoInferenceResult
   'minimax:4@1': VideoInferenceResult
   'minimax:4@2': VideoInferenceResult
+  'minimax:h3@0': VideoInferenceResult
+  'minimax:h3@max': VideoInferenceResult
   'minimax:m2.7@0': TextInferenceResult
   'minimax:m2.7@highspeed': TextInferenceResult
   'minimax:m3@0': TextInferenceResult
@@ -4003,7 +4034,6 @@ export type ModelResultMap = {
   'minimax:speech@2.8': AudioInferenceResult
   'mirelo:1@1': AudioInferenceResult
   'mirelo:sfx@1.6': AudioInferenceResult
-  'moonshotai:kimi@k2.6': TextInferenceResult
   'openai:1@1': ImageInferenceResult
   'openai:1@2': ImageInferenceResult
   'openai:3@1': VideoInferenceResult
@@ -4030,11 +4060,13 @@ export type ModelResultMap = {
   'pixverse:modify@0': VideoInferenceResult
   'prunaai:1@1': ImageInferenceResult
   'prunaai:2@1': ImageInferenceResult
+  'prunaai:p-image@ideogram': ImageInferenceResult
   'prunaai:p-image@try-on': ImageInferenceResult
   'prunaai:p-image@upscale': UpscaleResult
   'prunaai:p-video@0': VideoInferenceResult
   'prunaai:p-video@animate': VideoInferenceResult
   'prunaai:p-video@avatar': VideoInferenceResult
+  'prunaai:p-video@edit': VideoInferenceResult
   'prunaai:p-video@replace': VideoInferenceResult
   'recraft:1@1': VectorizeResult
   'recraft:v4-pro@0': ImageInferenceResult
@@ -4044,12 +4076,16 @@ export type ModelResultMap = {
   'recraft:v4.1-utility@0': ImageInferenceResult
   'recraft:v4.1@0': ImageInferenceResult
   'recraft:v4@0': ImageInferenceResult
+  'recraft:v4@styles': ImageInferenceResult
+  'recraft:v4@styles-pro': ImageInferenceResult
+  'recraft:v4@styles-pro-vector': VectorizeResult
+  'recraft:v4@styles-vector': VectorizeResult
   'recraft:v4@vector': VectorizeResult
-  'reve:2@1': ImageInferenceResult
   'rundiffusion:110@101': ImageInferenceResult
   'rundiffusion:120@100': ImageInferenceResult
   'rundiffusion:130@100': ImageInferenceResult
   'rundiffusion:200@100': ImageInferenceResult
+  'rundiffusion:300@100': ImageInferenceResult
   'runware:100@1': ImageInferenceResult
   'runware:101@1': ImageInferenceResult
   'runware:102@1': ImageInferenceResult
@@ -4141,7 +4177,6 @@ export type ModelResultMap = {
   'runware:z-image@turbo': ImageInferenceResult
   'runway:1@1': VideoInferenceResult
   'runway:1@2': VideoInferenceResult
-  'runway:2@1': VideoInferenceResult
   'runway:4@1': ImageInferenceResult
   'runway:4@2': ImageInferenceResult
   'runway:aleph@2.0': VideoInferenceResult
@@ -4150,18 +4185,19 @@ export type ModelResultMap = {
   'sourceful:riverflow-2.0@pro': ImageInferenceResult
   'sourceful:riverflow-2.5@fast': ImageInferenceResult
   'sourceful:riverflow-2.5@pro': ImageInferenceResult
+  'sync:3@0': VideoInferenceResult
   'sync:lipsync-2-pro@1': VideoInferenceResult
   'sync:lipsync-2@1': VideoInferenceResult
-  'sync:lipsync@3': VideoInferenceResult
   'sync:react-1@1': VideoInferenceResult
   'tencent:hunyuan-3d@3.1-pro': ThreeDInferenceResult
   'tencent:hunyuan-3d@3.1-rapid': ThreeDInferenceResult
+  'topazlabs:proteus@4': UpscaleResult
   'topazlabs:starlight-precise@2.5': UpscaleResult
+  'topazlabs:wonder@3.5': UpscaleResult
   'tripo:v3.1@0': ThreeDInferenceResult
   'veed:fabric@1.0-hosted': VideoInferenceResult
   'vidu:1@0': VideoInferenceResult
   'vidu:1@1': VideoInferenceResult
-  'vidu:1@5': VideoInferenceResult
   'vidu:2@0': VideoInferenceResult
   'vidu:3@1': VideoInferenceResult
   'vidu:3@2': VideoInferenceResult
@@ -4169,6 +4205,7 @@ export type ModelResultMap = {
   'vidu:4@2': VideoInferenceResult
   'vidu:q1@image': ImageInferenceResult
   'xai:grok-imagine@image': ImageInferenceResult
+  'xai:grok-imagine@image-2.0': ImageInferenceResult
   'xai:grok-imagine@image-quality': ImageInferenceResult
   'xai:grok-imagine@video': VideoInferenceResult
   'xai:grok-imagine@video-1.5': VideoInferenceResult
