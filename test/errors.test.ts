@@ -11,6 +11,7 @@ describe('deriveCode', () => {
     ['missingPositivePrompt', 'validation'],
     ['missingApiKey', 'auth'], // ApiKey wins over missing*
     ['conflictTaskUUID', 'validation'],
+    ['parameterConflict', 'validation'],
     ['duplicatePreloadModelAIR', 'validation'],
     ['unsupportedParameter', 'validation'],
     ['unsupportedTaskType', 'validation'],
@@ -62,6 +63,7 @@ describe('deriveCode', () => {
     ['promptBlocked', 'safety'],
     ['imageBlocked', 'safety'],
     ['moderationFailed', 'safety'],
+    ['invalidProviderContent', 'safety'], // provider moderation, not a bad request
 
     // provider
     ['providerError', 'provider'],

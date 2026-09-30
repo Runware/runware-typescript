@@ -56,6 +56,7 @@ const SAFETY_CODES = new Set([
   'promptBlocked',
   'imageBlocked',
   'moderationFailed',
+  'invalidProviderContent',
 ])
 
 const AUTH_CODES = new Set([
@@ -153,6 +154,7 @@ export const deriveCode = (raw: string): ErrorCode => {
     raw.startsWith('invalid')
     || raw.startsWith('missing')
     || raw.startsWith('conflict')
+    || raw.endsWith('Conflict')
     || raw.startsWith('duplicate')
     || raw.startsWith('unsupported')
     || raw.startsWith('value')
