@@ -30,8 +30,20 @@ export type {
   AccountManagementParams, AccountManagementResult,
   GetResponseParams, GetResponseResult,
   GetTaskDetailsParams, GetTaskDetailsResult,
+  // Inference params types, one per modality / processing task
   ImageInferenceParams,
+  VideoInferenceParams,
+  AudioInferenceParams,
+  TextInferenceParams,
+  ThreeDInferenceParams,
+  CaptionParams, CaptionImageParams, CaptionVideoParams,
+  ControlnetPreprocessParams,
   MaskingParams,
+  PromptEnhanceParams,
+  RemoveBackgroundParams, RemoveBackgroundImageParams, RemoveBackgroundVideoParams,
+  TrainingParams,
+  UpscaleParams, UpscaleImageParams, UpscaleVideoParams,
+  VectorizeParams,
 } from './types/task-map'
 export type { TextStream, TextStreamResult, TextStreamChunk } from './types/stream'
 export type { ErrorCode } from './errors'
