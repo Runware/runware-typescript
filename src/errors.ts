@@ -187,6 +187,16 @@ export class RunwareError extends Error {
   /** HTTP status code, when the error originated from an HTTP response. */
   declare statusCode?: number
   /**
+   * RFC 9457 problem type URI, when the error came from an API that returns
+   * `application/problem+json`. This is the stable identifier for the problem
+   * class: switch on it rather than on `statusCode` or the message.
+   */
+  declare problemType?: string
+  /** Correlation id for the failed request, echoed in `X-Request-Id`. */
+  declare requestId?: string
+  /** Seconds to wait before retrying, from a `Retry-After` header. */
+  declare retryAfter?: number
+  /**
    * Structured AJV errors describing each field that failed.
    * Only present when `code === 'validation'` and the failure was raised by the
    * opt-in client-side validator (`validate: true`). Server-side validation

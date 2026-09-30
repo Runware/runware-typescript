@@ -116,11 +116,11 @@ const fetchJson = async <T>(
   return await response.json() as T
 }
 
-// Models whose status marks them reachable only through the OpenAI-compatible
-// endpoint — not the native Runware API — are hidden from the SDK's model listing
-// by default, since the SDK can't run them. A caller can still surface them by
-// passing the matching `status` filter explicitly.
-const NON_NATIVE_STATUSES = new Set(['openai-compatible'])
+// Models whose status marks them reachable only through a compatible endpoint
+// (OpenAI, Anthropic or TypeSafe format) — not the native Runware API — are hidden
+// from the SDK's model listing by default, since the SDK can't run them. A caller
+// can still surface them by passing the matching `status` filter explicitly.
+const NON_NATIVE_STATUSES = new Set(['compatible-only'])
 
 const excludeNonNative = <T extends { status?: string }>(models: T[]): T[] =>
   models.filter((model) => !NON_NATIVE_STATUSES.has(model.status ?? ''))
@@ -156,7 +156,7 @@ export const createContentClient = (config: SDKConfig): ContentClient => {
     const result = await fetchJson<Result>(url, fetchImpl, false)
 
     // An explicit `status` filter is an intentional opt-in, so trust the service
-    // result. Otherwise hide non-native (OpenAI-only) models from the listing.
+    // result. Otherwise hide non-native (compatible-only) models from the listing.
     if (opts.status || result === null) { return result }
 
     return Array.isArray(result)

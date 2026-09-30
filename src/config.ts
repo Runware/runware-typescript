@@ -8,6 +8,7 @@ export const DEFAULT_CONFIG: Partial<SDKConfig> = {
   transport: 'websocket',
   wsBaseUrl: 'wss://ws-api.runware.ai/v1',
   httpBaseUrl: 'https://api.runware.ai/v1',
+  serverlessBaseUrl: 'https://api.serverless.runware.ai',
   timeout: 1_200_000,
   pollTimeout: 1_200_000,
   authTimeout: 15000,

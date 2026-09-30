@@ -34,6 +34,14 @@ export type {
   MaskingParams,
 } from './types/task-map'
 export type { TextStream, TextStreamResult, TextStreamChunk } from './types/stream'
+export type {
+  ServerlessTask,
+  TaskStatus,
+  DeliveryMethod,
+  InvokeParams,
+  InvokeOptions,
+  GetTaskOptions,
+} from './types/serverless'
 export type { ErrorCode } from './errors'
 export type { Logger, LogSink, LogEntry } from './logger'
 export type {

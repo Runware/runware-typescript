@@ -33,6 +33,15 @@ import { createRegistry } from './registry'
 import { SCHEMAS_BASE_URL } from './constants'
 import { createContentClient, type ContentClient } from './content'
 import { encodeLocalFiles } from './utils/file'
+import { generateUUID } from './utils/uuid'
+import { createServerlessApi } from './serverless'
+
+import type {
+  GetTaskOptions,
+  InvokeOptions,
+  InvokeParams,
+  ServerlessTask,
+} from './types/serverless'
 
 export type RunwareClient = {
   connect: () => Promise<void>
@@ -160,23 +169,56 @@ export type RunwareClient = {
   ) => Promise<UtilityMap['accountManagement']['result'][]>
 
   /**
+   * Call an endpoint on one of your serverless apps and return the finished
+   * task.
+   *
+   * ```ts
+   * const task = await client.invoke({
+   *   appId: 'my-app',
+   *   endpointPath: 'generate',
+   *   payload: { prompt: 'a cat' },
+   * })
+   * console.log(task.output)
+   * ```
+   *
+   * `deliveryMethod` decides how the wait happens, not whether you get a
+   * result: `async` (the default) takes an acknowledgement and polls, `sync`
+   * holds one request open and is the fast path for work that finishes in
+   * seconds. `wait: false` returns the accepted task instead, for a job you
+   * mean to pick up later with `getTask`.
+   *
+   * Every invocation carries a task id, generated unless you pass one. Sending
+   * the same id again returns the task it already names instead of starting a
+   * second, so a call whose response was lost is safe to repeat.
+   *
+   * Rejects with a `RunwareError` when the task fails to start. A task that
+   * runs and fails comes back with `status: 'failed'` and its `error` set,
+   * because that is an outcome rather than a broken call.
+   */
+  invoke: (
+    params: InvokeParams,
+    options?: InvokeOptions,
+  ) => Promise<ServerlessTask>
+
+  /**
+   * Read one serverless task by id.
+   *
+   * `invoke` already waits for you, so reach for this when you want to poll
+   * yourself: after `invoke` with `wait: false`, or from a different process
+   * than the one that submitted the task.
+   */
+  getTask: (
+    appId: string,
+    taskId: string,
+    options?: GetTaskOptions,
+  ) => Promise<ServerlessTask>
+
+  /**
    * Public read-only metadata about Runware's curated model catalog —
    * listings, single model details, examples, pricing, capabilities, creators.
    * Backed by the content service, separate from the inference API.
    */
   content: ContentClient
-}
-
-const generateUUID = (): string => {
-  if (typeof crypto !== 'undefined' && crypto.randomUUID) {
-    return crypto.randomUUID()
-  }
-
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (char) => {
-    const randomHex = (Math.random() * 16) | 0
-    const value = (char === 'x') ? randomHex : (randomHex & 0x3) | 0x8
-    return value.toString(16)
-  })
 }
 
 const normalizeTasks = (
@@ -982,6 +1024,7 @@ export const createClient = async (userConfig: ClientConfig): Promise<RunwareCli
   const refreshRegistry = async (): Promise<void> => registry.refresh()
 
   const content = createContentClient(fullConfig)
+  const serverless = createServerlessApi(fullConfig)
 
   return {
     connect,
@@ -997,6 +1040,8 @@ export const createClient = async (userConfig: ClientConfig): Promise<RunwareCli
     imageUpload: imageUpload as RunwareClient['imageUpload'],
     mediaStorage: mediaStorage as RunwareClient['mediaStorage'],
     accountManagement: accountManagement as RunwareClient['accountManagement'],
+    invoke: serverless.invoke,
+    getTask: serverless.getTask,
     content,
   }
 }

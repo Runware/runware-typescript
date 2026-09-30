@@ -20,6 +20,26 @@ import { createClient, isRunwareError } from '../../src/index'
 const apiKey = process.env.RUNWARE_API_KEY
 const describeIf = apiKey ? describe : describe.skip
 
+// Serverless invocation needs a deployed app to call, which no account has by
+// default, so these carry their own gate rather than riding on the API key.
+// Point them at one with:
+//
+//   RUNWARE_SERVERLESS_BASE_URL=... RUNWARE_SERVERLESS_TEST_APP=... \
+//   RUNWARE_SERVERLESS_TEST_ENDPOINT=echo bun run test:integration
+const serverlessBaseUrl = process.env.RUNWARE_SERVERLESS_BASE_URL
+const serverlessApp = process.env.RUNWARE_SERVERLESS_TEST_APP
+const serverlessEndpoint = process.env.RUNWARE_SERVERLESS_TEST_ENDPOINT
+const serverlessPayload = JSON.parse(process.env.RUNWARE_SERVERLESS_TEST_PAYLOAD ?? '{}') as Record<string, unknown>
+const describeServerless = (apiKey && serverlessBaseUrl && serverlessApp && serverlessEndpoint)
+  ? describe
+  : describe.skip
+
+const serverlessClient = async () => createClient({
+  apiKey: apiKey!,
+  transport: 'rest',
+  serverlessBaseUrl: serverlessBaseUrl!,
+})
+
 const IMAGE_MODEL = 'runware:400@2' // Flux 2 Klein 9b — cheap and fast
 const TEXT_MODEL = 'google:gemma@4-31b' // cheap and fast
 
@@ -155,4 +175,72 @@ describeIf('Integration: utilities and errors', () => {
       await client.disconnect()
     }
   }, 60_000)
+})
+
+describeServerless('Integration: serverless invoke', () => {
+  it('async delivery polls through to the finished task', async () => {
+    const client = await serverlessClient()
+    const task = await client.invoke({
+      appId: serverlessApp!,
+      endpointPath: serverlessEndpoint!,
+      payload: serverlessPayload,
+    })
+    expect(task.status).toBe('completed')
+    expect(task.appId).toBe(serverlessApp!)
+    expect(task.endpointPath).toBe(serverlessEndpoint!)
+  }, 300_000)
+
+  it('sync delivery returns the finished task', async () => {
+    const client = await serverlessClient()
+    const task = await client.invoke(
+      { appId: serverlessApp!, endpointPath: serverlessEndpoint!, payload: serverlessPayload },
+      { deliveryMethod: 'sync' },
+    )
+    expect(task.status).toBe('completed')
+  }, 300_000)
+
+  it('wait:false hands back an accepted task getTask can pick up', async () => {
+    const client = await serverlessClient()
+    const accepted = await client.invoke(
+      { appId: serverlessApp!, endpointPath: serverlessEndpoint!, payload: serverlessPayload },
+      { wait: false },
+    )
+    expect(accepted.status).toBe('pending')
+
+    let task = accepted
+    for (let i = 0; i < 60; i++) {
+      task = await client.getTask(serverlessApp!, accepted.id)
+      if (task.status !== 'pending') { break }
+      await new Promise((resolve) => { setTimeout(resolve, 2000) })
+    }
+    expect(task.status).toBe('completed')
+
+    // The same id is answered with the task it already names, so the second
+    // call must not start a second run.
+    const again = await client.invoke({
+      appId: serverlessApp!,
+      endpointPath: serverlessEndpoint!,
+      payload: serverlessPayload,
+      taskId: accepted.id,
+    })
+    expect(again.id).toBe(accepted.id)
+    expect(again.createdAt).toBe(task.createdAt)
+  }, 300_000)
+
+  it('an undeclared endpoint rejects before anything is queued', async () => {
+    const client = await serverlessClient()
+    try {
+      await client.invoke({
+        appId: serverlessApp!,
+        endpointPath: 'does-not-exist',
+        payload: {},
+      })
+      throw new Error('should have thrown')
+    } catch (error) {
+      if (!isRunwareError(error)) { throw error }
+      expect(error.code).toBe('notFound')
+      expect(error.statusCode).toBe(404)
+      expect(error.parameter).toBe('endpointPath')
+    }
+  }, 120_000)
 })

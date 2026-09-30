@@ -1,5 +1,5 @@
 /**
- * AUTO-GENERATED from schema-map@20260903174949 — do not edit manually.
+ * AUTO-GENERATED from schema-map@20260930171803 — do not edit manually.
  * Run: bun run scripts/generate-types.ts
  */
 
@@ -7,11 +7,11 @@
  * exactly-illustrative architecture params.
  */
 export type ExactlyIllustrativeParams = {
-  /** The unified payload wrapper for complex media assets dictating image, video or audio inference constraints. */
+  /** Input assets for the task. */
   inputs?: {
   /** Reference images for guiding generation. Each entry specifies an image, its purpose, and optional strength. */
   referenceImages?: ({
-  /** The purpose of this reference image. */
+  /** Purpose of the reference image. */
   type: 'sketch' | 'reference'
   /** Influence strength of the reference image. Only available when type is `sketch`. */
   strength?: number
@@ -30,7 +30,7 @@ export type ExactlyIllustrativeParams = {
   /** Generation quality level. */
   quality?: 'low' | 'high'
 }
-  /** Specifies a webhook URL where JSON responses will be sent via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
@@ -67,7 +67,7 @@ export type ExactlyIllustrativeParams = {
  * flux-1-dev architecture params.
  */
 export type Flux1DevParams = {
-  /** The unified payload wrapper for complex media assets dictating image, video or audio inference constraints. */
+  /** Input assets for the task. */
   inputs?: {
   /** Image used as a starting point for the generation (UUID, URL, Data URI, or Base64). */
   seedImage?: unknown
@@ -156,9 +156,16 @@ export type Flux1DevParams = {
   /** Images to guide the IP-Adapter (UUID, URL, Data URI, or Base64). */
   guideImages: unknown[]
 })[]
+  /** Model-specific advanced configuration options. */
+  advancedFeatures?: {
+  /** LayerDiffuse for transparent image generation. */
+  layerDiffuse?: boolean
+  /** Watermark configuration. */
+  watermark?: unknown
+}
   /** Two-stage generation for improved resolution. Can be enabled with `true` for default settings, or configured as an object for fine-grained control. */
   hiresFix?: true | {
-  /** The upscaling model to use for hires fix. */
+  /** Upscaling model for hires fix. */
   model: 'runware:realesrgan@anime-6b' | 'runware:esrgan@animesharp' | 'runware:esrgan@ultrasharp' | 'runware:504@1'
   /** Total number of denoising steps. Higher values generally produce more detailed results but take longer. */
   steps?: number
@@ -167,8 +174,6 @@ export type Flux1DevParams = {
   /** Factor by which to upscale the generated image. A value of 2 doubles width and height. */
   upscaleFactor?: 4
 }
-  /** LayerDiffuse for transparent image generation. */
-  layerDiffuse?: boolean
   /** Identity customization for character consistency. */
   pulid?: {
   /** Absolute step number to start identity influence. Must be less than `steps`. */
@@ -205,7 +210,7 @@ export type Flux1DevParams = {
   /** Refinement strength. Lower values preserve more of the original, higher values allow more aggressive reconstruction. */
   strength?: number
 }
-  /** Specifies a webhook URL where JSON responses will be sent via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
@@ -230,11 +235,6 @@ export type Flux1DevParams = {
   /** Enable or disable content safety checking. Increases total generation time. */
   checkContent?: boolean
 }
-  /** Model-specific advanced configuration options. */
-  advancedFeatures?: {
-  /** Watermark configuration. */
-  watermark?: unknown
-}
   [key: string]: unknown
 }
 
@@ -242,7 +242,7 @@ export type Flux1DevParams = {
  * flux-1-kontext-dev architecture params.
  */
 export type Flux1KontextDevParams = {
-  /** The unified payload wrapper for complex media assets dictating image, video or audio inference constraints. */
+  /** Input assets for the task. */
   inputs?: {
   /** List of reference images (UUID, URL, Data URI, or Base64). */
   referenceImages?: unknown[]
@@ -320,7 +320,7 @@ export type Flux1KontextDevParams = {
   /** Refinement strength. Lower values preserve more of the original, higher values allow more aggressive reconstruction. */
   strength?: number
 }
-  /** Specifies a webhook URL where JSON responses will be sent via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
@@ -357,7 +357,7 @@ export type Flux1KontextDevParams = {
  * flux-1-schnell architecture params.
  */
 export type Flux1SchnellParams = {
-  /** The unified payload wrapper for complex media assets dictating image, video or audio inference constraints. */
+  /** Input assets for the task. */
   inputs?: {
   /** Image used as a starting point for the generation (UUID, URL, Data URI, or Base64). */
   seedImage?: unknown
@@ -424,7 +424,7 @@ export type Flux1SchnellParams = {
 }[]
   /** Two-stage generation for improved resolution. Can be enabled with `true` for default settings, or configured as an object for fine-grained control. */
   hiresFix?: true | {
-  /** The upscaling model to use for hires fix. */
+  /** Upscaling model for hires fix. */
   model: 'runware:realesrgan@anime-6b' | 'runware:esrgan@animesharp' | 'runware:esrgan@ultrasharp' | 'runware:504@1'
   /** Total number of denoising steps. Higher values generally produce more detailed results but take longer. */
   steps?: number
@@ -456,7 +456,7 @@ export type Flux1SchnellParams = {
   /** Refinement strength. Lower values preserve more of the original, higher values allow more aggressive reconstruction. */
   strength?: number
 }
-  /** Specifies a webhook URL where JSON responses will be sent via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
@@ -493,7 +493,7 @@ export type Flux1SchnellParams = {
  * illustrious architecture params.
  */
 export type IllustriousParams = {
-  /** The unified payload wrapper for complex media assets dictating image, video or audio inference constraints. */
+  /** Input assets for the task. */
   inputs?: {
   /** Image used as a starting point for the generation (UUID, URL, Data URI, or Base64). */
   seedImage?: unknown
@@ -612,7 +612,7 @@ export type IllustriousParams = {
 }[]
   /** Two-stage generation for improved resolution. Can be enabled with `true` for default settings, or configured as an object for fine-grained control. */
   hiresFix?: true | {
-  /** The upscaling model to use for hires fix. */
+  /** Upscaling model for hires fix. */
   model: 'runware:realesrgan@anime-6b' | 'runware:esrgan@animesharp' | 'runware:esrgan@ultrasharp' | 'runware:504@1'
   /** Total number of denoising steps. Higher values generally produce more detailed results but take longer. */
   steps?: number
@@ -642,7 +642,7 @@ export type IllustriousParams = {
   /** Refinement strength. Lower values preserve more of the original, higher values allow more aggressive reconstruction. */
   strength?: number
 }
-  /** Specifies a webhook URL where JSON responses will be sent via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
@@ -679,7 +679,7 @@ export type IllustriousParams = {
  * noobai architecture params.
  */
 export type NoobaiParams = {
-  /** The unified payload wrapper for complex media assets dictating image, video or audio inference constraints. */
+  /** Input assets for the task. */
   inputs?: {
   /** Image used as a starting point for the generation (UUID, URL, Data URI, or Base64). */
   seedImage?: unknown
@@ -798,7 +798,7 @@ export type NoobaiParams = {
 }[]
   /** Two-stage generation for improved resolution. Can be enabled with `true` for default settings, or configured as an object for fine-grained control. */
   hiresFix?: true | {
-  /** The upscaling model to use for hires fix. */
+  /** Upscaling model for hires fix. */
   model: 'runware:realesrgan@anime-6b' | 'runware:esrgan@animesharp' | 'runware:esrgan@ultrasharp' | 'runware:504@1'
   /** Total number of denoising steps. Higher values generally produce more detailed results but take longer. */
   steps?: number
@@ -828,7 +828,7 @@ export type NoobaiParams = {
   /** Refinement strength. Lower values preserve more of the original, higher values allow more aggressive reconstruction. */
   strength?: number
 }
-  /** Specifies a webhook URL where JSON responses will be sent via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
@@ -865,7 +865,7 @@ export type NoobaiParams = {
  * pony architecture params.
  */
 export type PonyParams = {
-  /** The unified payload wrapper for complex media assets dictating image, video or audio inference constraints. */
+  /** Input assets for the task. */
   inputs?: {
   /** Image used as a starting point for the generation (UUID, URL, Data URI, or Base64). */
   seedImage?: unknown
@@ -984,7 +984,7 @@ export type PonyParams = {
 }[]
   /** Two-stage generation for improved resolution. Can be enabled with `true` for default settings, or configured as an object for fine-grained control. */
   hiresFix?: true | {
-  /** The upscaling model to use for hires fix. */
+  /** Upscaling model for hires fix. */
   model: 'runware:realesrgan@anime-6b' | 'runware:esrgan@animesharp' | 'runware:esrgan@ultrasharp' | 'runware:504@1'
   /** Total number of denoising steps. Higher values generally produce more detailed results but take longer. */
   steps?: number
@@ -1014,7 +1014,7 @@ export type PonyParams = {
   /** Refinement strength. Lower values preserve more of the original, higher values allow more aggressive reconstruction. */
   strength?: number
 }
-  /** Specifies a webhook URL where JSON responses will be sent via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
@@ -1051,7 +1051,7 @@ export type PonyParams = {
  * sd-1-5 architecture params.
  */
 export type Sd15Params = {
-  /** The unified payload wrapper for complex media assets dictating image, video or audio inference constraints. */
+  /** Input assets for the task. */
   inputs?: {
   /** Image used as a starting point for the generation (UUID, URL, Data URI, or Base64). */
   seedImage?: unknown
@@ -1161,7 +1161,7 @@ export type Sd15Params = {
 }[]
   /** Two-stage generation for improved resolution. Can be enabled with `true` for default settings, or configured as an object for fine-grained control. */
   hiresFix?: true | {
-  /** The upscaling model to use for hires fix. */
+  /** Upscaling model for hires fix. */
   model: 'runware:realesrgan@anime-6b' | 'runware:esrgan@animesharp' | 'runware:esrgan@ultrasharp' | 'runware:504@1'
   /** Total number of denoising steps. Higher values generally produce more detailed results but take longer. */
   steps?: number
@@ -1191,7 +1191,7 @@ export type Sd15Params = {
   /** Refinement strength. Lower values preserve more of the original, higher values allow more aggressive reconstruction. */
   strength?: number
 }
-  /** Specifies a webhook URL where JSON responses will be sent via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
@@ -1228,7 +1228,7 @@ export type Sd15Params = {
  * sdxl architecture params.
  */
 export type SdxlParams = {
-  /** The unified payload wrapper for complex media assets dictating image, video or audio inference constraints. */
+  /** Input assets for the task. */
   inputs?: {
   /** Image used as a starting point for the generation (UUID, URL, Data URI, or Base64). */
   seedImage?: unknown
@@ -1347,7 +1347,7 @@ export type SdxlParams = {
 }[]
   /** Two-stage generation for improved resolution. Can be enabled with `true` for default settings, or configured as an object for fine-grained control. */
   hiresFix?: true | {
-  /** The upscaling model to use for hires fix. */
+  /** Upscaling model for hires fix. */
   model: 'runware:realesrgan@anime-6b' | 'runware:esrgan@animesharp' | 'runware:esrgan@ultrasharp' | 'runware:504@1'
   /** Total number of denoising steps. Higher values generally produce more detailed results but take longer. */
   steps?: number
@@ -1386,7 +1386,7 @@ export type SdxlParams = {
   /** Refinement strength. Lower values preserve more of the original, higher values allow more aggressive reconstruction. */
   strength?: number
 }
-  /** Specifies a webhook URL where JSON responses will be sent via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
@@ -1423,7 +1423,7 @@ export type SdxlParams = {
  * sdxl-lightning architecture params.
  */
 export type SdxlLightningParams = {
-  /** The unified payload wrapper for complex media assets dictating image, video or audio inference constraints. */
+  /** Input assets for the task. */
   inputs?: {
   /** Image used as a starting point for the generation (UUID, URL, Data URI, or Base64). */
   seedImage?: unknown
@@ -1542,7 +1542,7 @@ export type SdxlLightningParams = {
 }[]
   /** Two-stage generation for improved resolution. Can be enabled with `true` for default settings, or configured as an object for fine-grained control. */
   hiresFix?: true | {
-  /** The upscaling model to use for hires fix. */
+  /** Upscaling model for hires fix. */
   model: 'runware:realesrgan@anime-6b' | 'runware:esrgan@animesharp' | 'runware:esrgan@ultrasharp' | 'runware:504@1'
   /** Total number of denoising steps. Higher values generally produce more detailed results but take longer. */
   steps?: number
@@ -1572,7 +1572,7 @@ export type SdxlLightningParams = {
   /** Refinement strength. Lower values preserve more of the original, higher values allow more aggressive reconstruction. */
   strength?: number
 }
-  /** Specifies a webhook URL where JSON responses will be sent via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
@@ -1609,7 +1609,7 @@ export type SdxlLightningParams = {
  * sdxl-turbo architecture params.
  */
 export type SdxlTurboParams = {
-  /** The unified payload wrapper for complex media assets dictating image, video or audio inference constraints. */
+  /** Input assets for the task. */
   inputs?: {
   /** Image used as a starting point for the generation (UUID, URL, Data URI, or Base64). */
   seedImage?: unknown
@@ -1728,7 +1728,7 @@ export type SdxlTurboParams = {
 }[]
   /** Two-stage generation for improved resolution. Can be enabled with `true` for default settings, or configured as an object for fine-grained control. */
   hiresFix?: true | {
-  /** The upscaling model to use for hires fix. */
+  /** Upscaling model for hires fix. */
   model: 'runware:realesrgan@anime-6b' | 'runware:esrgan@animesharp' | 'runware:esrgan@ultrasharp' | 'runware:504@1'
   /** Total number of denoising steps. Higher values generally produce more detailed results but take longer. */
   steps?: number
@@ -1758,7 +1758,7 @@ export type SdxlTurboParams = {
   /** Refinement strength. Lower values preserve more of the original, higher values allow more aggressive reconstruction. */
   strength?: number
 }
-  /** Specifies a webhook URL where JSON responses will be sent via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
@@ -1795,7 +1795,7 @@ export type SdxlTurboParams = {
  * z-image architecture params.
  */
 export type ZImageParams = {
-  /** The unified payload wrapper for complex media assets dictating image, video or audio inference constraints. */
+  /** Input assets for the task. */
   inputs?: {
   /** Image used as a starting point for the generation (UUID, URL, Data URI, or Base64). */
   seedImage?: unknown
@@ -1879,7 +1879,7 @@ export type ZImageParams = {
   /** Refinement strength. Lower values preserve more of the original, higher values allow more aggressive reconstruction. */
   strength?: number
 }
-  /** Specifies a webhook URL where JSON responses will be sent via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
@@ -1916,7 +1916,7 @@ export type ZImageParams = {
  * z-image-turbo architecture params.
  */
 export type ZImageTurboParams = {
-  /** The unified payload wrapper for complex media assets dictating image, video or audio inference constraints. */
+  /** Input assets for the task. */
   inputs?: {
   /** Image used as a starting point for the generation (UUID, URL, Data URI, or Base64). */
   seedImage?: unknown
@@ -2019,7 +2019,7 @@ export type ZImageTurboParams = {
   /** Refinement strength. Lower values preserve more of the original, higher values allow more aggressive reconstruction. */
   strength?: number
 }
-  /** Specifies a webhook URL where JSON responses will be sent via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
@@ -2056,7 +2056,7 @@ export type ZImageTurboParams = {
  * ThreeD inference params.
  */
 export type ThreeDInferenceParams = {
-  /** Specifies a webhook URL where JSON responses will be sent via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
@@ -2081,7 +2081,7 @@ export type ThreeDInferenceParams = {
  * Audio inference params.
  */
 export type AudioInferenceParams = {
-  /** Specifies a webhook URL where JSON responses will be sent via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
@@ -2115,7 +2115,7 @@ export type AudioInferenceParams = {
  * Image inference params.
  */
 export type ImageInferenceParams = {
-  /** Specifies a webhook URL where JSON responses will be sent via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
@@ -2152,7 +2152,7 @@ export type ImageInferenceParams = {
  * Text inference params.
  */
 export type TextInferenceParams = {
-  /** Specifies a webhook URL where JSON responses will be sent via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
@@ -2160,9 +2160,9 @@ export type TextInferenceParams = {
   model: string
   /** Array of chat messages forming the conversation context. The final message must use the user role. */
   messages: ({
-  /** The role of the message author. */
+  /** Role of the message author. */
   role: 'user' | 'assistant'
-  /** The text content of the message. */
+  /** Text content of the message. */
   content: string
 })[]
   /** Output format for the generated text. */
@@ -2182,7 +2182,7 @@ export type TextInferenceParams = {
  * Video inference params.
  */
 export type VideoInferenceParams = {
-  /** Specifies a webhook URL where JSON responses will be sent via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
@@ -2216,7 +2216,7 @@ export type VideoInferenceParams = {
  * caption operation params.
  */
 export type CaptionParams = {
-  /** Specifies a webhook URL where JSON responses will be sent via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
@@ -2229,7 +2229,7 @@ export type CaptionParams = {
  * caption-image operation params.
  */
 export type CaptionImageParams = {
-  /** Specifies a webhook URL where JSON responses will be sent via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
@@ -2237,7 +2237,7 @@ export type CaptionImageParams = {
   model: string
   /** Determines how the API delivers task results. */
   deliveryMethod?: 'sync' | 'async'
-  /** The unified payload wrapper for complex media assets dictating image, video or audio inference constraints. */
+  /** Input assets for the task. */
   inputs: {
   /** Image input (UUID, URL, Data URI, or Base64). */
   image: unknown
@@ -2249,7 +2249,7 @@ export type CaptionImageParams = {
  * caption-video operation params.
  */
 export type CaptionVideoParams = {
-  /** Specifies a webhook URL where JSON responses will be sent via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
@@ -2257,7 +2257,7 @@ export type CaptionVideoParams = {
   model: string
   /** Determines how the API delivers task results. */
   deliveryMethod?: 'async'
-  /** The unified payload wrapper for complex media assets dictating image, video or audio inference constraints. */
+  /** Input assets for the task. */
   inputs: {
   /** Video input (UUID or URL). */
   video: unknown
@@ -2269,7 +2269,7 @@ export type CaptionVideoParams = {
  * controlnet-preprocess operation params.
  */
 export type ControlnetPreprocessParams = {
-  /** Specifies a webhook URL where JSON responses will be sent via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
@@ -2285,7 +2285,7 @@ export type ControlnetPreprocessParams = {
   uploadEndpoint?: string
   /** Time-to-live (TTL) in seconds for generated content. Only applies when `outputType` is `URL`. */
   ttl?: number
-  /** The unified payload wrapper for complex media assets dictating image, video or audio inference constraints. */
+  /** Input assets for the task. */
   inputs: {
   /** Image input (UUID, URL, Data URI, or Base64). */
   image: unknown
@@ -2297,7 +2297,7 @@ export type ControlnetPreprocessParams = {
  * masking operation params.
  */
 export type MaskingParams = {
-  /** Specifies a webhook URL where JSON responses will be sent via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
@@ -2313,7 +2313,7 @@ export type MaskingParams = {
   uploadEndpoint?: string
   /** Time-to-live (TTL) in seconds for generated content. Only applies when `outputType` is `URL`. */
   ttl?: number
-  /** The unified payload wrapper for complex media assets dictating image, video or audio inference constraints. */
+  /** Input assets for the task. */
   inputs: {
   /** Image input (UUID, URL, Data URI, or Base64). */
   image: unknown
@@ -2336,7 +2336,7 @@ export type MaskingParams = {
  * prompt-enhance operation params.
  */
 export type PromptEnhanceParams = {
-  /** Specifies a webhook URL where JSON responses will be sent via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
   webhookURL?: string
   /** Determines how the API delivers task results. */
   deliveryMethod?: 'sync' | 'async'
@@ -2344,7 +2344,7 @@ export type PromptEnhanceParams = {
   includeCost?: boolean
   /** Identifier of the model to use for generation. */
   model: string
-  /** The text prompt to enhance. */
+  /** Text prompt to enhance. */
   prompt: string
   /** Maximum length of the enhanced prompt. */
   promptMaxLength?: number
@@ -2357,7 +2357,7 @@ export type PromptEnhanceParams = {
  * remove-background operation params.
  */
 export type RemoveBackgroundParams = {
-  /** Specifies a webhook URL where JSON responses will be sent via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
@@ -2376,7 +2376,7 @@ export type RemoveBackgroundParams = {
  * remove-background-image operation params.
  */
 export type RemoveBackgroundImageParams = {
-  /** Specifies a webhook URL where JSON responses will be sent via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
@@ -2394,7 +2394,7 @@ export type RemoveBackgroundImageParams = {
   outputFormat?: 'JPG' | 'PNG' | 'WEBP'
   /** Determines how the API delivers task results. */
   deliveryMethod?: 'sync' | 'async'
-  /** The unified payload wrapper for complex media assets dictating image, video or audio inference constraints. */
+  /** Input assets for the task. */
   inputs: {
   /** Image input (UUID, URL, Data URI, or Base64). */
   image: unknown
@@ -2406,7 +2406,7 @@ export type RemoveBackgroundImageParams = {
  * remove-background-video operation params.
  */
 export type RemoveBackgroundVideoParams = {
-  /** Specifies a webhook URL where JSON responses will be sent via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
@@ -2424,7 +2424,7 @@ export type RemoveBackgroundVideoParams = {
   outputFormat?: 'WEBM' | 'MOV'
   /** Determines how the API delivers task results. */
   deliveryMethod?: 'async'
-  /** The unified payload wrapper for complex media assets dictating image, video or audio inference constraints. */
+  /** Input assets for the task. */
   inputs: {
   /** Video input (UUID or URL). */
   video: unknown
@@ -2436,7 +2436,7 @@ export type RemoveBackgroundVideoParams = {
  * training operation params.
  */
 export type TrainingParams = {
-  /** Specifies a webhook URL where JSON responses will be sent via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
@@ -2449,7 +2449,7 @@ export type TrainingParams = {
  * upscale operation params.
  */
 export type UpscaleParams = {
-  /** Specifies a webhook URL where JSON responses will be sent via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
@@ -2468,7 +2468,7 @@ export type UpscaleParams = {
  * upscale-image operation params.
  */
 export type UpscaleImageParams = {
-  /** Specifies a webhook URL where JSON responses will be sent via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
@@ -2486,7 +2486,7 @@ export type UpscaleImageParams = {
   outputFormat?: 'JPG' | 'PNG' | 'WEBP'
   /** Determines how the API delivers task results. */
   deliveryMethod?: 'sync' | 'async'
-  /** The unified payload wrapper for complex media assets dictating image, video or audio inference constraints. */
+  /** Input assets for the task. */
   inputs: {
   /** Image input (UUID, URL, Data URI, or Base64). */
   image: unknown
@@ -2498,7 +2498,7 @@ export type UpscaleImageParams = {
  * upscale-video operation params.
  */
 export type UpscaleVideoParams = {
-  /** Specifies a webhook URL where JSON responses will be sent via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
@@ -2516,7 +2516,7 @@ export type UpscaleVideoParams = {
   outputFormat?: 'MP4' | 'WEBM' | 'MOV'
   /** Determines how the API delivers task results. */
   deliveryMethod?: 'async'
-  /** The unified payload wrapper for complex media assets dictating image, video or audio inference constraints. */
+  /** Input assets for the task. */
   inputs: {
   /** Video input (UUID or URL). */
   video: unknown
@@ -2528,7 +2528,7 @@ export type UpscaleVideoParams = {
  * vectorize operation params.
  */
 export type VectorizeParams = {
-  /** Specifies a webhook URL where JSON responses will be sent via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
@@ -2672,6 +2672,159 @@ export type ModelUploadParams = {
 }
 
 /**
+ * Image Response
+ */
+export type ImageInferenceResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'imageInference'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** UUID of the output image. */
+  imageUUID: string
+  /** URL of the output image. */
+  imageURL?: string
+  /** Base64-encoded image data. */
+  imageBase64Data?: string
+  /** Data URI of the output image. */
+  imageDataURI?: string
+  /** The seed used for generation. If none was provided, shows the randomly generated seed. */
+  seed?: number
+  /** Flag indicating if NSFW content was detected. */
+  NSFWContent?: boolean
+}
+
+/**
+ * Training Response
+ */
+export type TrainingResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'training'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** AIR of the trained model produced by this run. Use it to run inference with the trained model. */
+  air: string
+  /** The trained model produced by the training run. */
+  outputs: {
+  /** The file or files that make up the trained model. */
+  files: {
+  /** UUID of the output file. */
+  uuid: string
+  /** URL of the output file. */
+  url: string
+}[]
+}
+}
+
+/**
+ * 3D Response
+ */
+export type ThreeDInferenceResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: '3dInference'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** Generated output artifacts. */
+  outputs: {
+  /** Generated output files. */
+  files: {
+  /** UUID of the output file. */
+  uuid: string
+  /** URL of the output file. */
+  url: string
+}[]
+}
+  /** The seed used for generation. If none was provided, shows the randomly generated seed. */
+  seed?: number
+}
+
+/**
+ * Remove Background Image Response
+ */
+export type RemoveBackgroundResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'removeBackground'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** UUID of the output image. */
+  imageUUID: string
+  /** URL of the output image. */
+  imageURL?: string
+  /** Base64-encoded image data. */
+  imageBase64Data?: string
+  /** Data URI of the output image. */
+  imageDataURI?: string
+}
+
+/**
+ * Caption Text Response
+ */
+export type CaptionResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'caption'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** Generated caption text describing the input. */
+  text: string
+}
+
+/**
+ * Text Inference Response
+ */
+export type TextInferenceResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'textInference'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** Generated text content. */
+  text: string
+  /** The reason why the model stopped generating tokens. */
+  finishReason: 'stop' | 'length' | 'content_filter' | 'unknown'
+  /** Token usage statistics for the request. */
+  usage: {
+  /** Number of tokens in the input prompt. */
+  promptTokens: number
+  /** Number of tokens generated in the response. */
+  completionTokens: number
+  /** Total number of tokens used (prompt + completion). */
+  totalTokens: number
+  /** Number of tokens used for internal reasoning. Billed separately. */
+  thinkingTokens?: number
+}
+}
+
+/**
+ * Upscale Image Response
+ */
+export type UpscaleResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'upscale'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** UUID of the output image. */
+  imageUUID: string
+  /** URL of the output image. */
+  imageURL?: string
+  /** Base64-encoded image data. */
+  imageBase64Data?: string
+  /** Data URI of the output image. */
+  imageDataURI?: string
+}
+
+/**
  * Video Response
  */
 export type VideoInferenceResult = {
@@ -2718,74 +2871,36 @@ export type AudioInferenceResult = {
 }
 
 /**
- * Text Inference Response
+ * Image Masking Response
  */
-export type TextInferenceResult = {
+export type ImageMaskingResult = {
   /** Identifier for the type of task this response belongs to. */
-  taskType: 'textInference'
+  taskType: 'imageMasking'
   /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
   taskUUID: string
   /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
   cost?: number
-  /** Generated text content. */
-  text: string
-  /** The reason why the model stopped generating tokens. */
-  finishReason: 'stop' | 'length' | 'content_filter' | 'unknown'
-  /** Token usage statistics for the request. */
-  usage: {
-  /** Number of tokens in the input prompt. */
-  promptTokens: number
-  /** Number of tokens generated in the response. */
-  completionTokens: number
-  /** Total number of tokens used (prompt + completion). */
-  totalTokens: number
-  /** Number of tokens used for internal reasoning. Billed separately. */
-  thinkingTokens?: number
-}
-}
-
-/**
- * Image Response
- */
-export type ImageInferenceResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'imageInference'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** UUID of the output image. */
-  imageUUID: string
-  /** URL of the output image. */
-  imageURL?: string
-  /** Base64-encoded image data. */
-  imageBase64Data?: string
-  /** Data URI of the output image. */
-  imageDataURI?: string
-  /** The seed used for generation. If none was provided, shows the randomly generated seed. */
-  seed?: number
-  /** Flag indicating if NSFW content was detected. */
-  NSFWContent?: boolean
-}
-
-/**
- * Remove Background Image Response
- */
-export type RemoveBackgroundResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'removeBackground'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** UUID of the output image. */
-  imageUUID: string
-  /** URL of the output image. */
-  imageURL?: string
-  /** Base64-encoded image data. */
-  imageBase64Data?: string
-  /** Data URI of the output image. */
-  imageDataURI?: string
+  /** UUID of the output mask image. */
+  maskImageUUID: string
+  /** URL of the output mask image. */
+  maskImageURL?: string
+  /** Base64-encoded mask image data. */
+  maskImageBase64Data?: string
+  /** Data URI of the output mask image. */
+  maskImageDataURI?: string
+  /** An array of objects containing the coordinates of each detected element in the image. Each object provides the bounding box coordinates of a detected face, hand, or person (depending on the model used). */
+  detections: {
+  /** Leftmost coordinate of the detected area. */
+  x_min: number
+  /** Topmost coordinate of the detected area. */
+  y_min: number
+  /** Rightmost coordinate of the detected area. */
+  x_max: number
+  /** Bottommost coordinate of the detected area. */
+  y_max: number
+}[]
+  /** UUID of the input image used for masking. */
+  inputImageUUID: string
 }
 
 /**
@@ -2825,101 +2940,8 @@ export type PromptEnhanceResult = {
 }
 
 /**
- * Age Classification Response
+ * Vectorize Response
  */
-export type CaptionResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'caption'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** Machine-readable age classification data. */
-  structuredData: {
-  /** Predicted age range of the subject (e.g. `13-20`). */
-  ageGroup: string
-  /** Confidence score as a percentage. */
-  confidence: number
-}
-}
-
-/**
- * Image Masking Response
- */
-export type ImageMaskingResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'imageMasking'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** UUID of the output mask image. */
-  maskImageUUID: string
-  /** URL of the output mask image. */
-  maskImageURL?: string
-  /** Base64-encoded mask image data. */
-  maskImageBase64Data?: string
-  /** Data URI of the output mask image. */
-  maskImageDataURI?: string
-  /** An array of objects containing the coordinates of each detected element in the image. Each object provides the bounding box coordinates of a detected face, hand, or person (depending on the model used). */
-  detections: {
-  /** Leftmost coordinate of the detected area. */
-  x_min: number
-  /** Topmost coordinate of the detected area. */
-  y_min: number
-  /** Rightmost coordinate of the detected area. */
-  x_max: number
-  /** Bottommost coordinate of the detected area. */
-  y_max: number
-}[]
-  /** UUID of the input image used for masking. */
-  inputImageUUID: string
-}
-
-/**
- * Training Response
- */
-export type TrainingResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'training'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** AIR of the trained model produced by this run. Use it to run inference with the trained model. */
-  air: string
-  /** The trained model produced by the training run. */
-  outputs: {
-  /** The file or files that make up the trained model. */
-  files: {
-  /** UUID of the output file. */
-  uuid: string
-  /** URL of the output file. */
-  url: string
-}[]
-}
-}
-
-/**
- * Upscale Image Response
- */
-export type UpscaleResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'upscale'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** UUID of the output image. */
-  imageUUID: string
-  /** URL of the output image. */
-  imageURL?: string
-  /** Base64-encoded image data. */
-  imageBase64Data?: string
-  /** Data URI of the output image. */
-  imageDataURI?: string
-}
-
 export type VectorizeResult = {
   /** Identifier for the type of task this response belongs to. */
   taskType: 'vectorize'
@@ -2935,35 +2957,31 @@ export type VectorizeResult = {
   imageBase64Data?: string
   /** Data URI of the output image. */
   imageDataURI?: string
-  /** Generated output artifacts. */
-  outputs?: {
-  /** The ID of the style applied to the generation. Can be used to reuse the style in later requests. */
-  styleId?: string
-}
 }
 
 /**
- * 3D Response
+ * Media Storage Response
  */
-export type ThreeDInferenceResult = {
+export type MediaStorageResult = {
   /** Identifier for the type of task this response belongs to. */
-  taskType: '3dInference'
+  taskType: 'mediaStorage'
   /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
   taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** Generated output artifacts. */
-  outputs: {
-  /** Generated output files. */
-  files: {
-  /** UUID of the output file. */
-  uuid: string
-  /** URL of the output file. */
-  url: string
-}[]
-}
-  /** The seed used for generation. If none was provided, shows the randomly generated seed. */
-  seed?: number
+  /** The media storage operation that produced this response. */
+  operation: 'upload'
+  /** UUID of the stored media. */
+  mediaUUID: string
+  /** URL where the stored media is accessible. */
+  mediaURL: string
+} | {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'mediaStorage'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** The media storage operation that produced this response. */
+  operation: 'delete'
+  /** UUID of the stored media. */
+  mediaUUID: string
 }
 
 /**
@@ -2978,6 +2996,100 @@ export type ImageUploadResult = {
   imageUUID: string
   /** URL of the output image. */
   imageURL: string
+}
+
+/**
+ * Model Upload Response
+ */
+export type ModelUploadResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType?: 'modelUpload'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Status of the upload operation phase. */
+  status: 'validated' | 'downloaded' | 'optimized' | 'stored' | 'ready' | 'failed'
+  /** Status message or error details. */
+  message: string
+  /** The AIR identifier of the uploaded model. */
+  air?: string
+}
+
+/**
+ * Task Response
+ */
+export type GetResponseResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'authentication' | 'imageInference' | 'videoInference' | 'audioInference' | 'textInference' | '3dInference' | 'modelSearch' | 'modelUpload' | 'accountManagement' | 'imageUpload' | 'mediaStorage' | 'getResponse' | 'caption' | 'controlNetPreprocess' | 'imageMasking' | 'promptEnhance' | 'removeBackground' | 'upscale' | 'vectorize' | 'training' | 'ping'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Current status of the task. */
+  status: 'processing' | 'success' | 'error'
+  /** Task progress as a percentage from 0 to 100. Returned while `status` is `processing`, and only for tasks that support progress reporting. */
+  progress?: number
+  /** Error details if the task failed. */
+  error?: {
+  /** Error code. */
+  code?: string
+  /** Error message description. */
+  message?: string
+}
+  [key: string]: unknown
+}
+
+/**
+ * Model Search Response
+ */
+export type ModelSearchResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'modelSearch'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Total number of models matching the search criteria. */
+  totalResults: number
+  /** List of models found. */
+  results: ({
+  /** Artificial Intelligence Resource identifier. */
+  air: string
+  /** Model name. */
+  name: string
+  /** Model category. */
+  category: 'checkpoint' | 'lora' | 'lycoris' | 'vae' | 'embeddings'
+  /** Model architecture. */
+  architecture: string | null
+  /** Model capabilities. */
+  capabilities: string[]
+  /** Model source. */
+  source: 'featured' | 'community'
+  /** Representative image URL. */
+  heroImage: string | null
+  /** Whether the model is private. */
+  private: boolean
+  /** Whether the model is favorited. */
+  isFavorite?: boolean
+  /** Model provider. */
+  provider?: string
+  /** Short description. */
+  shortDescription?: string
+  /** Positive trigger words. */
+  positiveTriggerWords?: string
+  /** Negative trigger words. */
+  negativeTriggerWords?: string
+})[]
+  [key: string]: unknown
+}
+
+/**
+ * Get Task Details Response
+ */
+export type GetTaskDetailsResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'getTaskDetails'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** The original request array sent for this task. The structure of each object depends on the task type. */
+  request: Record<string, unknown>[]
+  /** The original API response for this task. Contains a `data` array when the task completed successfully, or an `errors` array when the task failed. */
+  response: Record<string, unknown>
 }
 
 /**
@@ -3228,125 +3340,6 @@ export type AccountManagementResult = {
 }
 
 /**
- * Model Search Response
- */
-export type ModelSearchResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'modelSearch'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Total number of models matching the search criteria. */
-  totalResults: number
-  /** List of models found. */
-  results: ({
-  /** Artificial Intelligence Resource identifier. */
-  air: string
-  /** Model name. */
-  name: string
-  /** Model category. */
-  category: 'checkpoint' | 'lora' | 'lycoris' | 'vae' | 'embeddings'
-  /** Model architecture. */
-  architecture: string | null
-  /** Model capabilities. */
-  capabilities: string[]
-  /** Model source. */
-  source: 'featured' | 'community'
-  /** Representative image URL. */
-  heroImage: string | null
-  /** Whether the model is private. */
-  private: boolean
-  /** Whether the model is favorited. */
-  isFavorite?: boolean
-  /** Model provider. */
-  provider?: string
-  /** Short description. */
-  shortDescription?: string
-  /** Positive trigger words. */
-  positiveTriggerWords?: string
-  /** Negative trigger words. */
-  negativeTriggerWords?: string
-})[]
-  [key: string]: unknown
-}
-
-/**
- * Task Response
- */
-export type GetResponseResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'authentication' | 'imageInference' | 'videoInference' | 'audioInference' | 'textInference' | 'modelSearch' | 'modelUpload' | 'accountManagement' | 'imageUpload' | 'mediaStorage' | 'getResponse' | 'caption' | 'controlNetPreprocess' | 'imageMasking' | 'promptEnhance' | 'removeBackground' | 'upscale' | 'vectorize' | 'training' | 'ping'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Current status of the task. */
-  status: 'processing' | 'success' | 'error'
-  /** Task progress as a percentage from 0 to 100. Returned while `status` is `processing`, and only for tasks that support progress reporting. */
-  progress?: number
-  /** Error details if the task failed. */
-  error?: {
-  /** Error code. */
-  code?: string
-  /** Error message description. */
-  message?: string
-}
-  [key: string]: unknown
-}
-
-/**
- * Model Upload Response
- */
-export type ModelUploadResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType?: 'modelUpload'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Status of the upload operation phase. */
-  status: 'validated' | 'downloaded' | 'optimized' | 'stored' | 'ready' | 'failed'
-  /** Status message or error details. */
-  message: string
-  /** The AIR identifier of the uploaded model. */
-  air?: string
-}
-
-/**
- * Media Storage Response
- */
-export type MediaStorageResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'mediaStorage'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** The media storage operation that produced this response. */
-  operation: 'upload'
-  /** UUID of the stored media. */
-  mediaUUID: string
-  /** URL where the stored media is accessible. */
-  mediaURL: string
-} | {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'mediaStorage'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** The media storage operation that produced this response. */
-  operation: 'delete'
-  /** UUID of the stored media. */
-  mediaUUID: string
-}
-
-/**
- * Get Task Details Response
- */
-export type GetTaskDetailsResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'getTaskDetails'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** The original request array sent for this task. The structure of each object depends on the task type. */
-  request: Record<string, unknown>[]
-  /** The original API response for this task. Contains a `data` array when the task completed successfully, or an `errors` array when the task failed. */
-  response: Record<string, unknown>
-}
-
-/**
  * Error Response
  */
 export type ApiError = {
@@ -3487,6 +3480,7 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'alibaba:qwen-image-edit@2511': { taskType: 'imageInference', id: 'alibaba-qwen-image-edit-2511' },
   'alibaba:qwen-image@2.0': { taskType: 'imageInference', id: 'alibaba-qwen-image-2-0' },
   'alibaba:qwen-image@2.0-pro': { taskType: 'imageInference', id: 'alibaba-qwen-image-2-0-pro' },
+  'alibaba:qwen-image@2.1-pro': { taskType: 'imageInference', id: 'alibaba-qwen-image-2-1-pro' },
   'alibaba:qwen-image@2512': { taskType: 'imageInference', id: 'alibaba-qwen-image-2512' },
   'alibaba:qwen-image@3.0': { taskType: 'imageInference', id: 'alibaba-qwen-image-3-0' },
   'alibaba:qwen-image@3.0-pro': { taskType: 'imageInference', id: 'alibaba-qwen-image-3-0-pro' },
@@ -3521,8 +3515,11 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'bfl:flux@3-video': { taskType: 'videoInference', id: 'bfl-flux-3-video' },
   'bfl:flux@erase': { taskType: 'imageInference', id: 'bfl-flux-erase' },
   'bfl:flux@outpainting': { taskType: 'imageInference', id: 'bfl-flux-outpainting' },
+  'bfl:flux@video-edit-fast': { taskType: 'videoInference', id: 'bfl-flux-video-edit-fast' },
   'bfl:flux@video-upscale': { taskType: 'upscale', id: 'bfl-flux-video-upscale' },
   'bfl:flux@vto': { taskType: 'imageInference', id: 'bfl-flux-virtual-try-on' },
+  'boogu:image@0.1-edit': { taskType: 'imageInference', id: 'boogu-image-0-1-edit' },
+  'boogu:image@0.1-edit-turbo': { taskType: 'imageInference', id: 'boogu-image-0-1-edit-turbo' },
   'bria:10@1': { taskType: 'imageInference', id: 'bria-3-2' },
   'bria:11@1': { taskType: 'imageInference', id: 'bria-image-replace-background' },
   'bria:2@1': { taskType: 'removeBackground', id: 'bria-rmbg-v2-0' },
@@ -3547,6 +3544,7 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'bytedance:seedance@2.0-mini': { taskType: 'videoInference', id: 'bytedance-seedance-2-0-mini' },
   'bytedance:seedance@2.5': { taskType: 'videoInference', id: 'bytedance-seedance-2-5' },
   'bytedance:seedream@4.5': { taskType: 'imageInference', id: 'bytedance-seedream-4-5' },
+  'bytedance:seedream@5.0-flash': { taskType: 'imageInference', id: 'bytedance-seedream-5-0-flash' },
   'bytedance:seedream@5.0-lite': { taskType: 'imageInference', id: 'bytedance-seedream-5-0-lite' },
   'bytedance:seedream@5.0-pro': { taskType: 'imageInference', id: 'bytedance-seedream-5-0-pro' },
   'bytedance:video-enhancement@pro': { taskType: 'upscale', id: 'bytedance-video-enhancement-pro' },
@@ -3554,7 +3552,6 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'civitai:101055@128078': { taskType: 'imageInference', id: 'stabilityai-stable-diffusion-xl-v1-0-vae-fix' },
   'creatify:aurora@0': { taskType: 'videoInference', id: 'creatify-aurora-v1' },
   'creatify:aurora@fast': { taskType: 'videoInference', id: 'creatify-aurora-v1-fast' },
-  'deepseek:v4@flash': { taskType: 'textInference', id: 'deepseek-v4-flash' },
   'exactly:illustrative@training': { taskType: 'training', id: 'exactly-illustrative-training' },
   'exactly:photo@bright-pulse': { taskType: 'imageInference', id: 'exactly-photo-bright-pulse' },
   'exactly:photo@distant-reality': { taskType: 'imageInference', id: 'exactly-photo-distant-reality' },
@@ -3573,7 +3570,6 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'google:gemini@3.1-flash-tts': { taskType: 'audioInference', id: 'google-gemini-3-1-flash-tts' },
   'google:gemini@3.1-pro': { taskType: 'textInference', id: 'google-gemini-3-1-pro' },
   'google:gemini@3.5-flash': { taskType: 'textInference', id: 'google-gemini-3-5-flash' },
-  'google:gemini@omni-flash': { taskType: 'videoInference', id: 'google-gemini-omni-flash' },
   'google:gemini@omni-flash-1.1': { taskType: 'videoInference', id: 'google-gemini-omni-flash-1-1' },
   'google:gemma@4-31b': { taskType: 'textInference', id: 'google-gemma-4-31b' },
   'google:nano-banana@2-lite': { taskType: 'imageInference', id: 'google-nano-banana-2-lite' },
@@ -3581,11 +3577,14 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'heygen:avatar@4': { taskType: 'videoInference', id: 'heygen-avatar-iv' },
   'heygen:avatar@5': { taskType: 'videoInference', id: 'heygen-avatar-v' },
   'heygen:video-agent@0': { taskType: 'videoInference', id: 'heygen-video-agent' },
+  'heygen:video@1.0': { taskType: 'videoInference', id: 'heygen-video-1-0' },
   'hyper3d:rodin@gen-2': { taskType: '3dInference', id: 'hyper3d-rodin-gen-2' },
   'ideogram:2@1': { taskType: 'imageInference', id: 'ideogram-2a' },
   'ideogram:2@2': { taskType: 'imageInference', id: 'ideogram-2a-remix' },
   'ideogram:3@1': { taskType: 'imageInference', id: 'ideogram-2-0' },
   'ideogram:3@2': { taskType: 'imageInference', id: 'ideogram-2-0-remix' },
+  'ideogram:4.5@0': { taskType: 'imageInference', id: 'ideogram-4-5' },
+  'ideogram:4.5@precise-edit': { taskType: 'imageInference', id: 'ideogram-4-5-precise-edit' },
   'ideogram:4@0': { taskType: 'imageInference', id: 'ideogram-4-0' },
   'ideogram:4@1': { taskType: 'imageInference', id: 'ideogram-3-0' },
   'ideogram:4@2': { taskType: 'imageInference', id: 'ideogram-3-0-remix' },
@@ -3603,16 +3602,6 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'inworld:tts@1.5-max': { taskType: 'audioInference', id: 'inworld-tts-1-5-max' },
   'inworld:tts@1.5-mini': { taskType: 'audioInference', id: 'inworld-tts-1-5-mini' },
   'inworld:tts@2': { taskType: 'audioInference', id: 'inworld-tts-2' },
-  'klingai:1@1': { taskType: 'videoInference', id: 'klingai-1-0-standard' },
-  'klingai:1@2': { taskType: 'videoInference', id: 'klingai-1-0-pro' },
-  'klingai:2@1': { taskType: 'videoInference', id: 'klingai-1-5-standard' },
-  'klingai:2@2': { taskType: 'videoInference', id: 'klingai-1-5-pro' },
-  'klingai:3@1': { taskType: 'videoInference', id: 'klingai-1-6-standard' },
-  'klingai:3@2': { taskType: 'videoInference', id: 'klingai-1-6-pro' },
-  'klingai:4@3': { taskType: 'videoInference', id: 'klingai-2-0-master' },
-  'klingai:5@1': { taskType: 'videoInference', id: 'klingai-2-1-standard' },
-  'klingai:5@2': { taskType: 'videoInference', id: 'klingai-2-1-pro' },
-  'klingai:5@3': { taskType: 'videoInference', id: 'klingai-2-1-master' },
   'klingai:6@0': { taskType: 'videoInference', id: 'klingai-2-5-turbo-standard' },
   'klingai:6@1': { taskType: 'videoInference', id: 'klingai-2-5-turbo-pro' },
   'klingai:7@1': { taskType: 'videoInference', id: 'klingai-lip-sync' },
@@ -3656,7 +3645,9 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'minimax:4@1': { taskType: 'videoInference', id: 'minimax-hailuo-2-3' },
   'minimax:4@2': { taskType: 'videoInference', id: 'minimax-hailuo-2-3-fast' },
   'minimax:h3@0': { taskType: 'videoInference', id: 'minimax-h3' },
+  'minimax:h3@fast': { taskType: 'videoInference', id: 'minimax-h3-fast' },
   'minimax:h3@max': { taskType: 'videoInference', id: 'minimax-h3-max' },
+  'minimax:h3@max-turbo': { taskType: 'videoInference', id: 'minimax-h3-max-turbo' },
   'minimax:m2.7@0': { taskType: 'textInference', id: 'minimax-m2-7' },
   'minimax:m2.7@highspeed': { taskType: 'textInference', id: 'minimax-m2-7-highspeed' },
   'minimax:m3@0': { taskType: 'textInference', id: 'minimax-m3' },
@@ -3664,13 +3655,12 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'minimax:music@cover': { taskType: 'audioInference', id: 'minimax-music-cover' },
   'minimax:speech@2.8': { taskType: 'audioInference', id: 'minimax-speech-2-8' },
   'mirelo:1@1': { taskType: 'audioInference', id: 'mirelo-sfx-1-5' },
-  'mirelo:sfx@1.6': { taskType: 'audioInference', id: 'mirelo-sfx-1-6' },
   'openai:1@1': { taskType: 'imageInference', id: 'openai-gpt-image-1' },
   'openai:1@2': { taskType: 'imageInference', id: 'openai-gpt-image-1-mini' },
-  'openai:3@1': { taskType: 'videoInference', id: 'openai-sora-2' },
-  'openai:3@2': { taskType: 'videoInference', id: 'openai-sora-2-pro' },
   'openai:4@1': { taskType: 'imageInference', id: 'openai-gpt-image-1-5' },
   'openai:gpt-image@2': { taskType: 'imageInference', id: 'openai-gpt-image-2' },
+  'openai:gpt-image@2.5-flare': { taskType: 'imageInference', id: 'openai-gpt-image-2-5-flare' },
+  'openai:gpt-image@2.5-sunburst': { taskType: 'imageInference', id: 'openai-gpt-image-2-5-sunburst' },
   'openai:gpt@5-mini': { taskType: 'textInference', id: 'openai-gpt-5-mini' },
   'openai:gpt@5-nano': { taskType: 'textInference', id: 'openai-gpt-5-nano' },
   'openai:gpt@5.4': { taskType: 'textInference', id: 'openai-gpt-5-4' },
@@ -3695,6 +3685,8 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'prunaai:p-image@try-on': { taskType: 'imageInference', id: 'prunaai-p-image-try-on' },
   'prunaai:p-image@upscale': { taskType: 'upscale', id: 'prunaai-p-image-upscale' },
   'prunaai:p-video@0': { taskType: 'videoInference', id: 'prunaai-p-video' },
+  'prunaai:p-video@2': { taskType: 'videoInference', id: 'prunaai-p-video-2' },
+  'prunaai:p-video@2-pro': { taskType: 'videoInference', id: 'prunaai-p-video-2-pro' },
   'prunaai:p-video@animate': { taskType: 'videoInference', id: 'prunaai-p-video-animate' },
   'prunaai:p-video@avatar': { taskType: 'videoInference', id: 'prunaai-p-video-avatar' },
   'prunaai:p-video@edit': { taskType: 'videoInference', id: 'prunaai-p-video-edit' },
@@ -3706,6 +3698,7 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'recraft:v4.1-utility-pro@0': { taskType: 'imageInference', id: 'recraft-v4-1-utility-pro' },
   'recraft:v4.1-utility@0': { taskType: 'imageInference', id: 'recraft-v4-1-utility' },
   'recraft:v4.1@0': { taskType: 'imageInference', id: 'recraft-v4-1' },
+  'recraft:v4.1@flash': { taskType: 'imageInference', id: 'recraft-v4-1-flash' },
   'recraft:v4@0': { taskType: 'imageInference', id: 'recraft-v4' },
   'recraft:v4@styles': { taskType: 'imageInference', id: 'recraft-v4-styles' },
   'recraft:v4@styles-pro': { taskType: 'imageInference', id: 'recraft-v4-styles-pro' },
@@ -3726,7 +3719,6 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'runware:108@20': { taskType: 'imageInference', id: 'alibaba-qwen-image-edit' },
   'runware:108@22': { taskType: 'imageInference', id: 'alibaba-qwen-image-edit-plus' },
   'runware:109@1': { taskType: 'removeBackground', id: 'rembg-v1-4' },
-  'runware:110@1': { taskType: 'removeBackground', id: 'bria-rmbg-v2-0-open' },
   'runware:111@1': { taskType: 'imageInference', id: 'flux-1-dev-srpo' },
   'runware:112@1': { taskType: 'removeBackground', id: 'birefnet-v1-base' },
   'runware:112@10': { taskType: 'removeBackground', id: 'birefnet-portrait' },
@@ -3782,7 +3774,6 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'runware:ace-step@v1.5-xl-base': { taskType: 'audioInference', id: 'ace-step-v1-5-xl-base' },
   'runware:ace-step@v1.5-xl-sft': { taskType: 'audioInference', id: 'ace-step-v1-5-xl-sft' },
   'runware:ace-step@v1.5-xl-turbo': { taskType: 'audioInference', id: 'ace-step-v1-5-xl-turbo' },
-  'runware:content-safety@1': { taskType: 'caption', id: 'content-safety' },
   'runware:controlnet-preprocess@canny': { taskType: 'controlNetPreprocess', id: 'controlnet-preprocess-canny' },
   'runware:controlnet-preprocess@depth': { taskType: 'controlNetPreprocess', id: 'controlnet-preprocess-depth' },
   'runware:controlnet-preprocess@lineart': { taskType: 'controlNetPreprocess', id: 'controlnet-preprocess-lineart' },
@@ -3856,6 +3847,7 @@ export type ModelResultMap = {
   'alibaba:qwen-image-edit@2511': ImageInferenceResult
   'alibaba:qwen-image@2.0': ImageInferenceResult
   'alibaba:qwen-image@2.0-pro': ImageInferenceResult
+  'alibaba:qwen-image@2.1-pro': ImageInferenceResult
   'alibaba:qwen-image@2512': ImageInferenceResult
   'alibaba:qwen-image@3.0': ImageInferenceResult
   'alibaba:qwen-image@3.0-pro': ImageInferenceResult
@@ -3890,8 +3882,11 @@ export type ModelResultMap = {
   'bfl:flux@3-video': VideoInferenceResult
   'bfl:flux@erase': ImageInferenceResult
   'bfl:flux@outpainting': ImageInferenceResult
+  'bfl:flux@video-edit-fast': VideoInferenceResult
   'bfl:flux@video-upscale': UpscaleResult
   'bfl:flux@vto': ImageInferenceResult
+  'boogu:image@0.1-edit': ImageInferenceResult
+  'boogu:image@0.1-edit-turbo': ImageInferenceResult
   'bria:10@1': ImageInferenceResult
   'bria:11@1': ImageInferenceResult
   'bria:2@1': RemoveBackgroundResult
@@ -3916,6 +3911,7 @@ export type ModelResultMap = {
   'bytedance:seedance@2.0-mini': VideoInferenceResult
   'bytedance:seedance@2.5': VideoInferenceResult
   'bytedance:seedream@4.5': ImageInferenceResult
+  'bytedance:seedream@5.0-flash': ImageInferenceResult
   'bytedance:seedream@5.0-lite': ImageInferenceResult
   'bytedance:seedream@5.0-pro': ImageInferenceResult
   'bytedance:video-enhancement@pro': UpscaleResult
@@ -3923,7 +3919,6 @@ export type ModelResultMap = {
   'civitai:101055@128078': ImageInferenceResult
   'creatify:aurora@0': VideoInferenceResult
   'creatify:aurora@fast': VideoInferenceResult
-  'deepseek:v4@flash': TextInferenceResult
   'exactly:illustrative@training': TrainingResult
   'exactly:photo@bright-pulse': ImageInferenceResult
   'exactly:photo@distant-reality': ImageInferenceResult
@@ -3942,7 +3937,6 @@ export type ModelResultMap = {
   'google:gemini@3.1-flash-tts': AudioInferenceResult
   'google:gemini@3.1-pro': TextInferenceResult
   'google:gemini@3.5-flash': TextInferenceResult
-  'google:gemini@omni-flash': VideoInferenceResult
   'google:gemini@omni-flash-1.1': VideoInferenceResult
   'google:gemma@4-31b': TextInferenceResult
   'google:nano-banana@2-lite': ImageInferenceResult
@@ -3950,11 +3944,14 @@ export type ModelResultMap = {
   'heygen:avatar@4': VideoInferenceResult
   'heygen:avatar@5': VideoInferenceResult
   'heygen:video-agent@0': VideoInferenceResult
+  'heygen:video@1.0': VideoInferenceResult
   'hyper3d:rodin@gen-2': ThreeDInferenceResult
   'ideogram:2@1': ImageInferenceResult
   'ideogram:2@2': ImageInferenceResult
   'ideogram:3@1': ImageInferenceResult
   'ideogram:3@2': ImageInferenceResult
+  'ideogram:4.5@0': ImageInferenceResult
+  'ideogram:4.5@precise-edit': ImageInferenceResult
   'ideogram:4@0': ImageInferenceResult
   'ideogram:4@1': ImageInferenceResult
   'ideogram:4@2': ImageInferenceResult
@@ -3972,16 +3969,6 @@ export type ModelResultMap = {
   'inworld:tts@1.5-max': AudioInferenceResult
   'inworld:tts@1.5-mini': AudioInferenceResult
   'inworld:tts@2': AudioInferenceResult
-  'klingai:1@1': VideoInferenceResult
-  'klingai:1@2': VideoInferenceResult
-  'klingai:2@1': VideoInferenceResult
-  'klingai:2@2': VideoInferenceResult
-  'klingai:3@1': VideoInferenceResult
-  'klingai:3@2': VideoInferenceResult
-  'klingai:4@3': VideoInferenceResult
-  'klingai:5@1': VideoInferenceResult
-  'klingai:5@2': VideoInferenceResult
-  'klingai:5@3': VideoInferenceResult
   'klingai:6@0': VideoInferenceResult
   'klingai:6@1': VideoInferenceResult
   'klingai:7@1': VideoInferenceResult
@@ -4025,7 +4012,9 @@ export type ModelResultMap = {
   'minimax:4@1': VideoInferenceResult
   'minimax:4@2': VideoInferenceResult
   'minimax:h3@0': VideoInferenceResult
+  'minimax:h3@fast': VideoInferenceResult
   'minimax:h3@max': VideoInferenceResult
+  'minimax:h3@max-turbo': VideoInferenceResult
   'minimax:m2.7@0': TextInferenceResult
   'minimax:m2.7@highspeed': TextInferenceResult
   'minimax:m3@0': TextInferenceResult
@@ -4033,13 +4022,12 @@ export type ModelResultMap = {
   'minimax:music@cover': AudioInferenceResult
   'minimax:speech@2.8': AudioInferenceResult
   'mirelo:1@1': AudioInferenceResult
-  'mirelo:sfx@1.6': AudioInferenceResult
   'openai:1@1': ImageInferenceResult
   'openai:1@2': ImageInferenceResult
-  'openai:3@1': VideoInferenceResult
-  'openai:3@2': VideoInferenceResult
   'openai:4@1': ImageInferenceResult
   'openai:gpt-image@2': ImageInferenceResult
+  'openai:gpt-image@2.5-flare': ImageInferenceResult
+  'openai:gpt-image@2.5-sunburst': ImageInferenceResult
   'openai:gpt@5-mini': TextInferenceResult
   'openai:gpt@5-nano': TextInferenceResult
   'openai:gpt@5.4': TextInferenceResult
@@ -4064,6 +4052,8 @@ export type ModelResultMap = {
   'prunaai:p-image@try-on': ImageInferenceResult
   'prunaai:p-image@upscale': UpscaleResult
   'prunaai:p-video@0': VideoInferenceResult
+  'prunaai:p-video@2': VideoInferenceResult
+  'prunaai:p-video@2-pro': VideoInferenceResult
   'prunaai:p-video@animate': VideoInferenceResult
   'prunaai:p-video@avatar': VideoInferenceResult
   'prunaai:p-video@edit': VideoInferenceResult
@@ -4075,6 +4065,7 @@ export type ModelResultMap = {
   'recraft:v4.1-utility-pro@0': ImageInferenceResult
   'recraft:v4.1-utility@0': ImageInferenceResult
   'recraft:v4.1@0': ImageInferenceResult
+  'recraft:v4.1@flash': ImageInferenceResult
   'recraft:v4@0': ImageInferenceResult
   'recraft:v4@styles': ImageInferenceResult
   'recraft:v4@styles-pro': ImageInferenceResult
@@ -4095,7 +4086,6 @@ export type ModelResultMap = {
   'runware:108@20': ImageInferenceResult
   'runware:108@22': ImageInferenceResult
   'runware:109@1': RemoveBackgroundResult
-  'runware:110@1': RemoveBackgroundResult
   'runware:111@1': ImageInferenceResult
   'runware:112@1': RemoveBackgroundResult
   'runware:112@10': RemoveBackgroundResult
@@ -4151,7 +4141,6 @@ export type ModelResultMap = {
   'runware:ace-step@v1.5-xl-base': AudioInferenceResult
   'runware:ace-step@v1.5-xl-sft': AudioInferenceResult
   'runware:ace-step@v1.5-xl-turbo': AudioInferenceResult
-  'runware:content-safety@1': CaptionResult
   'runware:controlnet-preprocess@canny': ControlNetPreprocessResult
   'runware:controlnet-preprocess@depth': ControlNetPreprocessResult
   'runware:controlnet-preprocess@lineart': ControlNetPreprocessResult

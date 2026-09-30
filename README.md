@@ -595,6 +595,45 @@ await client.modelUpload({
 
 `getTaskDetails` vs `getResponse`: use `getTaskDetails` for "look up something I ran before" — it queries the task archive. `getResponse` is the polling mechanism the SDK uses internally during async `.run()`; you generally don't need to call it directly.
 
+## Serverless apps
+
+`client.invoke()` calls an endpoint on one of your own Serverless apps and returns the finished task. A separate API from inference, reached through the same client and raising the same error type.
+
+```typescript
+const task = await client.invoke({
+  appId: 'image-tools',
+  endpointPath: 'generate',
+  payload: { prompt: 'a red bicycle' },
+})
+
+task.status   // 'completed' | 'failed'
+task.output   // whatever your handler returned
+```
+
+`deliveryMethod` decides how the wait happens, not whether you get a result. `async` is the default and polls without holding a connection, which is what a long job wants. `sync` holds one request open and is the fast path for work that finishes in seconds.
+
+```typescript
+const task = await client.invoke(
+  { appId: 'image-tools', endpointPath: 'generate', payload: { prompt: 'a red bicycle' } },
+  { deliveryMethod: 'sync' },
+)
+```
+
+Every invocation carries a task id, generated unless you pass one. Sending the same id again returns the task it already names instead of starting a second, so a call whose response was lost is safe to repeat.
+
+`wait: false` returns as soon as the task is accepted and leaves it running. Read the id off it and pick the task up later with `getTask`.
+
+```typescript
+const accepted = await client.invoke(
+  { appId: 'image-tools', endpointPath: 'train', payload: { epochs: 10 } },
+  { wait: false },
+)
+
+const task = await client.getTask('image-tools', accepted.id)
+```
+
+A task that runs and fails comes back with `status: 'failed'` and its `error` set. Only a failure to start throws.
+
 ## Content metadata
 
 `client.content.*` exposes Runware's curated model catalog as read-only metadata — names, AIRs, headlines, capabilities, pricing, examples. Public information, no extra cost.

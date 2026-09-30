@@ -19,6 +19,11 @@ export type SDKConfig = {
   wsBaseUrl: string
   /** REST endpoint, including API version path. Default: `https://api.runware.ai/v1`. */
   httpBaseUrl: string
+  /**
+   * Serverless API origin, without a version path. Default:
+   * `https://api.serverless.runware.ai`. Used by `invoke` and `getTask`.
+   */
+  serverlessBaseUrl: string
   /** Transport to use. Default: `websocket`. */
   transport: TransportType
   /**

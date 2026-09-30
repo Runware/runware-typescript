@@ -96,6 +96,23 @@ describe('createContentClient', () => {
       expect(result.items).toHaveLength(1)
       expect(result.items[0]?.air).toBe('runware:101@1')
     })
+
+    it('hides compatible-only models', async () => {
+      const live = { air: 'runware:101@1', status: 'live' }
+      const compatibleOnly = { air: 'typesafe:jev@1', status: 'compatible-only' }
+      const { fetchImpl } = createMockFetch({ body: [live, compatibleOnly] })
+      const client = buildClient(fetchImpl)
+      const result = await client.listModels()
+      expect(Array.isArray(result) && result.map((model) => model.air)).toEqual(['runware:101@1'])
+    })
+
+    it('keeps compatible-only models when the status filter asks for them', async () => {
+      const body = [{ air: 'typesafe:jev@1', status: 'compatible-only' }]
+      const { fetchImpl } = createMockFetch({ body })
+      const client = buildClient(fetchImpl)
+      const result = await client.listModels({ status: 'compatible-only' })
+      expect(result).toHaveLength(1)
+    })
   })
 
   describe('getModel', () => {
