@@ -92,7 +92,7 @@ export {
   RunwareError, createRunwareError, parseApiError, isRunwareError,
 } from './errors'
 export { clearValidatorCache } from './validate'
-export { fileToDataURI } from './utils/file'
+export { fileToBase64, fileToDataURI } from './utils/file'
 export { createLogger } from './logger'
 export { createRegistry } from './registry'
 export { SDK_VERSION } from './_version'

@@ -1,14 +1,47 @@
 /**
- * Converts a browser File or Blob to a data URI string.
- * Returns a string like `data:image/png;base64,iVBOR...`
+ * Explicit helpers for sending a local file.
  *
- * Works in browsers only (requires FileReader).
- *
- * Usage:
- *   const dataURI = await fileToDataURI(file)
- *   client.run({ seedImage: dataURI, ... })
+ * The SDK never reads the filesystem on its own: a string you pass as a
+ * parameter is sent as that string. When you want a file's contents on the
+ * wire, you say so by calling one of these.
  */
-export const fileToDataURI = async (file: File | Blob): Promise<string> => {
+
+const MIME_BY_EXTENSION: Record<string, string> = {
+  jpg: 'image/jpeg',
+  jpeg: 'image/jpeg',
+  png: 'image/png',
+  webp: 'image/webp',
+  gif: 'image/gif',
+  mp4: 'video/mp4',
+  webm: 'video/webm',
+  mov: 'video/quicktime',
+  mp3: 'audio/mpeg',
+  wav: 'audio/wav',
+  ogg: 'audio/ogg',
+  glb: 'model/gltf-binary',
+  pdf: 'application/pdf',
+}
+
+const isNode = (): boolean => (
+  typeof process !== 'undefined'
+  && typeof process.versions?.node === 'string'
+)
+
+const mimeFor = (path: string): string => {
+  const extension = path.split('.').pop()?.toLowerCase() ?? ''
+  return MIME_BY_EXTENSION[extension] ?? 'application/octet-stream'
+}
+
+const readBytes = async (source: string | Uint8Array): Promise<Uint8Array> => {
+  if (typeof source !== 'string') { return source }
+  if (!isNode()) {
+    throw new Error('Reading a file by path needs Node; pass a File or Blob in the browser')
+  }
+  const fs = await import('node:fs/promises')
+  return fs.readFile(source)
+}
+
+const blobToDataURI = async (blob: File | Blob): Promise<string> => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader()
     reader.onload = () => {
@@ -19,56 +52,37 @@ export const fileToDataURI = async (file: File | Blob): Promise<string> => {
       }
     }
     reader.onerror = () => reject(reader.error)
-    reader.readAsDataURL(file)
+    reader.readAsDataURL(blob)
   })
 }
 
-const MAX_PATH_LEN = 4096
-const REMOTE_PREFIXES = ['http://', 'https://', 'data:']
-
-const isNode = (): boolean => (
-  typeof process !== 'undefined'
-  && typeof process.versions?.node === 'string'
-)
+/**
+ * Encode a file as raw base64, with no `data:` prefix and no MIME type. The
+ * server reads the real format from the bytes.
+ *
+ * This is what a media parameter takes most directly:
+ *   client.run({ seedImage: await fileToBase64('photo.jpg'), ... })
+ */
+export const fileToBase64 = async (source: string | Uint8Array | File | Blob): Promise<string> => {
+  if (typeof source !== 'string' && !(source instanceof Uint8Array)) {
+    const uri = await blobToDataURI(source)
+    return uri.slice(uri.indexOf(',') + 1)
+  }
+  const bytes = await readBytes(source)
+  return Buffer.from(bytes).toString('base64')
+}
 
 /**
- * Recursively walk a params object (objects, arrays, strings) and replace any
- * string that points to an existing local file with its raw base64 contents
- * (no `data:` prefix or MIME type — the server sniffs the real format from the
- * bytes).
+ * Encode a file as a `data:<mime>;base64,...` URI.
  *
- * Node only. In the browser there's no filesystem, so this is a no-op: it
- * returns the value untouched and never imports `node:fs`. URLs, data URIs,
- * UUIDs, prompts, existing base64, numbers, and booleans always pass through —
- * only strings that resolve to a real file on disk are converted.
+ * A path is read in Node, with the MIME taken from its extension. A File or
+ * Blob carries its own type and works in the browser as well.
  */
-export const encodeLocalFiles = async (value: unknown): Promise<unknown> => {
-  if (!isNode()) { return value }
-  const fs = await import('node:fs/promises')
-
-  const encodeString = async (str: string): Promise<string> => {
-    if (REMOTE_PREFIXES.some((p) => str.startsWith(p))) { return str }
-    if (str.length > MAX_PATH_LEN) { return str }
-    try {
-      const stat = await fs.stat(str)
-      if (!stat.isFile()) { return str }
-    } catch {
-      return str
-    }
-    const bytes = await fs.readFile(str)
-    return bytes.toString('base64')
+export const fileToDataURI = async (source: string | Uint8Array | File | Blob): Promise<string> => {
+  if (typeof source !== 'string' && !(source instanceof Uint8Array)) {
+    return blobToDataURI(source)
   }
-
-  const walk = async (node: unknown): Promise<unknown> => {
-    if (typeof node === 'string') { return encodeString(node) }
-    if (Array.isArray(node)) { return Promise.all(node.map(walk)) }
-    if (node !== null && typeof node === 'object') {
-      const entryPromises = Object.entries(node).map(async ([k, v]) => [k, await walk(v)] as const)
-      const entries = await Promise.all(entryPromises)
-      return Object.fromEntries(entries)
-    }
-    return node
-  }
-
-  return walk(value)
+  const mime = typeof source === 'string' ? mimeFor(source) : 'application/octet-stream'
+  const bytes = await readBytes(source)
+  return `data:${mime};base64,${Buffer.from(bytes).toString('base64')}`
 }
