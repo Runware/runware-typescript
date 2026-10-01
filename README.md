@@ -676,22 +676,25 @@ The per-model methods (`getModel`, `getModelExamples`, `getModelPricing`) accept
 
 ## File helpers
 
-`fileToDataURI` encodes a local file or in-memory buffer as a `data:` URI for passing as input:
+**The SDK never reads the filesystem on its own.** A string you pass as a parameter is sent as that string, prompts and media parameters alike. When you want a file's contents on the wire, you say so:
 
 ```typescript
-import { fileToDataURI } from '@runware/sdk'
-import { readFile } from 'node:fs/promises'
+import { fileToBase64, fileToDataURI } from '@runware/sdk'
 
-const dataUri = await fileToDataURI(await readFile('photo.jpg'))
-await client.mediaStorage({ operation: 'upload', media: dataUri })
+await client.run({ model: '...', seedImage: await fileToBase64('photo.jpg') })
+await client.mediaStorage({ operation: 'upload', media: await fileToDataURI('photo.jpg') })
 ```
 
-In Node you usually don't need this for inputs: `run()` and `mediaStorage` auto-encode local file paths. Any string value (recursively, including nested objects and arrays) that points to an existing file on disk is read and replaced with its base64 before the request is sent. URLs, UUIDs, data URIs, existing base64, and prompts pass through untouched. In the browser there's no filesystem, so this step is a no-op.
+`fileToBase64` gives raw base64, with no prefix and no MIME type, which is what a media parameter takes most directly: the server reads the real format from the bytes. `fileToDataURI` gives a `data:<mime>;base64,...` URI, taking the MIME from the file's extension.
+
+Both read a path in Node, and both also accept bytes you already hold, or a `File` or `Blob` in the browser:
 
 ```typescript
-await client.run({ model: '...', seedImage: './photo.jpg' })
-await client.run({ model: '...', referenceImages: ['./a.jpg', './b.jpg'] })
+await fileToBase64(new Uint8Array(buffer))
+await fileToDataURI(input.files[0])
 ```
+
+> Before 1.7.1 the SDK replaced any string that happened to name a readable file with that file's contents, in every parameter. Passing a path straight to `seedImage` no longer works: wrap it in `fileToBase64`.
 
 ## Custom dependencies
 

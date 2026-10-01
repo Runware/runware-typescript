@@ -32,7 +32,6 @@ import { createTransport } from './transport'
 import { createRegistry } from './registry'
 import { SCHEMAS_BASE_URL } from './constants'
 import { createContentClient, type ContentClient } from './content'
-import { encodeLocalFiles } from './utils/file'
 import { generateUUID } from './utils/uuid'
 import { createServerlessApi } from './serverless'
 
@@ -924,8 +923,7 @@ export const createClient = async (userConfig: ClientConfig): Promise<RunwareCli
     params: Record<string, unknown>,
     options?: RunOptions,
   ): Promise<unknown[]> => {
-    const encoded = await encodeLocalFiles(params) as Record<string, unknown>
-    const normalized = await normalizeModelParam(encoded)
+    const normalized = await normalizeModelParam(params)
     const taskType = await resolveTaskType(undefined, normalized, registry)
     return execute(taskType, { deliveryMethod: 'async', ...normalized }, transport, fullConfig, options)
   }
@@ -1004,16 +1002,14 @@ export const createClient = async (userConfig: ClientConfig): Promise<RunwareCli
     params: Record<string, unknown>,
     options?: RunOptions,
   ) => {
-    const encoded = await encodeLocalFiles(params) as Record<string, unknown>
-    return execute('imageUpload', encoded, transport, fullConfig, options)
+    return execute('imageUpload', params, transport, fullConfig, options)
   }
 
   const mediaStorage = async (
     params: Record<string, unknown>,
     options?: RunOptions,
   ) => {
-    const encoded = await encodeLocalFiles(params) as Record<string, unknown>
-    return execute('mediaStorage', encoded, transport, fullConfig, options)
+    return execute('mediaStorage', params, transport, fullConfig, options)
   }
 
   const accountManagement = async (
