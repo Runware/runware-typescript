@@ -12,6 +12,7 @@ describe('deriveCode', () => {
     ['missingApiKey', 'auth'], // ApiKey wins over missing*
     ['conflictTaskUUID', 'validation'],
     ['parameterConflict', 'validation'],
+    ['parameterConflictNegative', 'validation'],
     ['duplicatePreloadModelAIR', 'validation'],
     ['unsupportedParameter', 'validation'],
     ['unsupportedTaskType', 'validation'],

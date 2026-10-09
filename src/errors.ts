@@ -154,7 +154,7 @@ export const deriveCode = (raw: string): ErrorCode => {
     raw.startsWith('invalid')
     || raw.startsWith('missing')
     || raw.startsWith('conflict')
-    || raw.endsWith('Conflict')
+    || raw.includes('Conflict')
     || raw.startsWith('duplicate')
     || raw.startsWith('unsupported')
     || raw.startsWith('value')
