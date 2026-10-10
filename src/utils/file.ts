@@ -37,7 +37,8 @@ const readBytes = async (source: string | Uint8Array): Promise<Uint8Array> => {
   if (!isNode()) {
     throw new Error('Reading a file by path needs Node; pass a File or Blob in the browser')
   }
-  const fs = await import('node:fs/promises')
+  const fsModule = 'node:fs/promises'
+  const fs = await import(fsModule) as typeof import('node:fs/promises')
   return fs.readFile(source)
 }
 
