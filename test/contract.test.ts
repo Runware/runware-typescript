@@ -109,3 +109,22 @@ describeIf('contract: parse_api_error', () => {
     })
   }
 })
+
+
+// ----------------------------------------------------------- public_exports
+
+describeIf('contract: public_exports', () => {
+  if (!HAS_FIXTURES) { return }
+  const { shared, renamed, typescript_only: typescriptOnly } = loadFixture('public-exports.json').expected
+  const source = readFileSync(join(__dirname, '..', 'src', 'index.ts'), 'utf-8').replace(/\/\/[^\n]*/g, '')
+  const exported = [...source.matchAll(/export\s+(?:type\s+)?\{([^}]*)\}/g)]
+    .flatMap((match) => match[1].split(','))
+    .map((name) => name.trim())
+    .filter(Boolean)
+    .sort()
+
+  it('the entry point exports exactly the names the fixture lists', () => {
+    const wanted = [...shared, ...Object.keys(renamed), ...typescriptOnly].sort()
+    expect(exported).toEqual(wanted)
+  })
+})

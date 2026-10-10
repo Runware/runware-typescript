@@ -1,4 +1,4 @@
-type LogCategory = typeof categories[number]
+export type LogCategory = typeof categories[number]
 
 const categories = [
   'connection',
