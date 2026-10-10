@@ -55,9 +55,11 @@ export type {
   GetTaskOptions,
 } from './types/serverless'
 export type { ErrorCode } from './errors'
-export type { Logger, LogSink, LogEntry } from './logger'
 export type {
-  Registry, RegistryData, RegistryOptions, RegistryFallback,
+  Logger, LogSink, LogEntry, LogCategory,
+} from './logger'
+export type {
+  Registry, RegistryData, RegistryOptions, RegistryFallback, ModelEntry,
 } from './registry'
 export type {
   SDKConfig,
@@ -108,3 +110,4 @@ export { fileToBase64, fileToDataURI } from './utils/file'
 export { createLogger } from './logger'
 export { createRegistry } from './registry'
 export { SDK_VERSION } from './_version'
+export { SCHEMAS_VERSION } from './_schemas-version'
