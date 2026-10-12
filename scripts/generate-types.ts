@@ -113,7 +113,28 @@ const toPascalCase = (s: string): string =>
     .replace(/-([a-z0-9])/g, (_, ch) => ch.toUpperCase())
     .replace(/^([a-z])/, (_, ch) => ch.toUpperCase())
 
- 
+const SHAPE_KEYWORDS = [
+  'type',
+  'const',
+  'enum',
+  'properties',
+  'items',
+  'oneOf',
+  'anyOf',
+  'allOf',
+]
+
+const describesShape = (schema: any): boolean =>
+  SHAPE_KEYWORDS.some((keyword) => schema?.[keyword] !== undefined)
+
+const unionVariants = (schema: any): any[] | undefined => {
+  const variants = schema.oneOf ?? schema.anyOf
+  if (!Array.isArray(variants)) { return undefined }
+  const hasOwnShape = schema.type !== undefined || schema.properties !== undefined
+  if (hasOwnShape && !variants.some(describesShape)) { return undefined }
+  return variants
+}
+
 const schemaToTs = (schema: any): string => {
   if (!schema || typeof schema !== 'object') { return 'unknown' }
 
@@ -126,10 +147,8 @@ const schemaToTs = (schema: any): string => {
       typeof v === 'string' ? `'${v}'` : String(v)))]
     return variants.join(' | ')
   }
-  if (schema.oneOf || schema.anyOf) {
-     
-    const variants = (schema.oneOf ?? schema.anyOf) as any[]
-     
+  const variants = unionVariants(schema)
+  if (variants) {
     const types = [...new Set(variants.map((sub: any) => schemaToTs(sub)))]
     return types.length === 1 ? types[0] : types.join(' | ')
   }
@@ -213,7 +232,7 @@ const emitType = (name: string, schema: Json | undefined, opts?: EmitOpts): stri
   // Discriminated union (oneOf/anyOf of closed variants): these schemas have no
   // top-level properties, so delegate to schemaToTs, which renders each object
   // variant and joins them with `|`.
-  if (s.oneOf || s.anyOf) {
+  if (unionVariants(s)) {
     lines.push(`export type ${name} = ${schemaToTs(s)}`)
     return lines.join('\n')
   }

@@ -16,7 +16,7 @@ export type ExactlyIllustrativeParams = {
   /** Influence strength of the reference image. Only available when type is `sketch`. */
   strength?: number
   /** Image input (UUID, URL, Data URI, or Base64). */
-  image: unknown
+  image: string
 })[]
 }
   /** Text prompt describing elements to include in the generated output. */
@@ -74,7 +74,20 @@ export type ExactlyIllustrativeParams = {
   /** Model-specific advanced configuration options. */
   advancedFeatures?: {
   /** Watermark configuration. */
-  watermark?: unknown
+  watermark?: {
+  /** Watermark text. */
+  text?: string
+  /** Watermark image (UUID, URL, Data URI, or Base64). */
+  image?: string
+  /** Watermark position. */
+  displayPosition?: 'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center-center' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' | 'tiled'
+  /** Watermark opacity. */
+  opacity?: number
+  /** Text color in hex format. */
+  fontColor?: string
+  /** Background color in hex format. */
+  bgColor?: string
+}
 }
   [key: string]: unknown
 }
@@ -86,9 +99,9 @@ export type Flux1DevParams = {
   /** Input assets for the task. */
   inputs?: {
   /** Image used as a starting point for the generation (UUID, URL, Data URI, or Base64). */
-  seedImage?: unknown
+  seedImage?: string
   /** Image used to specify which areas of the input image should be edited (UUID, URL, Data URI, or Base64). White marks the area to edit, black is preserved. */
-  maskImage?: unknown
+  maskImage?: string
 }
   /** Text prompt describing elements to include in the generated output. */
   positivePrompt: string
@@ -136,7 +149,18 @@ export type Flux1DevParams = {
   dbCacheSkipInterval?: number
 }
   /** Pixel extensions for each boundary direction of the source image. At least one direction is required. */
-  outpaint?: unknown
+  outpaint?: {
+  /** Number of pixels to extend to the top. */
+  top?: number
+  /** Number of pixels to extend to the bottom. */
+  bottom?: number
+  /** Number of pixels to extend to the left. */
+  left?: number
+  /** Number of pixels to extend to the right. */
+  right?: number
+  /** Amount of blur to apply to the mask edge. */
+  blur?: number
+}
   /** Configuration for Low-Rank Adaptation models. */
   lora?: {
   /** LoRA model identifier. */
@@ -151,7 +175,7 @@ export type Flux1DevParams = {
   /** Strength of the ControlNet influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the guide image. */
   weight?: number
   /** Reference image for ControlNet guidance (UUID, URL, Data URI, or Base64). */
-  guideImage: unknown
+  guideImage: string
   /** ControlNet guidance mode. */
   controlMode?: 'balanced' | 'controlnet' | 'prompt'
   /** Absolute step number to end ControlNet influence. Must be greater than `startStep` and less than or equal to `steps`. */
@@ -170,14 +194,27 @@ export type Flux1DevParams = {
   /** Strength of the IP-Adapter influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the reference. */
   weight?: number
   /** Images to guide the IP-Adapter (UUID, URL, Data URI, or Base64). */
-  guideImages: unknown[]
+  guideImages: string[]
 })[]
   /** Model-specific advanced configuration options. */
   advancedFeatures?: {
   /** LayerDiffuse for transparent image generation. */
   layerDiffuse?: boolean
   /** Watermark configuration. */
-  watermark?: unknown
+  watermark?: {
+  /** Watermark text. */
+  text?: string
+  /** Watermark image (UUID, URL, Data URI, or Base64). */
+  image?: string
+  /** Watermark position. */
+  displayPosition?: 'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center-center' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' | 'tiled'
+  /** Watermark opacity. */
+  opacity?: number
+  /** Text color in hex format. */
+  fontColor?: string
+  /** Background color in hex format. */
+  bgColor?: string
+}
 }
   /** Two-stage generation for improved resolution. Can be enabled with `true` for default settings, or configured as an object for fine-grained control. */
   hiresFix?: true | {
@@ -199,7 +236,7 @@ export type Flux1DevParams = {
   /** Identity preservation strength. Higher values create closer resemblance to the reference face. */
   idWeight?: number
   /** Reference images for identity customization (UUID, URL, Data URI, or Base64). */
-  images: unknown[]
+  images: string[]
   /** Guidance scale for identity embedding. */
   trueCFGScale?: number
 }
@@ -277,7 +314,7 @@ export type Flux1KontextDevParams = {
   /** Input assets for the task. */
   inputs?: {
   /** List of reference images (UUID, URL, Data URI, or Base64). */
-  referenceImages?: unknown[]
+  referenceImages?: string[]
 }
   /** Text prompt describing elements to include in the generated output. */
   positivePrompt: string
@@ -396,7 +433,20 @@ export type Flux1KontextDevParams = {
   /** Model-specific advanced configuration options. */
   advancedFeatures?: {
   /** Watermark configuration. */
-  watermark?: unknown
+  watermark?: {
+  /** Watermark text. */
+  text?: string
+  /** Watermark image (UUID, URL, Data URI, or Base64). */
+  image?: string
+  /** Watermark position. */
+  displayPosition?: 'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center-center' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' | 'tiled'
+  /** Watermark opacity. */
+  opacity?: number
+  /** Text color in hex format. */
+  fontColor?: string
+  /** Background color in hex format. */
+  bgColor?: string
+}
 }
   [key: string]: unknown
 }
@@ -408,9 +458,9 @@ export type Flux1SchnellParams = {
   /** Input assets for the task. */
   inputs?: {
   /** Image used as a starting point for the generation (UUID, URL, Data URI, or Base64). */
-  seedImage?: unknown
+  seedImage?: string
   /** Image used to specify which areas of the input image should be edited (UUID, URL, Data URI, or Base64). White marks the area to edit, black is preserved. */
-  maskImage?: unknown
+  maskImage?: string
 }
   /** Text prompt describing elements to include in the generated output. */
   positivePrompt: string
@@ -462,7 +512,18 @@ export type Flux1SchnellParams = {
   dbCacheSkipInterval?: number
 }
   /** Pixel extensions for each boundary direction of the source image. At least one direction is required. */
-  outpaint?: unknown
+  outpaint?: {
+  /** Number of pixels to extend to the top. */
+  top?: number
+  /** Number of pixels to extend to the bottom. */
+  bottom?: number
+  /** Number of pixels to extend to the left. */
+  left?: number
+  /** Number of pixels to extend to the right. */
+  right?: number
+  /** Amount of blur to apply to the mask edge. */
+  blur?: number
+}
   /** Configuration for Low-Rank Adaptation models. */
   lora?: {
   /** LoRA model identifier. */
@@ -548,7 +609,20 @@ export type Flux1SchnellParams = {
   /** Model-specific advanced configuration options. */
   advancedFeatures?: {
   /** Watermark configuration. */
-  watermark?: unknown
+  watermark?: {
+  /** Watermark text. */
+  text?: string
+  /** Watermark image (UUID, URL, Data URI, or Base64). */
+  image?: string
+  /** Watermark position. */
+  displayPosition?: 'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center-center' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' | 'tiled'
+  /** Watermark opacity. */
+  opacity?: number
+  /** Text color in hex format. */
+  fontColor?: string
+  /** Background color in hex format. */
+  bgColor?: string
+}
 }
   [key: string]: unknown
 }
@@ -560,9 +634,9 @@ export type IllustriousParams = {
   /** Input assets for the task. */
   inputs?: {
   /** Image used as a starting point for the generation (UUID, URL, Data URI, or Base64). */
-  seedImage?: unknown
+  seedImage?: string
   /** Image used to specify which areas of the input image should be edited (UUID, URL, Data URI, or Base64). White marks the area to edit, black is preserved. */
-  maskImage?: unknown
+  maskImage?: string
 }
   /** Text prompt describing elements to include in the generated output. */
   positivePrompt: string
@@ -614,7 +688,18 @@ export type IllustriousParams = {
   deepCacheBranchId?: number
 }
   /** Pixel extensions for each boundary direction of the source image. At least one direction is required. */
-  outpaint?: unknown
+  outpaint?: {
+  /** Number of pixels to extend to the top. */
+  top?: number
+  /** Number of pixels to extend to the bottom. */
+  bottom?: number
+  /** Number of pixels to extend to the left. */
+  left?: number
+  /** Number of pixels to extend to the right. */
+  right?: number
+  /** Amount of blur to apply to the mask edge. */
+  blur?: number
+}
   /** Configuration for Low-Rank Adaptation models. */
   lora?: {
   /** LoRA model identifier. */
@@ -629,7 +714,7 @@ export type IllustriousParams = {
   /** Strength of the ControlNet influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the guide image. */
   weight?: number
   /** Reference image for ControlNet guidance (UUID, URL, Data URI, or Base64). */
-  guideImage: unknown
+  guideImage: string
   /** ControlNet guidance mode. */
   controlMode?: 'balanced' | 'controlnet' | 'prompt'
   /** Absolute step number to end ControlNet influence. Must be greater than `startStep` and less than or equal to `steps`. */
@@ -648,7 +733,7 @@ export type IllustriousParams = {
   /** Strength of the IP-Adapter influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the reference. */
   weight?: number
   /** Images to guide the IP-Adapter (UUID, URL, Data URI, or Base64). */
-  guideImages: unknown[]
+  guideImages: string[]
   /** Shapes how influence evolves during generation. */
   weightType?: 'normal' | 'ease_in' | 'ease_out' | 'ease_in_out' | 'weak_input' | 'weak_output' | 'weak_middle' | 'strong_middle' | 'style_transfer' | 'composition' | 'strong_style_transfer' | 'style_and_composition' | 'strong_style_and_composition'
   /** Controls composition/layout influence specifically. */
@@ -750,7 +835,20 @@ export type IllustriousParams = {
   /** Model-specific advanced configuration options. */
   advancedFeatures?: {
   /** Watermark configuration. */
-  watermark?: unknown
+  watermark?: {
+  /** Watermark text. */
+  text?: string
+  /** Watermark image (UUID, URL, Data URI, or Base64). */
+  image?: string
+  /** Watermark position. */
+  displayPosition?: 'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center-center' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' | 'tiled'
+  /** Watermark opacity. */
+  opacity?: number
+  /** Text color in hex format. */
+  fontColor?: string
+  /** Background color in hex format. */
+  bgColor?: string
+}
 }
   [key: string]: unknown
 }
@@ -762,9 +860,9 @@ export type Krea2RawOssParams = {
   /** Input assets for the task. */
   inputs?: {
   /** Style reference images for guiding generation. Each item can be a plain image input (UUID, URL, Data URI, or Base64) or an object with an image and a per-image strength. */
-  referenceImages?: (unknown | {
+  referenceImages?: (string | {
   /** Image input (UUID, URL, Data URI, or Base64). */
-  image: unknown
+  image: string
   /** Influence strength of the reference image on the generated output. */
   strength?: number
 })[]
@@ -836,7 +934,20 @@ export type Krea2RawOssParams = {
   /** Model-specific advanced configuration options. */
   advancedFeatures?: {
   /** Watermark configuration. */
-  watermark?: unknown
+  watermark?: {
+  /** Watermark text. */
+  text?: string
+  /** Watermark image (UUID, URL, Data URI, or Base64). */
+  image?: string
+  /** Watermark position. */
+  displayPosition?: 'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center-center' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' | 'tiled'
+  /** Watermark opacity. */
+  opacity?: number
+  /** Text color in hex format. */
+  fontColor?: string
+  /** Background color in hex format. */
+  bgColor?: string
+}
 }
   [key: string]: unknown
 }
@@ -848,9 +959,9 @@ export type Krea2TurboOssParams = {
   /** Input assets for the task. */
   inputs?: {
   /** Style reference images for guiding generation. Each item can be a plain image input (UUID, URL, Data URI, or Base64) or an object with an image and a per-image strength. */
-  referenceImages?: (unknown | {
+  referenceImages?: (string | {
   /** Image input (UUID, URL, Data URI, or Base64). */
-  image: unknown
+  image: string
   /** Influence strength of the reference image on the generated output. */
   strength?: number
 })[]
@@ -918,7 +1029,20 @@ export type Krea2TurboOssParams = {
   /** Model-specific advanced configuration options. */
   advancedFeatures?: {
   /** Watermark configuration. */
-  watermark?: unknown
+  watermark?: {
+  /** Watermark text. */
+  text?: string
+  /** Watermark image (UUID, URL, Data URI, or Base64). */
+  image?: string
+  /** Watermark position. */
+  displayPosition?: 'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center-center' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' | 'tiled'
+  /** Watermark opacity. */
+  opacity?: number
+  /** Text color in hex format. */
+  fontColor?: string
+  /** Background color in hex format. */
+  bgColor?: string
+}
 }
   [key: string]: unknown
 }
@@ -930,9 +1054,9 @@ export type NoobaiParams = {
   /** Input assets for the task. */
   inputs?: {
   /** Image used as a starting point for the generation (UUID, URL, Data URI, or Base64). */
-  seedImage?: unknown
+  seedImage?: string
   /** Image used to specify which areas of the input image should be edited (UUID, URL, Data URI, or Base64). White marks the area to edit, black is preserved. */
-  maskImage?: unknown
+  maskImage?: string
 }
   /** Text prompt describing elements to include in the generated output. */
   positivePrompt: string
@@ -984,7 +1108,18 @@ export type NoobaiParams = {
   deepCacheBranchId?: number
 }
   /** Pixel extensions for each boundary direction of the source image. At least one direction is required. */
-  outpaint?: unknown
+  outpaint?: {
+  /** Number of pixels to extend to the top. */
+  top?: number
+  /** Number of pixels to extend to the bottom. */
+  bottom?: number
+  /** Number of pixels to extend to the left. */
+  left?: number
+  /** Number of pixels to extend to the right. */
+  right?: number
+  /** Amount of blur to apply to the mask edge. */
+  blur?: number
+}
   /** Configuration for Low-Rank Adaptation models. */
   lora?: {
   /** LoRA model identifier. */
@@ -999,7 +1134,7 @@ export type NoobaiParams = {
   /** Strength of the ControlNet influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the guide image. */
   weight?: number
   /** Reference image for ControlNet guidance (UUID, URL, Data URI, or Base64). */
-  guideImage: unknown
+  guideImage: string
   /** ControlNet guidance mode. */
   controlMode?: 'balanced' | 'controlnet' | 'prompt'
   /** Absolute step number to end ControlNet influence. Must be greater than `startStep` and less than or equal to `steps`. */
@@ -1018,7 +1153,7 @@ export type NoobaiParams = {
   /** Strength of the IP-Adapter influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the reference. */
   weight?: number
   /** Images to guide the IP-Adapter (UUID, URL, Data URI, or Base64). */
-  guideImages: unknown[]
+  guideImages: string[]
   /** Shapes how influence evolves during generation. */
   weightType?: 'normal' | 'ease_in' | 'ease_out' | 'ease_in_out' | 'weak_input' | 'weak_output' | 'weak_middle' | 'strong_middle' | 'style_transfer' | 'composition' | 'strong_style_transfer' | 'style_and_composition' | 'strong_style_and_composition'
   /** Controls composition/layout influence specifically. */
@@ -1120,7 +1255,20 @@ export type NoobaiParams = {
   /** Model-specific advanced configuration options. */
   advancedFeatures?: {
   /** Watermark configuration. */
-  watermark?: unknown
+  watermark?: {
+  /** Watermark text. */
+  text?: string
+  /** Watermark image (UUID, URL, Data URI, or Base64). */
+  image?: string
+  /** Watermark position. */
+  displayPosition?: 'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center-center' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' | 'tiled'
+  /** Watermark opacity. */
+  opacity?: number
+  /** Text color in hex format. */
+  fontColor?: string
+  /** Background color in hex format. */
+  bgColor?: string
+}
 }
   [key: string]: unknown
 }
@@ -1132,9 +1280,9 @@ export type PonyParams = {
   /** Input assets for the task. */
   inputs?: {
   /** Image used as a starting point for the generation (UUID, URL, Data URI, or Base64). */
-  seedImage?: unknown
+  seedImage?: string
   /** Image used to specify which areas of the input image should be edited (UUID, URL, Data URI, or Base64). White marks the area to edit, black is preserved. */
-  maskImage?: unknown
+  maskImage?: string
 }
   /** Text prompt describing elements to include in the generated output. */
   positivePrompt: string
@@ -1186,7 +1334,18 @@ export type PonyParams = {
   deepCacheBranchId?: number
 }
   /** Pixel extensions for each boundary direction of the source image. At least one direction is required. */
-  outpaint?: unknown
+  outpaint?: {
+  /** Number of pixels to extend to the top. */
+  top?: number
+  /** Number of pixels to extend to the bottom. */
+  bottom?: number
+  /** Number of pixels to extend to the left. */
+  left?: number
+  /** Number of pixels to extend to the right. */
+  right?: number
+  /** Amount of blur to apply to the mask edge. */
+  blur?: number
+}
   /** Configuration for Low-Rank Adaptation models. */
   lora?: {
   /** LoRA model identifier. */
@@ -1201,7 +1360,7 @@ export type PonyParams = {
   /** Strength of the ControlNet influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the guide image. */
   weight?: number
   /** Reference image for ControlNet guidance (UUID, URL, Data URI, or Base64). */
-  guideImage: unknown
+  guideImage: string
   /** ControlNet guidance mode. */
   controlMode?: 'balanced' | 'controlnet' | 'prompt'
   /** Absolute step number to end ControlNet influence. Must be greater than `startStep` and less than or equal to `steps`. */
@@ -1220,7 +1379,7 @@ export type PonyParams = {
   /** Strength of the IP-Adapter influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the reference. */
   weight?: number
   /** Images to guide the IP-Adapter (UUID, URL, Data URI, or Base64). */
-  guideImages: unknown[]
+  guideImages: string[]
   /** Shapes how influence evolves during generation. */
   weightType?: 'normal' | 'ease_in' | 'ease_out' | 'ease_in_out' | 'weak_input' | 'weak_output' | 'weak_middle' | 'strong_middle' | 'style_transfer' | 'composition' | 'strong_style_transfer' | 'style_and_composition' | 'strong_style_and_composition'
   /** Controls composition/layout influence specifically. */
@@ -1322,7 +1481,20 @@ export type PonyParams = {
   /** Model-specific advanced configuration options. */
   advancedFeatures?: {
   /** Watermark configuration. */
-  watermark?: unknown
+  watermark?: {
+  /** Watermark text. */
+  text?: string
+  /** Watermark image (UUID, URL, Data URI, or Base64). */
+  image?: string
+  /** Watermark position. */
+  displayPosition?: 'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center-center' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' | 'tiled'
+  /** Watermark opacity. */
+  opacity?: number
+  /** Text color in hex format. */
+  fontColor?: string
+  /** Background color in hex format. */
+  bgColor?: string
+}
 }
   [key: string]: unknown
 }
@@ -1334,9 +1506,9 @@ export type Sd15Params = {
   /** Input assets for the task. */
   inputs?: {
   /** Image used as a starting point for the generation (UUID, URL, Data URI, or Base64). */
-  seedImage?: unknown
+  seedImage?: string
   /** Image used to specify which areas of the input image should be edited (UUID, URL, Data URI, or Base64). White marks the area to edit, black is preserved. */
-  maskImage?: unknown
+  maskImage?: string
 }
   /** Text prompt describing elements to include in the generated output. */
   positivePrompt: string
@@ -1388,7 +1560,18 @@ export type Sd15Params = {
   deepCacheBranchId?: number
 }
   /** Pixel extensions for each boundary direction of the source image. At least one direction is required. */
-  outpaint?: unknown
+  outpaint?: {
+  /** Number of pixels to extend to the top. */
+  top?: number
+  /** Number of pixels to extend to the bottom. */
+  bottom?: number
+  /** Number of pixels to extend to the left. */
+  left?: number
+  /** Number of pixels to extend to the right. */
+  right?: number
+  /** Amount of blur to apply to the mask edge. */
+  blur?: number
+}
   /** Configuration for Low-Rank Adaptation models. */
   lora?: {
   /** LoRA model identifier. */
@@ -1403,7 +1586,7 @@ export type Sd15Params = {
   /** Strength of the ControlNet influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the guide image. */
   weight?: number
   /** Reference image for ControlNet guidance (UUID, URL, Data URI, or Base64). */
-  guideImage: unknown
+  guideImage: string
   /** ControlNet guidance mode. */
   controlMode?: 'balanced' | 'controlnet' | 'prompt'
   /** Absolute step number to end ControlNet influence. Must be greater than `startStep` and less than or equal to `steps`. */
@@ -1422,7 +1605,7 @@ export type Sd15Params = {
   /** Strength of the IP-Adapter influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the reference. */
   weight?: number
   /** Images to guide the IP-Adapter (UUID, URL, Data URI, or Base64). */
-  guideImages: unknown[]
+  guideImages: string[]
   /** Shapes how influence evolves during generation. */
   weightType?: 'normal' | 'ease_in' | 'ease_out' | 'ease_in_out' | 'weak_input' | 'weak_output' | 'weak_middle' | 'strong_middle' | 'style_transfer' | 'composition' | 'strong_style_transfer' | 'style_and_composition' | 'strong_style_and_composition'
   /** Controls composition/layout influence specifically. */
@@ -1515,7 +1698,20 @@ export type Sd15Params = {
   /** Model-specific advanced configuration options. */
   advancedFeatures?: {
   /** Watermark configuration. */
-  watermark?: unknown
+  watermark?: {
+  /** Watermark text. */
+  text?: string
+  /** Watermark image (UUID, URL, Data URI, or Base64). */
+  image?: string
+  /** Watermark position. */
+  displayPosition?: 'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center-center' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' | 'tiled'
+  /** Watermark opacity. */
+  opacity?: number
+  /** Text color in hex format. */
+  fontColor?: string
+  /** Background color in hex format. */
+  bgColor?: string
+}
 }
   [key: string]: unknown
 }
@@ -1527,9 +1723,9 @@ export type SdxlParams = {
   /** Input assets for the task. */
   inputs?: {
   /** Image used as a starting point for the generation (UUID, URL, Data URI, or Base64). */
-  seedImage?: unknown
+  seedImage?: string
   /** Image used to specify which areas of the input image should be edited (UUID, URL, Data URI, or Base64). White marks the area to edit, black is preserved. */
-  maskImage?: unknown
+  maskImage?: string
 }
   /** Text prompt describing elements to include in the generated output. */
   positivePrompt: string
@@ -1581,7 +1777,18 @@ export type SdxlParams = {
   deepCacheBranchId?: number
 }
   /** Pixel extensions for each boundary direction of the source image. At least one direction is required. */
-  outpaint?: unknown
+  outpaint?: {
+  /** Number of pixels to extend to the top. */
+  top?: number
+  /** Number of pixels to extend to the bottom. */
+  bottom?: number
+  /** Number of pixels to extend to the left. */
+  left?: number
+  /** Number of pixels to extend to the right. */
+  right?: number
+  /** Amount of blur to apply to the mask edge. */
+  blur?: number
+}
   /** Configuration for Low-Rank Adaptation models. */
   lora?: {
   /** LoRA model identifier. */
@@ -1596,7 +1803,7 @@ export type SdxlParams = {
   /** Strength of the ControlNet influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the guide image. */
   weight?: number
   /** Reference image for ControlNet guidance (UUID, URL, Data URI, or Base64). */
-  guideImage: unknown
+  guideImage: string
   /** ControlNet guidance mode. */
   controlMode?: 'balanced' | 'controlnet' | 'prompt'
   /** Absolute step number to end ControlNet influence. Must be greater than `startStep` and less than or equal to `steps`. */
@@ -1615,7 +1822,7 @@ export type SdxlParams = {
   /** Strength of the IP-Adapter influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the reference. */
   weight?: number
   /** Images to guide the IP-Adapter (UUID, URL, Data URI, or Base64). */
-  guideImages: unknown[]
+  guideImages: string[]
   /** Shapes how influence evolves during generation. */
   weightType?: 'normal' | 'ease_in' | 'ease_out' | 'ease_in_out' | 'weak_input' | 'weak_output' | 'weak_middle' | 'strong_middle' | 'style_transfer' | 'composition' | 'strong_style_transfer' | 'style_and_composition' | 'strong_style_and_composition'
   /** Controls composition/layout influence specifically. */
@@ -1655,7 +1862,7 @@ export type SdxlParams = {
   /** Personalized image generation with subject identity preservation. */
   photoMaker?: {
   /** Reference images for subject identity preservation. Each image must contain a single, clear face of the subject (UUID, URL, Data URI, or Base64). */
-  images: unknown[]
+  images: string[]
   /** Controls the balance between preserving the subject's original features and the creative transformation specified in the prompt. Lower values provide stronger subject fidelity, higher values allow more creative freedom. */
   strength?: number
   /** Artistic style applied to the generated images. */
@@ -1726,7 +1933,20 @@ export type SdxlParams = {
   /** Model-specific advanced configuration options. */
   advancedFeatures?: {
   /** Watermark configuration. */
-  watermark?: unknown
+  watermark?: {
+  /** Watermark text. */
+  text?: string
+  /** Watermark image (UUID, URL, Data URI, or Base64). */
+  image?: string
+  /** Watermark position. */
+  displayPosition?: 'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center-center' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' | 'tiled'
+  /** Watermark opacity. */
+  opacity?: number
+  /** Text color in hex format. */
+  fontColor?: string
+  /** Background color in hex format. */
+  bgColor?: string
+}
 }
   [key: string]: unknown
 }
@@ -1738,9 +1958,9 @@ export type SdxlLightningParams = {
   /** Input assets for the task. */
   inputs?: {
   /** Image used as a starting point for the generation (UUID, URL, Data URI, or Base64). */
-  seedImage?: unknown
+  seedImage?: string
   /** Image used to specify which areas of the input image should be edited (UUID, URL, Data URI, or Base64). White marks the area to edit, black is preserved. */
-  maskImage?: unknown
+  maskImage?: string
 }
   /** Text prompt describing elements to include in the generated output. */
   positivePrompt: string
@@ -1792,7 +2012,18 @@ export type SdxlLightningParams = {
   deepCacheBranchId?: number
 }
   /** Pixel extensions for each boundary direction of the source image. At least one direction is required. */
-  outpaint?: unknown
+  outpaint?: {
+  /** Number of pixels to extend to the top. */
+  top?: number
+  /** Number of pixels to extend to the bottom. */
+  bottom?: number
+  /** Number of pixels to extend to the left. */
+  left?: number
+  /** Number of pixels to extend to the right. */
+  right?: number
+  /** Amount of blur to apply to the mask edge. */
+  blur?: number
+}
   /** Configuration for Low-Rank Adaptation models. */
   lora?: {
   /** LoRA model identifier. */
@@ -1807,7 +2038,7 @@ export type SdxlLightningParams = {
   /** Strength of the ControlNet influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the guide image. */
   weight?: number
   /** Reference image for ControlNet guidance (UUID, URL, Data URI, or Base64). */
-  guideImage: unknown
+  guideImage: string
   /** ControlNet guidance mode. */
   controlMode?: 'balanced' | 'controlnet' | 'prompt'
   /** Absolute step number to end ControlNet influence. Must be greater than `startStep` and less than or equal to `steps`. */
@@ -1826,7 +2057,7 @@ export type SdxlLightningParams = {
   /** Strength of the IP-Adapter influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the reference. */
   weight?: number
   /** Images to guide the IP-Adapter (UUID, URL, Data URI, or Base64). */
-  guideImages: unknown[]
+  guideImages: string[]
   /** Shapes how influence evolves during generation. */
   weightType?: 'normal' | 'ease_in' | 'ease_out' | 'ease_in_out' | 'weak_input' | 'weak_output' | 'weak_middle' | 'strong_middle' | 'style_transfer' | 'composition' | 'strong_style_transfer' | 'style_and_composition' | 'strong_style_and_composition'
   /** Controls composition/layout influence specifically. */
@@ -1928,7 +2159,20 @@ export type SdxlLightningParams = {
   /** Model-specific advanced configuration options. */
   advancedFeatures?: {
   /** Watermark configuration. */
-  watermark?: unknown
+  watermark?: {
+  /** Watermark text. */
+  text?: string
+  /** Watermark image (UUID, URL, Data URI, or Base64). */
+  image?: string
+  /** Watermark position. */
+  displayPosition?: 'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center-center' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' | 'tiled'
+  /** Watermark opacity. */
+  opacity?: number
+  /** Text color in hex format. */
+  fontColor?: string
+  /** Background color in hex format. */
+  bgColor?: string
+}
 }
   [key: string]: unknown
 }
@@ -1940,9 +2184,9 @@ export type SdxlTurboParams = {
   /** Input assets for the task. */
   inputs?: {
   /** Image used as a starting point for the generation (UUID, URL, Data URI, or Base64). */
-  seedImage?: unknown
+  seedImage?: string
   /** Image used to specify which areas of the input image should be edited (UUID, URL, Data URI, or Base64). White marks the area to edit, black is preserved. */
-  maskImage?: unknown
+  maskImage?: string
 }
   /** Text prompt describing elements to include in the generated output. */
   positivePrompt: string
@@ -1994,7 +2238,18 @@ export type SdxlTurboParams = {
   deepCacheBranchId?: number
 }
   /** Pixel extensions for each boundary direction of the source image. At least one direction is required. */
-  outpaint?: unknown
+  outpaint?: {
+  /** Number of pixels to extend to the top. */
+  top?: number
+  /** Number of pixels to extend to the bottom. */
+  bottom?: number
+  /** Number of pixels to extend to the left. */
+  left?: number
+  /** Number of pixels to extend to the right. */
+  right?: number
+  /** Amount of blur to apply to the mask edge. */
+  blur?: number
+}
   /** Configuration for Low-Rank Adaptation models. */
   lora?: {
   /** LoRA model identifier. */
@@ -2009,7 +2264,7 @@ export type SdxlTurboParams = {
   /** Strength of the ControlNet influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the guide image. */
   weight?: number
   /** Reference image for ControlNet guidance (UUID, URL, Data URI, or Base64). */
-  guideImage: unknown
+  guideImage: string
   /** ControlNet guidance mode. */
   controlMode?: 'balanced' | 'controlnet' | 'prompt'
   /** Absolute step number to end ControlNet influence. Must be greater than `startStep` and less than or equal to `steps`. */
@@ -2028,7 +2283,7 @@ export type SdxlTurboParams = {
   /** Strength of the IP-Adapter influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the reference. */
   weight?: number
   /** Images to guide the IP-Adapter (UUID, URL, Data URI, or Base64). */
-  guideImages: unknown[]
+  guideImages: string[]
   /** Shapes how influence evolves during generation. */
   weightType?: 'normal' | 'ease_in' | 'ease_out' | 'ease_in_out' | 'weak_input' | 'weak_output' | 'weak_middle' | 'strong_middle' | 'style_transfer' | 'composition' | 'strong_style_transfer' | 'style_and_composition' | 'strong_style_and_composition'
   /** Controls composition/layout influence specifically. */
@@ -2130,7 +2385,20 @@ export type SdxlTurboParams = {
   /** Model-specific advanced configuration options. */
   advancedFeatures?: {
   /** Watermark configuration. */
-  watermark?: unknown
+  watermark?: {
+  /** Watermark text. */
+  text?: string
+  /** Watermark image (UUID, URL, Data URI, or Base64). */
+  image?: string
+  /** Watermark position. */
+  displayPosition?: 'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center-center' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' | 'tiled'
+  /** Watermark opacity. */
+  opacity?: number
+  /** Text color in hex format. */
+  fontColor?: string
+  /** Background color in hex format. */
+  bgColor?: string
+}
 }
   [key: string]: unknown
 }
@@ -2142,9 +2410,9 @@ export type ZImageParams = {
   /** Input assets for the task. */
   inputs?: {
   /** Image used as a starting point for the generation (UUID, URL, Data URI, or Base64). */
-  seedImage?: unknown
+  seedImage?: string
   /** Image used to specify which areas of the input image should be edited (UUID, URL, Data URI, or Base64). White marks the area to edit, black is preserved. */
-  maskImage?: unknown
+  maskImage?: string
 }
   /** Text prompt describing elements to include in the generated output. */
   positivePrompt: string
@@ -2194,7 +2462,18 @@ export type ZImageParams = {
   dbCacheSkipInterval?: number
 }
   /** Pixel extensions for each boundary direction of the source image. At least one direction is required. */
-  outpaint?: unknown
+  outpaint?: {
+  /** Number of pixels to extend to the top. */
+  top?: number
+  /** Number of pixels to extend to the bottom. */
+  bottom?: number
+  /** Number of pixels to extend to the left. */
+  left?: number
+  /** Number of pixels to extend to the right. */
+  right?: number
+  /** Amount of blur to apply to the mask edge. */
+  blur?: number
+}
   /** Configuration for Low-Rank Adaptation models. */
   lora?: {
   /** LoRA model identifier. */
@@ -2267,7 +2546,20 @@ export type ZImageParams = {
   /** Model-specific advanced configuration options. */
   advancedFeatures?: {
   /** Watermark configuration. */
-  watermark?: unknown
+  watermark?: {
+  /** Watermark text. */
+  text?: string
+  /** Watermark image (UUID, URL, Data URI, or Base64). */
+  image?: string
+  /** Watermark position. */
+  displayPosition?: 'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center-center' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' | 'tiled'
+  /** Watermark opacity. */
+  opacity?: number
+  /** Text color in hex format. */
+  fontColor?: string
+  /** Background color in hex format. */
+  bgColor?: string
+}
 }
   [key: string]: unknown
 }
@@ -2279,9 +2571,9 @@ export type ZImageTurboParams = {
   /** Input assets for the task. */
   inputs?: {
   /** Image used as a starting point for the generation (UUID, URL, Data URI, or Base64). */
-  seedImage?: unknown
+  seedImage?: string
   /** Image used to specify which areas of the input image should be edited (UUID, URL, Data URI, or Base64). White marks the area to edit, black is preserved. */
-  maskImage?: unknown
+  maskImage?: string
 }
   /** Text prompt describing elements to include in the generated output. */
   positivePrompt: string
@@ -2331,7 +2623,18 @@ export type ZImageTurboParams = {
   dbCacheSkipInterval?: number
 }
   /** Pixel extensions for each boundary direction of the source image. At least one direction is required. */
-  outpaint?: unknown
+  outpaint?: {
+  /** Number of pixels to extend to the top. */
+  top?: number
+  /** Number of pixels to extend to the bottom. */
+  bottom?: number
+  /** Number of pixels to extend to the left. */
+  left?: number
+  /** Number of pixels to extend to the right. */
+  right?: number
+  /** Amount of blur to apply to the mask edge. */
+  blur?: number
+}
   /** Configuration for Low-Rank Adaptation models. */
   lora?: {
   /** LoRA model identifier. */
@@ -2346,7 +2649,7 @@ export type ZImageTurboParams = {
   /** Strength of the ControlNet influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the guide image. */
   weight?: number
   /** Reference image for ControlNet guidance (UUID, URL, Data URI, or Base64). */
-  guideImage: unknown
+  guideImage: string
   /** ControlNet guidance mode. */
   controlMode?: 'balanced' | 'controlnet' | 'prompt'
   /** Absolute step number to end ControlNet influence. Must be greater than `startStep` and less than or equal to `steps`. */
@@ -2423,7 +2726,20 @@ export type ZImageTurboParams = {
   /** Model-specific advanced configuration options. */
   advancedFeatures?: {
   /** Watermark configuration. */
-  watermark?: unknown
+  watermark?: {
+  /** Watermark text. */
+  text?: string
+  /** Watermark image (UUID, URL, Data URI, or Base64). */
+  image?: string
+  /** Watermark position. */
+  displayPosition?: 'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center-center' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' | 'tiled'
+  /** Watermark opacity. */
+  opacity?: number
+  /** Text color in hex format. */
+  fontColor?: string
+  /** Background color in hex format. */
+  bgColor?: string
+}
 }
   [key: string]: unknown
 }
@@ -2567,7 +2883,20 @@ export type ImageInferenceParams = {
   /** Model-specific advanced configuration options. */
   advancedFeatures?: {
   /** Watermark configuration. */
-  watermark?: unknown
+  watermark?: {
+  /** Watermark text. */
+  text?: string
+  /** Watermark image (UUID, URL, Data URI, or Base64). */
+  image?: string
+  /** Watermark position. */
+  displayPosition?: 'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center-center' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' | 'tiled'
+  /** Watermark opacity. */
+  opacity?: number
+  /** Text color in hex format. */
+  fontColor?: string
+  /** Background color in hex format. */
+  bgColor?: string
+}
 }
   [key: string]: unknown
 }
@@ -2728,7 +3057,7 @@ export type CaptionImageParams = {
   /** Input assets for the task. */
   inputs: {
   /** Image input (UUID, URL, Data URI, or Base64). */
-  image: unknown
+  image: string
 }
   [key: string]: unknown
 }
@@ -2764,7 +3093,7 @@ export type CaptionVideoParams = {
   /** Input assets for the task. */
   inputs: {
   /** Video input (UUID or URL). */
-  video: unknown
+  video: string
 }
   [key: string]: unknown
 }
@@ -2808,7 +3137,7 @@ export type ControlnetPreprocessParams = {
   /** Input assets for the task. */
   inputs: {
   /** Image input (UUID, URL, Data URI, or Base64). */
-  image: unknown
+  image: string
 }
   [key: string]: unknown
 }
@@ -2852,7 +3181,7 @@ export type MaskingParams = {
   /** Input assets for the task. */
   inputs: {
   /** Image input (UUID, URL, Data URI, or Base64). */
-  image: unknown
+  image: string
 }
   /** Global inference settings. */
   settings?: {
@@ -2981,7 +3310,7 @@ export type RemoveBackgroundImageParams = {
   /** Input assets for the task. */
   inputs: {
   /** Image input (UUID, URL, Data URI, or Base64). */
-  image: unknown
+  image: string
 }
   [key: string]: unknown
 }
@@ -3027,7 +3356,7 @@ export type RemoveBackgroundVideoParams = {
   /** Input assets for the task. */
   inputs: {
   /** Video input (UUID or URL). */
-  video: unknown
+  video: string
 }
   [key: string]: unknown
 }
@@ -3121,7 +3450,7 @@ export type UpscaleImageParams = {
   /** Input assets for the task. */
   inputs: {
   /** Image input (UUID, URL, Data URI, or Base64). */
-  image: unknown
+  image: string
 }
   [key: string]: unknown
 }
@@ -3167,7 +3496,7 @@ export type UpscaleVideoParams = {
   /** Input assets for the task. */
   inputs: {
   /** Video input (UUID or URL). */
-  video: unknown
+  video: string
 }
   [key: string]: unknown
 }
@@ -3250,7 +3579,7 @@ export type GetTaskDetailsParams = {
  */
 export type ImageUploadParams = {
   /** Image to upload (URL, Data URI, or Base64). */
-  image: unknown
+  image: string
 }
 
 /**
@@ -3268,7 +3597,7 @@ export type MediaStorageParams = {
  */
 export type ModelSearchParams = {
   /** Search query to find models by name, description or AIR ID. */
-  search?: unknown
+  search?: string
   /** Filter by model source. */
   source?: 'official' | 'community'
   /** Filter models by category. */

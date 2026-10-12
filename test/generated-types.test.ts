@@ -54,6 +54,13 @@ describe('Generated task-map.ts', () => {
     expect(content).not.toContain('unknown | unknown')
   })
 
+  it('types a parameter by its own type when its union only adds constraints', () => {
+    expect(content).toMatch(/^  search\?: string$/m)
+    expect(content).toMatch(/^  seedImage\?: string$/m)
+    expect(content).toMatch(/^  outpaint\?: \{$/m)
+    expect(content).not.toMatch(/^\s+\w+\??: unknown$/m)
+  })
+
   it('contains JSDoc comments for params', () => {
     // At least some properties should have JSDoc
     const jsdocCount = (content.match(/\/\*\*.*\*\//g) ?? []).length
