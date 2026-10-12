@@ -1,5 +1,5 @@
 /**
- * AUTO-GENERATED from schema-map@20260930171803 — do not edit manually.
+ * AUTO-GENERATED from schema-map@20261012162326 — do not edit manually.
  * Run: bun run scripts/generate-types.ts
  */
 
@@ -34,6 +34,22 @@ export type ExactlyIllustrativeParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
+  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  routing?: {
+  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  preferences?: {
+  /** How much one dimension counts against the others. */
+  quality?: number
+  /** How much one dimension counts against the others. */
+  speed?: number
+  /** How much one dimension counts against the others. */
+  cost?: number
+}
+  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  maxPrice?: number
+  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  requirements?: string
+}
   /** Identifier of the model to use for generation. */
   model: string
   /** Number of results to generate. Each result uses a different seed, producing variations of the same parameters. */
@@ -214,6 +230,22 @@ export type Flux1DevParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
+  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  routing?: {
+  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  preferences?: {
+  /** How much one dimension counts against the others. */
+  quality?: number
+  /** How much one dimension counts against the others. */
+  speed?: number
+  /** How much one dimension counts against the others. */
+  cost?: number
+}
+  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  maxPrice?: number
+  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  requirements?: string
+}
   /** Identifier of the model to use for generation. */
   model: string
   /** Number of results to generate. Each result uses a different seed, producing variations of the same parameters. */
@@ -324,6 +356,22 @@ export type Flux1KontextDevParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
+  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  routing?: {
+  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  preferences?: {
+  /** How much one dimension counts against the others. */
+  quality?: number
+  /** How much one dimension counts against the others. */
+  speed?: number
+  /** How much one dimension counts against the others. */
+  cost?: number
+}
+  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  maxPrice?: number
+  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  requirements?: string
+}
   /** Identifier of the model to use for generation. */
   model: string
   /** Number of results to generate. Each result uses a different seed, producing variations of the same parameters. */
@@ -460,6 +508,22 @@ export type Flux1SchnellParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
+  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  routing?: {
+  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  preferences?: {
+  /** How much one dimension counts against the others. */
+  quality?: number
+  /** How much one dimension counts against the others. */
+  speed?: number
+  /** How much one dimension counts against the others. */
+  cost?: number
+}
+  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  maxPrice?: number
+  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  requirements?: string
+}
   /** Identifier of the model to use for generation. */
   model: string
   /** Number of results to generate. Each result uses a different seed, producing variations of the same parameters. */
@@ -646,6 +710,190 @@ export type IllustriousParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
+  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  routing?: {
+  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  preferences?: {
+  /** How much one dimension counts against the others. */
+  quality?: number
+  /** How much one dimension counts against the others. */
+  speed?: number
+  /** How much one dimension counts against the others. */
+  cost?: number
+}
+  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  maxPrice?: number
+  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  requirements?: string
+}
+  /** Identifier of the model to use for generation. */
+  model: string
+  /** Number of results to generate. Each result uses a different seed, producing variations of the same parameters. */
+  numberResults?: number
+  /** URL to upload content via HTTP PUT. The request body will contain the raw binary data. */
+  uploadEndpoint?: string
+  /** Time-to-live (TTL) in seconds for generated content. Only applies when `outputType` is `URL`. */
+  ttl?: number
+  /** Image output type. */
+  outputType?: 'URL' | 'base64Data' | 'dataURI'
+  /** File format for the generated image. */
+  outputFormat?: 'JPG' | 'PNG' | 'WEBP'
+  /** Compression quality of the output. Higher values preserve quality but increase file size. */
+  outputQuality?: number
+  /** Determines how the API delivers task results. */
+  deliveryMethod?: 'sync' | 'async'
+  /** Content safety checking configuration for image generation. */
+  safety?: {
+  /** Enable or disable content safety checking. Increases total generation time. */
+  checkContent?: boolean
+}
+  /** Model-specific advanced configuration options. */
+  advancedFeatures?: {
+  /** Watermark configuration. */
+  watermark?: unknown
+}
+  [key: string]: unknown
+}
+
+/**
+ * krea-2-raw-oss architecture params.
+ */
+export type Krea2RawOssParams = {
+  /** Input assets for the task. */
+  inputs?: {
+  /** Style reference images for guiding generation. Each item can be a plain image input (UUID, URL, Data URI, or Base64) or an object with an image and a per-image strength. */
+  referenceImages?: (unknown | {
+  /** Image input (UUID, URL, Data URI, or Base64). */
+  image: unknown
+  /** Influence strength of the reference image on the generated output. */
+  strength?: number
+})[]
+}
+  /** Text prompt describing elements to include in the generated output. */
+  positivePrompt: string
+  /** Prompt to guide what to exclude from generation. Ignored when guidance is disabled (CFGScale ≤ 1). */
+  negativePrompt?: string
+  /** Width of the generated media in pixels. */
+  width: number
+  /** Height of the generated media in pixels. */
+  height: number
+  /** Random seed for reproducible generation. When not provided, a random seed is generated in the unsigned 32-bit range. */
+  seed?: number
+  /** Total number of denoising steps. Higher values generally produce more detailed results but take longer. */
+  steps?: number
+  /** Guidance scale representing how closely the output will resemble the prompt. Higher values produce results more aligned with the prompt. */
+  CFGScale?: number
+  /** Optimization level. */
+  acceleration?: 'none' | 'low' | 'medium' | 'high'
+  /** Configuration for Low-Rank Adaptation models. */
+  lora?: {
+  /** LoRA model identifier. */
+  model: string
+  /** Strength of the LoRA influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the LoRA's style. */
+  weight?: number
+}[]
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  webhookURL?: string
+  /** Include task cost in the response. */
+  includeCost?: boolean
+  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  routing?: {
+  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  preferences?: {
+  /** How much one dimension counts against the others. */
+  quality?: number
+  /** How much one dimension counts against the others. */
+  speed?: number
+  /** How much one dimension counts against the others. */
+  cost?: number
+}
+  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  maxPrice?: number
+  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  requirements?: string
+}
+  /** Identifier of the model to use for generation. */
+  model: string
+  /** Number of results to generate. Each result uses a different seed, producing variations of the same parameters. */
+  numberResults?: number
+  /** URL to upload content via HTTP PUT. The request body will contain the raw binary data. */
+  uploadEndpoint?: string
+  /** Time-to-live (TTL) in seconds for generated content. Only applies when `outputType` is `URL`. */
+  ttl?: number
+  /** Image output type. */
+  outputType?: 'URL' | 'base64Data' | 'dataURI'
+  /** File format for the generated image. */
+  outputFormat?: 'JPG' | 'PNG' | 'WEBP'
+  /** Compression quality of the output. Higher values preserve quality but increase file size. */
+  outputQuality?: number
+  /** Determines how the API delivers task results. */
+  deliveryMethod?: 'sync' | 'async'
+  /** Content safety checking configuration for image generation. */
+  safety?: {
+  /** Enable or disable content safety checking. Increases total generation time. */
+  checkContent?: boolean
+}
+  /** Model-specific advanced configuration options. */
+  advancedFeatures?: {
+  /** Watermark configuration. */
+  watermark?: unknown
+}
+  [key: string]: unknown
+}
+
+/**
+ * krea-2-turbo-oss architecture params.
+ */
+export type Krea2TurboOssParams = {
+  /** Input assets for the task. */
+  inputs?: {
+  /** Style reference images for guiding generation. Each item can be a plain image input (UUID, URL, Data URI, or Base64) or an object with an image and a per-image strength. */
+  referenceImages?: (unknown | {
+  /** Image input (UUID, URL, Data URI, or Base64). */
+  image: unknown
+  /** Influence strength of the reference image on the generated output. */
+  strength?: number
+})[]
+}
+  /** Text prompt describing elements to include in the generated output. */
+  positivePrompt: string
+  /** Width of the generated media in pixels. */
+  width: number
+  /** Height of the generated media in pixels. */
+  height: number
+  /** Random seed for reproducible generation. When not provided, a random seed is generated in the unsigned 32-bit range. */
+  seed?: number
+  /** Total number of denoising steps. Higher values generally produce more detailed results but take longer. */
+  steps?: number
+  /** Optimization level. */
+  acceleration?: 'none' | 'low' | 'medium' | 'high'
+  /** Configuration for Low-Rank Adaptation models. */
+  lora?: {
+  /** LoRA model identifier. */
+  model: string
+  /** Strength of the LoRA influence. A value of 0 means no influence. Higher values increase the influence, and negative values can be used to steer away from the LoRA's style. */
+  weight?: number
+}[]
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  webhookURL?: string
+  /** Include task cost in the response. */
+  includeCost?: boolean
+  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  routing?: {
+  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  preferences?: {
+  /** How much one dimension counts against the others. */
+  quality?: number
+  /** How much one dimension counts against the others. */
+  speed?: number
+  /** How much one dimension counts against the others. */
+  cost?: number
+}
+  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  maxPrice?: number
+  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  requirements?: string
+}
   /** Identifier of the model to use for generation. */
   model: string
   /** Number of results to generate. Each result uses a different seed, producing variations of the same parameters. */
@@ -832,6 +1080,22 @@ export type NoobaiParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
+  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  routing?: {
+  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  preferences?: {
+  /** How much one dimension counts against the others. */
+  quality?: number
+  /** How much one dimension counts against the others. */
+  speed?: number
+  /** How much one dimension counts against the others. */
+  cost?: number
+}
+  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  maxPrice?: number
+  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  requirements?: string
+}
   /** Identifier of the model to use for generation. */
   model: string
   /** Number of results to generate. Each result uses a different seed, producing variations of the same parameters. */
@@ -1018,6 +1282,22 @@ export type PonyParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
+  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  routing?: {
+  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  preferences?: {
+  /** How much one dimension counts against the others. */
+  quality?: number
+  /** How much one dimension counts against the others. */
+  speed?: number
+  /** How much one dimension counts against the others. */
+  cost?: number
+}
+  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  maxPrice?: number
+  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  requirements?: string
+}
   /** Identifier of the model to use for generation. */
   model: string
   /** Number of results to generate. Each result uses a different seed, producing variations of the same parameters. */
@@ -1195,6 +1475,22 @@ export type Sd15Params = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
+  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  routing?: {
+  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  preferences?: {
+  /** How much one dimension counts against the others. */
+  quality?: number
+  /** How much one dimension counts against the others. */
+  speed?: number
+  /** How much one dimension counts against the others. */
+  cost?: number
+}
+  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  maxPrice?: number
+  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  requirements?: string
+}
   /** Identifier of the model to use for generation. */
   model: string
   /** Number of results to generate. Each result uses a different seed, producing variations of the same parameters. */
@@ -1390,6 +1686,22 @@ export type SdxlParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
+  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  routing?: {
+  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  preferences?: {
+  /** How much one dimension counts against the others. */
+  quality?: number
+  /** How much one dimension counts against the others. */
+  speed?: number
+  /** How much one dimension counts against the others. */
+  cost?: number
+}
+  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  maxPrice?: number
+  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  requirements?: string
+}
   /** Identifier of the model to use for generation. */
   model: string
   /** Number of results to generate. Each result uses a different seed, producing variations of the same parameters. */
@@ -1576,6 +1888,22 @@ export type SdxlLightningParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
+  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  routing?: {
+  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  preferences?: {
+  /** How much one dimension counts against the others. */
+  quality?: number
+  /** How much one dimension counts against the others. */
+  speed?: number
+  /** How much one dimension counts against the others. */
+  cost?: number
+}
+  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  maxPrice?: number
+  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  requirements?: string
+}
   /** Identifier of the model to use for generation. */
   model: string
   /** Number of results to generate. Each result uses a different seed, producing variations of the same parameters. */
@@ -1762,6 +2090,22 @@ export type SdxlTurboParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
+  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  routing?: {
+  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  preferences?: {
+  /** How much one dimension counts against the others. */
+  quality?: number
+  /** How much one dimension counts against the others. */
+  speed?: number
+  /** How much one dimension counts against the others. */
+  cost?: number
+}
+  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  maxPrice?: number
+  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  requirements?: string
+}
   /** Identifier of the model to use for generation. */
   model: string
   /** Number of results to generate. Each result uses a different seed, producing variations of the same parameters. */
@@ -1883,6 +2227,22 @@ export type ZImageParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
+  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  routing?: {
+  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  preferences?: {
+  /** How much one dimension counts against the others. */
+  quality?: number
+  /** How much one dimension counts against the others. */
+  speed?: number
+  /** How much one dimension counts against the others. */
+  cost?: number
+}
+  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  maxPrice?: number
+  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  requirements?: string
+}
   /** Identifier of the model to use for generation. */
   model: string
   /** Number of results to generate. Each result uses a different seed, producing variations of the same parameters. */
@@ -2023,6 +2383,22 @@ export type ZImageTurboParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
+  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  routing?: {
+  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  preferences?: {
+  /** How much one dimension counts against the others. */
+  quality?: number
+  /** How much one dimension counts against the others. */
+  speed?: number
+  /** How much one dimension counts against the others. */
+  cost?: number
+}
+  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  maxPrice?: number
+  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  requirements?: string
+}
   /** Identifier of the model to use for generation. */
   model: string
   /** Number of results to generate. Each result uses a different seed, producing variations of the same parameters. */
@@ -2060,6 +2436,22 @@ export type ThreeDInferenceParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
+  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  routing?: {
+  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  preferences?: {
+  /** How much one dimension counts against the others. */
+  quality?: number
+  /** How much one dimension counts against the others. */
+  speed?: number
+  /** How much one dimension counts against the others. */
+  cost?: number
+}
+  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  maxPrice?: number
+  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  requirements?: string
+}
   /** Identifier of the model to use for generation. */
   model: string
   /** Number of results to generate. Each result uses a different seed, producing variations of the same parameters. */
@@ -2085,6 +2477,22 @@ export type AudioInferenceParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
+  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  routing?: {
+  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  preferences?: {
+  /** How much one dimension counts against the others. */
+  quality?: number
+  /** How much one dimension counts against the others. */
+  speed?: number
+  /** How much one dimension counts against the others. */
+  cost?: number
+}
+  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  maxPrice?: number
+  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  requirements?: string
+}
   /** Identifier of the model to use for generation. */
   model: string
   /** Number of results to generate. Each result uses a different seed, producing variations of the same parameters. */
@@ -2119,6 +2527,22 @@ export type ImageInferenceParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
+  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  routing?: {
+  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  preferences?: {
+  /** How much one dimension counts against the others. */
+  quality?: number
+  /** How much one dimension counts against the others. */
+  speed?: number
+  /** How much one dimension counts against the others. */
+  cost?: number
+}
+  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  maxPrice?: number
+  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  requirements?: string
+}
   /** Identifier of the model to use for generation. */
   model: string
   /** Number of results to generate. Each result uses a different seed, producing variations of the same parameters. */
@@ -2156,6 +2580,22 @@ export type TextInferenceParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
+  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  routing?: {
+  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  preferences?: {
+  /** How much one dimension counts against the others. */
+  quality?: number
+  /** How much one dimension counts against the others. */
+  speed?: number
+  /** How much one dimension counts against the others. */
+  cost?: number
+}
+  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  maxPrice?: number
+  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  requirements?: string
+}
   /** Identifier of the model to use for generation. */
   model: string
   /** Array of chat messages forming the conversation context. The final message must use the user role. */
@@ -2186,6 +2626,22 @@ export type VideoInferenceParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
+  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  routing?: {
+  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  preferences?: {
+  /** How much one dimension counts against the others. */
+  quality?: number
+  /** How much one dimension counts against the others. */
+  speed?: number
+  /** How much one dimension counts against the others. */
+  cost?: number
+}
+  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  maxPrice?: number
+  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  requirements?: string
+}
   /** Identifier of the model to use for generation. */
   model: string
   /** Number of results to generate. Each result uses a different seed, producing variations of the same parameters. */
@@ -2220,6 +2676,22 @@ export type CaptionParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
+  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  routing?: {
+  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  preferences?: {
+  /** How much one dimension counts against the others. */
+  quality?: number
+  /** How much one dimension counts against the others. */
+  speed?: number
+  /** How much one dimension counts against the others. */
+  cost?: number
+}
+  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  maxPrice?: number
+  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  requirements?: string
+}
   /** Identifier of the model to use for generation. */
   model: string
   [key: string]: unknown
@@ -2233,6 +2705,22 @@ export type CaptionImageParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
+  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  routing?: {
+  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  preferences?: {
+  /** How much one dimension counts against the others. */
+  quality?: number
+  /** How much one dimension counts against the others. */
+  speed?: number
+  /** How much one dimension counts against the others. */
+  cost?: number
+}
+  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  maxPrice?: number
+  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  requirements?: string
+}
   /** Identifier of the model to use for generation. */
   model: string
   /** Determines how the API delivers task results. */
@@ -2253,6 +2741,22 @@ export type CaptionVideoParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
+  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  routing?: {
+  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  preferences?: {
+  /** How much one dimension counts against the others. */
+  quality?: number
+  /** How much one dimension counts against the others. */
+  speed?: number
+  /** How much one dimension counts against the others. */
+  cost?: number
+}
+  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  maxPrice?: number
+  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  requirements?: string
+}
   /** Identifier of the model to use for generation. */
   model: string
   /** Determines how the API delivers task results. */
@@ -2273,6 +2777,22 @@ export type ControlnetPreprocessParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
+  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  routing?: {
+  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  preferences?: {
+  /** How much one dimension counts against the others. */
+  quality?: number
+  /** How much one dimension counts against the others. */
+  speed?: number
+  /** How much one dimension counts against the others. */
+  cost?: number
+}
+  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  maxPrice?: number
+  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  requirements?: string
+}
   /** Identifier of the model to use for generation. */
   model: string
   /** Image output type. */
@@ -2301,6 +2821,22 @@ export type MaskingParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
+  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  routing?: {
+  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  preferences?: {
+  /** How much one dimension counts against the others. */
+  quality?: number
+  /** How much one dimension counts against the others. */
+  speed?: number
+  /** How much one dimension counts against the others. */
+  cost?: number
+}
+  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  maxPrice?: number
+  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  requirements?: string
+}
   /** Identifier of the model to use for generation. */
   model: string
   /** Image output type. */
@@ -2342,6 +2878,22 @@ export type PromptEnhanceParams = {
   deliveryMethod?: 'sync' | 'async'
   /** Include task cost in the response. */
   includeCost?: boolean
+  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  routing?: {
+  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  preferences?: {
+  /** How much one dimension counts against the others. */
+  quality?: number
+  /** How much one dimension counts against the others. */
+  speed?: number
+  /** How much one dimension counts against the others. */
+  cost?: number
+}
+  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  maxPrice?: number
+  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  requirements?: string
+}
   /** Identifier of the model to use for generation. */
   model: string
   /** Text prompt to enhance. */
@@ -2361,6 +2913,22 @@ export type RemoveBackgroundParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
+  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  routing?: {
+  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  preferences?: {
+  /** How much one dimension counts against the others. */
+  quality?: number
+  /** How much one dimension counts against the others. */
+  speed?: number
+  /** How much one dimension counts against the others. */
+  cost?: number
+}
+  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  maxPrice?: number
+  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  requirements?: string
+}
   /** Identifier of the model to use for generation. */
   model: string
   /** URL to upload content via HTTP PUT. The request body will contain the raw binary data. */
@@ -2380,6 +2948,22 @@ export type RemoveBackgroundImageParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
+  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  routing?: {
+  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  preferences?: {
+  /** How much one dimension counts against the others. */
+  quality?: number
+  /** How much one dimension counts against the others. */
+  speed?: number
+  /** How much one dimension counts against the others. */
+  cost?: number
+}
+  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  maxPrice?: number
+  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  requirements?: string
+}
   /** Identifier of the model to use for generation. */
   model: string
   /** URL to upload content via HTTP PUT. The request body will contain the raw binary data. */
@@ -2410,6 +2994,22 @@ export type RemoveBackgroundVideoParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
+  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  routing?: {
+  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  preferences?: {
+  /** How much one dimension counts against the others. */
+  quality?: number
+  /** How much one dimension counts against the others. */
+  speed?: number
+  /** How much one dimension counts against the others. */
+  cost?: number
+}
+  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  maxPrice?: number
+  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  requirements?: string
+}
   /** Identifier of the model to use for generation. */
   model: string
   /** URL to upload content via HTTP PUT. The request body will contain the raw binary data. */
@@ -2453,6 +3053,22 @@ export type UpscaleParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
+  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  routing?: {
+  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  preferences?: {
+  /** How much one dimension counts against the others. */
+  quality?: number
+  /** How much one dimension counts against the others. */
+  speed?: number
+  /** How much one dimension counts against the others. */
+  cost?: number
+}
+  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  maxPrice?: number
+  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  requirements?: string
+}
   /** Identifier of the model to use for generation. */
   model: string
   /** URL to upload content via HTTP PUT. The request body will contain the raw binary data. */
@@ -2472,6 +3088,22 @@ export type UpscaleImageParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
+  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  routing?: {
+  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  preferences?: {
+  /** How much one dimension counts against the others. */
+  quality?: number
+  /** How much one dimension counts against the others. */
+  speed?: number
+  /** How much one dimension counts against the others. */
+  cost?: number
+}
+  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  maxPrice?: number
+  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  requirements?: string
+}
   /** Identifier of the model to use for generation. */
   model: string
   /** URL to upload content via HTTP PUT. The request body will contain the raw binary data. */
@@ -2502,6 +3134,22 @@ export type UpscaleVideoParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
+  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  routing?: {
+  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  preferences?: {
+  /** How much one dimension counts against the others. */
+  quality?: number
+  /** How much one dimension counts against the others. */
+  speed?: number
+  /** How much one dimension counts against the others. */
+  cost?: number
+}
+  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  maxPrice?: number
+  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  requirements?: string
+}
   /** Identifier of the model to use for generation. */
   model: string
   /** URL to upload content via HTTP PUT. The request body will contain the raw binary data. */
@@ -2532,6 +3180,22 @@ export type VectorizeParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
+  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  routing?: {
+  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  preferences?: {
+  /** How much one dimension counts against the others. */
+  quality?: number
+  /** How much one dimension counts against the others. */
+  speed?: number
+  /** How much one dimension counts against the others. */
+  cost?: number
+}
+  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  maxPrice?: number
+  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  requirements?: string
+}
   /** Identifier of the model to use for generation. */
   model: string
   /** URL to upload content via HTTP PUT. The request body will contain the raw binary data. */
@@ -2604,9 +3268,9 @@ export type MediaStorageParams = {
  */
 export type ModelSearchParams = {
   /** Search query to find models by name, description or AIR ID. */
-  search: string
+  search?: unknown
   /** Filter by model source. */
-  source?: 'featured' | 'community'
+  source?: 'official' | 'community'
   /** Filter models by category. */
   category?: 'checkpoint' | 'lora' | 'lycoris' | 'vae' | 'embeddings'
   /** Filter by model architecture. */
@@ -2619,8 +3283,8 @@ export type ModelSearchParams = {
   limit?: number
   /** Number of results to skip for pagination. */
   offset?: number
-  /** Sort order for results. A bare field name sorts ascending and a `-` prefix sorts descending, except `popularity`, whose bare value is already descending (most popular first). */
-  sort?: 'popularity' | '-popularity' | 'name' | '-name' | 'addedUnixTimestamp' | '-addedUnixTimestamp' | 'updatedDateUnixTimestamp' | '-updatedDateUnixTimestamp'
+  /** Sort order for results. A bare field name sorts ascending and a `-` prefix sorts descending, except `popularity`, whose bare value is already descending (most popular first). `_score` sorts by search relevance and has no descending form. Defaults to `_score` when `search` is non-empty, and to `popularity` otherwise. */
+  sort?: '_score' | 'popularity' | '-popularity' | 'name' | '-name' | 'addedUnixTimestamp' | '-addedUnixTimestamp' | 'updatedDateUnixTimestamp' | '-updatedDateUnixTimestamp'
 }
 
 /**
@@ -3059,7 +3723,7 @@ export type ModelSearchResult = {
   /** Model capabilities. */
   capabilities: string[]
   /** Model source. */
-  source: 'featured' | 'community'
+  source: 'official' | 'community'
   /** Representative image URL. */
   heroImage: string | null
   /** Whether the model is private. */
@@ -3371,6 +4035,8 @@ export type SchemaMap = {
   'flux-1-kontext-dev': { params: Flux1KontextDevParams, result: ImageInferenceResult }
   'flux-1-schnell': { params: Flux1SchnellParams, result: ImageInferenceResult }
   illustrious: { params: IllustriousParams, result: ImageInferenceResult }
+  'krea-2-raw-oss': { params: Krea2RawOssParams, result: ImageInferenceResult }
+  'krea-2-turbo-oss': { params: Krea2TurboOssParams, result: ImageInferenceResult }
   noobai: { params: NoobaiParams, result: ImageInferenceResult }
   pony: { params: PonyParams, result: ImageInferenceResult }
   'sd-1-5': { params: Sd15Params, result: ImageInferenceResult }
@@ -3425,6 +4091,8 @@ export const architectureTaskTypes: Record<string, string> = {
   'flux-1-kontext-dev': 'imageInference',
   'flux-1-schnell': 'imageInference',
   illustrious: 'imageInference',
+  'krea-2-raw-oss': 'imageInference',
+  'krea-2-turbo-oss': 'imageInference',
   noobai: 'imageInference',
   pony: 'imageInference',
   'sd-1-5': 'imageInference',
@@ -3481,6 +4149,7 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'alibaba:qwen-image@2.0': { taskType: 'imageInference', id: 'alibaba-qwen-image-2-0' },
   'alibaba:qwen-image@2.0-pro': { taskType: 'imageInference', id: 'alibaba-qwen-image-2-0-pro' },
   'alibaba:qwen-image@2.1-pro': { taskType: 'imageInference', id: 'alibaba-qwen-image-2-1-pro' },
+  'alibaba:qwen-image@2.1-turbo': { taskType: 'imageInference', id: 'alibaba-qwen-image-2-1-turbo' },
   'alibaba:qwen-image@2512': { taskType: 'imageInference', id: 'alibaba-qwen-image-2512' },
   'alibaba:qwen-image@3.0': { taskType: 'imageInference', id: 'alibaba-qwen-image-3-0' },
   'alibaba:qwen-image@3.0-pro': { taskType: 'imageInference', id: 'alibaba-qwen-image-3-0-pro' },
@@ -3512,6 +4181,7 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'bfl:5@1': { taskType: 'imageInference', id: 'bfl-flux-2-pro' },
   'bfl:6@1': { taskType: 'imageInference', id: 'bfl-flux-2-flex' },
   'bfl:7@1': { taskType: 'imageInference', id: 'bfl-flux-2-max' },
+  'bfl:flux@3-image': { taskType: 'imageInference', id: 'bfl-flux-3-image' },
   'bfl:flux@3-video': { taskType: 'videoInference', id: 'bfl-flux-3-video' },
   'bfl:flux@erase': { taskType: 'imageInference', id: 'bfl-flux-erase' },
   'bfl:flux@outpainting': { taskType: 'imageInference', id: 'bfl-flux-outpainting' },
@@ -3573,6 +4243,7 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'google:gemini@omni-flash-1.1': { taskType: 'videoInference', id: 'google-gemini-omni-flash-1-1' },
   'google:gemma@4-31b': { taskType: 'textInference', id: 'google-gemma-4-31b' },
   'google:nano-banana@2-lite': { taskType: 'imageInference', id: 'google-nano-banana-2-lite' },
+  'google:nano-banana@2.1': { taskType: 'imageInference', id: 'google-nano-banana-2-1' },
   'google:veo@3.1-lite': { taskType: 'videoInference', id: 'google-veo-3-1-lite' },
   'heygen:avatar@4': { taskType: 'videoInference', id: 'heygen-avatar-iv' },
   'heygen:avatar@5': { taskType: 'videoInference', id: 'heygen-avatar-v' },
@@ -3831,6 +4502,7 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'xai:grok-imagine@image-quality': { taskType: 'imageInference', id: 'xai-grok-imagine-image-quality' },
   'xai:grok-imagine@video': { taskType: 'videoInference', id: 'xai-grok-imagine-video' },
   'xai:grok-imagine@video-1.5': { taskType: 'videoInference', id: 'xai-grok-imagine-video-1-5' },
+  'xai:grok-imagine@video-1.5-lite': { taskType: 'videoInference', id: 'xai-grok-imagine-video-1-5-lite' },
   'xai:grok@4.3': { taskType: 'textInference', id: 'xai-grok-4-3' },
   'xai:tts@0': { taskType: 'audioInference', id: 'xai-tts' },
   'zai:glm@5.1': { taskType: 'textInference', id: 'zai-glm-5-1' }
@@ -3848,6 +4520,7 @@ export type ModelResultMap = {
   'alibaba:qwen-image@2.0': ImageInferenceResult
   'alibaba:qwen-image@2.0-pro': ImageInferenceResult
   'alibaba:qwen-image@2.1-pro': ImageInferenceResult
+  'alibaba:qwen-image@2.1-turbo': ImageInferenceResult
   'alibaba:qwen-image@2512': ImageInferenceResult
   'alibaba:qwen-image@3.0': ImageInferenceResult
   'alibaba:qwen-image@3.0-pro': ImageInferenceResult
@@ -3879,6 +4552,7 @@ export type ModelResultMap = {
   'bfl:5@1': ImageInferenceResult
   'bfl:6@1': ImageInferenceResult
   'bfl:7@1': ImageInferenceResult
+  'bfl:flux@3-image': ImageInferenceResult
   'bfl:flux@3-video': VideoInferenceResult
   'bfl:flux@erase': ImageInferenceResult
   'bfl:flux@outpainting': ImageInferenceResult
@@ -3940,6 +4614,7 @@ export type ModelResultMap = {
   'google:gemini@omni-flash-1.1': VideoInferenceResult
   'google:gemma@4-31b': TextInferenceResult
   'google:nano-banana@2-lite': ImageInferenceResult
+  'google:nano-banana@2.1': ImageInferenceResult
   'google:veo@3.1-lite': VideoInferenceResult
   'heygen:avatar@4': VideoInferenceResult
   'heygen:avatar@5': VideoInferenceResult
@@ -4198,6 +4873,7 @@ export type ModelResultMap = {
   'xai:grok-imagine@image-quality': ImageInferenceResult
   'xai:grok-imagine@video': VideoInferenceResult
   'xai:grok-imagine@video-1.5': VideoInferenceResult
+  'xai:grok-imagine@video-1.5-lite': VideoInferenceResult
   'xai:grok@4.3': TextInferenceResult
   'xai:tts@0': AudioInferenceResult
   'zai:glm@5.1': TextInferenceResult
