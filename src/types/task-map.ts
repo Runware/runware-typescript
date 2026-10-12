@@ -1,5 +1,5 @@
 /**
- * AUTO-GENERATED from schema-map@20261012162326 — do not edit manually.
+ * AUTO-GENERATED from schema-map@20261012233936 — do not edit manually.
  * Run: bun run scripts/generate-types.ts
  */
 
@@ -3362,6 +3362,23 @@ export type RemoveBackgroundVideoParams = {
 }
 
 /**
+ * tools operation params.
+ */
+export type ToolsParams = {
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  webhookURL?: string
+  /** Include task cost in the response. */
+  includeCost?: boolean
+  /** Identifier of the tool to run. */
+  model: string
+  /** Time-to-live (TTL) in seconds for the output files. */
+  ttl?: number
+  /** Determines how the API delivers task results. */
+  deliveryMethod?: 'sync' | 'async'
+  [key: string]: unknown
+}
+
+/**
  * training operation params.
  */
 export type TrainingParams = {
@@ -3919,6 +3936,28 @@ export type ControlNetPreprocessResult = {
 }
 
 /**
+ * Tools Response
+ */
+export type ToolsResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'tools'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** Generated output artifacts. */
+  outputs: {
+  /** Generated output files. */
+  files: {
+  /** UUID of the output file. */
+  uuid: string
+  /** URL of the output file. */
+  url: string
+}[]
+}
+}
+
+/**
  * Prompt Enhance Response
  */
 export type PromptEnhanceResult = {
@@ -4012,7 +4051,7 @@ export type ModelUploadResult = {
  */
 export type GetResponseResult = {
   /** Identifier for the type of task this response belongs to. */
-  taskType: 'authentication' | 'imageInference' | 'videoInference' | 'audioInference' | 'textInference' | '3dInference' | 'modelSearch' | 'modelUpload' | 'accountManagement' | 'imageUpload' | 'mediaStorage' | 'getResponse' | 'caption' | 'controlNetPreprocess' | 'imageMasking' | 'promptEnhance' | 'removeBackground' | 'upscale' | 'vectorize' | 'training' | 'ping'
+  taskType: 'authentication' | 'imageInference' | 'videoInference' | 'audioInference' | 'textInference' | '3dInference' | 'modelSearch' | 'modelUpload' | 'accountManagement' | 'imageUpload' | 'mediaStorage' | 'getResponse' | 'caption' | 'controlNetPreprocess' | 'imageMasking' | 'promptEnhance' | 'removeBackground' | 'upscale' | 'vectorize' | 'training' | 'tools' | 'ping'
   /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
   taskUUID: string
   /** Current status of the task. */
@@ -4067,6 +4106,42 @@ export type ModelSearchResult = {
   positiveTriggerWords?: string
   /** Negative trigger words. */
   negativeTriggerWords?: string
+  /** Additional comments or notes. */
+  comment?: string
+  /** Checkpoint type. */
+  type?: 'base' | 'inpainting' | 'refiner' | 'pix2pix'
+  /** Version of the model. */
+  version?: string
+  /** Tags associated with the model. */
+  tags?: string[]
+  /** Unix timestamp of when the model was added. */
+  addedUnixTimestamp?: number
+  /** Unix timestamp of when the model was last updated. */
+  updatedDateUnixTimestamp?: number
+  /** Floating point precision of the model weights. */
+  floatingPoint?: string
+  /** Unique identifier for the model. */
+  uniqueIdentifier?: string
+  /** Default output width. */
+  defaultWidth?: number | null
+  /** Default output height. */
+  defaultHeight?: number | null
+  /** Default number of inference steps. */
+  defaultSteps?: number
+  /** Default classifier-free guidance scale. */
+  defaultCFG?: number
+  /** Default scheduler. */
+  defaultScheduler?: string
+  /** Default strength for img2img. */
+  defaultStrength?: number
+  /** Default weight for the model. */
+  defaultWeight?: number
+  /** Default frames per second. */
+  defaultFPS?: number
+  /** Default number of frames. */
+  defaultNumberOfFrames?: number
+  /** Default duration in seconds. */
+  defaultDuration?: number
 })[]
   [key: string]: unknown
 }
@@ -4388,6 +4463,7 @@ export type SchemaMap = {
   'remove-background': { params: RemoveBackgroundParams, result: RemoveBackgroundResult }
   'remove-background-image': { params: RemoveBackgroundImageParams, result: RemoveBackgroundResult }
   'remove-background-video': { params: RemoveBackgroundVideoParams, result: RemoveBackgroundResult }
+  tools: { params: ToolsParams, result: ToolsResult }
   training: { params: TrainingParams, result: TrainingResult }
   upscale: { params: UpscaleParams, result: UpscaleResult }
   'upscale-image': { params: UpscaleImageParams, result: UpscaleResult }
@@ -4459,6 +4535,7 @@ export const operationTaskTypes: Record<string, string> = {
   'remove-background': 'removeBackground',
   'remove-background-image': 'removeBackground',
   'remove-background-video': 'removeBackground',
+  tools: 'tools',
   training: 'training',
   upscale: 'upscale',
   'upscale-image': 'upscale',
@@ -4561,7 +4638,6 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'fishaudio:s2.1@pro': { taskType: 'audioInference', id: 'fish-audio-s2-1-pro' },
   'google:3@2': { taskType: 'videoInference', id: 'google-veo-3-1' },
   'google:3@3': { taskType: 'videoInference', id: 'google-veo-3-1-fast' },
-  'google:4@1': { taskType: 'imageInference', id: 'google-nano-banana' },
   'google:4@2': { taskType: 'imageInference', id: 'google-nano-banana-pro' },
   'google:4@3': { taskType: 'imageInference', id: 'google-nano-banana-2' },
   'google:gemini@3-flash': { taskType: 'textInference', id: 'google-gemini-3-flash' },
@@ -4787,6 +4863,7 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'runware:controlnet-preprocess@softedge': { taskType: 'controlNetPreprocess', id: 'controlnet-preprocess-softedge' },
   'runware:controlnet-preprocess@tile': { taskType: 'controlNetPreprocess', id: 'controlnet-preprocess-tile' },
   'runware:dia2@2b': { taskType: 'audioInference', id: 'dia2-2b' },
+  'runware:ffmpeg@0': { taskType: 'tools', id: 'ffmpeg' },
   'runware:flux-1-dev@style-lora-training': { taskType: 'training', id: 'runware-flux-1-dev-style-lora-training' },
   'runware:flux-2-klein-4b@style-lora-training': { taskType: 'training', id: 'runware-flux-2-klein-4b-style-lora-training' },
   'runware:flux-2-klein-9b@style-lora-training': { taskType: 'training', id: 'runware-flux-2-klein-9b-style-lora-training' },
@@ -4932,7 +5009,6 @@ export type ModelResultMap = {
   'fishaudio:s2.1@pro': AudioInferenceResult
   'google:3@2': VideoInferenceResult
   'google:3@3': VideoInferenceResult
-  'google:4@1': ImageInferenceResult
   'google:4@2': ImageInferenceResult
   'google:4@3': ImageInferenceResult
   'google:gemini@3-flash': TextInferenceResult
@@ -5158,6 +5234,7 @@ export type ModelResultMap = {
   'runware:controlnet-preprocess@softedge': ControlNetPreprocessResult
   'runware:controlnet-preprocess@tile': ControlNetPreprocessResult
   'runware:dia2@2b': AudioInferenceResult
+  'runware:ffmpeg@0': ToolsResult
   'runware:flux-1-dev@style-lora-training': TrainingResult
   'runware:flux-2-klein-4b@style-lora-training': TrainingResult
   'runware:flux-2-klein-9b@style-lora-training': TrainingResult
