@@ -210,7 +210,7 @@ const videos = await client.run({ model: 'google:3@3', positivePrompt: '...', wi
 await client.disconnect()
 ```
 
-WebSocket connections are automatically recovered on network interruptions. The SDK re-authenticates with the same session UUID, and the server replays any pending results.
+WebSocket connections are automatically recovered on network interruptions. Requests made while the connection is down wait for it to come back. After a reconnect, the SDK sends again any read or async request that had no reply yet. A synchronous request that may already have run fails with a `connection` error instead of being sent twice.
 
 Call `client.disconnect()` to close the connection cleanly. This also stops any in-flight reconnect attempts — subsequent `connect()` calls re-enable reconnection.
 

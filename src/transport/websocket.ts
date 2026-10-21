@@ -7,6 +7,22 @@ import { userAgent } from '../user-agent'
 const RECONNECT_DELAY_CAP_MS = 30000
 const RECONNECT_JITTER_MS = 1000
 
+const READ_ONLY_TASK_TYPES = new Set([
+  'getResponse',
+  'getTaskDetails',
+  'modelSearch',
+  'accountManagement',
+])
+
+const canResend = (task: TaskPayload): boolean =>
+  READ_ONLY_TASK_TYPES.has(task.taskType) || task.deliveryMethod === 'async'
+
+type InFlightRequest = {
+  task: TaskPayload
+  sent: boolean
+  resent: boolean
+}
+
 /**
  * Exponential backoff for reconnect. Cap is applied to the base exponent only,
  * with jitter added on top, so simultaneously-reconnecting clients still spread
@@ -40,6 +56,7 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
 
   // Per-taskUUID routing prevents concurrent tasks from overwriting callbacks
   const taskCallbacks = new Map<string, ResponseCallback<WsResponse>>()
+  const inFlight = new Map<string, InFlightRequest>()
 
   const setupHeartbeat = () => {
     if (pingInterval) {
@@ -111,11 +128,19 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
 
         let delivered = false
         for (const [taskUUID, taskErrors] of errorsByTask) {
+          const request = inFlight.get(taskUUID)
+          inFlight.delete(taskUUID)
           const callback = taskCallbacks.get(taskUUID)
-          if (callback) {
-            delivered = true
-            safeCall(callback, { error: taskErrors } as WsResponse)
-          }
+          if (!callback) { continue }
+
+          delivered = true
+          const acceptedResend = request?.resent === true
+            && request.task.deliveryMethod === 'async'
+            && taskErrors.every((error) => error.code === 'conflictTaskUUID')
+          const frame = acceptedResend
+            ? { data: [{ taskType: request.task.taskType, taskUUID }] }
+            : { error: taskErrors }
+          safeCall(callback, frame as WsResponse)
         }
 
         if (unrouted.length > 0 || !delivered) {
@@ -154,6 +179,7 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
       }
 
       for (const [taskUUID, items] of itemsByTask) {
+        inFlight.delete(taskUUID)
         const callback = taskCallbacks.get(taskUUID)
         if (callback) {
           safeCall(callback, { data: items } as WsResponse)
@@ -208,17 +234,24 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
 
         ws.onopen = async () => {
           if (ws !== thisSocket) { return }
-          connectionState.connected = true
 
           try {
-            await authenticate()
+            await authenticate(thisSocket)
+            if (ws !== thisSocket) {
+              throw createRunwareError('connectionFailed', 'WebSocket was replaced during authentication')
+            }
+
+            connectionState.connected = true
+            connectionState.lastActivity = Date.now()
+            connectionState.connectedAt = Date.now()
             setupHeartbeat()
+            sendInFlight()
             if (!settled) {
               settled = true
               resolve()
             }
           } catch (error) {
-            ws?.close()
+            thisSocket.close()
             if (!settled) {
               settled = true
               reject(error)
@@ -238,8 +271,13 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
           pingInterval = null
           ws = null
 
-          // Callbacks survive reconnect so server can replay pending messages
           config.log.connection('Connection closed')
+
+          if (!settled) {
+            settled = true
+            reject(createRunwareError('connectionFailed', 'WebSocket closed before authentication completed'))
+            return
+          }
 
           // A clean server-side close still warrants a reconnect — no `error`
           // event fires for graceful closes, so without this path the
@@ -282,10 +320,10 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
     })
   }
 
-  const authenticate = async (): Promise<void> => {
+  const authenticate = async (socket: typeof ws): Promise<void> => {
     return new Promise<void>((resolve, reject) => {
       // readyState: 1 = OPEN
-      if (!ws || ws.readyState !== 1) {
+      if (socket.readyState !== 1) {
         return reject(createRunwareError('notOpen', 'WebSocket not open for authentication'))
       }
 
@@ -298,11 +336,10 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
       }])
 
       let authTimeoutId: ReturnType<typeof setTimeout> | null = null
-      const originalMessageHandler = ws.onmessage
+      const originalMessageHandler = socket.onmessage
 
-      // Safe restore: ws may be nulled by a concurrent disconnect/reconnect
       const restoreHandler = () => {
-        if (ws) { ws.onmessage = originalMessageHandler }
+        socket.onmessage = originalMessageHandler
       }
 
       const authHandler = (event: { data: string | Buffer | ArrayBuffer | Buffer[] }) => {
@@ -354,7 +391,7 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
         }
       }
 
-      ws.onmessage = authHandler
+      socket.onmessage = authHandler
 
       authTimeoutId = setTimeout(() => {
         restoreHandler()
@@ -372,7 +409,7 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
             ? { connectionSessionUUID: connectionState.connectionSessionUUID }
             : {}),
         }]))
-        ws.send(authMessage)
+        socket.send(authMessage)
       } catch (sendError) {
         if (authTimeoutId) {
           clearTimeout(authTimeoutId)
@@ -445,6 +482,7 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
           safeCall(callback, errorFrame)
         }
         taskCallbacks.clear()
+        inFlight.clear()
         return
       }
 
@@ -480,24 +518,24 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
       reconnectTimer = null
     }
 
+    connectionState.connected = false
+    if (pingInterval) {
+      clearInterval(pingInterval)
+      pingInterval = null
+    }
+
+    const disconnectError: WsResponse = { error: [{ code: 'disconnected', message: 'Client disconnected' }] }
+    for (const [, callback] of taskCallbacks) {
+      safeCall(callback, disconnectError)
+    }
+    taskCallbacks.clear()
+    inFlight.clear()
+
     if (!ws) {
       return Promise.resolve()
     }
 
     return new Promise((resolve) => {
-      connectionState.connected = false
-
-      if (pingInterval) {
-        clearInterval(pingInterval)
-        pingInterval = null
-      }
-
-      const disconnectError: WsResponse = { error: [{ code: 'disconnected', message: 'Client disconnected' }] }
-      for (const [, callback] of taskCallbacks) {
-        safeCall(callback, disconnectError)
-      }
-      taskCallbacks.clear()
-
       // readyState: 0 = CONNECTING, 1 = OPEN
       if (ws.readyState === 0 || ws.readyState === 1) {
         ws.onclose = () => {
@@ -523,21 +561,56 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
         : task
     ))
 
+  const send = (payload: TaskPayload[]): void => {
+    config.log.send(JSON.stringify(redactApiKey(payload)))
+    ws.send(JSON.stringify(payload))
+  }
+
+  const sendInFlight = (): void => {
+    const pending: TaskPayload[] = []
+    for (const [taskUUID, request] of inFlight) {
+      if (request.sent && !canResend(request.task)) {
+        inFlight.delete(taskUUID)
+        const callback = taskCallbacks.get(taskUUID)
+        if (callback) {
+          safeCall(callback, {
+            error: [{
+              code: 'connectionLost',
+              message: 'Connection lost before the response arrived. The request may have been processed.',
+              taskUUID,
+            }],
+          })
+        }
+        continue
+      }
+
+      if (request.sent) { request.resent = true }
+      request.sent = true
+      pending.push(request.task)
+    }
+
+    if (pending.length === 0) { return }
+    config.log.connection(`Sending ${pending.length} pending request(s) after reconnect`)
+    send(pending)
+  }
+
   const sendRequest = async (data: TaskPayload | TaskPayload[]): Promise<void> => {
-    if (!connectionState.connected) {
+    const willReconnect = isReconnecting && shouldReconnect
+    if (!connectionState.connected && !willReconnect) {
       throw createRunwareError('notConnected', 'Not connected to WebSocket server')
     }
 
-    try {
-      const payload = (Array.isArray(data)) ? data : [data]
-      const serialized = JSON.stringify(payload)
-      config.log.send(JSON.stringify(redactApiKey(payload)))
-      ws.send(serialized)
-
-      return Promise.resolve()
-    } catch (error) {
-      return Promise.reject(error)
+    const payload = (Array.isArray(data)) ? data : [data]
+    for (const task of payload) {
+      inFlight.set(task.taskUUID, { task, sent: connectionState.connected, resent: false })
     }
+
+    if (!connectionState.connected) {
+      config.log.connection(`Reconnecting, holding ${payload.length} request(s) until the connection is back`)
+      return
+    }
+
+    send(payload)
   }
 
   const subscribeToTask = (taskUUID: string, callback: ResponseCallback<WsResponse>): void => {
@@ -546,6 +619,7 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
 
   const unsubscribeFromTask = (taskUUID: string): void => {
     taskCallbacks.delete(taskUUID)
+    inFlight.delete(taskUUID)
   }
 
   const isConnected = (): boolean => {
@@ -556,12 +630,17 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
     return connectionState.connectionSessionUUID
   }
 
+  const getConnectedAt = (): number | undefined => {
+    return connectionState.connectedAt
+  }
+
   return {
     type: 'websocket',
     connect,
     disconnect,
     isConnected,
     getSessionId,
+    getConnectedAt,
     sendRequest,
     subscribeToTask,
     unsubscribeFromTask,

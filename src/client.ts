@@ -432,22 +432,35 @@ const executeWebSocketAsync = async (
 
   try {
     // Phase 1: send and wait for the ACK frame (or validation error). ACKs
-    // come back in milliseconds — if 30s passes, the server lost the request
-    // or the WS context broke (e.g. silent reconnect mid-flight). Don't let
-    // the user wait the full `pollTimeout` (20 min) for that.
+    // come back in milliseconds, so 30s of connected time without one means
+    // the server lost the request. Time spent reconnecting does not count:
+    // the transport sends the request again once the connection is back.
     const ACK_TIMEOUT_MS = 30_000
+    const pollTimeout = options?.timeout ?? config.pollTimeout
+    const submittedAt = Date.now()
     const ackPromises = tasks.map(async (task) => new Promise<AckResult>((resolve, reject) => {
-      const timer = setTimeout(() => {
-        ackTimers.delete(task.taskUUID)
-        if (ackResolvers.has(task.taskUUID)) {
+      const armAckTimer = (delay: number) => {
+        const timer = setTimeout(() => {
+          ackTimers.delete(task.taskUUID)
+          if (!ackResolvers.has(task.taskUUID)) { return }
+
+          const connectedFor = transport.isConnected()
+            ? Date.now() - (transport.getConnectedAt() ?? 0)
+            : 0
+          if (connectedFor < ACK_TIMEOUT_MS && Date.now() - submittedAt < pollTimeout) {
+            armAckTimer(ACK_TIMEOUT_MS - connectedFor)
+            return
+          }
+
           ackResolvers.delete(task.taskUUID)
           reject(createRunwareError(
             'timeout',
             `ACK not received for task ${task.taskUUID} after ${ACK_TIMEOUT_MS}ms`,
           ))
-        }
-      }, ACK_TIMEOUT_MS)
-      ackTimers.set(task.taskUUID, timer)
+        }, delay)
+        ackTimers.set(task.taskUUID, timer)
+      }
+      armAckTimer(ACK_TIMEOUT_MS)
 
       ackResolvers.set(task.taskUUID, (result) => {
         const timer = ackTimers.get(task.taskUUID)
@@ -478,7 +491,6 @@ const executeWebSocketAsync = async (
     // Phase 2: poll getResponse until each task completes.
     // Cadence: first poll at 1000ms (no model finishes faster), second at
     // +500ms (likely done by then), then ×1.5 backoff capped at 10s.
-    const pollTimeout = options?.timeout ?? config.pollTimeout
     const startTime = Date.now()
     let delay = 1000
     let pollNumber = 0

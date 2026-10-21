@@ -37,6 +37,7 @@ export type WebSocketConstructor = {
 export type ConnectionState = {
   connected: boolean
   connectionSessionUUID?: string
+  connectedAt?: number
   lastActivity: number
 }
 
@@ -57,6 +58,7 @@ export type WebSocketTransport = BaseTransport & {
   disconnect: () => Promise<void>
   isConnected: () => boolean
   getSessionId: () => string | undefined
+  getConnectedAt: () => number | undefined
   sendRequest: (data: TaskPayload | TaskPayload[], options?: RequestOptions) => Promise<void>
   subscribeToTask: (taskUUID: string, callback: ResponseCallback<WsResponse>) => void
   unsubscribeFromTask: (taskUUID: string) => void

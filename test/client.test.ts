@@ -25,6 +25,7 @@ const createMockTransport = () => {
     disconnect: vi.fn().mockResolvedValue(undefined),
     isConnected: vi.fn().mockReturnValue(true),
     getSessionId: vi.fn().mockReturnValue('test-session'),
+    getConnectedAt: vi.fn().mockReturnValue(0),
     sendRequest: vi.fn(async (data: TaskPayload | TaskPayload[]) => {
       const payload = Array.isArray(data) ? data : [data]
       sentPayloads.push(payload)
