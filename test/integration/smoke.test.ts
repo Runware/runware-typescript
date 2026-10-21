@@ -29,6 +29,8 @@ const describeIf = apiKey ? describe : describe.skip
 const serverlessBaseUrl = process.env.RUNWARE_SERVERLESS_BASE_URL
 const serverlessApp = process.env.RUNWARE_SERVERLESS_TEST_APP
 const serverlessEndpoint = process.env.RUNWARE_SERVERLESS_TEST_ENDPOINT
+// Optional: the environment of the app copy to call. Unset means production.
+const serverlessEnvironment = process.env.RUNWARE_SERVERLESS_TEST_ENVIRONMENT || undefined
 const serverlessPayload = JSON.parse(process.env.RUNWARE_SERVERLESS_TEST_PAYLOAD ?? '{}') as Record<string, unknown>
 const describeServerless = (apiKey && serverlessBaseUrl && serverlessApp && serverlessEndpoint)
   ? describe
@@ -38,6 +40,7 @@ const serverlessClient = async () => createClient({
   apiKey: apiKey!,
   transport: 'rest',
   serverlessBaseUrl: serverlessBaseUrl!,
+  ...(serverlessEnvironment ? { serverlessEnvironment } : {}),
 })
 
 const IMAGE_MODEL = 'runware:400@2' // Flux 2 Klein 9b — cheap and fast

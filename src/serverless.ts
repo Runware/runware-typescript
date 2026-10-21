@@ -108,13 +108,13 @@ const validateEndpointPath = (endpointPath: unknown): string => {
   return endpointPath
 }
 
-const validateEnvironment = (environment: unknown): string | undefined => {
+const validateEnvironment = (environment: unknown, parameter = 'environment'): string | undefined => {
   if (environment === undefined || environment === null) { return undefined }
   if (typeof environment !== 'string' || !ENVIRONMENT_PATTERN.test(environment)) {
     throw createRunwareError(
       'invalidParameter',
-      `environment "${String(environment)}" is invalid: use 1 to 63 lowercase letters, digits, hyphens, underscores or periods, starting with a letter or digit`,
-      { parameter: 'environment' },
+      `${parameter} "${String(environment)}" is invalid: use 1 to 63 lowercase letters, digits, hyphens, underscores or periods, starting with a letter or digit`,
+      { parameter },
     )
   }
   return environment
@@ -224,6 +224,7 @@ type HttpResult = { status: number, body: unknown }
 
 const createServerlessApi = (config: SDKConfig) => {
   const origin = config.serverlessBaseUrl.replace(/\/+$/, '')
+  validateEnvironment(config.serverlessEnvironment, 'serverlessEnvironment')
 
   /** The per-call environment, else the client's, else none. */
   const resolveEnvironment = (environment: string | undefined): string | undefined =>
@@ -231,7 +232,7 @@ const createServerlessApi = (config: SDKConfig) => {
 
   const appUrl = (appId: string, path: string, environment: string | undefined): string => {
     const url = `${origin}/v1/apps/${appId}/${path}`
-    return environment === undefined ? url : `${url}?environment=${environment}`
+    return environment === undefined ? url : `${url}?environment=${encodeURIComponent(environment)}`
   }
 
   const fetchOnce = async (

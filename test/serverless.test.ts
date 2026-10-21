@@ -546,7 +546,10 @@ describe('environment', () => {
     '',
     'Staging',
     '-dev',
+    '.dev',
+    '_dev',
     'a/b',
+    'staging\n',
     'a'.repeat(64),
   ]
   for (const environment of impossible) {
@@ -562,11 +565,51 @@ describe('environment', () => {
     })
   }
 
-  it('rejects an invalid client environment before asking the API', async () => {
-    const { impl, calls } = mockFetch([])
-    const api = createServerlessApi(config(impl, { serverlessEnvironment: 'Staging' }))
+  const allowed = [
+    'pr-12',
+    'feature_x',
+    'v1.2',
+    '1st',
+    'a'.repeat(63),
+  ]
+  for (const environment of allowed) {
+    it(`accepts the environment ${JSON.stringify(environment)}`, async () => {
+      const { impl, calls } = mockFetch([ok()])
+      const api = createServerlessApi(config(impl))
 
-    await expect(api.getTask('my-app', TASK_ID)).rejects.toThrow('environment "Staging" is invalid')
-    expect(calls).toHaveLength(0)
+      await api.invoke({ appId: 'my-app', endpointPath: 'generate', environment })
+
+      expect(calls[0]!.url).toBe(`${ASYNC_URL}?environment=${environment}`)
+    })
+  }
+
+  it('rejects an invalid client environment when the client is built', () => {
+    const { impl } = mockFetch([])
+
+    let error: unknown
+    try { createServerlessApi(config(impl, { serverlessEnvironment: 'Staging' })) } catch (caught) { error = caught }
+
+    expect(isRunwareError(error) && error.parameter).toBe('serverlessEnvironment')
+    expect(String(error)).toContain('serverlessEnvironment "Staging" is invalid')
+  })
+
+  it('treats a null client environment from untyped JS as unset', async () => {
+    const { impl, calls } = mockFetch([ok()])
+    const unset = null as unknown as string
+    const api = createServerlessApi(config(impl, { serverlessEnvironment: unset }))
+
+    await api.invoke({ appId: 'my-app', endpointPath: 'generate' })
+
+    expect(calls[0]!.url).toBe(ASYNC_URL)
+  })
+
+  it('names no environment in the hint when none is set', async () => {
+    const { impl } = mockFetch(Array.from({ length: 40 }, () => ({ status: 200, body: pending() })))
+    const api = createServerlessApi(config(impl, { pollTimeout: 0 }))
+
+    await expect(api.invoke(
+      { appId: 'my-app', endpointPath: 'generate' },
+      { pollInterval: 0 },
+    )).rejects.toThrow(`getTask("my-app", "${TASK_ID}") to pick it up`)
   })
 })

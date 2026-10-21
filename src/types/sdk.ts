@@ -26,8 +26,8 @@ export type SDKConfig = {
   serverlessBaseUrl: string
   /**
    * Serverless environment `invoke` and `getTask` address, such as `staging`.
-   * An app id names one copy per environment. Unset sends no environment,
-   * which the platform reads as `production`. Optional.
+   * An app id names one copy per environment. Default: unset, which sends no
+   * environment and the platform reads as `production`.
    */
   serverlessEnvironment?: string
   /** Transport to use. Default: `websocket`. */
