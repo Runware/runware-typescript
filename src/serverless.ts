@@ -37,6 +37,12 @@ const SYNC_MIN_TIMEOUT_MS = 300000
 const RETRYABLE_STATUS = (status: number): boolean =>
   status === 408 || status === 429 || (status >= 500 && status < 600)
 
+/**
+ * The 429 an environment paused at its monthly budget answers invoke with. It
+ * holds until the budget is raised or the UTC month turns, so it is not retried.
+ */
+const ENVIRONMENT_PAUSED_TYPE = 'https://docs.runware.ai/serverless/errors#environment-paused'
+
 const TERMINAL: ReadonlySet<TaskStatus> = new Set<TaskStatus>(['completed', 'failed'])
 
 export const isTerminal = (status: string): boolean => TERMINAL.has(status as TaskStatus)
@@ -174,7 +180,8 @@ const problemToError = (
     message = `${message}\n${lines.join('\n')}`
   }
 
-  const error = createRunwareError(rawCodeForStatus(status), message, { statusCode: status })
+  const rawCode = problem.type === ENVIRONMENT_PAUSED_TYPE ? 'environmentPaused' : rawCodeForStatus(status)
+  const error = createRunwareError(rawCode, message, { statusCode: status })
   if (typeof problem.type === 'string' && problem.type !== 'about:blank') {
     error.problemType = problem.type
   }
@@ -313,7 +320,7 @@ const createServerlessApi = (config: SDKConfig) => {
         lastError = error
 
         const retryable = (() => {
-          if (isRunwareError(error) && error.code === 'aborted') { return false }
+          if (isRunwareError(error) && (error.code === 'aborted' || error.code === 'quota')) { return false }
           if (isRunwareError(error) && error.code === 'timeout') { return true }
           if (isRunwareError(error) && error.statusCode !== undefined) {
             return RETRYABLE_STATUS(error.statusCode)

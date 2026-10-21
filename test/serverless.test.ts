@@ -613,3 +613,44 @@ describe('environment', () => {
     )).rejects.toThrow(`getTask("my-app", "${TASK_ID}") to pick it up`)
   })
 })
+
+describe('budget', () => {
+  const paused = {
+    type: 'https://docs.runware.ai/serverless/errors#environment-paused',
+    title: 'Too Many Requests',
+    status: 429,
+    detail: 'environment "staging" is paused at its monthly budget',
+  }
+
+  it('does not retry an environment paused at its budget', async () => {
+    const replies = Array.from({ length: 4 }, () => ({
+      status: 429,
+      headers: { 'Retry-After': '0' },
+      body: paused,
+    }))
+    const { impl, calls } = mockFetch(replies)
+    const api = createServerlessApi(config(impl, { maxRetries: 3 }))
+
+    const error = await api.invoke({ appId: 'my-app', endpointPath: 'generate', environment: 'staging' })
+      .catch((caught: unknown) => caught)
+
+    expect(calls).toHaveLength(1)
+    if (!isRunwareError(error)) { throw error }
+    expect(error.code).toBe('quota')
+    expect(error.retryable).toBe(false)
+    expect(error.statusCode).toBe(429)
+    expect(error.message).toContain('paused at its monthly budget')
+  })
+
+  it('still retries any other 429', async () => {
+    const { impl, calls } = mockFetch([
+      { status: 429, headers: { 'Retry-After': '0' }, body: { status: 429 } }, { status: 200, body: task() },
+    ])
+    const api = createServerlessApi(config(impl, { maxRetries: 2 }))
+
+    const result = await api.invoke({ appId: 'my-app', endpointPath: 'generate' })
+
+    expect(result.status).toBe('completed')
+    expect(calls).toHaveLength(2)
+  })
+})

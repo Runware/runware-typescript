@@ -634,7 +634,7 @@ const task = await client.getTask('image-tools', accepted.id)
 
 A task that runs and fails comes back with `status: 'failed'` and its `error` set. Only a failure to start throws.
 
-An app id names one copy of the app per environment. Calls go to `production` unless you name another environment, for the whole client or for one call. Waiting polls the task in the environment it was invoked in; when you call `getTask` yourself, pass that same environment.
+An app id names one copy of the app per environment. Calls go to `production` unless you name another environment, for the whole client or for one call. Waiting polls the task in the environment it was invoked in; when you call `getTask` yourself, pass that same environment. An environment paused at its monthly budget refuses an invocation with a `quota` error, which is not retried: it holds until the budget is raised or the UTC month turns.
 
 ```typescript
 const client = await createClient({ apiKey, serverlessEnvironment: 'staging' })
