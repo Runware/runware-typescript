@@ -24,6 +24,12 @@ export type SDKConfig = {
    * `https://api.serverless.runware.ai`. Used by `invoke` and `getTask`.
    */
   serverlessBaseUrl: string
+  /**
+   * Serverless environment `invoke` and `getTask` address, such as `staging`.
+   * An app id names one copy per environment. Unset sends no environment,
+   * which the platform reads as `production`. Optional.
+   */
+  serverlessEnvironment?: string
   /** Transport to use. Default: `websocket`. */
   transport: TransportType
   /**

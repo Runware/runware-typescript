@@ -14,6 +14,7 @@ import { generateUUID } from './utils/uuid'
 
 const APP_ID_PATTERN = /^[a-z][a-z0-9-]{4,28}[a-z0-9]$/
 const ENDPOINT_PATH_PATTERN = /^[a-z]([a-z0-9-]{0,62}[a-z0-9])?$/
+const ENVIRONMENT_PATTERN = /^[a-z0-9][a-z0-9._-]{0,62}$/
 const TASK_ID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/
 
 const DEFAULT_POLL_INTERVAL_MS = 2000
@@ -105,6 +106,18 @@ const validateEndpointPath = (endpointPath: unknown): string => {
     )
   }
   return endpointPath
+}
+
+const validateEnvironment = (environment: unknown): string | undefined => {
+  if (environment === undefined || environment === null) { return undefined }
+  if (typeof environment !== 'string' || !ENVIRONMENT_PATTERN.test(environment)) {
+    throw createRunwareError(
+      'invalidParameter',
+      `environment "${String(environment)}" is invalid: use 1 to 63 lowercase letters, digits, hyphens, underscores or periods, starting with a letter or digit`,
+      { parameter: 'environment' },
+    )
+  }
+  return environment
 }
 
 const validateTaskId = (taskId: unknown): string => {
@@ -211,6 +224,15 @@ type HttpResult = { status: number, body: unknown }
 
 const createServerlessApi = (config: SDKConfig) => {
   const origin = config.serverlessBaseUrl.replace(/\/+$/, '')
+
+  /** The per-call environment, else the client's, else none. */
+  const resolveEnvironment = (environment: string | undefined): string | undefined =>
+    validateEnvironment(environment ?? config.serverlessEnvironment)
+
+  const appUrl = (appId: string, path: string, environment: string | undefined): string => {
+    const url = `${origin}/v1/apps/${appId}/${path}`
+    return environment === undefined ? url : `${url}?environment=${environment}`
+  }
 
   const fetchOnce = async (
     url: string,
@@ -320,8 +342,9 @@ const createServerlessApi = (config: SDKConfig) => {
   ): Promise<ServerlessTask> => {
     const app = validateAppId(appId)
     const id = validateTaskId(taskId)
+    const environment = resolveEnvironment(options?.environment)
     const result = await request(
-      `${origin}/v1/apps/${app}/tasks/${id}`,
+      appUrl(app, `tasks/${id}`, environment),
       { method: 'GET' },
       options?.timeout ?? config.timeout,
       options?.signal,
@@ -332,9 +355,13 @@ const createServerlessApi = (config: SDKConfig) => {
   /**
    * Polls until the task reaches a terminal state. Never resubmits: the task
    * is already running, and a second invocation would be a second charge.
+   *
+   * Polls in the environment the task was invoked in. A task carries no
+   * environment of its own, and a poll without one would read production.
    */
   const waitForTask = async (
     task: ServerlessTask,
+    environment: string | undefined,
     options: InvokeOptions | undefined,
     startedAt: number,
   ): Promise<ServerlessTask> => {
@@ -347,9 +374,10 @@ const createServerlessApi = (config: SDKConfig) => {
 
     while (!isTerminal(current.status)) {
       if (Date.now() - startedAt > budget) {
+        const environmentArg = environment === undefined ? '' : `, { environment: "${environment}" }`
         throw createRunwareError(
           'timeout',
-          `Task ${current.id} is still running after ${budget}ms. It was not cancelled: poll getTask("${current.appId}", "${current.id}") to pick it up.`,
+          `Task ${current.id} is still running after ${budget}ms. It was not cancelled: poll getTask("${current.appId}", "${current.id}"${environmentArg}) to pick it up.`,
           { taskUUID: current.id },
         )
       }
@@ -358,6 +386,7 @@ const createServerlessApi = (config: SDKConfig) => {
 
       try {
         current = await getTask(current.appId, current.id, {
+          ...(environment !== undefined ? { environment } : {}),
           ...(options?.timeout !== undefined ? { timeout: options.timeout } : {}),
           ...(options?.signal ? { signal: options.signal } : {}),
         })
@@ -382,6 +411,7 @@ const createServerlessApi = (config: SDKConfig) => {
     const appId = validateAppId(params.appId)
     const endpointPath = validateEndpointPath(params.endpointPath)
     const taskId = resolveTaskId(params.taskId)
+    const environment = resolveEnvironment(params.environment)
     const wait = options?.wait !== false
     const deliveryMethod = wait ? (options?.deliveryMethod ?? 'async') : 'async'
     const route = deliveryMethod === 'sync' ? 'invoke-sync' : 'invoke-async'
@@ -396,7 +426,7 @@ const createServerlessApi = (config: SDKConfig) => {
 
     const startedAt = Date.now()
     const result = await request(
-      `${origin}/v1/apps/${appId}/${route}/${endpointPath}`,
+      appUrl(appId, `${route}/${endpointPath}`, environment),
       { method: 'POST', body },
       timeoutMs,
       options?.signal,
@@ -408,7 +438,7 @@ const createServerlessApi = (config: SDKConfig) => {
       return task
     }
 
-    return waitForTask(task, options, startedAt)
+    return waitForTask(task, environment, options, startedAt)
   }
 
   return { invoke, getTask }
