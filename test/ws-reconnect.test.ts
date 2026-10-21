@@ -8,6 +8,7 @@ import {
   expect,
   it,
   jest,
+  setDefaultTimeout,
   spyOn,
 } from 'bun:test'
 
@@ -18,7 +19,7 @@ import { createWebSocketTransport } from '../src/transport/websocket'
 
 const sleep = async (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
-const waitFor = async (condition: () => boolean, timeout = 3000) => {
+const waitFor = async (condition: () => boolean, timeout = 10_000) => {
   const start = Date.now()
   while (!condition()) {
     if (Date.now() - start > timeout) { throw new Error('waitFor timed out') }
@@ -51,7 +52,7 @@ type TaskHandler = (task: TaskPayload, deliver: Deliver, socket: MockSocket) => 
 const createServer = () => {
   const sockets: MockSocket[] = []
   const log: string[] = []
-  const received: Array<{ socket: number, task: TaskPayload }> = []
+  const received: Array<{ socket: number, task: TaskPayload, at: number }> = []
   const state = { down: false, silentSocket: 0, authDelay: 1 }
   let handleTask: TaskHandler = () => {}
 
@@ -88,7 +89,7 @@ const createServer = () => {
             continue
           }
           log.push(`s${id}:${task.taskType}`)
-          received.push({ socket: id, task })
+          received.push({ socket: id, task, at: Date.now() })
           handleTask(task, deliver, socket)
         }
       },
@@ -173,6 +174,8 @@ beforeEach(() => {
   spyOn(Math, 'random').mockReturnValue(0)
 })
 
+setDefaultTimeout(20_000)
+
 afterEach(() => {
   jest.restoreAllMocks()
   jest.useRealTimers()
@@ -235,6 +238,30 @@ describe('WebSocket reconnect', () => {
 
     await waitFor(() => frames.length === 1)
     expect(server.sentOn('imageInference')).toEqual([1, 2])
+    expect(frames[0]).toEqual({ data: [{ taskType: 'imageInference', taskUUID: 'task-1' }] })
+    await transport.disconnect()
+  })
+
+  it('waits a second after the original before resending an async submission', async () => {
+    const server = createServer()
+    server.onTask((task, deliver, socket) => {
+      if (socket.id === 1) { return }
+      deliver(conflict(task.taskUUID))
+    })
+    const transport = createWebSocketTransport(transportConfig(server))
+    await transport.connect()
+
+    const frames: WsResponse[] = []
+    transport.subscribeToTask('task-1', (frame) => { frames.push(frame) })
+    await transport.sendRequest({ taskType: 'imageInference', taskUUID: 'task-1', deliveryMethod: 'async' })
+    server.drop()
+
+    await waitFor(() => transport.isConnected())
+    expect(server.sentOn('imageInference')).toEqual([1])
+
+    await waitFor(() => frames.length === 1)
+    const [original, resend] = server.received
+    expect(resend!.at - original!.at).toBeGreaterThanOrEqual(1000)
     expect(frames[0]).toEqual({ data: [{ taskType: 'imageInference', taskUUID: 'task-1' }] })
     await transport.disconnect()
   })

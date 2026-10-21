@@ -6,6 +6,7 @@ import { userAgent } from '../user-agent'
 
 const RECONNECT_DELAY_CAP_MS = 30000
 const RECONNECT_JITTER_MS = 1000
+const ASYNC_RESEND_MIN_AGE_MS = 1000
 
 const READ_ONLY_TASK_TYPES = new Set([
   'getResponse',
@@ -20,7 +21,9 @@ const canResend = (task: TaskPayload): boolean =>
 type InFlightRequest = {
   task: TaskPayload
   sent: boolean
+  sentAt: number
   resent: boolean
+  resendScheduled: boolean
 }
 
 /**
@@ -566,6 +569,18 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
     ws.send(JSON.stringify(payload))
   }
 
+  const resendLater = (taskUUID: string): void => {
+    const request = inFlight.get(taskUUID)
+    if (!request) { return }
+
+    request.resendScheduled = false
+    if (!connectionState.connected) { return }
+
+    request.resent = true
+    request.sentAt = Date.now()
+    send([request.task])
+  }
+
   const sendInFlight = (): void => {
     const pending: TaskPayload[] = []
     for (const [taskUUID, request] of inFlight) {
@@ -584,8 +599,18 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
         continue
       }
 
+      const age = Date.now() - request.sentAt
+      if (request.sent && request.task.deliveryMethod === 'async' && age < ASYNC_RESEND_MIN_AGE_MS) {
+        if (!request.resendScheduled) {
+          request.resendScheduled = true
+          setTimeout(() => { resendLater(taskUUID) }, ASYNC_RESEND_MIN_AGE_MS - age)
+        }
+        continue
+      }
+
       if (request.sent) { request.resent = true }
       request.sent = true
+      request.sentAt = Date.now()
       pending.push(request.task)
     }
 
@@ -602,7 +627,13 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
 
     const payload = (Array.isArray(data)) ? data : [data]
     for (const task of payload) {
-      inFlight.set(task.taskUUID, { task, sent: connectionState.connected, resent: false })
+      inFlight.set(task.taskUUID, {
+        task,
+        sent: connectionState.connected,
+        sentAt: Date.now(),
+        resent: false,
+        resendScheduled: false,
+      })
     }
 
     if (!connectionState.connected) {
