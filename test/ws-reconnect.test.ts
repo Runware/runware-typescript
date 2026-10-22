@@ -153,14 +153,15 @@ const transportConfig = (server: ReturnType<typeof createServer>): SDKConfig => 
 
 const conflict = (taskUUID: string): Frame => ({ errors: [{ code: 'conflictTaskUUID', message: 'Conflicting taskUUID', taskUUID }] })
 
-const success = (taskUUID: string): Frame => ({
-  data: [{
-    taskUUID,
-    taskType: 'imageInference',
-    status: 'success',
-    imageURL: 'https://example.com/img.jpg',
-  }],
+const successItem = (taskUUID: string, imageUUID = 'i1'): Frame => ({
+  taskUUID,
+  taskType: 'imageInference',
+  status: 'success',
+  imageUUID,
+  imageURL: 'https://example.com/img.jpg',
 })
+
+const success = (taskUUID: string): Frame => ({ data: [successItem(taskUUID)] })
 
 const imageParams = {
   taskType: 'imageInference',
@@ -415,6 +416,78 @@ describe('run() over a dropping connection', () => {
     const results = await client.run(imageParams as never)
     expect((results[0] as Record<string, unknown>).imageURL).toBe('https://example.com/img.jpg')
     expect(server.sentOn('getResponse').every((socket) => socket > 1)).toBe(true)
+    await client.disconnect()
+  })
+
+  it('settles every request that was in flight when the connection dropped', async () => {
+    const server = createServer()
+    const expected = new Map<string, number>()
+    let submissions = 0
+    server.onTask((task, deliver, socket) => {
+      if (task.taskType === 'imageInference' && task.deliveryMethod === 'async') {
+        if (socket.id > 1) {
+          deliver(conflict(task.taskUUID))
+          return
+        }
+        expected.set(task.taskUUID, Number(task.numberResults) || 1)
+        submissions += 1
+        if (submissions === 3) {
+          server.drop()
+          return
+        }
+        deliver({ data: [{ taskType: 'imageInference', taskUUID: task.taskUUID }] })
+        return
+      }
+      if (socket.id === 1) { return }
+      if (task.taskType === 'modelSearch') {
+        const result = {
+          taskType: 'modelSearch',
+          taskUUID: task.taskUUID,
+          results: [],
+          totalResults: 0,
+        }
+        deliver({ data: [result] })
+        return
+      }
+      const count = expected.get(task.taskUUID) ?? 1
+      const items = Array.from({ length: count }, (_, index) => successItem(task.taskUUID, `${task.taskUUID}-${index}`))
+      deliver({ data: items })
+    })
+    const client = await createClient({
+      apiKey: 'test',
+      dependencies: { WebSocket: server.WebSocket },
+      retryDelay: 10,
+      timeout: 10_000,
+    })
+    await client.connect()
+
+    type Outcome = { ok: true, value: unknown[] } | { ok: false, error: { code: string } }
+    const settle = async (promise: Promise<unknown>): Promise<Outcome> => promise.then(
+      (value) => ({ ok: true, value: value as unknown[] }),
+      (error: unknown) => ({ ok: false, error: error as { code: string } }),
+    )
+    const sync = settle(client.run({ ...imageParams, deliveryMethod: 'sync' } as never))
+    const search = settle(client.modelSearch({ search: 'flux' } as never))
+    const single = settle(client.run(imageParams as never))
+    const double = settle(client.run({ ...imageParams, numberResults: 2 } as never))
+    await waitFor(() => server.received.length === 4)
+    const last = settle(client.run(imageParams as never))
+
+    const syncOutcome = await sync
+    const searchOutcome = await search
+    const singleOutcome = await single
+    const doubleOutcome = await double
+    const lastOutcome = await last
+    expect(singleOutcome.ok && singleOutcome.value).toHaveLength(1)
+    expect(doubleOutcome.ok && doubleOutcome.value).toHaveLength(2)
+    expect(lastOutcome.ok && lastOutcome.value).toHaveLength(1)
+    expect(searchOutcome.ok).toBe(true)
+    expect(!syncOutcome.ok && syncOutcome.error.code).toBe('connection')
+    expect(server.sentOn('modelSearch')).toEqual([1, 2])
+    const syncSends = server.received.filter((entry) => (
+      entry.task.taskType === 'imageInference' && entry.task.deliveryMethod === 'sync'
+    ))
+    expect(syncSends.map((entry) => entry.socket)).toEqual([1])
     await client.disconnect()
   })
 
