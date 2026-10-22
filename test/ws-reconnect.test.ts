@@ -85,7 +85,8 @@ const createServer = () => {
               if (state.rejectKey) {
                 log.push(`s${id}:auth-rejected`)
                 deliver({ errors: [{ code: 'invalidApiKey', message: 'Invalid API key', taskUUID: 'N/A' }] })
-                socket.close()
+                socket.readyState = 3
+                socket.onclose?.({})
                 return
               }
               log.push(`s${id}:auth-ok`)

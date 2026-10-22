@@ -1,7 +1,7 @@
 import type { SDKConfig, ResponseCallback, TaskPayload } from '../types/sdk'
 import type { ConnectionState, WebSocketTransport, WsResponse } from '../types/transport'
 
-import { createRunwareError } from '../errors'
+import { createRunwareError, type RunwareError } from '../errors'
 import { userAgent } from '../user-agent'
 
 const RECONNECT_DELAY_CAP_MS = 30000
@@ -56,7 +56,7 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
   let reconnectAttempt = 0
   let shouldReconnect = true
   let reconnectTimer: ReturnType<typeof setTimeout> | null = null
-  let keyRejected = false
+  let keyRejection: RunwareError | null = null
 
   // Per-taskUUID routing prevents concurrent tasks from overwriting callbacks
   const taskCallbacks = new Map<string, ResponseCallback<WsResponse>>()
@@ -279,7 +279,10 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
 
           if (!settled) {
             settled = true
-            reject(createRunwareError('connectionFailed', 'WebSocket closed before authentication completed'))
+            reject(keyRejection ?? createRunwareError(
+              'connectionFailed',
+              'WebSocket closed before authentication completed',
+            ))
             return
           }
 
@@ -288,7 +291,7 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
           // connection would silently die. `shouldReconnect` is false during
           // user-initiated disconnect; `isReconnecting` is true when a
           // reconnect is already in flight (e.g., from heartbeat or onerror).
-          if (shouldReconnect && !isReconnecting && !keyRejected) {
+          if (shouldReconnect && !isReconnecting && !keyRejection) {
             reconnect()
           }
         }
@@ -360,7 +363,7 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
 
             if (response.data[0].connectionSessionUUID) {
               connectionState.connectionSessionUUID = response.data[0].connectionSessionUUID
-              keyRejected = false
+              keyRejection = null
               resolve()
             } else {
               reject(createRunwareError(
@@ -381,11 +384,11 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
             restoreHandler()
 
             const firstError = Array.isArray(rawErrors) ? rawErrors[0] : rawErrors
-            keyRejected = true
-            reject(createRunwareError(
+            keyRejection = createRunwareError(
               'authFailed',
               firstError?.message ?? 'Authentication failed via API response',
-            ))
+            )
+            reject(keyRejection)
             return
           }
 
@@ -476,11 +479,10 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
         return
       }
 
-      if (keyRejected) {
+      if (keyRejection) {
         config.log.error('The server rejected the API key on reconnect, giving up', error)
         isReconnecting = false
-        const message = (error instanceof Error) ? error.message : 'Authentication failed via API response'
-        const errorFrame: WsResponse = { error: [{ code: 'authFailed', message }] }
+        const errorFrame: WsResponse = { error: [{ code: 'authFailed', message: keyRejection.message }] }
         for (const [, callback] of taskCallbacks) {
           safeCall(callback, errorFrame)
         }
@@ -528,7 +530,7 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
   // directly to preserve the in-flight counter.
   const connect = async (): Promise<void> => {
     reconnectAttempt = 0
-    keyRejected = false
+    keyRejection = null
     return establishConnection()
   }
 
