@@ -396,6 +396,19 @@ const executeWebSocketAsync = async (
   const ackTimers = new Map<string, ReturnType<typeof setTimeout>>()
   const pendingPolls = new Map<string, (result: PollResult) => void>()
 
+  let removeAbortListener = () => {}
+  const aborted = new Promise<never>((_, reject) => {
+    if (!signal) { return }
+    const onAbort = () => { reject(createRunwareError('aborted', 'Request aborted')) }
+    if (signal.aborted) {
+      onAbort()
+      return
+    }
+    signal.addEventListener('abort', onAbort, { once: true })
+    removeAbortListener = () => { signal.removeEventListener('abort', onAbort) }
+  })
+  aborted.catch(() => {})
+
   // Stateful subscription: first frame per task is the ACK (or validation
   // error). Subsequent frames are getResponse poll responses.
   for (const task of tasks) {
@@ -423,6 +436,7 @@ const executeWebSocketAsync = async (
   }
 
   const cleanup = () => {
+    removeAbortListener()
     for (const task of tasks) { transport.unsubscribeFromTask(task.taskUUID) }
     for (const timer of ackTimers.values()) { clearTimeout(timer) }
     ackTimers.clear()
@@ -472,7 +486,7 @@ const executeWebSocketAsync = async (
       })
     }))
     await transport.sendRequest(tasks)
-    const acks = await Promise.all(ackPromises)
+    const acks = await Promise.race([Promise.all(ackPromises), aborted])
 
     for (let i = 0; i < tasks.length; i++) {
       const ack = acks[i]
@@ -540,6 +554,7 @@ const executeWebSocketAsync = async (
         try {
           const result = await Promise.race([
             promise,
+            aborted,
             new Promise<PollResult>((_, reject) => {
               timerId = setTimeout(
                 () => reject(createRunwareError(

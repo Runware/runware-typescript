@@ -56,6 +56,7 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
   let reconnectAttempt = 0
   let shouldReconnect = true
   let reconnectTimer: ReturnType<typeof setTimeout> | null = null
+  let keyRejected = false
 
   // Per-taskUUID routing prevents concurrent tasks from overwriting callbacks
   const taskCallbacks = new Map<string, ResponseCallback<WsResponse>>()
@@ -287,7 +288,7 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
           // connection would silently die. `shouldReconnect` is false during
           // user-initiated disconnect; `isReconnecting` is true when a
           // reconnect is already in flight (e.g., from heartbeat or onerror).
-          if (shouldReconnect && !isReconnecting) {
+          if (shouldReconnect && !isReconnecting && !keyRejected) {
             reconnect()
           }
         }
@@ -359,6 +360,7 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
 
             if (response.data[0].connectionSessionUUID) {
               connectionState.connectionSessionUUID = response.data[0].connectionSessionUUID
+              keyRejected = false
               resolve()
             } else {
               reject(createRunwareError(
@@ -370,16 +372,19 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
             return
           }
 
-          if (response.error) {
+          const rawErrors = response.errors ?? response.error
+          if (rawErrors) {
             if (authTimeoutId) {
               clearTimeout(authTimeoutId)
             }
 
             restoreHandler()
 
+            const firstError = Array.isArray(rawErrors) ? rawErrors[0] : rawErrors
+            keyRejected = true
             reject(createRunwareError(
               'authFailed',
-              response.error.message ?? 'Authentication failed via API response',
+              firstError?.message ?? 'Authentication failed via API response',
             ))
             return
           }
@@ -471,6 +476,19 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
         return
       }
 
+      if (keyRejected) {
+        config.log.error('The server rejected the API key on reconnect, giving up', error)
+        isReconnecting = false
+        const message = (error instanceof Error) ? error.message : 'Authentication failed via API response'
+        const errorFrame: WsResponse = { error: [{ code: 'authFailed', message }] }
+        for (const [, callback] of taskCallbacks) {
+          safeCall(callback, errorFrame)
+        }
+        taskCallbacks.clear()
+        inFlight.clear()
+        return
+      }
+
       if (reconnectAttempt >= config.maxReconnectAttempts) {
         config.log.error(`Reconnection failed after ${reconnectAttempt} attempts, giving up`)
         isReconnecting = false
@@ -510,6 +528,7 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
   // directly to preserve the in-flight counter.
   const connect = async (): Promise<void> => {
     reconnectAttempt = 0
+    keyRejected = false
     return establishConnection()
   }
 

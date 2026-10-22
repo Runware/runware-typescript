@@ -14,7 +14,7 @@ import {
 
 import { createClient } from '../src/index'
 import { createLogger } from '../src/logger'
-import { parseApiError } from '../src/errors'
+import { parseApiError, type RunwareError } from '../src/errors'
 import { createWebSocketTransport } from '../src/transport/websocket'
 
 const sleep = async (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
@@ -53,7 +53,12 @@ const createServer = () => {
   const sockets: MockSocket[] = []
   const log: string[] = []
   const received: Array<{ socket: number, task: TaskPayload, at: number }> = []
-  const state = { down: false, silentSocket: 0, authDelay: 1 }
+  const state = {
+    down: false,
+    silentSocket: 0,
+    authDelay: 1,
+    rejectKey: false,
+  }
   let handleTask: TaskHandler = () => {}
 
   const WebSocket = function () {
@@ -77,6 +82,12 @@ const createServer = () => {
           if (task.taskType === 'authentication') {
             log.push(`s${id}:auth`)
             setTimeout(() => {
+              if (state.rejectKey) {
+                log.push(`s${id}:auth-rejected`)
+                deliver({ errors: [{ code: 'invalidApiKey', message: 'Invalid API key', taskUUID: 'N/A' }] })
+                socket.close()
+                return
+              }
               log.push(`s${id}:auth-ok`)
               deliver({ data: [{ taskType: 'authentication', connectionSessionUUID: 'session-1' }] })
             }, state.authDelay)
@@ -350,6 +361,42 @@ describe('WebSocket reconnect', () => {
       .rejects.toThrow('Not connected to WebSocket server')
   })
 
+  it('reports a rejected API key as an auth error and does not reconnect', async () => {
+    const server = createServer()
+    server.state.rejectKey = true
+    const transport = createWebSocketTransport(transportConfig(server))
+
+    const error = await transport.connect()
+      .then(() => null, (reason: unknown) => reason as RunwareError)
+    await sleep(300)
+
+    expect(error?.code).toBe('auth')
+    expect(error?.message).toBe('Invalid API key')
+    expect(server.sockets).toHaveLength(1)
+    await transport.disconnect()
+  })
+
+  it('stops reconnecting when the server rejects the API key on a reconnect', async () => {
+    const server = createServer()
+    const transport = createWebSocketTransport(transportConfig(server))
+    await transport.connect()
+
+    const frames: WsResponse[] = []
+    transport.subscribeToTask('task-1', (frame) => { frames.push(frame) })
+    await transport.sendRequest({ taskType: 'getResponse', taskUUID: 'task-1' })
+    server.state.rejectKey = true
+    server.drop()
+
+    await waitFor(() => frames.length === 1)
+    await sleep(300)
+    expect(server.sockets).toHaveLength(2)
+    expect(parseApiError(frames[0]!.error).code).toBe('auth')
+    expect(transport.isConnected()).toBe(false)
+    await expect(transport.sendRequest({ taskType: 'getResponse', taskUUID: 'task-2' }))
+      .rejects.toThrow('Not connected to WebSocket server')
+    await transport.disconnect()
+  })
+
   it('reconnects once after a silent connection instead of every 30 seconds', async () => {
     jest.useFakeTimers()
     const server = createServer()
@@ -488,6 +535,53 @@ describe('run() over a dropping connection', () => {
       entry.task.taskType === 'imageInference' && entry.task.deliveryMethod === 'sync'
     ))
     expect(syncSends.map((entry) => entry.socket)).toEqual([1])
+    await client.disconnect()
+  })
+
+  it('rejects as soon as it is aborted while waiting for the ACK', async () => {
+    const server = createServer()
+    const client = await createClient({
+      apiKey: 'test',
+      dependencies: { WebSocket: server.WebSocket },
+    })
+    await client.connect()
+
+    const controller = new AbortController()
+    const started = Date.now()
+    const outcome = client.run(imageParams as never, { signal: controller.signal })
+      .then(() => null, (error: unknown) => error as RunwareError)
+    await waitFor(() => server.received.length === 1)
+    controller.abort()
+
+    const error = await outcome
+    expect(error?.code).toBe('aborted')
+    expect(Date.now() - started).toBeLessThan(1000)
+    await client.disconnect()
+  })
+
+  it('rejects as soon as it is aborted while a poll reply is pending', async () => {
+    const server = createServer()
+    server.onTask((task, deliver) => {
+      if (task.taskType === 'imageInference') {
+        deliver({ data: [{ taskType: 'imageInference', taskUUID: task.taskUUID }] })
+      }
+    })
+    const client = await createClient({
+      apiKey: 'test',
+      dependencies: { WebSocket: server.WebSocket },
+    })
+    await client.connect()
+
+    const controller = new AbortController()
+    const outcome = client.run(imageParams as never, { signal: controller.signal })
+      .then(() => null, (error: unknown) => error as RunwareError)
+    await waitFor(() => server.sentOn('getResponse').length === 1)
+    const abortedAt = Date.now()
+    controller.abort()
+
+    const error = await outcome
+    expect(error?.code).toBe('aborted')
+    expect(Date.now() - abortedAt).toBeLessThan(200)
     await client.disconnect()
   })
 
