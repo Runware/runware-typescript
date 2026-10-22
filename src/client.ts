@@ -20,7 +20,7 @@ import {
   operationTaskTypes,
 } from './types/task-map'
 import { createTextStream } from './stream'
-import { createRunwareError, parseApiError } from './errors'
+import { createRunwareError, isRunwareError, parseApiError } from './errors'
 import { validateTasks } from './validate'
 import {
   createConfig,
@@ -495,6 +495,10 @@ const executeWebSocketAsync = async (
     let delay = 1000
     let pollNumber = 0
     const pending = new Set(tasks.map((task) => task.taskUUID))
+    const pollingTimedOut = () => createRunwareError(
+      'timeout',
+      `Polling timed out after ${pollTimeout}ms with ${pending.size} task(s) still processing`,
+    )
 
     config.log.request(`Polling ${pending.size} async task(s) over WebSocket`)
 
@@ -503,16 +507,16 @@ const executeWebSocketAsync = async (
         throw createRunwareError('aborted', 'Request aborted during polling')
       }
       if (Date.now() - startTime >= pollTimeout) {
-        throw createRunwareError(
-          'timeout',
-          `Polling timed out after ${pollTimeout}ms with ${pending.size} task(s) still processing`,
-        )
+        throw pollingTimedOut()
       }
 
-      await interruptibleSleep(delay, signal)
+      await interruptibleSleep(Math.min(delay, pollTimeout - (Date.now() - startTime)), signal)
 
       if (signal?.aborted) {
         throw createRunwareError('aborted', 'Request aborted during polling')
+      }
+      if (Date.now() - startTime >= pollTimeout) {
+        throw pollingTimedOut()
       }
 
       const uuids = Array.from(pending)
@@ -551,7 +555,12 @@ const executeWebSocketAsync = async (
           if (timerId) { clearTimeout(timerId) }
           pendingPolls.delete(uuid)
         }
-      }))
+      })).catch((error: unknown) => {
+        if (isRunwareError(error) && error.code === 'timeout' && Date.now() - startTime >= pollTimeout) {
+          throw pollingTimedOut()
+        }
+        throw error
+      })
 
       for (const { uuid, result } of polled) {
         // Fire callbacks BEFORE throwing — so users see partial outcomes
@@ -737,6 +746,10 @@ const executeRest = async (
   let delay = 1000
   let pollNumber = 0
   const pending = new Set(tasks.map((task) => task.taskUUID))
+  const pollingTimedOut = () => createRunwareError(
+    'timeout',
+    `Polling timed out after ${pollTimeout}ms with ${pending.size} task(s) still processing`,
+  )
 
   config.log.request(`Polling ${pending.size} async task(s)`)
 
@@ -745,16 +758,16 @@ const executeRest = async (
       throw createRunwareError('aborted', 'Request aborted during polling')
     }
     if (Date.now() - startTime >= pollTimeout) {
-      throw createRunwareError(
-        'timeout',
-        `Polling timed out after ${pollTimeout}ms with ${pending.size} task(s) still processing`,
-      )
+      throw pollingTimedOut()
     }
 
-    await interruptibleSleep(delay, signal)
+    await interruptibleSleep(Math.min(delay, pollTimeout - (Date.now() - startTime)), signal)
 
     if (signal?.aborted) {
       throw createRunwareError('aborted', 'Request aborted during polling')
+    }
+    if (Date.now() - startTime >= pollTimeout) {
+      throw pollingTimedOut()
     }
 
     const uuids = Array.from(pending)
@@ -775,7 +788,12 @@ const executeRest = async (
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const pollResponse = rawResponse as any
       return { taskUUID, response: pollResponse }
-    }))
+    })).catch((error: unknown) => {
+      if (isRunwareError(error) && error.code === 'timeout' && Date.now() - startTime >= pollTimeout) {
+        throw pollingTimedOut()
+      }
+      throw error
+    })
 
     for (const { taskUUID, response: pollResponse } of polled) {
       const items: Record<string, unknown>[] = Array.isArray(pollResponse?.data)

@@ -462,4 +462,33 @@ describe('WebSocket async polling (executeWebSocketAsync)', () => {
 
     await client.disconnect()
   })
+
+  it('reports the polling timeout when the last poll runs out of budget', async () => {
+    const sent: string[] = []
+    const mock = createMockWebSocket(sent)
+
+    const client = await createClient({
+      apiKey: 'test',
+      dependencies: { WebSocket: mock.WebSocket as any },
+      retryDelay: 1,
+      pollTimeout: 1300,
+    })
+    await client.connect()
+
+    const runPromise = client.run({
+      taskType: 'imageInference',
+      model: 'civitai:1@1',
+      positivePrompt: 'x',
+      width: 512,
+      height: 512,
+    } as any)
+
+    await sleep(50)
+    const initialTaskUUID = JSON.parse(sent[1])[0].taskUUID
+    pushAck(mock, initialTaskUUID)
+
+    await expect(runPromise).rejects.toThrow('Polling timed out after 1300ms with 1 task(s) still processing')
+
+    await client.disconnect()
+  })
 })

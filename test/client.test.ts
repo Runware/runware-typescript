@@ -577,7 +577,7 @@ describe('per-poll timeout budget propagation', () => {
       apiKey: 'test',
       transport: 'rest',
       timeout: 60000,
-      pollTimeout: 150,
+      pollTimeout: 1200,
       maxRetries: 0,
       dependencies: { fetch: mockFetch as any },
     })
@@ -589,14 +589,59 @@ describe('per-poll timeout budget propagation', () => {
       model: 'civitai:1@1',
       positivePrompt: 'x',
       deliveryMethod: 'async',
-    } as any)).rejects.toThrow()
+    } as any)).rejects.toThrow('Polling timed out after 1200ms with 1 task(s) still processing')
     const elapsed = Date.now() - start
 
     // Without the fix the inner sendRequest would block ~60s before its own
     // timeout aborted. With it, the per-poll budget (≤150ms) trips the abort
     // first and the whole run unwinds well under config.timeout.
-    expect(elapsed).toBeLessThan(2000)
+    expect(elapsed).toBeLessThan(2500)
     expect(abortReasons.length).toBeGreaterThan(0)
+  })
+
+  it('REST: reports the polling timeout when the deadline falls between polls', async () => {
+    const mockFetch = vi.fn().mockImplementation(async (_url, opts: RequestInit) => {
+      const body = JSON.parse(opts.body as string)
+      if (body[0]?.taskType !== 'getResponse') {
+        return { ok: true, status: 200, json: async () => ({ data: [{ taskUUID: 't-deadline' }] }) }
+      }
+      return new Promise((resolve, reject) => {
+        const timer = setTimeout(() => resolve({
+          ok: true,
+          status: 200,
+          json: async () => ({ data: [{ taskUUID: 't-deadline', taskType: 'imageInference', status: 'processing' }] }),
+        }), 20)
+        opts.signal?.addEventListener('abort', () => {
+          clearTimeout(timer)
+          const err = new Error('aborted')
+          ;(err as any).name = 'AbortError'
+          reject(err)
+        })
+      })
+    })
+
+    const { createClient } = await import('../src/index')
+
+    const client = await createClient({
+      apiKey: 'test',
+      transport: 'rest',
+      pollTimeout: 1300,
+      maxRetries: 3,
+      retryDelay: 1,
+      dependencies: { fetch: mockFetch as any },
+    })
+
+    const start = Date.now()
+    await expect(client.run({
+      taskType: 'imageInference',
+      taskUUID: 't-deadline',
+      model: 'civitai:1@1',
+      positivePrompt: 'x',
+      deliveryMethod: 'async',
+    } as any)).rejects.toThrow('Polling timed out after 1300ms with 1 task(s) still processing')
+    const elapsed = Date.now() - start
+
+    expect(elapsed).toBeLessThan(1500)
   })
 })
 
