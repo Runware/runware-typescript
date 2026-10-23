@@ -190,6 +190,10 @@ export type RunwareClient = {
    * the same id again returns the task it already names instead of starting a
    * second, so a call whose response was lost is safe to repeat.
    *
+   * `environment` selects which copy of the app to call, falling back to
+   * `config.serverlessEnvironment` and then to `production`. Waiting polls the
+   * task in that same environment.
+   *
    * Rejects with a `RunwareError` when the task fails to start. A task that
    * runs and fails comes back with `status: 'failed'` and its `error` set,
    * because that is an outcome rather than a broken call.
@@ -205,6 +209,9 @@ export type RunwareClient = {
    * `invoke` already waits for you, so reach for this when you want to poll
    * yourself: after `invoke` with `wait: false`, or from a different process
    * than the one that submitted the task.
+   *
+   * Pass the `environment` the task was invoked in. It falls back to
+   * `config.serverlessEnvironment` and then to `production`.
    */
   getTask: (
     appId: string,

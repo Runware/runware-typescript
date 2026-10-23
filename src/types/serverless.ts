@@ -62,6 +62,12 @@ export type InvokeParams = {
    * retry from a different process land on the same task.
    */
   taskId?: string
+  /**
+   * Environment of the app copy to invoke. Falls back to
+   * `config.serverlessEnvironment`, then to `production`. Waiting polls the
+   * task in this same environment.
+   */
+  environment?: string
 }
 
 export type InvokeOptions = {
@@ -100,6 +106,11 @@ export type InvokeOptions = {
 }
 
 export type GetTaskOptions = {
+  /**
+   * Environment the task was invoked in. Falls back to
+   * `config.serverlessEnvironment`, then to `production`.
+   */
+  environment?: string
   /** Per-request timeout in ms. Falls back to `config.timeout`. */
   timeout?: number
   signal?: AbortSignal

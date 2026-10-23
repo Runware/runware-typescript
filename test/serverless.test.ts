@@ -473,3 +473,184 @@ describe('getTask', () => {
     expect(calls).toHaveLength(0)
   })
 })
+
+describe('environment', () => {
+  const ASYNC_URL = 'https://serverless.test.com/v1/apps/my-app/invoke-async/generate'
+  const TASK_ID = '7c9e6679-7425-40de-944b-e07fc1f90ae7'
+  const TASK_URL = `https://serverless.test.com/v1/apps/my-app/tasks/${TASK_ID}`
+  const pending = () => task({ status: 'pending', output: null, completedAt: null })
+  const ok = (): Reply => ({ status: 200, body: task() })
+
+  it('sends no environment when none is set', async () => {
+    const { impl, calls } = mockFetch([ok(), ok()])
+    const api = createServerlessApi(config(impl))
+
+    await api.invoke({ appId: 'my-app', endpointPath: 'generate' })
+    await api.getTask('my-app', TASK_ID)
+
+    expect(calls.map((call) => call.url)).toEqual([ASYNC_URL, TASK_URL])
+  })
+
+  it('addresses the client environment', async () => {
+    const { impl, calls } = mockFetch([ok(), ok()])
+    const api = createServerlessApi(config(impl, { serverlessEnvironment: 'staging' }))
+
+    await api.invoke({ appId: 'my-app', endpointPath: 'generate' })
+    await api.getTask('my-app', TASK_ID)
+
+    expect(calls.map((call) => call.url)).toEqual([
+      `${ASYNC_URL}?environment=staging`, `${TASK_URL}?environment=staging`,
+    ])
+  })
+
+  it('lets a per-call environment override the client one', async () => {
+    const { impl, calls } = mockFetch([ok(), ok()])
+    const api = createServerlessApi(config(impl, { serverlessEnvironment: 'production' }))
+
+    await api.invoke({ appId: 'my-app', endpointPath: 'generate', environment: 'staging' })
+    await api.getTask('my-app', TASK_ID, { environment: 'staging' })
+
+    expect(calls.map((call) => call.url)).toEqual([
+      `${ASYNC_URL}?environment=staging`, `${TASK_URL}?environment=staging`,
+    ])
+  })
+
+  it('polls in the environment the task was invoked in', async () => {
+    const { impl, calls } = mockFetch([
+      { status: 202, body: pending() }, { status: 200, body: pending() }, ok(),
+    ])
+    const api = createServerlessApi(config(impl))
+
+    const result = await api.invoke(
+      { appId: 'my-app', endpointPath: 'generate', environment: 'staging' },
+      { pollInterval: 0 },
+    )
+
+    expect(result.status).toBe('completed')
+    expect(calls.slice(1).map((call) => call.url)).toEqual([
+      `${TASK_URL}?environment=staging`, `${TASK_URL}?environment=staging`,
+    ])
+  })
+
+  it('names the environment when the poll budget runs out', async () => {
+    const { impl } = mockFetch(Array.from({ length: 40 }, () => ({ status: 200, body: pending() })))
+    const api = createServerlessApi(config(impl, { pollTimeout: 0 }))
+
+    await expect(api.invoke(
+      { appId: 'my-app', endpointPath: 'generate', environment: 'staging' },
+      { pollInterval: 0 },
+    )).rejects.toThrow('{ environment: "staging" }) to pick it up')
+  })
+
+  const impossible = [
+    '',
+    'Staging',
+    '-dev',
+    '.dev',
+    '_dev',
+    'a/b',
+    'staging\n',
+    'a'.repeat(64),
+  ]
+  for (const environment of impossible) {
+    it(`rejects the environment ${JSON.stringify(environment)} before asking the API`, async () => {
+      const { impl, calls } = mockFetch([])
+      const api = createServerlessApi(config(impl))
+
+      const error = await api.invoke({ appId: 'my-app', endpointPath: 'generate', environment })
+        .catch((caught: unknown) => caught)
+
+      expect(isRunwareError(error) && error.parameter).toBe('environment')
+      expect(calls).toHaveLength(0)
+    })
+  }
+
+  const allowed = [
+    'pr-12',
+    'feature_x',
+    'v1.2',
+    '1st',
+    'a'.repeat(63),
+  ]
+  for (const environment of allowed) {
+    it(`accepts the environment ${JSON.stringify(environment)}`, async () => {
+      const { impl, calls } = mockFetch([ok()])
+      const api = createServerlessApi(config(impl))
+
+      await api.invoke({ appId: 'my-app', endpointPath: 'generate', environment })
+
+      expect(calls[0]!.url).toBe(`${ASYNC_URL}?environment=${environment}`)
+    })
+  }
+
+  it('rejects an invalid client environment when the client is built', () => {
+    const { impl } = mockFetch([])
+
+    let error: unknown
+    try { createServerlessApi(config(impl, { serverlessEnvironment: 'Staging' })) } catch (caught) { error = caught }
+
+    expect(isRunwareError(error) && error.parameter).toBe('serverlessEnvironment')
+    expect(String(error)).toContain('serverlessEnvironment "Staging" is invalid')
+  })
+
+  it('treats a null client environment from untyped JS as unset', async () => {
+    const { impl, calls } = mockFetch([ok()])
+    const unset = null as unknown as string
+    const api = createServerlessApi(config(impl, { serverlessEnvironment: unset }))
+
+    await api.invoke({ appId: 'my-app', endpointPath: 'generate' })
+
+    expect(calls[0]!.url).toBe(ASYNC_URL)
+  })
+
+  it('names no environment in the hint when none is set', async () => {
+    const { impl } = mockFetch(Array.from({ length: 40 }, () => ({ status: 200, body: pending() })))
+    const api = createServerlessApi(config(impl, { pollTimeout: 0 }))
+
+    await expect(api.invoke(
+      { appId: 'my-app', endpointPath: 'generate' },
+      { pollInterval: 0 },
+    )).rejects.toThrow(`getTask("my-app", "${TASK_ID}") to pick it up`)
+  })
+})
+
+describe('budget', () => {
+  const paused = {
+    type: 'https://docs.runware.ai/serverless/errors#environment-paused',
+    title: 'Too Many Requests',
+    status: 429,
+    detail: 'environment "staging" is paused at its monthly budget',
+  }
+
+  it('does not retry an environment paused at its budget', async () => {
+    const replies = Array.from({ length: 4 }, () => ({
+      status: 429,
+      headers: { 'Retry-After': '0' },
+      body: paused,
+    }))
+    const { impl, calls } = mockFetch(replies)
+    const api = createServerlessApi(config(impl, { maxRetries: 3 }))
+
+    const error = await api.invoke({ appId: 'my-app', endpointPath: 'generate', environment: 'staging' })
+      .catch((caught: unknown) => caught)
+
+    expect(calls).toHaveLength(1)
+    if (!isRunwareError(error)) { throw error }
+    expect(error.code).toBe('quota')
+    expect(error.retryable).toBe(false)
+    expect(error.statusCode).toBe(429)
+    expect(error.message).toContain('paused at its monthly budget')
+  })
+
+  it('still retries any other 429', async () => {
+    const { impl, calls } = mockFetch([
+      { status: 429, headers: { 'Retry-After': '0' }, body: { status: 429 } }, { status: 200, body: task() },
+    ])
+    const api = createServerlessApi(config(impl, { maxRetries: 2 }))
+
+    const result = await api.invoke({ appId: 'my-app', endpointPath: 'generate' })
+
+    expect(result.status).toBe('completed')
+    expect(calls).toHaveLength(2)
+  })
+})
