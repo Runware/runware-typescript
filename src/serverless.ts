@@ -13,7 +13,8 @@ import { calculateRetryDelay } from './utils/retry'
 import { generateUUID } from './utils/uuid'
 
 const APP_ID_PATTERN = /^[a-z][a-z0-9-]{4,28}[a-z0-9]$/
-const ENDPOINT_PATH_PATTERN = /^[a-z]([a-z0-9-]{0,62}[a-z0-9])?$/
+const ENDPOINT_PATH_PATTERN = /^[a-z]([a-z0-9-]{0,62}[a-z0-9])?(\/[a-z]([a-z0-9-]{0,62}[a-z0-9])?)*$/
+const ENDPOINT_PATH_MAX_LENGTH = 255
 const ENVIRONMENT_PATTERN = /^[a-z0-9][a-z0-9._-]{0,62}$/
 const TASK_ID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/
 
@@ -104,10 +105,10 @@ const validateEndpointPath = (endpointPath: unknown): string => {
       { parameter: 'endpointPath' },
     )
   }
-  if (!ENDPOINT_PATH_PATTERN.test(endpointPath)) {
+  if (endpointPath.length > ENDPOINT_PATH_MAX_LENGTH || !ENDPOINT_PATH_PATTERN.test(endpointPath)) {
     throw createRunwareError(
       'invalidParameter',
-      `endpointPath "${endpointPath}" is invalid: use a lowercase segment of 1 to 64 characters (letters, digits, hyphens)`,
+      `endpointPath "${endpointPath}" is invalid: use lowercase segments of 1 to 64 characters (letters, digits, hyphens) joined by slashes, up to ${ENDPOINT_PATH_MAX_LENGTH} characters`,
       { parameter: 'endpointPath' },
     )
   }

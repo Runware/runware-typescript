@@ -179,12 +179,32 @@ describe('invoke — local validation', () => {
     expect(calls).toHaveLength(0)
   })
 
-  it('rejects an endpoint path that is not a bare lowercase segment', async () => {
+  it('rejects an endpoint path that is not a lowercase segment', async () => {
     const { impl } = mockFetch([])
     const api = createServerlessApi(config(impl))
 
     await expect(api.invoke({ appId: 'my-app', endpointPath: 'Generate Image' }))
-      .rejects.toThrow(/lowercase segment/)
+      .rejects.toThrow(/lowercase segments/)
+  })
+
+  it('sends a multi-segment endpoint path with its slashes unencoded', async () => {
+    const { impl, calls } = mockFetch([
+      { status: 200, body: task({ endpointPath: 'v1/chat/completions' }) },
+    ])
+    const api = createServerlessApi(config(impl))
+
+    await api.invoke({ appId: 'my-app', endpointPath: 'v1/chat/completions' })
+
+    expect(calls[0]!.url).toBe('https://serverless.test.com/v1/apps/my-app/invoke-async/v1/chat/completions')
+  })
+
+  it('rejects an endpoint path longer than the platform accepts', async () => {
+    const { impl } = mockFetch([])
+    const api = createServerlessApi(config(impl))
+    const tooLong = Array.from({ length: 5 }, () => 'a'.repeat(60)).join('/')
+
+    await expect(api.invoke({ appId: 'my-app', endpointPath: tooLong }))
+      .rejects.toThrow(/up to 255 characters/)
   })
 
   it('rejects an app id that cannot exist', async () => {
