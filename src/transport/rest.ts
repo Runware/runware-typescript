@@ -22,7 +22,16 @@ const isAbortError = (error: unknown) => (error instanceof Error && error.name =
 const isRetryableStatus = (status: number) =>
   (status === 408 || status === 429 || (status >= 500 && status < 600))
 
+const STILL_RUNNING_CODE = 'failedTaskTimeout'
+
+const firstErrorCode = (body: unknown): unknown => {
+  const errors = (body as { errors?: unknown } | null)?.errors
+  return Array.isArray(errors) ? (errors[0] as { code?: unknown } | undefined)?.code : undefined
+}
+
 export const createRestTransport = (config: SDKConfig): RestTransport => {
+  const stillRunning = new WeakSet<Error>()
+
   const customFetch = async (url: string, options: RequestInit): Promise<Response> => {
     const fetchImpl = config.dependencies?.fetch ?? globalThis.fetch
     if (!fetchImpl) {
@@ -108,6 +117,10 @@ export const createRestTransport = (config: SDKConfig): RestTransport => {
 
               const parsed = parseApiError(body, context)
               parsed.statusCode = response.status
+              if (firstErrorCode(body) === STILL_RUNNING_CODE) {
+                parsed.retryable = false
+                stillRunning.add(parsed)
+              }
               throw parsed
             }
 
@@ -158,6 +171,7 @@ export const createRestTransport = (config: SDKConfig): RestTransport => {
         shouldRetry: (error: unknown): boolean => {
           // Don't retry on user-initiated abort
           if (isRunwareError(error) && error.code === 'aborted') { return false }
+          if (error instanceof Error && stillRunning.has(error)) { return false }
           // Retry on timeout
           if (isTimeoutError(error)) { return true }
           // Retry on retryable HTTP status (5xx, 429, 408)

@@ -431,6 +431,58 @@ describe('REST transport sendRequest', () => {
     expect(result.data[0].imageURL).toBe('x.jpg')
   })
 
+  const createTransportWith = async (mockFetch: unknown) => {
+    const { createRestTransport } = await import('../src/transport/rest')
+    const { createLogger } = await import('../src/logger')
+    return createRestTransport({
+      apiKey: 'k',
+      wsBaseUrl: 'wss://ws.test.com',
+      httpBaseUrl: 'https://api.test.com',
+      serverlessBaseUrl: 'https://serverless.test.com',
+      transport: 'rest',
+      timeout: 5000,
+      pollTimeout: 5000,
+      authTimeout: 5000,
+      maxRetries: 3,
+      retryDelay: 1,
+      retryStrategy: 'linear',
+      maxReconnectAttempts: Infinity,
+      debug: false,
+      log: createLogger(false),
+      dependencies: { fetch: mockFetch as unknown as typeof fetch },
+    })
+  }
+
+  const gatewayTimeout = (code: string) => vi.fn().mockResolvedValue({
+    ok: false,
+    status: 504,
+    statusText: 'Gateway Timeout',
+    json: async () => ({ errors: [{ code, message: `${code} message` }] }),
+  })
+
+  it('does not resend a task the server stopped waiting for (504 failedTaskTimeout)', async () => {
+    const mockFetch = gatewayTimeout('failedTaskTimeout')
+    const transport = await createTransportWith(mockFetch)
+
+    const syncTask = {
+      taskType: 'imageInference', taskUUID: 't1', model: 'x', deliveryMethod: 'sync',
+    }
+    const error = await transport.sendRequest([syncTask]).catch((caught: unknown) => caught) as any
+
+    expect(mockFetch).toHaveBeenCalledTimes(1)
+    expect(error.statusCode).toBe(504)
+    expect(error.retryable).toBe(false)
+  })
+
+  it('still retries any other 504', async () => {
+    const mockFetch = gatewayTimeout('timeoutProvider')
+    const transport = await createTransportWith(mockFetch)
+
+    await expect(transport.sendRequest([{ taskType: 'imageInference', taskUUID: 't1', model: 'x' }]))
+      .rejects.toThrow('timeoutProvider message')
+    expect(mockFetch).toHaveBeenCalledTimes(4)
+  })
+
   it('does not retry on 400', async () => {
     let calls = 0
     const mockFetch = vi.fn().mockImplementation(async () => {
