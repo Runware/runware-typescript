@@ -194,6 +194,96 @@ afterEach(() => {
   jest.useRealTimers()
 })
 
+describe('WebSocket error isolation', () => {
+  it.each([
+    ['async', 'error'],
+    ['async', 'errors'],
+    ['sync', 'error'],
+    ['sync', 'errors'],
+  ])('keeps concurrent %s runs isolated from a late %s after abort', async (deliveryMethod, shape) => {
+    const server = createServer()
+    let deliver: Deliver = () => {}
+    server.onTask((_task, sendFrame) => { deliver = sendFrame })
+    const client = await createClient({
+      apiKey: 'test',
+      dependencies: {
+        WebSocket: server.WebSocket,
+        fetch: (async () => { throw new Error('Unexpected HTTP request') }) as unknown as typeof fetch,
+      },
+    })
+    await client.connect()
+
+    try {
+      const controller = new AbortController()
+      const cancelled = client.run(
+        { ...imageParams, taskUUID: 'cancelled', deliveryMethod },
+        { signal: controller.signal },
+      ).then(() => null, (error: unknown) => error as RunwareError)
+      const survivor = client.run({ ...imageParams, taskUUID: 'survivor', deliveryMethod })
+        .then((value: unknown[]) => ({ value }), (error: unknown) => ({ error }))
+      await waitFor(() => server.received.length === 2)
+
+      controller.abort()
+      expect((await cancelled)?.code).toBe('aborted')
+      deliver({ [shape]: [{ code: 'invalidParameter', message: 'Late error', taskUUID: 'cancelled' }] })
+
+      if (deliveryMethod === 'async') {
+        deliver({ data: [{ taskType: 'imageInference', taskUUID: 'survivor' }] })
+        server.onTask((task, sendFrame) => { sendFrame(success(task.taskUUID)) })
+      } else {
+        deliver(success('survivor'))
+      }
+      expect(await survivor).toEqual({ value: [successItem('survivor')] })
+    } finally {
+      await client.disconnect()
+    }
+  })
+
+  it('keeps another run alive after a timed-out task receives a late error', async () => {
+    const server = createServer()
+    let deliver: Deliver = () => {}
+    server.onTask((_task, sendFrame) => { deliver = sendFrame })
+    const client = await createClient({ apiKey: 'test', dependencies: { WebSocket: server.WebSocket } })
+    await client.connect()
+    try {
+      const expired = client.run(
+        { ...imageParams, taskUUID: 'expired', deliveryMethod: 'sync' },
+        { timeout: 20 },
+      ).then(() => null, (error: unknown) => error as RunwareError)
+      const survivor = client.run({ ...imageParams, taskUUID: 'survivor', deliveryMethod: 'sync' })
+        .then((value: unknown[]) => ({ value }), (error: unknown) => ({ error }))
+      await waitFor(() => server.received.length === 2)
+      expect((await expired)?.code).toBe('timeout')
+      deliver({ errors: [{ code: 'invalidParameter', message: 'Late error', taskUUID: 'expired' }] })
+      deliver(success('survivor'))
+      expect(await survivor).toEqual({ value: [successItem('survivor')] })
+    } finally {
+      await client.disconnect()
+    }
+  })
+
+  it('broadcasts only unscoped errors from a mixed frame and keeps task errors scoped', async () => {
+    const server = createServer()
+    const transport = createWebSocketTransport(transportConfig(server))
+    await transport.connect()
+    try {
+      const first: WsResponse[] = []
+      const second: WsResponse[] = []
+      transport.subscribeToTask('first', (frame) => { first.push(frame) })
+      transport.subscribeToTask('second', (frame) => { second.push(frame) })
+      const scoped = { code: 'invalidParameter', message: 'First task only', taskUUID: 'first' }
+      const stale = { code: 'invalidParameter', message: 'No subscriber', taskUUID: 'stale' }
+      const global = { code: 'internalServerError', message: 'Connection-wide failure' }
+      server.onTask((_task, deliver) => { deliver({ errors: [scoped, stale, global] }) })
+      await transport.sendRequest({ taskType: 'getResponse', taskUUID: 'first' })
+      expect(first).toEqual([{ error: [scoped] }, { error: [global] }])
+      expect(second).toEqual([{ error: [global] }])
+    } finally {
+      await transport.disconnect()
+    }
+  })
+})
+
 describe('WebSocket reconnect', () => {
   it('holds a request sent while reconnecting and sends it after authentication', async () => {
     const server = createServer()
