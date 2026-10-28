@@ -717,11 +717,7 @@ const interruptibleSleep = async (ms: number, signal?: AbortSignal): Promise<voi
   })
 
 /**
- * REST execution: send the request, then poll getResponse for any async tasks.
- * One poll per unique taskUUID per cycle — the server returns the full state
- * (all N items for a numberResults=N task) every time. Expected count comes
- * from `task.numberResults`, not from initial-response slots (the server
- * returns one placeholder per task regardless of numberResults).
+ * REST execution: send the request, then poll getResponse for any task still processing.
  */
 const executeRest = async (
   tasks: TaskPayload[],
@@ -738,7 +734,14 @@ const executeRest = async (
 
   const isAsync = tasks.some((task) => task.deliveryMethod === 'async')
   if (!isAsync) {
-    return toResultsArray(response)
+    const items = toResultsArray(response)
+    const handedOff = tasks.filter((task) => task.deliveryMethod === 'sync'
+      && items.some((item) => item.taskUUID === task.taskUUID && item.status === 'processing'))
+    if (handedOff.length === 0) { return items }
+
+    config.log.request(`${handedOff.length} sync task(s) still processing after the server wait`)
+    const polled = await pollRestTasks(handedOff, transport, config, options)
+    return replaceHandedOffRows(items, polled)
   }
 
   // Async submit returns an ACK or a validation error. If there's an error,
@@ -750,6 +753,44 @@ const executeRest = async (
     })
   }
 
+  const resultsPerTask = await pollRestTasks(tasks, transport, config, options)
+  return tasks.flatMap((task) => resultsPerTask.get(task.taskUUID) ?? [])
+}
+
+const replaceHandedOffRows = (
+  items: Record<string, unknown>[],
+  polled: Map<string, Record<string, unknown>[]>,
+): Record<string, unknown>[] => {
+  const results: Record<string, unknown>[] = []
+  const placed = new Set<string>()
+  for (const item of items) {
+    const taskUUID = item.taskUUID as string
+    const polledItems = polled.get(taskUUID)
+    if (!polledItems) {
+      results.push(item)
+      continue
+    }
+    if (placed.has(taskUUID)) { continue }
+    placed.add(taskUUID)
+    results.push(...polledItems)
+  }
+  return results
+}
+
+/**
+ * Polls getResponse until every task has its results. One poll per unique
+ * taskUUID per cycle — the server returns the full state (all N items for a
+ * numberResults=N task) every time. Expected count comes from
+ * `task.numberResults`, not from initial-response slots (the server returns
+ * one placeholder per task regardless of numberResults).
+ */
+const pollRestTasks = async (
+  tasks: TaskPayload[],
+  transport: Transport,
+  config: SDKConfig,
+  options?: RunOptions,
+): Promise<Map<string, Record<string, unknown>[]>> => {
+  const signal = options?.signal
   const dispatcher = createItemDispatcher(config, options)
 
   const expectedPerTask = new Map<string, number>()
@@ -857,11 +898,7 @@ const executeRest = async (
     delay = pollNumber === 1 ? 500 : Math.min(delay * 1.5, 10000)
   }
 
-  const results: Record<string, unknown>[] = []
-  for (const task of tasks) {
-    results.push(...(resultsPerTask.get(task.taskUUID) ?? []))
-  }
-  return results
+  return resultsPerTask
 }
 
 /**

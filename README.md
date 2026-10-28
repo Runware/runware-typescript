@@ -469,7 +469,7 @@ const responses = await client.run({
 On **WebSocket** this is where the transport's persistent connection actually pays off — one frame in, one frame back, no polling.  
 On **REST** it means a single HTTP request with the full result in the response body.
 
-Pick sync when you're confident the task finishes inside the server's connection budget (~120s for WebSocket sync, the HTTP read timeout for REST). For anything longer — video, 3D, large upscale, multi-result batches — stick with the async default so the SDK can poll safely.
+Pick sync when you're confident the task finishes inside the server's 120s wait. Over **REST**, a task still running at that point comes back with `status: 'processing'`, and the SDK polls `getResponse` for it, so the call still resolves with the result. Over **WebSocket**, sync has no such fallback. For anything longer — video, 3D, large upscale, multi-result batches — stick with the async default so the SDK can poll from the start.
 
 ### Per-call options
 

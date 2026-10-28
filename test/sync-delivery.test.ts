@@ -73,6 +73,79 @@ describe('REST + deliveryMethod=sync via client.run', () => {
   })
 })
 
+const jsonResponse = (body: unknown) => ({
+  ok: true, status: 200, statusText: 'OK', json: async () => body,
+})
+
+const handoffRow = (fields: Record<string, unknown>) => ({ taskType: 'imageInference', taskUUID: 'handoff-1', ...fields })
+
+const createHandoffFetch = (syncReply: unknown, pollReplies: unknown[]) => {
+  const reply = async (_url: string, init: any) => {
+    const body = JSON.parse(init.body)
+    if (body[0].taskType !== 'getResponse') { return jsonResponse(syncReply) }
+    return jsonResponse(pollReplies.length > 1 ? pollReplies.shift() : pollReplies[0])
+  }
+  return vi.fn(reply)
+}
+
+const createRestClient = async (mockFetch: unknown) => createClient({ apiKey: 'test', transport: 'rest', dependencies: { fetch: mockFetch as any } })
+
+const sentTasks = (mockFetch: ReturnType<typeof vi.fn>) => mockFetch.mock.calls
+  .map((call) => JSON.parse((call[1] as any).body)[0])
+
+describe('REST + deliveryMethod=sync, task handed off after the server wait', () => {
+  const processingRow = handoffRow({ status: 'processing' })
+  const runParams = { ...sampleRunParams, taskUUID: 'handoff-1' }
+
+  it('polls getResponse and returns the late result', async () => {
+    const success = handoffRow({ status: 'success', imageUUID: 'img-1', imageURL: 'https://result.jpg' })
+    const mockFetch = createHandoffFetch(
+      { data: [processingRow] },
+      [{ data: [processingRow] }, { data: [success] }],
+    )
+    const client = await createRestClient(mockFetch)
+    const onResult = vi.fn()
+
+    const result: unknown[] = await client.run(runParams as any, { onResult })
+
+    expect(result).toEqual([success])
+    expect(onResult).toHaveBeenCalledTimes(1)
+    const polls = sentTasks(mockFetch).filter((task) => task.taskType === 'getResponse')
+    expect(polls).toHaveLength(2)
+    expect(polls[0].taskUUID).toBe('handoff-1')
+  })
+
+  it('returns every result once when some arrived before the handoff', async () => {
+    const first = handoffRow({ imageUUID: 'img-1', imageURL: 'https://one.jpg' })
+    const second = handoffRow({ status: 'success', imageUUID: 'img-2', imageURL: 'https://two.jpg' })
+    const polled = [{ ...first, status: 'success' }, second]
+    const mockFetch = createHandoffFetch({ data: [first, processingRow] }, [{ data: polled }])
+    const client = await createRestClient(mockFetch)
+
+    const result: unknown[] = await client.run({ ...runParams, numberResults: 2 } as any)
+
+    expect(result).toEqual(polled)
+  })
+
+  it('rejects with the error the task ends in', async () => {
+    const failed = { errors: [handoffRow({ code: 'timeoutProvider', message: 'The provider did not respond' })] }
+    const mockFetch = createHandoffFetch({ data: [processingRow] }, [failed])
+    const client = await createRestClient(mockFetch)
+
+    await expect(client.run(runParams as any)).rejects.toThrow(/did not respond/)
+  })
+
+  it('leaves a processing row from a getResponse call untouched', async () => {
+    const mockFetch = vi.fn().mockResolvedValue(jsonResponse({ data: [processingRow] }))
+    const client = await createRestClient(mockFetch)
+
+    const result: unknown[] = await client.getResponse({ taskUUID: 'handoff-1' })
+
+    expect(result).toEqual([processingRow])
+    expect(mockFetch).toHaveBeenCalledTimes(1)
+  })
+})
+
 const createMockWebSocket = (sent: string[]) => {
   let instance: any
   const MockWS = function (this: any) {
