@@ -1,5 +1,5 @@
 /**
- * AUTO-GENERATED from schema-map@20261012233936 — do not edit manually.
+ * AUTO-GENERATED from schema-map@20261028112401 — do not edit manually.
  * Run: bun run scripts/generate-types.ts
  */
 
@@ -34,20 +34,20 @@ export type ExactlyIllustrativeParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
-  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
-  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   speed?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   cost?: number
 }
-  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
   maxPrice?: number
-  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
   requirements?: string
 }
   /** Identifier of the model to use for generation. */
@@ -267,20 +267,20 @@ export type Flux1DevParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
-  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
-  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   speed?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   cost?: number
 }
-  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
   maxPrice?: number
-  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
   requirements?: string
 }
   /** Identifier of the model to use for generation. */
@@ -393,20 +393,20 @@ export type Flux1KontextDevParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
-  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
-  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   speed?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   cost?: number
 }
-  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
   maxPrice?: number
-  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
   requirements?: string
 }
   /** Identifier of the model to use for generation. */
@@ -569,20 +569,20 @@ export type Flux1SchnellParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
-  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
-  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   speed?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   cost?: number
 }
-  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
   maxPrice?: number
-  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
   requirements?: string
 }
   /** Identifier of the model to use for generation. */
@@ -795,20 +795,20 @@ export type IllustriousParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
-  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
-  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   speed?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   cost?: number
 }
-  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
   maxPrice?: number
-  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
   requirements?: string
 }
   /** Identifier of the model to use for generation. */
@@ -894,20 +894,20 @@ export type Krea2RawOssParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
-  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
-  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   speed?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   cost?: number
 }
-  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
   maxPrice?: number
-  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
   requirements?: string
 }
   /** Identifier of the model to use for generation. */
@@ -989,20 +989,20 @@ export type Krea2TurboOssParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
-  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
-  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   speed?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   cost?: number
 }
-  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
   maxPrice?: number
-  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
   requirements?: string
 }
   /** Identifier of the model to use for generation. */
@@ -1215,20 +1215,20 @@ export type NoobaiParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
-  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
-  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   speed?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   cost?: number
 }
-  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
   maxPrice?: number
-  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
   requirements?: string
 }
   /** Identifier of the model to use for generation. */
@@ -1441,20 +1441,20 @@ export type PonyParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
-  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
-  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   speed?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   cost?: number
 }
-  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
   maxPrice?: number
-  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
   requirements?: string
 }
   /** Identifier of the model to use for generation. */
@@ -1658,20 +1658,20 @@ export type Sd15Params = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
-  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
-  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   speed?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   cost?: number
 }
-  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
   maxPrice?: number
-  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
   requirements?: string
 }
   /** Identifier of the model to use for generation. */
@@ -1893,20 +1893,20 @@ export type SdxlParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
-  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
-  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   speed?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   cost?: number
 }
-  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
   maxPrice?: number
-  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
   requirements?: string
 }
   /** Identifier of the model to use for generation. */
@@ -2119,20 +2119,20 @@ export type SdxlLightningParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
-  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
-  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   speed?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   cost?: number
 }
-  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
   maxPrice?: number
-  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
   requirements?: string
 }
   /** Identifier of the model to use for generation. */
@@ -2345,20 +2345,20 @@ export type SdxlTurboParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
-  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
-  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   speed?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   cost?: number
 }
-  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
   maxPrice?: number
-  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
   requirements?: string
 }
   /** Identifier of the model to use for generation. */
@@ -2506,20 +2506,20 @@ export type ZImageParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
-  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
-  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   speed?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   cost?: number
 }
-  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
   maxPrice?: number
-  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
   requirements?: string
 }
   /** Identifier of the model to use for generation. */
@@ -2686,20 +2686,20 @@ export type ZImageTurboParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
-  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
-  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   speed?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   cost?: number
 }
-  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
   maxPrice?: number
-  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
   requirements?: string
 }
   /** Identifier of the model to use for generation. */
@@ -2752,20 +2752,20 @@ export type ThreeDInferenceParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
-  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
-  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   speed?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   cost?: number
 }
-  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
   maxPrice?: number
-  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
   requirements?: string
 }
   /** Identifier of the model to use for generation. */
@@ -2793,20 +2793,20 @@ export type AudioInferenceParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
-  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
-  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   speed?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   cost?: number
 }
-  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
   maxPrice?: number
-  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
   requirements?: string
 }
   /** Identifier of the model to use for generation. */
@@ -2843,20 +2843,20 @@ export type ImageInferenceParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
-  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
-  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   speed?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   cost?: number
 }
-  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
   maxPrice?: number
-  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
   requirements?: string
 }
   /** Identifier of the model to use for generation. */
@@ -2909,20 +2909,20 @@ export type TextInferenceParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
-  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
-  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   speed?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   cost?: number
 }
-  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
   maxPrice?: number
-  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
   requirements?: string
 }
   /** Identifier of the model to use for generation. */
@@ -2955,20 +2955,20 @@ export type VideoInferenceParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
-  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
-  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   speed?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   cost?: number
 }
-  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
   maxPrice?: number
-  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
   requirements?: string
 }
   /** Identifier of the model to use for generation. */
@@ -2986,7 +2986,7 @@ export type VideoInferenceParams = {
   /** Compression quality of the output. Higher values preserve quality but increase file size. */
   outputQuality?: number
   /** Determines how the API delivers task results. */
-  deliveryMethod?: 'async'
+  deliveryMethod?: 'sync' | 'async'
   /** Content safety checking configuration for video generation. */
   safety?: {
   /** Enable or disable content safety checking. Increases total generation time. */
@@ -3005,20 +3005,20 @@ export type CaptionParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
-  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
-  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   speed?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   cost?: number
 }
-  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
   maxPrice?: number
-  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
   requirements?: string
 }
   /** Identifier of the model to use for generation. */
@@ -3034,20 +3034,20 @@ export type CaptionImageParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
-  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
-  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   speed?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   cost?: number
 }
-  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
   maxPrice?: number
-  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
   requirements?: string
 }
   /** Identifier of the model to use for generation. */
@@ -3070,26 +3070,26 @@ export type CaptionVideoParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
-  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
-  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   speed?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   cost?: number
 }
-  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
   maxPrice?: number
-  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
   requirements?: string
 }
   /** Identifier of the model to use for generation. */
   model: string
   /** Determines how the API delivers task results. */
-  deliveryMethod?: 'async'
+  deliveryMethod?: 'sync' | 'async'
   /** Input assets for the task. */
   inputs: {
   /** Video input (UUID or URL). */
@@ -3106,20 +3106,20 @@ export type ControlnetPreprocessParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
-  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
-  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   speed?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   cost?: number
 }
-  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
   maxPrice?: number
-  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
   requirements?: string
 }
   /** Identifier of the model to use for generation. */
@@ -3150,20 +3150,20 @@ export type MaskingParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
-  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
-  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   speed?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   cost?: number
 }
-  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
   maxPrice?: number
-  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
   requirements?: string
 }
   /** Identifier of the model to use for generation. */
@@ -3207,20 +3207,20 @@ export type PromptEnhanceParams = {
   deliveryMethod?: 'sync' | 'async'
   /** Include task cost in the response. */
   includeCost?: boolean
-  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
-  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   speed?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   cost?: number
 }
-  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
   maxPrice?: number
-  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
   requirements?: string
 }
   /** Identifier of the model to use for generation. */
@@ -3242,20 +3242,20 @@ export type RemoveBackgroundParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
-  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
-  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   speed?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   cost?: number
 }
-  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
   maxPrice?: number
-  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
   requirements?: string
 }
   /** Identifier of the model to use for generation. */
@@ -3277,20 +3277,20 @@ export type RemoveBackgroundImageParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
-  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
-  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   speed?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   cost?: number
 }
-  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
   maxPrice?: number
-  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
   requirements?: string
 }
   /** Identifier of the model to use for generation. */
@@ -3323,20 +3323,20 @@ export type RemoveBackgroundVideoParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
-  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
-  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   speed?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   cost?: number
 }
-  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
   maxPrice?: number
-  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
   requirements?: string
 }
   /** Identifier of the model to use for generation. */
@@ -3352,7 +3352,7 @@ export type RemoveBackgroundVideoParams = {
   /** File format for the generated video. */
   outputFormat?: 'WEBM' | 'MOV'
   /** Determines how the API delivers task results. */
-  deliveryMethod?: 'async'
+  deliveryMethod?: 'sync' | 'async'
   /** Input assets for the task. */
   inputs: {
   /** Video input (UUID or URL). */
@@ -3399,20 +3399,20 @@ export type UpscaleParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
-  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
-  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   speed?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   cost?: number
 }
-  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
   maxPrice?: number
-  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
   requirements?: string
 }
   /** Identifier of the model to use for generation. */
@@ -3434,20 +3434,20 @@ export type UpscaleImageParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
-  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
-  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   speed?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   cost?: number
 }
-  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
   maxPrice?: number
-  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
   requirements?: string
 }
   /** Identifier of the model to use for generation. */
@@ -3480,20 +3480,20 @@ export type UpscaleVideoParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
-  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
-  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   speed?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   cost?: number
 }
-  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
   maxPrice?: number
-  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
   requirements?: string
 }
   /** Identifier of the model to use for generation. */
@@ -3509,7 +3509,7 @@ export type UpscaleVideoParams = {
   /** File format for the generated video. */
   outputFormat?: 'MP4' | 'WEBM' | 'MOV'
   /** Determines how the API delivers task results. */
-  deliveryMethod?: 'async'
+  deliveryMethod?: 'sync' | 'async'
   /** Input assets for the task. */
   inputs: {
   /** Video input (UUID or URL). */
@@ -3526,20 +3526,20 @@ export type VectorizeParams = {
   webhookURL?: string
   /** Include task cost in the response. */
   includeCost?: boolean
-  /** Model router options. Read only when `model` is `auto`, and never sent to the model. */
+  /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
-  /** What matters for this request. Weights relative to each other, not thresholds: a cost of 5 means cost decides, not that any particular price is acceptable. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   speed?: number
-  /** How much one dimension counts against the others. */
+  /** Importance of one dimension. `0` leaves it out of the decision. */
   cost?: number
 }
-  /** Upper bound on the price for this task, in the unit that task is priced in. A model with no comparable price recorded stays eligible. */
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
   maxPrice?: number
-  /** What the result has to do, in words. Read as conditions a model has to satisfy, so a model that cannot meet them is not chosen however well it scores. Not a prompt: the prompt says what to make. */
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
   requirements?: string
 }
   /** Identifier of the model to use for generation. */
@@ -4588,20 +4588,22 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'bfl:6@1': { taskType: 'imageInference', id: 'bfl-flux-2-flex' },
   'bfl:7@1': { taskType: 'imageInference', id: 'bfl-flux-2-max' },
   'bfl:flux@3-image': { taskType: 'imageInference', id: 'bfl-flux-3-image' },
+  'bfl:flux@3-image-klein': { taskType: 'imageInference', id: 'bfl-flux-3-image-klein' },
+  'bfl:flux@3-image-klein-base': { taskType: 'imageInference', id: 'bfl-flux-3-image-klein-base' },
   'bfl:flux@3-video': { taskType: 'videoInference', id: 'bfl-flux-3-video' },
   'bfl:flux@erase': { taskType: 'imageInference', id: 'bfl-flux-erase' },
   'bfl:flux@outpainting': { taskType: 'imageInference', id: 'bfl-flux-outpainting' },
   'bfl:flux@video-edit-fast': { taskType: 'videoInference', id: 'bfl-flux-video-edit-fast' },
-  'bfl:flux@video-upscale': { taskType: 'upscale', id: 'bfl-flux-video-upscale' },
+  'bfl:flux@video-upscale': { taskType: 'upscale', id: 'bfl-flux-3-upscaler' },
   'bfl:flux@vto': { taskType: 'imageInference', id: 'bfl-flux-virtual-try-on' },
   'boogu:image@0.1-edit': { taskType: 'imageInference', id: 'boogu-image-0-1-edit' },
   'boogu:image@0.1-edit-turbo': { taskType: 'imageInference', id: 'boogu-image-0-1-edit-turbo' },
   'bria:10@1': { taskType: 'imageInference', id: 'bria-3-2' },
   'bria:11@1': { taskType: 'imageInference', id: 'bria-image-replace-background' },
   'bria:2@1': { taskType: 'removeBackground', id: 'bria-rmbg-v2-0' },
-  'bria:20@1': { taskType: 'imageInference', id: 'bria-fibo' },
+  'bria:20@1': { taskType: 'imageInference', id: 'bria-fibo-2-0' },
   'bria:20@3': { taskType: 'imageInference', id: 'bria-fibo-lite' },
-  'bria:21@1': { taskType: 'imageInference', id: 'bria-fibo-edit' },
+  'bria:21@1': { taskType: 'imageInference', id: 'bria-fibo-2-0-edit' },
   'bria:21@2': { taskType: 'imageInference', id: 'bria-fibo-edit-tools' },
   'bria:50@1': { taskType: 'upscale', id: 'bria-video-increase-resolution' },
   'bria:51@1': { taskType: 'removeBackground', id: 'bria-video-background-removal' },
@@ -4654,6 +4656,9 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'heygen:avatar@5': { taskType: 'videoInference', id: 'heygen-avatar-v' },
   'heygen:video-agent@0': { taskType: 'videoInference', id: 'heygen-video-agent' },
   'heygen:video@1.0': { taskType: 'videoInference', id: 'heygen-video-1-0' },
+  'heygen:voice@1.0': { taskType: 'audioInference', id: 'heygen-voice-1-0' },
+  'heygen:voice@1.0-turbo': { taskType: 'audioInference', id: 'heygen-voice-1-0-turbo' },
+  'heygen:voice@1.0-turbo-free': { taskType: 'audioInference', id: 'heygen-voice-1-0-turbo-free' },
   'hyper3d:rodin@gen-2': { taskType: '3dInference', id: 'hyper3d-rodin-gen-2' },
   'ideogram:2@1': { taskType: 'imageInference', id: 'ideogram-2a' },
   'ideogram:2@2': { taskType: 'imageInference', id: 'ideogram-2a-remix' },
@@ -4692,6 +4697,7 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'klingai:kling-video@3-pro': { taskType: 'videoInference', id: 'klingai-video-3-0-pro' },
   'klingai:kling-video@3-standard': { taskType: 'videoInference', id: 'klingai-video-3-0-standard' },
   'klingai:kling-video@3.0-turbo': { taskType: 'videoInference', id: 'klingai-video-3-0-turbo' },
+  'klingai:kling-video@4.0': { taskType: 'videoInference', id: 'klingai-video-4-0' },
   'klingai:kling-video@o3-4k': { taskType: 'videoInference', id: 'klingai-video-3-0-omni-4k' },
   'klingai:kling-video@o3-pro': { taskType: 'videoInference', id: 'klingai-video-3-0-omni-pro' },
   'klingai:kling-video@o3-standard': { taskType: 'videoInference', id: 'klingai-video-3-0-omni-standard' },
@@ -4731,7 +4737,6 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'minimax:music@cover': { taskType: 'audioInference', id: 'minimax-music-cover' },
   'minimax:speech@2.8': { taskType: 'audioInference', id: 'minimax-speech-2-8' },
   'mirelo:1@1': { taskType: 'audioInference', id: 'mirelo-sfx-1-5' },
-  'openai:1@1': { taskType: 'imageInference', id: 'openai-gpt-image-1' },
   'openai:1@2': { taskType: 'imageInference', id: 'openai-gpt-image-1-mini' },
   'openai:4@1': { taskType: 'imageInference', id: 'openai-gpt-image-1-5' },
   'openai:gpt-image@2': { taskType: 'imageInference', id: 'openai-gpt-image-2' },
@@ -4763,6 +4768,7 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'prunaai:p-video@0': { taskType: 'videoInference', id: 'prunaai-p-video' },
   'prunaai:p-video@2': { taskType: 'videoInference', id: 'prunaai-p-video-2' },
   'prunaai:p-video@2-pro': { taskType: 'videoInference', id: 'prunaai-p-video-2-pro' },
+  'prunaai:p-video@2-pro-avatar': { taskType: 'videoInference', id: 'prunaai-p-video-2-pro-avatar' },
   'prunaai:p-video@animate': { taskType: 'videoInference', id: 'prunaai-p-video-animate' },
   'prunaai:p-video@avatar': { taskType: 'videoInference', id: 'prunaai-p-video-avatar' },
   'prunaai:p-video@edit': { taskType: 'videoInference', id: 'prunaai-p-video-edit' },
@@ -4959,6 +4965,8 @@ export type ModelResultMap = {
   'bfl:6@1': ImageInferenceResult
   'bfl:7@1': ImageInferenceResult
   'bfl:flux@3-image': ImageInferenceResult
+  'bfl:flux@3-image-klein': ImageInferenceResult
+  'bfl:flux@3-image-klein-base': ImageInferenceResult
   'bfl:flux@3-video': VideoInferenceResult
   'bfl:flux@erase': ImageInferenceResult
   'bfl:flux@outpainting': ImageInferenceResult
@@ -5025,6 +5033,9 @@ export type ModelResultMap = {
   'heygen:avatar@5': VideoInferenceResult
   'heygen:video-agent@0': VideoInferenceResult
   'heygen:video@1.0': VideoInferenceResult
+  'heygen:voice@1.0': AudioInferenceResult
+  'heygen:voice@1.0-turbo': AudioInferenceResult
+  'heygen:voice@1.0-turbo-free': AudioInferenceResult
   'hyper3d:rodin@gen-2': ThreeDInferenceResult
   'ideogram:2@1': ImageInferenceResult
   'ideogram:2@2': ImageInferenceResult
@@ -5063,6 +5074,7 @@ export type ModelResultMap = {
   'klingai:kling-video@3-pro': VideoInferenceResult
   'klingai:kling-video@3-standard': VideoInferenceResult
   'klingai:kling-video@3.0-turbo': VideoInferenceResult
+  'klingai:kling-video@4.0': VideoInferenceResult
   'klingai:kling-video@o3-4k': VideoInferenceResult
   'klingai:kling-video@o3-pro': VideoInferenceResult
   'klingai:kling-video@o3-standard': VideoInferenceResult
@@ -5102,7 +5114,6 @@ export type ModelResultMap = {
   'minimax:music@cover': AudioInferenceResult
   'minimax:speech@2.8': AudioInferenceResult
   'mirelo:1@1': AudioInferenceResult
-  'openai:1@1': ImageInferenceResult
   'openai:1@2': ImageInferenceResult
   'openai:4@1': ImageInferenceResult
   'openai:gpt-image@2': ImageInferenceResult
@@ -5134,6 +5145,7 @@ export type ModelResultMap = {
   'prunaai:p-video@0': VideoInferenceResult
   'prunaai:p-video@2': VideoInferenceResult
   'prunaai:p-video@2-pro': VideoInferenceResult
+  'prunaai:p-video@2-pro-avatar': VideoInferenceResult
   'prunaai:p-video@animate': VideoInferenceResult
   'prunaai:p-video@avatar': VideoInferenceResult
   'prunaai:p-video@edit': VideoInferenceResult
