@@ -87,6 +87,7 @@ const SERVER_ERROR_CODES = new Set([
   'internalServerError',
   'serviceUnavailable',
   'serverUnavailable',
+  'modelRouterUnavailable',
   'standardError',
   'unknownError',
   'undefinedError',
@@ -169,6 +170,10 @@ export const deriveCode = (raw: string): ErrorCode => {
     || raw === 'modelAlreadyExists'
     || raw.startsWith('max')
     || raw === 'validationFailed'
+    // Every router rejection but `modelRouterUnavailable`, caught above as a server error,
+    // names something about the request only the caller can change.
+    || raw.startsWith('modelRouter')
+    || raw === 'noEligibleModel'
   ) { return 'validation' }
 
   return 'unknown'

@@ -23,6 +23,14 @@ describe('deriveCode', () => {
     ['mismatchProviderSettingsProvider', 'validation'],
     ['modelOwnershipValidationError', 'validation'],
     ['modelAlreadyExists', 'validation'],
+    ['modelRouterUnknownModel', 'validation'],
+    ['modelRouterInvalidModelList', 'validation'],
+    ['modelRouterTooFewAllowedModels', 'validation'],
+    ['modelRouterConflictingModelLists', 'validation'],
+    ['modelRouterNeedsDescription', 'validation'],
+    ['modelRouterUnsupportedTaskType', 'validation'],
+    ['noEligibleModel', 'validation'],
+    ['modelRouterUnavailable', 'serverError'], // retryable, unlike the rest of the router's
     ['maxLycorisModelsExceeded', 'validation'],
     ['validationFailed', 'validation'],
 
