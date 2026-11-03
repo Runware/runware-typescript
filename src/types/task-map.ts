@@ -1,5 +1,5 @@
 /**
- * AUTO-GENERATED from schema-map@20261028112401 — do not edit manually.
+ * AUTO-GENERATED from schema-map@20261103162519 — do not edit manually.
  * Run: bun run scripts/generate-types.ts
  */
 
@@ -36,6 +36,10 @@ export type ExactlyIllustrativeParams = {
   includeCost?: boolean
   /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
   /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
@@ -269,6 +273,10 @@ export type Flux1DevParams = {
   includeCost?: boolean
   /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
   /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
@@ -395,6 +403,10 @@ export type Flux1KontextDevParams = {
   includeCost?: boolean
   /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
   /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
@@ -571,6 +583,10 @@ export type Flux1SchnellParams = {
   includeCost?: boolean
   /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
   /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
@@ -797,6 +813,10 @@ export type IllustriousParams = {
   includeCost?: boolean
   /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
   /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
@@ -896,6 +916,10 @@ export type Krea2RawOssParams = {
   includeCost?: boolean
   /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
   /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
@@ -991,6 +1015,10 @@ export type Krea2TurboOssParams = {
   includeCost?: boolean
   /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
   /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
@@ -1217,6 +1245,10 @@ export type NoobaiParams = {
   includeCost?: boolean
   /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
   /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
@@ -1443,6 +1475,10 @@ export type PonyParams = {
   includeCost?: boolean
   /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
   /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
@@ -1660,6 +1696,10 @@ export type Sd15Params = {
   includeCost?: boolean
   /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
   /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
@@ -1895,6 +1935,10 @@ export type SdxlParams = {
   includeCost?: boolean
   /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
   /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
@@ -2121,6 +2165,10 @@ export type SdxlLightningParams = {
   includeCost?: boolean
   /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
   /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
@@ -2347,6 +2395,10 @@ export type SdxlTurboParams = {
   includeCost?: boolean
   /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
   /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
@@ -2508,6 +2560,10 @@ export type ZImageParams = {
   includeCost?: boolean
   /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
   /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
@@ -2688,6 +2744,10 @@ export type ZImageTurboParams = {
   includeCost?: boolean
   /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
   /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
@@ -2754,6 +2814,10 @@ export type ThreeDInferenceParams = {
   includeCost?: boolean
   /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
   /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
@@ -2795,6 +2859,10 @@ export type AudioInferenceParams = {
   includeCost?: boolean
   /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
   /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
@@ -2845,6 +2913,10 @@ export type ImageInferenceParams = {
   includeCost?: boolean
   /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
   /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
@@ -2911,6 +2983,10 @@ export type TextInferenceParams = {
   includeCost?: boolean
   /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
   /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
@@ -2957,6 +3033,10 @@ export type VideoInferenceParams = {
   includeCost?: boolean
   /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
   /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
@@ -3007,6 +3087,10 @@ export type CaptionParams = {
   includeCost?: boolean
   /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
   /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
@@ -3036,6 +3120,10 @@ export type CaptionImageParams = {
   includeCost?: boolean
   /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
   /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
@@ -3072,6 +3160,10 @@ export type CaptionVideoParams = {
   includeCost?: boolean
   /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
   /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
@@ -3108,6 +3200,10 @@ export type ControlnetPreprocessParams = {
   includeCost?: boolean
   /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
   /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
@@ -3152,6 +3248,10 @@ export type MaskingParams = {
   includeCost?: boolean
   /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
   /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
@@ -3209,6 +3309,10 @@ export type PromptEnhanceParams = {
   includeCost?: boolean
   /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
   /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
@@ -3244,6 +3348,10 @@ export type RemoveBackgroundParams = {
   includeCost?: boolean
   /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
   /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
@@ -3279,6 +3387,10 @@ export type RemoveBackgroundImageParams = {
   includeCost?: boolean
   /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
   /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
@@ -3325,6 +3437,10 @@ export type RemoveBackgroundVideoParams = {
   includeCost?: boolean
   /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
   /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
@@ -3401,6 +3517,10 @@ export type UpscaleParams = {
   includeCost?: boolean
   /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
   /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
@@ -3436,6 +3556,10 @@ export type UpscaleImageParams = {
   includeCost?: boolean
   /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
   /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
@@ -3482,6 +3606,10 @@ export type UpscaleVideoParams = {
   includeCost?: boolean
   /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
   /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
@@ -3528,6 +3656,10 @@ export type VectorizeParams = {
   includeCost?: boolean
   /** Model router options. Only read when `model` is `auto`, and never sent to the model. */
   routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
   /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
@@ -3706,85 +3838,25 @@ export type ImageInferenceResult = {
 }
 
 /**
- * Training Response
+ * Audio Response
  */
-export type TrainingResult = {
+export type AudioInferenceResult = {
   /** Identifier for the type of task this response belongs to. */
-  taskType: 'training'
+  taskType: 'audioInference'
   /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
   taskUUID: string
   /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
   cost?: number
-  /** AIR of the trained model produced by this run. Use it to run inference with the trained model. */
-  air: string
-  /** The trained model produced by the training run. */
-  outputs: {
-  /** The file or files that make up the trained model. */
-  files: {
-  /** UUID of the output file. */
-  uuid: string
-  /** URL of the output file. */
-  url: string
-}[]
-}
-}
-
-/**
- * 3D Response
- */
-export type ThreeDInferenceResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: '3dInference'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** Generated output artifacts. */
-  outputs: {
-  /** Generated output files. */
-  files: {
-  /** UUID of the output file. */
-  uuid: string
-  /** URL of the output file. */
-  url: string
-}[]
-}
+  /** UUID of the output audio. */
+  audioUUID: string
+  /** URL of the output audio. */
+  audioURL?: string
+  /** Base64-encoded audio data. */
+  audioBase64Data?: string
+  /** Data URI of the output audio. */
+  audioDataURI?: string
   /** The seed used for generation. If none was provided, shows the randomly generated seed. */
   seed?: number
-}
-
-/**
- * Remove Background Image Response
- */
-export type RemoveBackgroundResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'removeBackground'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** UUID of the output image. */
-  imageUUID: string
-  /** URL of the output image. */
-  imageURL?: string
-  /** Base64-encoded image data. */
-  imageBase64Data?: string
-  /** Data URI of the output image. */
-  imageDataURI?: string
-}
-
-/**
- * Caption Text Response
- */
-export type CaptionResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'caption'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** Generated caption text describing the input. */
-  text: string
 }
 
 /**
@@ -3815,23 +3887,41 @@ export type TextInferenceResult = {
 }
 
 /**
- * Upscale Image Response
+ * Caption Text Response
  */
-export type UpscaleResult = {
+export type CaptionResult = {
   /** Identifier for the type of task this response belongs to. */
-  taskType: 'upscale'
+  taskType: 'caption'
   /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
   taskUUID: string
   /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
   cost?: number
-  /** UUID of the output image. */
-  imageUUID: string
-  /** URL of the output image. */
-  imageURL?: string
-  /** Base64-encoded image data. */
-  imageBase64Data?: string
-  /** Data URI of the output image. */
-  imageDataURI?: string
+  /** Generated caption text describing the input. */
+  text: string
+}
+
+/**
+ * 3D Response
+ */
+export type ThreeDInferenceResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: '3dInference'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** Generated output artifacts. */
+  outputs: {
+  /** Generated output files. */
+  files: {
+  /** UUID of the output file. */
+  uuid: string
+  /** URL of the output file. */
+  url: string
+}[]
+}
+  /** The seed used for generation. If none was provided, shows the randomly generated seed. */
+  seed?: number
 }
 
 /**
@@ -3859,25 +3949,69 @@ export type VideoInferenceResult = {
 }
 
 /**
- * Audio Response
+ * Upscale Image Response
  */
-export type AudioInferenceResult = {
+export type UpscaleResult = {
   /** Identifier for the type of task this response belongs to. */
-  taskType: 'audioInference'
+  taskType: 'upscale'
   /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
   taskUUID: string
   /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
   cost?: number
-  /** UUID of the output audio. */
-  audioUUID: string
-  /** URL of the output audio. */
-  audioURL?: string
-  /** Base64-encoded audio data. */
-  audioBase64Data?: string
-  /** Data URI of the output audio. */
-  audioDataURI?: string
-  /** The seed used for generation. If none was provided, shows the randomly generated seed. */
-  seed?: number
+  /** UUID of the output image. */
+  imageUUID: string
+  /** URL of the output image. */
+  imageURL?: string
+  /** Base64-encoded image data. */
+  imageBase64Data?: string
+  /** Data URI of the output image. */
+  imageDataURI?: string
+}
+
+/**
+ * Training Response
+ */
+export type TrainingResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'training'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** AIR of the trained model produced by this run. Use it to run inference with the trained model. */
+  air: string
+  /** The trained model produced by the training run. */
+  outputs: {
+  /** The file or files that make up the trained model. */
+  files: {
+  /** UUID of the output file. */
+  uuid: string
+  /** URL of the output file. */
+  url: string
+}[]
+}
+}
+
+/**
+ * ControlNet Preprocess Response
+ */
+export type ControlNetPreprocessResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'controlNetPreprocess'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** UUID of the output guide image. */
+  guideImageUUID: string
+  /** URL of the output guide image. */
+  guideImageURL?: string
+  /** Base64-encoded guide image data. */
+  guideImageBase64Data?: string
+  /** Data URI of the output guide image. */
+  guideImageDataURI?: string
+  /** UUID of the input image used for preprocessing. */
+  inputImageUUID: string
 }
 
 /**
@@ -3914,25 +4048,37 @@ export type ImageMaskingResult = {
 }
 
 /**
- * ControlNet Preprocess Response
+ * Remove Background Image Response
  */
-export type ControlNetPreprocessResult = {
+export type RemoveBackgroundResult = {
   /** Identifier for the type of task this response belongs to. */
-  taskType: 'controlNetPreprocess'
+  taskType: 'removeBackground'
   /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
   taskUUID: string
   /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
   cost?: number
-  /** UUID of the output guide image. */
-  guideImageUUID: string
-  /** URL of the output guide image. */
-  guideImageURL?: string
-  /** Base64-encoded guide image data. */
-  guideImageBase64Data?: string
-  /** Data URI of the output guide image. */
-  guideImageDataURI?: string
-  /** UUID of the input image used for preprocessing. */
-  inputImageUUID: string
+  /** UUID of the output image. */
+  imageUUID: string
+  /** URL of the output image. */
+  imageURL?: string
+  /** Base64-encoded image data. */
+  imageBase64Data?: string
+  /** Data URI of the output image. */
+  imageDataURI?: string
+}
+
+/**
+ * Prompt Enhance Response
+ */
+export type PromptEnhanceResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'promptEnhance'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** Enhanced prompt text. */
+  text: string
 }
 
 /**
@@ -3958,20 +4104,6 @@ export type ToolsResult = {
 }
 
 /**
- * Prompt Enhance Response
- */
-export type PromptEnhanceResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'promptEnhance'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** Enhanced prompt text. */
-  text: string
-}
-
-/**
  * Vectorize Response
  */
 export type VectorizeResult = {
@@ -3989,83 +4121,6 @@ export type VectorizeResult = {
   imageBase64Data?: string
   /** Data URI of the output image. */
   imageDataURI?: string
-}
-
-/**
- * Media Storage Response
- */
-export type MediaStorageResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'mediaStorage'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** The media storage operation that produced this response. */
-  operation: 'upload'
-  /** UUID of the stored media. */
-  mediaUUID: string
-  /** URL where the stored media is accessible. */
-  mediaURL: string
-} | {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'mediaStorage'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** The media storage operation that produced this response. */
-  operation: 'delete'
-  /** UUID of the stored media. */
-  mediaUUID: string
-}
-
-/**
- * Image Upload Response
- */
-export type ImageUploadResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'imageUpload'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** UUID of the output image. */
-  imageUUID: string
-  /** URL of the output image. */
-  imageURL: string
-}
-
-/**
- * Model Upload Response
- */
-export type ModelUploadResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType?: 'modelUpload'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Status of the upload operation phase. */
-  status: 'validated' | 'downloaded' | 'optimized' | 'stored' | 'ready' | 'failed'
-  /** Status message or error details. */
-  message: string
-  /** The AIR identifier of the uploaded model. */
-  air?: string
-}
-
-/**
- * Task Response
- */
-export type GetResponseResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'authentication' | 'imageInference' | 'videoInference' | 'audioInference' | 'textInference' | '3dInference' | 'modelSearch' | 'modelUpload' | 'accountManagement' | 'imageUpload' | 'mediaStorage' | 'getResponse' | 'caption' | 'controlNetPreprocess' | 'imageMasking' | 'promptEnhance' | 'removeBackground' | 'upscale' | 'vectorize' | 'training' | 'tools' | 'ping'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Current status of the task. */
-  status: 'processing' | 'success' | 'error'
-  /** Task progress as a percentage from 0 to 100. Returned while `status` is `processing`, and only for tasks that support progress reporting. */
-  progress?: number
-  /** Error details if the task failed. */
-  error?: {
-  /** Error code. */
-  code?: string
-  /** Error message description. */
-  message?: string
-}
-  [key: string]: unknown
 }
 
 /**
@@ -4147,17 +4202,41 @@ export type ModelSearchResult = {
 }
 
 /**
- * Get Task Details Response
+ * Task Response
  */
-export type GetTaskDetailsResult = {
+export type GetResponseResult = {
   /** Identifier for the type of task this response belongs to. */
-  taskType: 'getTaskDetails'
+  taskType: 'authentication' | 'imageInference' | 'videoInference' | 'audioInference' | 'textInference' | '3dInference' | 'modelSearch' | 'modelUpload' | 'accountManagement' | 'imageUpload' | 'mediaStorage' | 'getResponse' | 'caption' | 'controlNetPreprocess' | 'imageMasking' | 'promptEnhance' | 'removeBackground' | 'upscale' | 'vectorize' | 'training' | 'tools' | 'ping'
   /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
   taskUUID: string
-  /** The original request array sent for this task. The structure of each object depends on the task type. */
-  request: Record<string, unknown>[]
-  /** The original API response for this task. Contains a `data` array when the task completed successfully, or an `errors` array when the task failed. */
-  response: Record<string, unknown>
+  /** Current status of the task. */
+  status: 'processing' | 'success' | 'error'
+  /** Task progress as a percentage from 0 to 100. Returned while `status` is `processing`, and only for tasks that support progress reporting. */
+  progress?: number
+  /** Error details if the task failed. */
+  error?: {
+  /** Error code. */
+  code?: string
+  /** Error message description. */
+  message?: string
+}
+  [key: string]: unknown
+}
+
+/**
+ * Model Upload Response
+ */
+export type ModelUploadResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType?: 'modelUpload'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Status of the upload operation phase. */
+  status: 'validated' | 'downloaded' | 'optimized' | 'stored' | 'ready' | 'failed'
+  /** Status message or error details. */
+  message: string
+  /** The AIR identifier of the uploaded model. */
+  air?: string
 }
 
 /**
@@ -4405,6 +4484,59 @@ export type AccountManagementResult = {
 }
 }
 }
+}
+
+/**
+ * Get Task Details Response
+ */
+export type GetTaskDetailsResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'getTaskDetails'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** The original request array sent for this task. The structure of each object depends on the task type. */
+  request: Record<string, unknown>[]
+  /** The original API response for this task. Contains a `data` array when the task completed successfully, or an `errors` array when the task failed. */
+  response: Record<string, unknown>
+}
+
+/**
+ * Image Upload Response
+ */
+export type ImageUploadResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'imageUpload'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** UUID of the output image. */
+  imageUUID: string
+  /** URL of the output image. */
+  imageURL: string
+}
+
+/**
+ * Media Storage Response
+ */
+export type MediaStorageResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'mediaStorage'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** The media storage operation that produced this response. */
+  operation: 'upload'
+  /** UUID of the stored media. */
+  mediaUUID: string
+  /** URL where the stored media is accessible. */
+  mediaURL: string
+} | {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'mediaStorage'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** The media storage operation that produced this response. */
+  operation: 'delete'
+  /** UUID of the stored media. */
+  mediaUUID: string
 }
 
 /**
@@ -4677,6 +4809,7 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'ideogram:layerize-text@0': { taskType: 'imageInference', id: 'ideogram-layerize-text' },
   'ideogram:object-remover@0': { taskType: 'imageInference', id: 'ideogram-object-remover' },
   'ideogram:remove-background@0': { taskType: 'removeBackground', id: 'ideogram-remove-background' },
+  'ideogram:vector@1.0': { taskType: 'vectorize', id: 'ideogram-vector-1-0' },
   'imagineart:1.5-pro@0': { taskType: 'imageInference', id: 'imagineart-1-5-pro' },
   'imagineart:1@5': { taskType: 'imageInference', id: 'imagineart-1-5' },
   'imagineart:2.0@0': { taskType: 'imageInference', id: 'imagineart-2-0' },
@@ -4728,6 +4861,8 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'minimax:4@2': { taskType: 'videoInference', id: 'minimax-hailuo-2-3-fast' },
   'minimax:h3@0': { taskType: 'videoInference', id: 'minimax-h3' },
   'minimax:h3@fast': { taskType: 'videoInference', id: 'minimax-h3-fast' },
+  'minimax:h3@highspeed': { taskType: 'videoInference', id: 'minimax-h3-highspeed' },
+  'minimax:h3@lite': { taskType: 'videoInference', id: 'minimax-h3-lite' },
   'minimax:h3@max': { taskType: 'videoInference', id: 'minimax-h3-max' },
   'minimax:h3@max-turbo': { taskType: 'videoInference', id: 'minimax-h3-max-turbo' },
   'minimax:m2.7@0': { taskType: 'textInference', id: 'minimax-m2-7' },
@@ -4773,6 +4908,7 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'prunaai:p-video@avatar': { taskType: 'videoInference', id: 'prunaai-p-video-avatar' },
   'prunaai:p-video@edit': { taskType: 'videoInference', id: 'prunaai-p-video-edit' },
   'prunaai:p-video@replace': { taskType: 'videoInference', id: 'prunaai-p-video-replace' },
+  'prunaai:p-video@upscale': { taskType: 'upscale', id: 'prunaai-p-video-upscale' },
   'recraft:1@1': { taskType: 'vectorize', id: 'recraft-vectorize' },
   'recraft:v4-pro@0': { taskType: 'imageInference', id: 'recraft-v4-pro' },
   'recraft:v4-pro@vector': { taskType: 'vectorize', id: 'recraft-v4-pro-vector' },
@@ -4911,7 +5047,6 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'vidu:q1@image': { taskType: 'imageInference', id: 'vidu-q1-image' },
   'xai:grok-imagine@image': { taskType: 'imageInference', id: 'xai-grok-imagine-image' },
   'xai:grok-imagine@image-2.0': { taskType: 'imageInference', id: 'xai-grok-imagine-image-2-0' },
-  'xai:grok-imagine@image-quality': { taskType: 'imageInference', id: 'xai-grok-imagine-image-quality' },
   'xai:grok-imagine@video': { taskType: 'videoInference', id: 'xai-grok-imagine-video' },
   'xai:grok-imagine@video-1.5': { taskType: 'videoInference', id: 'xai-grok-imagine-video-1-5' },
   'xai:grok-imagine@video-1.5-lite': { taskType: 'videoInference', id: 'xai-grok-imagine-video-1-5-lite' },
@@ -5054,6 +5189,7 @@ export type ModelResultMap = {
   'ideogram:layerize-text@0': ImageInferenceResult
   'ideogram:object-remover@0': ImageInferenceResult
   'ideogram:remove-background@0': RemoveBackgroundResult
+  'ideogram:vector@1.0': VectorizeResult
   'imagineart:1.5-pro@0': ImageInferenceResult
   'imagineart:1@5': ImageInferenceResult
   'imagineart:2.0@0': ImageInferenceResult
@@ -5105,6 +5241,8 @@ export type ModelResultMap = {
   'minimax:4@2': VideoInferenceResult
   'minimax:h3@0': VideoInferenceResult
   'minimax:h3@fast': VideoInferenceResult
+  'minimax:h3@highspeed': VideoInferenceResult
+  'minimax:h3@lite': VideoInferenceResult
   'minimax:h3@max': VideoInferenceResult
   'minimax:h3@max-turbo': VideoInferenceResult
   'minimax:m2.7@0': TextInferenceResult
@@ -5150,6 +5288,7 @@ export type ModelResultMap = {
   'prunaai:p-video@avatar': VideoInferenceResult
   'prunaai:p-video@edit': VideoInferenceResult
   'prunaai:p-video@replace': VideoInferenceResult
+  'prunaai:p-video@upscale': UpscaleResult
   'recraft:1@1': VectorizeResult
   'recraft:v4-pro@0': ImageInferenceResult
   'recraft:v4-pro@vector': VectorizeResult
@@ -5288,7 +5427,6 @@ export type ModelResultMap = {
   'vidu:q1@image': ImageInferenceResult
   'xai:grok-imagine@image': ImageInferenceResult
   'xai:grok-imagine@image-2.0': ImageInferenceResult
-  'xai:grok-imagine@image-quality': ImageInferenceResult
   'xai:grok-imagine@video': VideoInferenceResult
   'xai:grok-imagine@video-1.5': VideoInferenceResult
   'xai:grok-imagine@video-1.5-lite': VideoInferenceResult
