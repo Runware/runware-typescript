@@ -1,5 +1,5 @@
 /**
- * AUTO-GENERATED from schema-map@20261103162519 — do not edit manually.
+ * AUTO-GENERATED from schema-map@20261103170224 — do not edit manually.
  * Run: bun run scripts/generate-types.ts
  */
 
@@ -5035,6 +5035,7 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'topazlabs:proteus@4': { taskType: 'upscale', id: 'topazlabs-proteus-4' },
   'topazlabs:starlight-precise@2.5': { taskType: 'upscale', id: 'topazlabs-starlight-precise-2-5' },
   'topazlabs:wonder@3.5': { taskType: 'upscale', id: 'topazlabs-wonder-3-5' },
+  'topazlabs:wonder@4': { taskType: 'upscale', id: 'topazlabs-wonder-4' },
   'tripo:v3.1@0': { taskType: '3dInference', id: 'tripo-v3-1' },
   'veed:fabric@1.0-hosted': { taskType: 'videoInference', id: 'veed-fabric-1-0-hosted' },
   'vidu:1@0': { taskType: 'videoInference', id: 'vidu-q1-classic' },
@@ -5415,6 +5416,7 @@ export type ModelResultMap = {
   'topazlabs:proteus@4': UpscaleResult
   'topazlabs:starlight-precise@2.5': UpscaleResult
   'topazlabs:wonder@3.5': UpscaleResult
+  'topazlabs:wonder@4': UpscaleResult
   'tripo:v3.1@0': ThreeDInferenceResult
   'veed:fabric@1.0-hosted': VideoInferenceResult
   'vidu:1@0': VideoInferenceResult
