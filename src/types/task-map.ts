@@ -3030,6 +3030,605 @@ export type VectorizeParams = {
 }
 
 /**
+ * Routed 3D Request
+ */
+export type RoutedThreeDInferenceParams = {
+  /** Identifier of the model to use for generation. */
+  model: 'auto'
+  /** Model router options. */
+  routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
+  preferences?: {
+  /** Importance of one dimension. `0` leaves it out of the decision. */
+  quality?: number
+  /** Importance of one dimension. `0` leaves it out of the decision. */
+  speed?: number
+  /** Importance of one dimension. `0` leaves it out of the decision. */
+  cost?: number
+}
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
+  maxPrice?: number
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
+  requirements?: string
+}
+  /** Identifier for the type of task being performed. */
+  taskType: '3dInference'
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  webhookURL?: string
+  /** Include task cost in the response. */
+  includeCost?: boolean
+  /** Number of results to generate. Each result uses a different seed, producing variations of the same parameters. */
+  numberResults?: number
+  /** URL to upload content via HTTP PUT. The request body will contain the raw binary data. */
+  uploadEndpoint?: string
+  /** Time-to-live (TTL) in seconds for generated content. Only applies when `outputType` is `URL`. */
+  ttl?: number
+  /** 3D output type. */
+  outputType?: 'URL'
+  /** File format for the generated 3D model. */
+  outputFormat?: 'GLB'
+  /** Determines how the API delivers task results. */
+  deliveryMethod?: 'sync' | 'async'
+  [key: string]: unknown
+}
+
+/**
+ * Routed Audio Request
+ */
+export type RoutedAudioInferenceParams = {
+  /** Identifier of the model to use for generation. */
+  model: 'auto'
+  /** Model router options. */
+  routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
+  preferences?: {
+  /** Importance of one dimension. `0` leaves it out of the decision. */
+  quality?: number
+  /** Importance of one dimension. `0` leaves it out of the decision. */
+  speed?: number
+  /** Importance of one dimension. `0` leaves it out of the decision. */
+  cost?: number
+}
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
+  maxPrice?: number
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
+  requirements?: string
+}
+  /** Identifier for the type of task being performed. */
+  taskType: 'audioInference'
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  webhookURL?: string
+  /** Include task cost in the response. */
+  includeCost?: boolean
+  /** Number of results to generate. Each result uses a different seed, producing variations of the same parameters. */
+  numberResults?: number
+  /** URL to upload content via HTTP PUT. The request body will contain the raw binary data. */
+  uploadEndpoint?: string
+  /** Time-to-live (TTL) in seconds for generated content. Only applies when `outputType` is `URL`. */
+  ttl?: number
+  /** Audio output type. */
+  outputType?: 'URL' | 'base64Data' | 'dataURI'
+  /** File format for the generated audio. */
+  outputFormat?: 'MP3' | 'WAV' | 'FLAC' | 'OGG'
+  /** Determines how the API delivers task results. */
+  deliveryMethod?: 'sync' | 'async'
+  /** Audio encoding settings. Only applicable for lossy formats (MP3, OGG). Available sample rates and valid bitrate ranges depend on the output format and number of channels. */
+  audioSettings?: {
+  /** Audio bitrate in kbps. */
+  bitrate?: number
+  /** Number of audio channels. 1 for mono, 2 for stereo. */
+  channels?: 1 | 2
+  /** Audio sample rate in Hz. */
+  sampleRate?: number
+}
+  [key: string]: unknown
+}
+
+/**
+ * Routed Caption Request
+ */
+export type RoutedCaptionParams = {
+  /** Identifier of the model to use for generation. */
+  model: 'auto'
+  /** Model router options. */
+  routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
+  preferences?: {
+  /** Importance of one dimension. `0` leaves it out of the decision. */
+  quality?: number
+  /** Importance of one dimension. `0` leaves it out of the decision. */
+  speed?: number
+  /** Importance of one dimension. `0` leaves it out of the decision. */
+  cost?: number
+}
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
+  maxPrice?: number
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
+  requirements?: string
+}
+  /** Identifier for the type of task being performed. */
+  taskType: 'caption'
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  webhookURL?: string
+  /** Include task cost in the response. */
+  includeCost?: boolean
+  [key: string]: unknown
+}
+
+/**
+ * Routed ControlNet Preprocess Request
+ */
+export type RoutedControlNetPreprocessParams = {
+  /** Identifier of the model to use for generation. */
+  model: 'auto'
+  /** Model router options. */
+  routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
+  preferences?: {
+  /** Importance of one dimension. `0` leaves it out of the decision. */
+  quality?: number
+  /** Importance of one dimension. `0` leaves it out of the decision. */
+  speed?: number
+  /** Importance of one dimension. `0` leaves it out of the decision. */
+  cost?: number
+}
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
+  maxPrice?: number
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
+  requirements?: string
+}
+  /** Identifier for the type of task being performed. */
+  taskType: 'controlNetPreprocess'
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  webhookURL?: string
+  /** Include task cost in the response. */
+  includeCost?: boolean
+  /** Image output type. */
+  outputType?: 'URL' | 'base64Data' | 'dataURI'
+  /** File format for the generated image. */
+  outputFormat?: 'JPG' | 'PNG' | 'WEBP'
+  /** Determines how the API delivers task results. */
+  deliveryMethod?: 'sync' | 'async'
+  /** URL to upload content via HTTP PUT. The request body will contain the raw binary data. */
+  uploadEndpoint?: string
+  /** Time-to-live (TTL) in seconds for generated content. Only applies when `outputType` is `URL`. */
+  ttl?: number
+  /** Input assets for the task. */
+  inputs: {
+  /** Image input (UUID, URL, Data URI, or Base64). */
+  image: string
+}
+  [key: string]: unknown
+}
+
+/**
+ * Routed Image Request
+ */
+export type RoutedImageInferenceParams = {
+  /** Identifier of the model to use for generation. */
+  model: 'auto'
+  /** Model router options. */
+  routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
+  preferences?: {
+  /** Importance of one dimension. `0` leaves it out of the decision. */
+  quality?: number
+  /** Importance of one dimension. `0` leaves it out of the decision. */
+  speed?: number
+  /** Importance of one dimension. `0` leaves it out of the decision. */
+  cost?: number
+}
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
+  maxPrice?: number
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
+  requirements?: string
+}
+  /** Identifier for the type of task being performed. */
+  taskType: 'imageInference'
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  webhookURL?: string
+  /** Include task cost in the response. */
+  includeCost?: boolean
+  /** Number of results to generate. Each result uses a different seed, producing variations of the same parameters. */
+  numberResults?: number
+  /** URL to upload content via HTTP PUT. The request body will contain the raw binary data. */
+  uploadEndpoint?: string
+  /** Time-to-live (TTL) in seconds for generated content. Only applies when `outputType` is `URL`. */
+  ttl?: number
+  /** Image output type. */
+  outputType?: 'URL' | 'base64Data' | 'dataURI'
+  /** File format for the generated image. */
+  outputFormat?: 'JPG' | 'PNG' | 'WEBP'
+  /** Compression quality of the output. Higher values preserve quality but increase file size. */
+  outputQuality?: number
+  /** Determines how the API delivers task results. */
+  deliveryMethod?: 'sync' | 'async'
+  /** Content safety checking configuration for image generation. */
+  safety?: {
+  /** Enable or disable content safety checking. Increases total generation time. */
+  checkContent?: boolean
+}
+  /** Model-specific advanced configuration options. */
+  advancedFeatures?: {
+  /** Watermark configuration. */
+  watermark?: {
+  /** Watermark text. */
+  text?: string
+  /** Watermark image (UUID, URL, Data URI, or Base64). */
+  image?: string
+  /** Watermark position. */
+  displayPosition?: 'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center-center' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' | 'tiled'
+  /** Watermark opacity. */
+  opacity?: number
+  /** Text color in hex format. */
+  fontColor?: string
+  /** Background color in hex format. */
+  bgColor?: string
+}
+}
+  [key: string]: unknown
+}
+
+/**
+ * Routed Image Masking Request
+ */
+export type RoutedImageMaskingParams = {
+  /** Identifier of the model to use for generation. */
+  model: 'auto'
+  /** Model router options. */
+  routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
+  preferences?: {
+  /** Importance of one dimension. `0` leaves it out of the decision. */
+  quality?: number
+  /** Importance of one dimension. `0` leaves it out of the decision. */
+  speed?: number
+  /** Importance of one dimension. `0` leaves it out of the decision. */
+  cost?: number
+}
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
+  maxPrice?: number
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
+  requirements?: string
+}
+  /** Identifier for the type of task being performed. */
+  taskType: 'imageMasking'
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  webhookURL?: string
+  /** Include task cost in the response. */
+  includeCost?: boolean
+  /** Image output type. */
+  outputType?: 'URL' | 'base64Data' | 'dataURI'
+  /** File format for the generated image. */
+  outputFormat?: 'JPG' | 'PNG' | 'WEBP'
+  /** Determines how the API delivers task results. */
+  deliveryMethod?: 'sync' | 'async'
+  /** URL to upload content via HTTP PUT. The request body will contain the raw binary data. */
+  uploadEndpoint?: string
+  /** Time-to-live (TTL) in seconds for generated content. Only applies when `outputType` is `URL`. */
+  ttl?: number
+  /** Input assets for the task. */
+  inputs: {
+  /** Image input (UUID, URL, Data URI, or Base64). */
+  image: string
+}
+  /** Global inference settings. */
+  settings?: {
+  /** Confidence threshold for detections. Only detections above this score are included. */
+  confidence?: number
+  /** Maximum number of detections. Prioritizes highest confidence scores if exceeded. */
+  maxDetections?: number
+  /** Pixel amount to extend (positive) or shrink (negative) the mask area. */
+  maskPadding?: number
+  /** Blur radius for mask edges, creating smooth transitions. */
+  maskBlur?: number
+}
+  [key: string]: unknown
+}
+
+/**
+ * Routed Prompt Enhance Request
+ */
+export type RoutedPromptEnhanceParams = {
+  /** Identifier of the model to use for generation. */
+  model: 'auto'
+  /** Model router options. */
+  routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
+  preferences?: {
+  /** Importance of one dimension. `0` leaves it out of the decision. */
+  quality?: number
+  /** Importance of one dimension. `0` leaves it out of the decision. */
+  speed?: number
+  /** Importance of one dimension. `0` leaves it out of the decision. */
+  cost?: number
+}
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
+  maxPrice?: number
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
+  requirements?: string
+}
+  /** Identifier for the type of task being performed. */
+  taskType: 'promptEnhance'
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  webhookURL?: string
+  /** Determines how the API delivers task results. */
+  deliveryMethod?: 'sync' | 'async'
+  /** Include task cost in the response. */
+  includeCost?: boolean
+  /** Text prompt to enhance. */
+  prompt: string
+  /** Maximum length of the enhanced prompt. */
+  promptMaxLength?: number
+  /** Number of enhanced prompt variations to generate. */
+  promptVersions?: number
+  [key: string]: unknown
+}
+
+/**
+ * Routed Remove Background Request
+ */
+export type RoutedRemoveBackgroundParams = {
+  /** Identifier of the model to use for generation. */
+  model: 'auto'
+  /** Model router options. */
+  routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
+  preferences?: {
+  /** Importance of one dimension. `0` leaves it out of the decision. */
+  quality?: number
+  /** Importance of one dimension. `0` leaves it out of the decision. */
+  speed?: number
+  /** Importance of one dimension. `0` leaves it out of the decision. */
+  cost?: number
+}
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
+  maxPrice?: number
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
+  requirements?: string
+}
+  /** Identifier for the type of task being performed. */
+  taskType: 'removeBackground'
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  webhookURL?: string
+  /** Include task cost in the response. */
+  includeCost?: boolean
+  /** URL to upload content via HTTP PUT. The request body will contain the raw binary data. */
+  uploadEndpoint?: string
+  /** Time-to-live (TTL) in seconds for generated content. Only applies when `outputType` is `URL`. */
+  ttl?: number
+  /** Compression quality of the output. Higher values preserve quality but increase file size. */
+  outputQuality?: number
+  [key: string]: unknown
+}
+
+/**
+ * Routed Text Request
+ */
+export type RoutedTextInferenceParams = {
+  /** Identifier of the model to use for generation. */
+  model: 'auto'
+  /** Model router options. */
+  routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
+  preferences?: {
+  /** Importance of one dimension. `0` leaves it out of the decision. */
+  quality?: number
+  /** Importance of one dimension. `0` leaves it out of the decision. */
+  speed?: number
+  /** Importance of one dimension. `0` leaves it out of the decision. */
+  cost?: number
+}
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
+  maxPrice?: number
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
+  requirements?: string
+}
+  /** Identifier for the type of task being performed. */
+  taskType: 'textInference'
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  webhookURL?: string
+  /** Include task cost in the response. */
+  includeCost?: boolean
+  /** Array of chat messages forming the conversation context. The final message must use the user role. */
+  messages: ({
+  /** Role of the message author. */
+  role: 'user' | 'assistant'
+  /** Text content of the message. */
+  content: string
+})[]
+  /** Output format for the generated text. */
+  outputFormat?: 'TEXT'
+  /** Determines how the API delivers task results. */
+  deliveryMethod?: 'sync' | 'async' | 'stream'
+  /** Number of results to generate. Each result uses a different seed, producing variations of the same parameters. */
+  numberResults?: number
+  /** Global inference settings. */
+  settings?: Record<string, unknown>
+  /** Include token usage statistics in the response. */
+  includeUsage?: boolean
+  [key: string]: unknown
+}
+
+/**
+ * Routed Upscale Request
+ */
+export type RoutedUpscaleParams = {
+  /** Identifier of the model to use for generation. */
+  model: 'auto'
+  /** Model router options. */
+  routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
+  preferences?: {
+  /** Importance of one dimension. `0` leaves it out of the decision. */
+  quality?: number
+  /** Importance of one dimension. `0` leaves it out of the decision. */
+  speed?: number
+  /** Importance of one dimension. `0` leaves it out of the decision. */
+  cost?: number
+}
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
+  maxPrice?: number
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
+  requirements?: string
+}
+  /** Identifier for the type of task being performed. */
+  taskType: 'upscale'
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  webhookURL?: string
+  /** Include task cost in the response. */
+  includeCost?: boolean
+  /** URL to upload content via HTTP PUT. The request body will contain the raw binary data. */
+  uploadEndpoint?: string
+  /** Time-to-live (TTL) in seconds for generated content. Only applies when `outputType` is `URL`. */
+  ttl?: number
+  /** Compression quality of the output. Higher values preserve quality but increase file size. */
+  outputQuality?: number
+  [key: string]: unknown
+}
+
+/**
+ * Routed Vectorize Request
+ */
+export type RoutedVectorizeParams = {
+  /** Identifier of the model to use for generation. */
+  model: 'auto'
+  /** Model router options. */
+  routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
+  preferences?: {
+  /** Importance of one dimension. `0` leaves it out of the decision. */
+  quality?: number
+  /** Importance of one dimension. `0` leaves it out of the decision. */
+  speed?: number
+  /** Importance of one dimension. `0` leaves it out of the decision. */
+  cost?: number
+}
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
+  maxPrice?: number
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
+  requirements?: string
+}
+  /** Identifier for the type of task being performed. */
+  taskType: 'vectorize'
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  webhookURL?: string
+  /** Include task cost in the response. */
+  includeCost?: boolean
+  /** URL to upload content via HTTP PUT. The request body will contain the raw binary data. */
+  uploadEndpoint?: string
+  /** Time-to-live (TTL) in seconds for generated content. Only applies when `outputType` is `URL`. */
+  ttl?: number
+  /** Image output type. */
+  outputType?: 'URL' | 'base64Data' | 'dataURI'
+  /** File format for the vectorized output. */
+  outputFormat?: 'SVG'
+  /** Determines how the API delivers task results. */
+  deliveryMethod?: 'sync' | 'async'
+  [key: string]: unknown
+}
+
+/**
+ * Routed Video Request
+ */
+export type RoutedVideoInferenceParams = {
+  /** Identifier of the model to use for generation. */
+  model: 'auto'
+  /** Model router options. */
+  routing?: {
+  /** Models the router may choose from. Nothing outside this list is considered, so a request none of them can serve is refused. */
+  allowedModels?: string[]
+  /** Models the router may not choose. Every other model stays a candidate. */
+  excludedModels?: string[]
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
+  preferences?: {
+  /** Importance of one dimension. `0` leaves it out of the decision. */
+  quality?: number
+  /** Importance of one dimension. `0` leaves it out of the decision. */
+  speed?: number
+  /** Importance of one dimension. `0` leaves it out of the decision. */
+  cost?: number
+}
+  /** Upper bound on what this request may cost, in USD. A model whose cost cannot be bounded is not chosen. */
+  maxPrice?: number
+  /** Conditions the result has to meet, in plain words, such as a style or a feature. A model that cannot meet them is not chosen. Output size is set with width and height rather than described here. */
+  requirements?: string
+}
+  /** Identifier for the type of task being performed. */
+  taskType: 'videoInference'
+  /** Webhook URL that receives JSON responses via HTTP POST when generation tasks complete. For batch requests with multiple results, each completed item triggers a separate webhook call as it becomes available. */
+  webhookURL?: string
+  /** Include task cost in the response. */
+  includeCost?: boolean
+  /** Number of results to generate. Each result uses a different seed, producing variations of the same parameters. */
+  numberResults?: number
+  /** URL to upload content via HTTP PUT. The request body will contain the raw binary data. */
+  uploadEndpoint?: string
+  /** Time-to-live (TTL) in seconds for generated content. Only applies when `outputType` is `URL`. */
+  ttl?: number
+  /** Video output type. */
+  outputType?: 'URL'
+  /** File format for the generated video. */
+  outputFormat?: 'MP4' | 'WEBM' | 'MOV'
+  /** Compression quality of the output. Higher values preserve quality but increase file size. */
+  outputQuality?: number
+  /** Determines how the API delivers task results. */
+  deliveryMethod?: 'sync' | 'async'
+  /** Content safety checking configuration for video generation. */
+  safety?: {
+  /** Enable or disable content safety checking. Increases total generation time. */
+  checkContent?: boolean
+  /** Safety checking mode for video generation. */
+  mode?: 'fast' | 'full'
+}
+  [key: string]: unknown
+}
+
+/**
  * Account Management
  */
 export type AccountManagementParams = {
@@ -3957,6 +4556,23 @@ export type UtilityMap = {
 }
 
 export type UtilityKey = keyof UtilityMap
+
+export type RoutedMap = {
+  '3dInference': { params: RoutedThreeDInferenceParams, result: ThreeDInferenceResult }
+  audioInference: { params: RoutedAudioInferenceParams, result: AudioInferenceResult }
+  caption: { params: RoutedCaptionParams, result: CaptionResult }
+  controlNetPreprocess: { params: RoutedControlNetPreprocessParams, result: ControlNetPreprocessResult }
+  imageInference: { params: RoutedImageInferenceParams, result: ImageInferenceResult }
+  imageMasking: { params: RoutedImageMaskingParams, result: ImageMaskingResult }
+  promptEnhance: { params: RoutedPromptEnhanceParams, result: PromptEnhanceResult }
+  removeBackground: { params: RoutedRemoveBackgroundParams, result: RemoveBackgroundResult }
+  textInference: { params: RoutedTextInferenceParams, result: TextInferenceResult }
+  upscale: { params: RoutedUpscaleParams, result: UpscaleResult }
+  vectorize: { params: RoutedVectorizeParams, result: VectorizeResult }
+  videoInference: { params: RoutedVideoInferenceParams, result: VideoInferenceResult }
+}
+
+export type RoutedTaskType = keyof RoutedMap
 
 /**
  * Architecture-slug → API taskType. Used by `.run()` when the SDK can identify

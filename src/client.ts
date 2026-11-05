@@ -7,6 +7,8 @@ import type {
   SchemaMap,
   ModelResultMap,
   ModelAIR,
+  RoutedMap,
+  RoutedTaskType,
   UtilityMap,
   RunParams,
 } from './types/task-map'
@@ -65,6 +67,11 @@ export type RunwareClient = {
       params: { model: M } & Record<string, unknown>,
       options?: RunOptions,
     ): Promise<ModelResultMap[M][]>
+
+    <T extends RoutedTaskType>(
+      params: RoutedMap[T]['params'] & { taskType: T },
+      options?: RunOptions,
+    ): Promise<RoutedMap[T]['result'][]>
 
     // Explicit architecture generic
     <S extends SchemaKey>(

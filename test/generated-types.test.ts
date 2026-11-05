@@ -28,6 +28,18 @@ describe('Generated task-map.ts', () => {
     expect(content).toContain('export type UtilityMap')
   })
 
+  it('exports RoutedMap keyed by taskType', () => {
+    expect(content).toContain('export type RoutedMap')
+    expect(content).toMatch(/^  imageInference: \{ params: RoutedImageInferenceParams, result: ImageInferenceResult \}$/m)
+    expect(content).toMatch(/^export type RoutedImageInferenceParams = \{\n(?:.*\n)*?  model: 'auto'$/m)
+  })
+
+  it('declares routing only on routed params', () => {
+    const routing = content.match(/^  routing\?: \{$/gm) ?? []
+    const routed = content.match(/^export type Routed\w+Params = \{$/gm) ?? []
+    expect(routing.length).toBe(routed.length)
+  })
+
   it('exports the three runtime taskType maps (model/architecture/modality)', () => {
     expect(content).toContain('export const models')
     expect(content).toContain('export const architectureTaskTypes')

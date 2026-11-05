@@ -4,6 +4,8 @@ export type {
   SchemaMap,
   ModelResultMap,
   ModelAIR,
+  RoutedMap,
+  RoutedTaskType,
   UtilityKey,
   UtilityMap,
   RunParams,
@@ -44,6 +46,18 @@ export type {
   TrainingParams,
   UpscaleParams, UpscaleImageParams, UpscaleVideoParams,
   VectorizeParams,
+  RoutedImageInferenceParams,
+  RoutedVideoInferenceParams,
+  RoutedAudioInferenceParams,
+  RoutedTextInferenceParams,
+  RoutedThreeDInferenceParams,
+  RoutedCaptionParams,
+  RoutedControlNetPreprocessParams,
+  RoutedImageMaskingParams,
+  RoutedPromptEnhanceParams,
+  RoutedRemoveBackgroundParams,
+  RoutedUpscaleParams,
+  RoutedVectorizeParams,
 } from './types/task-map'
 export type { TextStream, TextStreamResult, TextStreamChunk } from './types/stream'
 export type {

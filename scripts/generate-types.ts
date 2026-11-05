@@ -66,6 +66,7 @@ type SchemaMap = {
   architectures?: Record<string, Json>
   modalities?: Record<string, Json>
   operations?: Record<string, Json>
+  auto?: Record<string, Json>
   utilities?: UtilityEntry[]
   errors?: Record<string, Json>
 }
@@ -359,6 +360,22 @@ const main = async () => {
     })
   }
 
+  const routedEntries: Array<{ taskType: string, typeName: string }> = []
+  const routed = Object.entries(schemaMap.auto ?? {}).sort(([a], [b]) => a.localeCompare(b))
+  for (const [key, schema] of routed) {
+    const taskType = extractTaskType(schema)
+    if (!taskType) {
+      warn(`  ⚠ auto '${key}' has no taskType`)
+      continue
+    }
+    const typeName = 'Routed' + toPascalCase(taskType) + 'Params'
+    const { taskUUID: _taskUUID, ...properties } = (schema.properties ?? {}) as Json
+    const required = ((schema.required ?? []) as string[]).filter((name) => name !== 'taskUUID')
+    output.push(emitType(typeName, { ...schema, properties, required }, { stripTaskFields: false }))
+    output.push('')
+    routedEntries.push({ taskType, typeName })
+  }
+
   // ----- utilities -----
   const skipUtils = new Set(['authentication', 'ping'])
   const sortedUtilities = (schemaMap.utilities ?? []).slice()
@@ -440,6 +457,17 @@ const main = async () => {
     utilMapLines.push(`  ${taskType}: { params: ${paramsType}, result: ${resultType} }`)
   }
 
+  const routedMapLines: string[] = []
+  for (const { taskType, typeName } of routedEntries) {
+    const resultType = resultMap.get(taskType)
+    if (!resultType) {
+      warn(`  ⚠ No result type for routed '${taskType}'`)
+      continue
+    }
+    const quotedKey = /^\d|[- ]/.test(taskType) ? `'${taskType}'` : taskType
+    routedMapLines.push(`  ${quotedKey}: { params: ${typeName}, result: ${resultType} }`)
+  }
+
   const schemaMapKeys = new Set(schemaMapLines.map((l) => l.trim().split(':')[0].replace(/'/g, '')))
 
   // ----- taskType maps -----
@@ -502,6 +530,12 @@ ${utilMapLines.join('\n')}
 }
 
 export type UtilityKey = keyof UtilityMap
+
+export type RoutedMap = {
+${routedMapLines.join('\n')}
+}
+
+export type RoutedTaskType = keyof RoutedMap
 
 /**
  * Architecture-slug → API taskType. Used by \`.run()\` when the SDK can identify
