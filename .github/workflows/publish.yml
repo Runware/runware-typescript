@@ -7,6 +7,8 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    # Only v* tags can use this environment, and npm's trusted publisher requires it, so a branch cannot publish.
+    environment: npm
     permissions:
       contents: read
       # Mints the OIDC token npm exchanges for publish rights (trusted publishing).
