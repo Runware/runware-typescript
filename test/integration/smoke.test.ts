@@ -15,7 +15,7 @@ import {
   expect,
 } from 'bun:test'
 
-import { createClient, isRunwareError } from '../../src/index'
+import { createClient, isRunwareError, models } from '../../src/index'
 
 const apiKey = process.env.RUNWARE_API_KEY
 const describeIf = apiKey ? describe : describe.skip
@@ -44,7 +44,32 @@ const serverlessClient = async () => createClient({
 })
 
 const IMAGE_MODEL = 'runware:400@2' // Flux 2 Klein 9b — cheap and fast
-const TEXT_MODEL = 'google:gemma@4-31b' // cheap and fast
+
+// LLMs keep leaving the native API, and a fixed id broke this suite each time one did,
+// so the cheapest live one is picked when the suite runs.
+const pickTextModel = async (): Promise<string | undefined> => {
+  const client = await createClient({ apiKey: apiKey!, transport: 'rest' })
+  const live = await client.content.listModels({ status: 'live', category: 'text' })
+  const outputRate = (model: (typeof live)[number]) => {
+    const rates = ((model.pricingRates ?? []) as { unit: string, amount: number }[])
+      .filter((rate) => rate.unit === 'outputToken')
+      .map((rate) => rate.amount)
+
+    return rates.length ? Math.max(...rates) : Infinity
+  }
+
+  return live
+    .filter((model) => models[model.air]?.taskType === 'textInference')
+    .sort((a, b) => outputRate(a) - outputRate(b))[0]?.air
+}
+
+const TEXT_MODEL = apiKey ? await pickTextModel() : undefined
+
+if (apiKey && !TEXT_MODEL) {
+  console.warn('No live textInference model is left on the native API, so the Stream suite is skipped. Remove it.')
+}
+
+const describeText = TEXT_MODEL ? describe : describe.skip
 
 const IMAGE_PARAMS = {
   model: IMAGE_MODEL,
@@ -127,7 +152,7 @@ describeIf('Integration: WebSocket + deliveryMethod=sync', () => {
   }, 120_000)
 })
 
-describeIf('Integration: Stream', () => {
+describeText('Integration: Stream', () => {
   it('numberResults=1 yields text chunks and a final result', async () => {
     const client = await createClient({ apiKey: apiKey! })
     const stream = await client.stream(TEXT_PARAMS)

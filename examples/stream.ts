@@ -11,7 +11,7 @@ const main = async () => {
   try {
     const textStream = await client.stream(
       {
-        model: 'google:gemma@4-31b',
+        model: 'openai:gpt@5.5',
         messages: [{ role: 'user', content: 'Write a 200-word short story about a lighthouse keeper.' }],
       },
       { signal: controller.signal },

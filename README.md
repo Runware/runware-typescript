@@ -67,7 +67,7 @@ const videos = await client.run({
 
 // Text inference (LLM)
 const responses = await client.run({
-  model: 'google:gemma@4-31b',
+  model: 'openai:gpt@5.5',
   messages: [{ role: 'user', content: 'Explain quantum computing' }],
 })
 
@@ -148,7 +148,7 @@ For text models, `.stream()` delivers tokens as they're generated:
 
 ```typescript
 const stream = await client.stream({
-  model: 'google:gemma@4-31b',
+  model: 'openai:gpt@5.5',
   messages: [{ role: 'user', content: 'Tell me a story about a robot' }],
 })
 
@@ -162,7 +162,7 @@ The `.stream()` method returns a `TextStream` object with multiple ways to consu
 
 ```typescript
 const stream = await client.stream({
-  model: 'google:gemma@4-31b',
+  model: 'openai:gpt@5.5',
   messages: [{ role: 'user', content: 'Explain gravity' }],
 })
 
@@ -283,7 +283,7 @@ For streams, abort closes the SSE connection cleanly:
 
 ```typescript
 const stream = await client.stream({
-  model: 'google:gemma@4-31b',
+  model: 'openai:gpt@5.5',
   messages: [{ role: 'user', content: 'Tell me a long story' }],
 }, { signal: controller.signal })
 
@@ -460,7 +460,7 @@ For tasks that complete quickly (text inference, fast image generation, captioni
 
 ```typescript
 const responses = await client.run({
-  model: 'google:gemma@4-31b',
+  model: 'openai:gpt@5.5',
   messages: [{ role: 'user', content: 'Hello' }],
   deliveryMethod: 'sync',
 })
