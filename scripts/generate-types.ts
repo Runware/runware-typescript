@@ -53,6 +53,7 @@ type InferenceEntry = {
   air?: string
   requestSchema?: Json
   responseSchema?: Json | null
+  responseType?: string
 }
 
 type UtilityEntry = {
@@ -68,6 +69,7 @@ type SchemaMap = {
   operations?: Record<string, Json>
   auto?: Record<string, Json>
   utilities?: UtilityEntry[]
+  responseTypes?: Record<string, Json>
   errors?: Record<string, Json>
 }
 
@@ -397,13 +399,22 @@ const main = async () => {
   const skipInferenceResp = new Set(['authentication', 'getResponse', 'ping'])
   const skipUtilityResp = new Set(['authentication', 'ping'])
 
+  // A model's own response drops fields its shared type declares when the model
+  // never returns them (seed on a model that takes none), so a task's result
+  // type comes from the shared type the model references.
+  const sharedResponse = (entry: InferenceEntry): Json | null | undefined => {
+    if (!schemaMap.responseTypes) { return entry.responseSchema }
+    return (entry.responseType) ? schemaMap.responseTypes[entry.responseType] : undefined
+  }
+
   for (const entry of schemaMap.inference ?? []) {
-    if (!entry.responseSchema) { continue }
-    const taskType = extractTaskType(entry.responseSchema)
+    const responseSchema = sharedResponse(entry)
+    if (!responseSchema) { continue }
+    const taskType = extractTaskType(responseSchema)
     if (!taskType || seenResult.has(taskType) || skipInferenceResp.has(taskType)) { continue }
     seenResult.add(taskType)
     const typeName = toPascalCase(taskType) + 'Result'
-    output.push(emitType(typeName, entry.responseSchema, { stripTaskFields: false }))
+    output.push(emitType(typeName, responseSchema, { stripTaskFields: false }))
     output.push('')
     resultMap.set(taskType, typeName)
   }
