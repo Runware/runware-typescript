@@ -274,6 +274,29 @@ const extractTaskType = (schema: any): string | undefined => {
   return typeof tt === 'string' ? tt : undefined
 }
 
+// A task whose models return different shapes (upscale: image or video) gets
+// one type with every field, required only where every shape requires it.
+const mergeShapes = (taskType: string, shapes: Json[]): Json => {
+  if (shapes.length === 1) { return shapes[0] }
+
+  const properties: Json = {}
+  for (const shape of shapes) {
+    for (const [key, value] of Object.entries((shape.properties ?? {}) as Json)) {
+      if (!(key in properties)) { properties[key] = value }
+    }
+  }
+
+  const requiredIn = (shape: Json) => (shape.required ?? []) as string[]
+  const required = requiredIn(shapes[0])
+    .filter((key) => shapes.every((shape) => requiredIn(shape).includes(key)))
+  const words = taskType.replace(/[A-Z]/g, (letter) => ` ${letter}`)
+  const title = `${words[0].toUpperCase()}${words.slice(1)} Response`
+
+  return {
+    ...shapes[0], title, properties, required,
+  }
+}
+
 // ----------------------------------------------------------------- main driver
 
 const main = async () => {
@@ -401,20 +424,35 @@ const main = async () => {
 
   // A model's own response drops fields its shared type declares when the model
   // never returns them (seed on a model that takes none), so a task's result
-  // type comes from the shared type the model references.
-  const sharedResponse = (entry: InferenceEntry): Json | null | undefined => {
-    if (!schemaMap.responseTypes) { return entry.responseSchema }
-    return (entry.responseType) ? schemaMap.responseTypes[entry.responseType] : undefined
+  // type comes from the shared types its models reference, all of them merged.
+  // A bundle without responseTypes only has each model's own response, and the
+  // first one stands for the task.
+  const resultShapes = new Map<string, Json[]>()
+  const responseTypes = schemaMap.responseTypes
+  if (responseTypes) {
+    const slugsByTask = new Map<string, Set<string>>()
+    for (const entry of schemaMap.inference ?? []) {
+      const slug = entry.responseType
+      const taskType = (slug) ? extractTaskType(responseTypes[slug]) : undefined
+      if (!slug || !taskType || skipInferenceResp.has(taskType)) { continue }
+      slugsByTask.set(taskType, (slugsByTask.get(taskType) ?? new Set<string>()).add(slug))
+    }
+    for (const [taskType, slugs] of slugsByTask) {
+      resultShapes.set(taskType, [...slugs].sort().map((slug) => responseTypes[slug]))
+    }
+  } else {
+    for (const entry of schemaMap.inference ?? []) {
+      const taskType = extractTaskType(entry.responseSchema)
+      if (!entry.responseSchema || !taskType) { continue }
+      if (resultShapes.has(taskType) || skipInferenceResp.has(taskType)) { continue }
+      resultShapes.set(taskType, [entry.responseSchema])
+    }
   }
 
-  for (const entry of schemaMap.inference ?? []) {
-    const responseSchema = sharedResponse(entry)
-    if (!responseSchema) { continue }
-    const taskType = extractTaskType(responseSchema)
-    if (!taskType || seenResult.has(taskType) || skipInferenceResp.has(taskType)) { continue }
+  for (const [taskType, shapes] of [...resultShapes].sort(([a], [b]) => a.localeCompare(b))) {
     seenResult.add(taskType)
     const typeName = toPascalCase(taskType) + 'Result'
-    output.push(emitType(typeName, responseSchema, { stripTaskFields: false }))
+    output.push(emitType(typeName, mergeShapes(taskType, shapes), { stripTaskFields: false }))
     output.push('')
     resultMap.set(taskType, typeName)
   }
