@@ -1,5 +1,5 @@
 /**
- * AUTO-GENERATED from schema-map@20261105172523 — do not edit manually.
+ * AUTO-GENERATED from schema-map@20261116211641 — do not edit manually.
  * Run: bun run scripts/generate-types.ts
  */
 
@@ -3041,7 +3041,7 @@ export type RoutedThreeDInferenceParams = {
   allowedModels?: string[]
   /** Models the router may not choose. Every other model stays a candidate. */
   excludedModels?: string[]
-  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. A dimension you leave out is weighed at its default, quality 5, speed 3 and cost 2. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
@@ -3088,7 +3088,7 @@ export type RoutedAudioInferenceParams = {
   allowedModels?: string[]
   /** Models the router may not choose. Every other model stays a candidate. */
   excludedModels?: string[]
-  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. A dimension you leave out is weighed at its default, quality 5, speed 3 and cost 2. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
@@ -3144,7 +3144,7 @@ export type RoutedCaptionParams = {
   allowedModels?: string[]
   /** Models the router may not choose. Every other model stays a candidate. */
   excludedModels?: string[]
-  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. A dimension you leave out is weighed at its default, quality 5, speed 3 and cost 2. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
@@ -3179,7 +3179,7 @@ export type RoutedControlNetPreprocessParams = {
   allowedModels?: string[]
   /** Models the router may not choose. Every other model stays a candidate. */
   excludedModels?: string[]
-  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. A dimension you leave out is weighed at its default, quality 5, speed 3 and cost 2. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
@@ -3229,7 +3229,7 @@ export type RoutedImageInferenceParams = {
   allowedModels?: string[]
   /** Models the router may not choose. Every other model stays a candidate. */
   excludedModels?: string[]
-  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. A dimension you leave out is weighed at its default, quality 5, speed 3 and cost 2. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
@@ -3301,7 +3301,7 @@ export type RoutedImageMaskingParams = {
   allowedModels?: string[]
   /** Models the router may not choose. Every other model stays a candidate. */
   excludedModels?: string[]
-  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. A dimension you leave out is weighed at its default, quality 5, speed 3 and cost 2. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
@@ -3362,7 +3362,7 @@ export type RoutedPromptEnhanceParams = {
   allowedModels?: string[]
   /** Models the router may not choose. Every other model stays a candidate. */
   excludedModels?: string[]
-  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. A dimension you leave out is weighed at its default, quality 5, speed 3 and cost 2. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
@@ -3405,7 +3405,7 @@ export type RoutedRemoveBackgroundParams = {
   allowedModels?: string[]
   /** Models the router may not choose. Every other model stays a candidate. */
   excludedModels?: string[]
-  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. A dimension you leave out is weighed at its default, quality 5, speed 3 and cost 2. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
@@ -3446,7 +3446,7 @@ export type RoutedTextInferenceParams = {
   allowedModels?: string[]
   /** Models the router may not choose. Every other model stays a candidate. */
   excludedModels?: string[]
-  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. A dimension you leave out is weighed at its default, quality 5, speed 3 and cost 2. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
@@ -3498,7 +3498,7 @@ export type RoutedUpscaleParams = {
   allowedModels?: string[]
   /** Models the router may not choose. Every other model stays a candidate. */
   excludedModels?: string[]
-  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. A dimension you leave out is weighed at its default, quality 5, speed 3 and cost 2. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
@@ -3539,7 +3539,7 @@ export type RoutedVectorizeParams = {
   allowedModels?: string[]
   /** Models the router may not choose. Every other model stays a candidate. */
   excludedModels?: string[]
-  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. A dimension you leave out is weighed at its default, quality 5, speed 3 and cost 2. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
@@ -3584,7 +3584,7 @@ export type RoutedVideoInferenceParams = {
   allowedModels?: string[]
   /** Models the router may not choose. Every other model stays a candidate. */
   excludedModels?: string[]
-  /** Relative importance of each dimension when models are compared. Weights, not thresholds. */
+  /** Relative importance of each dimension when models are compared. Weights, not thresholds. A dimension you leave out is weighed at its default, quality 5, speed 3 and cost 2. */
   preferences?: {
   /** Importance of one dimension. `0` leaves it out of the decision. */
   quality?: number
@@ -3753,27 +3753,27 @@ export type ModelUploadParams = {
 }
 
 /**
- * Image Response
+ * 3D Response
  */
-export type ImageInferenceResult = {
+export type ThreeDInferenceResult = {
   /** Identifier for the type of task this response belongs to. */
-  taskType: 'imageInference'
+  taskType: '3dInference'
   /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
   taskUUID: string
   /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
   cost?: number
-  /** UUID of the output image. */
-  imageUUID: string
-  /** URL of the output image. */
-  imageURL?: string
-  /** Base64-encoded image data. */
-  imageBase64Data?: string
-  /** Data URI of the output image. */
-  imageDataURI?: string
+  /** Generated output artifacts. */
+  outputs: {
+  /** Generated output files. */
+  files: {
+  /** UUID of the output file. */
+  uuid: string
+  /** URL of the output file. */
+  url: string
+}[]
+}
   /** The seed used for generation. If none was provided, shows the randomly generated seed. */
   seed?: number
-  /** Flag indicating if NSFW content was detected. */
-  NSFWContent?: boolean
 }
 
 /**
@@ -3799,34 +3799,7 @@ export type AudioInferenceResult = {
 }
 
 /**
- * Text Inference Response
- */
-export type TextInferenceResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'textInference'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** Generated text content. */
-  text: string
-  /** The reason why the model stopped generating tokens. */
-  finishReason: 'stop' | 'length' | 'content_filter' | 'unknown'
-  /** Token usage statistics for the request. */
-  usage: {
-  /** Number of tokens in the input prompt. */
-  promptTokens: number
-  /** Number of tokens generated in the response. */
-  completionTokens: number
-  /** Total number of tokens used (prompt + completion). */
-  totalTokens: number
-  /** Number of tokens used for internal reasoning. Billed separately. */
-  thinkingTokens?: number
-}
-}
-
-/**
- * Caption Text Response
+ * Caption Response
  */
 export type CaptionResult = {
   /** Identifier for the type of task this response belongs to. */
@@ -3835,100 +3808,15 @@ export type CaptionResult = {
   taskUUID: string
   /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
   cost?: number
+  /** Machine-readable age classification data. */
+  structuredData?: {
+  /** Predicted age range of the subject (e.g. `13-20`). */
+  ageGroup: string
+  /** Confidence score as a percentage. */
+  confidence: number
+}
   /** Generated caption text describing the input. */
-  text: string
-}
-
-/**
- * 3D Response
- */
-export type ThreeDInferenceResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: '3dInference'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** Generated output artifacts. */
-  outputs: {
-  /** Generated output files. */
-  files: {
-  /** UUID of the output file. */
-  uuid: string
-  /** URL of the output file. */
-  url: string
-}[]
-}
-  /** The seed used for generation. If none was provided, shows the randomly generated seed. */
-  seed?: number
-}
-
-/**
- * Video Response
- */
-export type VideoInferenceResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'videoInference'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** UUID of the output video. */
-  videoUUID: string
-  /** URL of the output video. */
-  videoURL?: string
-  /** Base64-encoded video data. */
-  videoBase64Data?: string
-  /** Data URI of the output video. */
-  videoDataURI?: string
-  /** The seed used for generation. If none was provided, shows the randomly generated seed. */
-  seed?: number
-  /** Flag indicating if NSFW content was detected. */
-  NSFWContent?: boolean
-}
-
-/**
- * Upscale Image Response
- */
-export type UpscaleResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'upscale'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** UUID of the output image. */
-  imageUUID: string
-  /** URL of the output image. */
-  imageURL?: string
-  /** Base64-encoded image data. */
-  imageBase64Data?: string
-  /** Data URI of the output image. */
-  imageDataURI?: string
-}
-
-/**
- * Training Response
- */
-export type TrainingResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'training'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** AIR of the trained model produced by this run. Use it to run inference with the trained model. */
-  air: string
-  /** The trained model produced by the training run. */
-  outputs: {
-  /** The file or files that make up the trained model. */
-  files: {
-  /** UUID of the output file. */
-  uuid: string
-  /** URL of the output file. */
-  url: string
-}[]
-}
+  text?: string
 }
 
 /**
@@ -3951,6 +3839,30 @@ export type ControlNetPreprocessResult = {
   guideImageDataURI?: string
   /** UUID of the input image used for preprocessing. */
   inputImageUUID: string
+}
+
+/**
+ * Image Response
+ */
+export type ImageInferenceResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'imageInference'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** UUID of the output image. */
+  imageUUID: string
+  /** URL of the output image. */
+  imageURL?: string
+  /** Base64-encoded image data. */
+  imageBase64Data?: string
+  /** Data URI of the output image. */
+  imageDataURI?: string
+  /** The seed used for generation. If none was provided, shows the randomly generated seed. */
+  seed?: number
+  /** Flag indicating if NSFW content was detected. */
+  NSFWContent?: boolean
 }
 
 /**
@@ -3987,26 +3899,6 @@ export type ImageMaskingResult = {
 }
 
 /**
- * Remove Background Image Response
- */
-export type RemoveBackgroundResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'removeBackground'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
-  cost?: number
-  /** UUID of the output image. */
-  imageUUID: string
-  /** URL of the output image. */
-  imageURL?: string
-  /** Base64-encoded image data. */
-  imageBase64Data?: string
-  /** Data URI of the output image. */
-  imageDataURI?: string
-}
-
-/**
  * Prompt Enhance Response
  */
 export type PromptEnhanceResult = {
@@ -4018,6 +3910,61 @@ export type PromptEnhanceResult = {
   cost?: number
   /** Enhanced prompt text. */
   text: string
+}
+
+/**
+ * Remove Background Response
+ */
+export type RemoveBackgroundResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'removeBackground'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** UUID of the output image. */
+  imageUUID?: string
+  /** URL of the output image. */
+  imageURL?: string
+  /** Base64-encoded image data. */
+  imageBase64Data?: string
+  /** Data URI of the output image. */
+  imageDataURI?: string
+  /** UUID of the output video. */
+  videoUUID?: string
+  /** URL of the output video. */
+  videoURL?: string
+  /** Base64-encoded video data. */
+  videoBase64Data?: string
+  /** Data URI of the output video. */
+  videoDataURI?: string
+}
+
+/**
+ * Text Inference Response
+ */
+export type TextInferenceResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'textInference'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** Generated text content. */
+  text: string
+  /** The reason why the model stopped generating tokens. */
+  finishReason: 'stop' | 'length' | 'content_filter' | 'unknown'
+  /** Token usage statistics for the request. */
+  usage: {
+  /** Number of tokens in the input prompt. */
+  promptTokens: number
+  /** Number of tokens generated in the response. */
+  completionTokens: number
+  /** Total number of tokens used (prompt + completion). */
+  totalTokens: number
+  /** Number of tokens used for internal reasoning. Billed separately. */
+  thinkingTokens?: number
+}
 }
 
 /**
@@ -4043,6 +3990,58 @@ export type ToolsResult = {
 }
 
 /**
+ * Training Response
+ */
+export type TrainingResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'training'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** AIR of the trained model produced by this run. Use it to run inference with the trained model. */
+  air: string
+  /** The trained model produced by the training run. */
+  outputs: {
+  /** The file or files that make up the trained model. */
+  files: {
+  /** UUID of the output file. */
+  uuid: string
+  /** URL of the output file. */
+  url: string
+}[]
+}
+}
+
+/**
+ * Upscale Response
+ */
+export type UpscaleResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'upscale'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** UUID of the output image. */
+  imageUUID?: string
+  /** URL of the output image. */
+  imageURL?: string
+  /** Base64-encoded image data. */
+  imageBase64Data?: string
+  /** Data URI of the output image. */
+  imageDataURI?: string
+  /** UUID of the output video. */
+  videoUUID?: string
+  /** URL of the output video. */
+  videoURL?: string
+  /** Base64-encoded video data. */
+  videoBase64Data?: string
+  /** Data URI of the output video. */
+  videoDataURI?: string
+}
+
+/**
  * Vectorize Response
  */
 export type VectorizeResult = {
@@ -4060,6 +4059,99 @@ export type VectorizeResult = {
   imageBase64Data?: string
   /** Data URI of the output image. */
   imageDataURI?: string
+}
+
+/**
+ * Video Response
+ */
+export type VideoInferenceResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'videoInference'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Task cost in USD. Present when `includeCost` is set to `true` in the request. */
+  cost?: number
+  /** UUID of the output video. */
+  videoUUID: string
+  /** URL of the output video. */
+  videoURL?: string
+  /** Base64-encoded video data. */
+  videoBase64Data?: string
+  /** Data URI of the output video. */
+  videoDataURI?: string
+  /** The seed used for generation. If none was provided, shows the randomly generated seed. */
+  seed?: number
+  /** Flag indicating if NSFW content was detected. */
+  NSFWContent?: boolean
+}
+
+/**
+ * Model Upload Response
+ */
+export type ModelUploadResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType?: 'modelUpload'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** Status of the upload operation phase. */
+  status: 'validated' | 'downloaded' | 'optimized' | 'stored' | 'ready' | 'failed'
+  /** Status message or error details. */
+  message: string
+  /** The AIR identifier of the uploaded model. */
+  air?: string
+}
+
+/**
+ * Get Task Details Response
+ */
+export type GetTaskDetailsResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'getTaskDetails'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** The original request array sent for this task. The structure of each object depends on the task type. */
+  request: Record<string, unknown>[]
+  /** The original API response for this task. Contains a `data` array when the task completed successfully, or an `errors` array when the task failed. */
+  response: Record<string, unknown>
+}
+
+/**
+ * Media Storage Response
+ */
+export type MediaStorageResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'mediaStorage'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** The media storage operation that produced this response. */
+  operation: 'upload'
+  /** UUID of the stored media. */
+  mediaUUID: string
+  /** URL where the stored media is accessible. */
+  mediaURL: string
+} | {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'mediaStorage'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** The media storage operation that produced this response. */
+  operation: 'delete'
+  /** UUID of the stored media. */
+  mediaUUID: string
+}
+
+/**
+ * Image Upload Response
+ */
+export type ImageUploadResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'imageUpload'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** UUID of the output image. */
+  imageUUID: string
+  /** URL of the output image. */
+  imageURL: string
 }
 
 /**
@@ -4141,6 +4233,400 @@ export type ModelSearchResult = {
 }
 
 /**
+ * Account Management Response
+ */
+export type AccountManagementResult = {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'accountManagement'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** The account management operation that produced this response. */
+  operation: 'getDetails'
+  /** The name of the organization. */
+  organizationName: string
+  /** Unique identifier for the organization. */
+  organizationUUID: string
+  /** AIR source set for the organization in the dashboard. Models uploaded through the API must use it as the source of their `air`. */
+  AIRSource?: string
+  /** Current account balance. */
+  balance: number
+  /** List of team members. */
+  team: ({
+  /** Full name of the team member. */
+  name: string
+  /** Email address of the team member. */
+  email: string
+  /** Roles assigned to the team member. */
+  roles: ('Owner' | 'Admin' | 'Developer')[]
+  /** Date and time when the member joined. */
+  joinedAt?: string | null
+})[]
+  /** List of API keys associated with the account. */
+  apiKeys: ({
+  /** The API key string (partially masked). */
+  apiKey: string
+  /** Name or label for the API key. */
+  name: string
+  /** Description of the API key, or null when it has none. */
+  description?: string | null
+  /** Whether the API key is active. */
+  enabled: boolean
+  /** Date and time when the key was created. */
+  createdAt: string
+  /** Date and time when the key was last used, or null when it has never been used. */
+  lastUsedAt?: string | null
+  /** Total number of requests made with this key. */
+  requests?: number
+})[]
+  /** Account usage statistics. */
+  usage: {
+  /** Usage stats for today. */
+  today: {
+  /** Total credits consumed. */
+  credits: number
+  /** Total API requests made. */
+  requests: number
+}
+  /** Usage stats for the last 7 days. */
+  last7Days: {
+  /** Total credits consumed. */
+  credits: number
+  /** Total API requests made. */
+  requests: number
+}
+  /** Usage stats for the last 30 days. */
+  last30Days: {
+  /** Total credits consumed. */
+  credits: number
+  /** Total API requests made. */
+  requests: number
+}
+  /** Total lifetime usage stats. */
+  total: {
+  /** Total credits consumed. */
+  credits: number
+  /** Total API requests made. */
+  requests: number
+}
+}
+} | {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'accountManagement'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** The account management operation that produced this response. */
+  operation: 'getUsageActivity'
+  /** Start of the returned window (inclusive). */
+  startDate: string
+  /** End of the returned window (inclusive). */
+  endDate: string
+  /** Account usage statistics. */
+  usage: {
+  /** Per-day breakdown (from groupBy date). */
+  timeseries?: {
+  /** Rows for this breakdown. */
+  data: {
+  /** Day bucket. */
+  date: string
+  /** Number of requests in this bucket. */
+  count: number
+  /** Amount spent in this bucket. */
+  spend: number
+}[]
+  /** Roll-up totals for a breakdown. Which fields are present depends on the operation. */
+  meta: {
+  /** Total requests across the window. */
+  totalRequests: number
+  /** Total results produced across the window. */
+  totalResults: number
+  /** Total spend across the window. */
+  totalSpend: number
+  /** Average spend per day. An estimate that drifts between calls. */
+  avgDailySpend: number
+  /** Projected 30-day spend extrapolated from the window. An estimate that drifts between calls. */
+  projectedSpend: number
+}
+}
+  /** Per-model breakdown (from groupBy model). */
+  model?: {
+  /** Rows for this breakdown. */
+  data: {
+  /** Day bucket. */
+  date?: string
+  /** Model AIR. */
+  model: string
+  /** Human-friendly model name. Falls back to the AIR when none exists. */
+  modelName: string
+  /** Number of requests in this bucket. */
+  count: number
+  /** Amount spent in this bucket. */
+  spend: number
+}[]
+  /** Roll-up totals for a breakdown. Which fields are present depends on the operation. */
+  meta: {
+  /** Total requests across the window. */
+  totalRequests: number
+  /** Total results produced across the window. */
+  totalResults: number
+  /** Total spend across the window. */
+  totalSpend: number
+  /** Average spend per day. An estimate that drifts between calls. */
+  avgDailySpend: number
+  /** Projected 30-day spend extrapolated from the window. An estimate that drifts between calls. */
+  projectedSpend: number
+}
+}
+  /** Per-key breakdown (from groupBy apiKey). */
+  apiKey?: {
+  /** Rows for this breakdown. */
+  data: {
+  /** Day bucket. */
+  date?: string
+  /** API key UUID. */
+  apiKey: string
+  /** Number of requests in this bucket. */
+  count: number
+  /** Amount spent in this bucket. */
+  spend: number
+}[]
+  /** Roll-up totals for a breakdown. Which fields are present depends on the operation. */
+  meta: {
+  /** Total requests across the window. */
+  totalRequests: number
+  /** Total results produced across the window. */
+  totalResults: number
+  /** Total spend across the window. */
+  totalSpend: number
+  /** Average spend per day. An estimate that drifts between calls. */
+  avgDailySpend: number
+  /** Projected 30-day spend extrapolated from the window. An estimate that drifts between calls. */
+  projectedSpend: number
+}
+}
+}
+} | {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'accountManagement'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** The account management operation that produced this response. */
+  operation: 'getUsagePerformance'
+  /** Start of the returned window (inclusive). */
+  startDate: string
+  /** End of the returned window (inclusive). */
+  endDate: string
+  /** Account usage statistics. */
+  usage: {
+  /** Per-day breakdown (from groupBy date). */
+  timeseries?: {
+  /** Rows for this breakdown. */
+  data: ({
+  /** Day bucket. */
+  date: string
+  /** Average inference time in seconds, or null when there were no inferences. */
+  avgInferenceTime: number | null
+  /** Median inference time in seconds, or null when there were no inferences. */
+  p50InferenceTime: number | null
+  /** 90th-percentile inference time in seconds, or null when there were no inferences. */
+  p90InferenceTime: number | null
+  /** 95th-percentile inference time in seconds, or null when there were no inferences. */
+  p95InferenceTime: number | null
+  /** 99th-percentile inference time in seconds, or null when there were no inferences. */
+  p99InferenceTime: number | null
+})[]
+  /** Roll-up totals for a breakdown. Which fields are present depends on the operation. */
+  meta: {
+  /** Total requests across the window. */
+  totalRequests?: number
+  /** Total results produced across the window. */
+  totalResults?: number
+  /** Total spend across the window. */
+  totalSpend?: number
+  /** Average spend per day. An estimate that drifts between calls. */
+  avgDailySpend?: number
+  /** Projected 30-day spend extrapolated from the window. An estimate that drifts between calls. */
+  projectedSpend?: number
+  /** Average inference time in seconds. */
+  avgInferenceTime?: number
+  /** Median inference time in seconds. */
+  p50InferenceTime?: number
+  /** 90th-percentile inference time in seconds. */
+  p90InferenceTime?: number
+  /** 95th-percentile inference time in seconds. */
+  p95InferenceTime?: number
+  /** 99th-percentile inference time in seconds. */
+  p99InferenceTime?: number
+}
+}
+  /** Per-model breakdown (from groupBy model). */
+  model?: {
+  /** Rows for this breakdown. */
+  data: ({
+  /** Day bucket. */
+  date?: string
+  /** Model AIR. */
+  model: string
+  /** Human-friendly model name. Falls back to the AIR when none exists. */
+  modelName: string
+  /** Average inference time in seconds, or null when there were no inferences. */
+  avgInferenceTime: number | null
+  /** Median inference time in seconds, or null when there were no inferences. */
+  p50InferenceTime: number | null
+  /** 90th-percentile inference time in seconds, or null when there were no inferences. */
+  p90InferenceTime: number | null
+  /** 95th-percentile inference time in seconds, or null when there were no inferences. */
+  p95InferenceTime: number | null
+  /** 99th-percentile inference time in seconds, or null when there were no inferences. */
+  p99InferenceTime: number | null
+})[]
+  /** Roll-up totals for a breakdown. Which fields are present depends on the operation. */
+  meta: {
+  /** Total requests across the window. */
+  totalRequests: number
+  /** Total results produced across the window. */
+  totalResults: number
+  /** Total spend across the window. */
+  totalSpend: number
+  /** Average spend per day. An estimate that drifts between calls. */
+  avgDailySpend: number
+  /** Projected 30-day spend extrapolated from the window. An estimate that drifts between calls. */
+  projectedSpend: number
+  /** Average inference time in seconds. */
+  avgInferenceTime: number
+  /** Median inference time in seconds. */
+  p50InferenceTime: number
+  /** 90th-percentile inference time in seconds. */
+  p90InferenceTime: number
+  /** 95th-percentile inference time in seconds. */
+  p95InferenceTime: number
+  /** 99th-percentile inference time in seconds. */
+  p99InferenceTime: number
+}
+}
+  /** Per-key breakdown (from groupBy apiKey). */
+  apiKey?: {
+  /** Rows for this breakdown. */
+  data: ({
+  /** Day bucket. */
+  date?: string
+  /** API key UUID. */
+  apiKey: string
+  /** Average inference time in seconds, or null when there were no inferences. */
+  avgInferenceTime: number | null
+  /** Median inference time in seconds, or null when there were no inferences. */
+  p50InferenceTime: number | null
+  /** 90th-percentile inference time in seconds, or null when there were no inferences. */
+  p90InferenceTime: number | null
+  /** 95th-percentile inference time in seconds, or null when there were no inferences. */
+  p95InferenceTime: number | null
+  /** 99th-percentile inference time in seconds, or null when there were no inferences. */
+  p99InferenceTime: number | null
+})[]
+  /** Roll-up totals for a breakdown. Which fields are present depends on the operation. */
+  meta: {
+  /** Total requests across the window. */
+  totalRequests?: number
+  /** Total results produced across the window. */
+  totalResults?: number
+  /** Total spend across the window. */
+  totalSpend?: number
+  /** Average spend per day. An estimate that drifts between calls. */
+  avgDailySpend?: number
+  /** Projected 30-day spend extrapolated from the window. An estimate that drifts between calls. */
+  projectedSpend?: number
+  /** Average inference time in seconds. */
+  avgInferenceTime?: number
+  /** Median inference time in seconds. */
+  p50InferenceTime?: number
+  /** 90th-percentile inference time in seconds. */
+  p90InferenceTime?: number
+  /** 95th-percentile inference time in seconds. */
+  p95InferenceTime?: number
+  /** 99th-percentile inference time in seconds. */
+  p99InferenceTime?: number
+}
+}
+}
+} | {
+  /** Identifier for the type of task this response belongs to. */
+  taskType: 'accountManagement'
+  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
+  taskUUID: string
+  /** The account management operation that produced this response. */
+  operation: 'getUsageErrors'
+  /** Start of the returned window (inclusive). */
+  startDate: string
+  /** End of the returned window (inclusive). */
+  endDate: string
+  /** Account usage statistics. */
+  usage: {
+  /** Per-day breakdown (from groupBy date). */
+  timeseries?: {
+  /** Rows for this breakdown. */
+  data: {
+  /** Day bucket. */
+  date: string
+  /** Number of 4xx (client) errors in this bucket. */
+  clientErrors: number
+  /** Number of 5xx (server) errors in this bucket. */
+  serverErrors: number
+}[]
+  /** Roll-up totals for a breakdown. Which fields are present depends on the operation. */
+  meta: {
+  /** Total errors across the window. */
+  totalErrors: number
+  /** Error rate across the window, as a percentage. */
+  errorRate: number
+}
+}
+  /** Per-model breakdown (from groupBy model). */
+  model?: {
+  /** Rows for this breakdown. */
+  data: {
+  /** Day bucket. */
+  date?: string
+  /** Model AIR. */
+  model: string
+  /** Human-friendly model name. Falls back to the AIR when none exists. */
+  modelName: string
+  /** Number of 4xx (client) errors in this bucket. */
+  clientErrors: number
+  /** Number of 5xx (server) errors in this bucket. */
+  serverErrors: number
+}[]
+  /** Roll-up totals for a breakdown. Which fields are present depends on the operation. */
+  meta: {
+  /** Total errors across the window. */
+  totalErrors: number
+  /** Error rate across the window, as a percentage. */
+  errorRate: number
+}
+}
+  /** Per-key breakdown (from groupBy apiKey). */
+  apiKey?: {
+  /** Rows for this breakdown. */
+  data: {
+  /** Day bucket. */
+  date?: string
+  /** API key UUID. */
+  apiKey: string
+  /** Number of 4xx (client) errors in this bucket. */
+  clientErrors: number
+  /** Number of 5xx (server) errors in this bucket. */
+  serverErrors: number
+}[]
+  /** Roll-up totals for a breakdown. Which fields are present depends on the operation. */
+  meta: {
+  /** Total errors across the window. */
+  totalErrors: number
+  /** Error rate across the window, as a percentage. */
+  errorRate: number
+}
+}
+}
+}
+
+/**
  * Task Response
  */
 export type GetResponseResult = {
@@ -4160,322 +4646,6 @@ export type GetResponseResult = {
   message?: string
 }
   [key: string]: unknown
-}
-
-/**
- * Model Upload Response
- */
-export type ModelUploadResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType?: 'modelUpload'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** Status of the upload operation phase. */
-  status: 'validated' | 'downloaded' | 'optimized' | 'stored' | 'ready' | 'failed'
-  /** Status message or error details. */
-  message: string
-  /** The AIR identifier of the uploaded model. */
-  air?: string
-}
-
-/**
- * Account Management Response
- */
-export type AccountManagementResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'accountManagement'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** The account management operation that produced this response. */
-  operation: 'getDetails' | 'getUsageActivity' | 'getUsagePerformance' | 'getUsageErrors'
-  /** Start of the returned window (inclusive). */
-  startDate?: string
-  /** End of the returned window (inclusive). */
-  endDate?: string
-  /** The name of the organization. */
-  organizationName?: string
-  /** Unique identifier for the organization. */
-  organizationUUID?: string
-  /** Current account balance and currency. */
-  balance?: {
-  /** Current balance amount. */
-  amount: number
-  /** Available free credit balance. */
-  freeBalance?: number
-  /** Currency code. */
-  currency: string
-}
-  /** List of team members. */
-  team?: ({
-  /** Full name of the team member. */
-  name: string
-  /** Email address of the team member. */
-  email: string
-  /** Roles assigned to the team member. */
-  roles: ('Owner' | 'Admin' | 'Developer')[]
-  /** Date and time when the member joined. */
-  joinedAt?: string
-})[]
-  /** List of API keys associated with the account. */
-  apiKeys?: {
-  /** The API key string (partially masked). */
-  apiKey: string
-  /** Name or label for the API key. */
-  name: string
-  /** Description of the API key. */
-  description?: string
-  /** Whether the API key is active. */
-  enabled: boolean
-  /** Date and time when the key was created. */
-  createdAt: string
-  /** Date and time when the key was last used. */
-  lastUsedAt?: string
-  /** Total number of requests made with this key. */
-  requests?: number
-}[]
-  /** Account usage statistics. */
-  usage?: {
-  /** Usage stats for today. */
-  today?: {
-  /** Total credits consumed. */
-  credits: number
-  /** Total API requests made. */
-  requests: number
-}
-  /** Usage stats for the last 7 days. */
-  last7Days?: {
-  /** Total credits consumed. */
-  credits: number
-  /** Total API requests made. */
-  requests: number
-}
-  /** Usage stats for the last 30 days. */
-  last30Days?: {
-  /** Total credits consumed. */
-  credits: number
-  /** Total API requests made. */
-  requests: number
-}
-  /** Total lifetime usage stats. */
-  total?: {
-  /** Total credits consumed. */
-  credits: number
-  /** Total API requests made. */
-  requests: number
-}
-  /** Per-day breakdown (from groupBy date). */
-  timeseries?: {
-  /** Rows for this breakdown. */
-  data: ({
-  /** Day bucket. */
-  date?: string
-  /** Model AIR. */
-  model?: string
-  /** Human-friendly model name. Falls back to the AIR when none exists. */
-  modelName?: string
-  /** API key UUID. */
-  apiKey?: string
-  /** Number of requests in this bucket. */
-  count?: number
-  /** Amount spent in this bucket. */
-  spend?: number
-  /** Number of 4xx (client) errors in this bucket. */
-  clientErrors?: number
-  /** Number of 5xx (server) errors in this bucket. */
-  serverErrors?: number
-  /** Average inference time in seconds, or null when there were no inferences. */
-  avgInferenceTime?: number | null
-  /** 90th-percentile inference time in seconds, or null when there were no inferences. */
-  p90InferenceTime?: number | null
-  /** 99th-percentile inference time in seconds, or null when there were no inferences. */
-  p99InferenceTime?: number | null
-})[]
-  /** Roll-up totals for a breakdown. Which fields are present depends on the operation. */
-  meta: {
-  /** Total requests across the window. */
-  totalRequests?: number
-  /** Total results produced across the window. */
-  totalResults?: number
-  /** Total spend across the window. */
-  totalSpend?: number
-  /** Average spend per day. An estimate that drifts between calls. */
-  avgDailySpend?: number
-  /** Projected 30-day spend extrapolated from the window. An estimate that drifts between calls. */
-  projectedSpend?: number
-  /** Total errors across the window. */
-  totalErrors?: number
-  /** Error rate across the window, as a percentage. */
-  errorRate?: number
-  /** Average inference time in seconds. */
-  avgInferenceTime?: number
-  /** Median inference time in seconds. */
-  p50InferenceTime?: number
-  /** 90th-percentile inference time in seconds. */
-  p90InferenceTime?: number
-  /** 99th-percentile inference time in seconds. */
-  p99InferenceTime?: number
-}
-}
-  /** Per-model breakdown (from groupBy model). */
-  model?: {
-  /** Rows for this breakdown. */
-  data: ({
-  /** Day bucket. */
-  date?: string
-  /** Model AIR. */
-  model?: string
-  /** Human-friendly model name. Falls back to the AIR when none exists. */
-  modelName?: string
-  /** API key UUID. */
-  apiKey?: string
-  /** Number of requests in this bucket. */
-  count?: number
-  /** Amount spent in this bucket. */
-  spend?: number
-  /** Number of 4xx (client) errors in this bucket. */
-  clientErrors?: number
-  /** Number of 5xx (server) errors in this bucket. */
-  serverErrors?: number
-  /** Average inference time in seconds, or null when there were no inferences. */
-  avgInferenceTime?: number | null
-  /** 90th-percentile inference time in seconds, or null when there were no inferences. */
-  p90InferenceTime?: number | null
-  /** 99th-percentile inference time in seconds, or null when there were no inferences. */
-  p99InferenceTime?: number | null
-})[]
-  /** Roll-up totals for a breakdown. Which fields are present depends on the operation. */
-  meta: {
-  /** Total requests across the window. */
-  totalRequests?: number
-  /** Total results produced across the window. */
-  totalResults?: number
-  /** Total spend across the window. */
-  totalSpend?: number
-  /** Average spend per day. An estimate that drifts between calls. */
-  avgDailySpend?: number
-  /** Projected 30-day spend extrapolated from the window. An estimate that drifts between calls. */
-  projectedSpend?: number
-  /** Total errors across the window. */
-  totalErrors?: number
-  /** Error rate across the window, as a percentage. */
-  errorRate?: number
-  /** Average inference time in seconds. */
-  avgInferenceTime?: number
-  /** Median inference time in seconds. */
-  p50InferenceTime?: number
-  /** 90th-percentile inference time in seconds. */
-  p90InferenceTime?: number
-  /** 99th-percentile inference time in seconds. */
-  p99InferenceTime?: number
-}
-}
-  /** Per-key breakdown (from groupBy apiKey). */
-  apiKey?: {
-  /** Rows for this breakdown. */
-  data: ({
-  /** Day bucket. */
-  date?: string
-  /** Model AIR. */
-  model?: string
-  /** Human-friendly model name. Falls back to the AIR when none exists. */
-  modelName?: string
-  /** API key UUID. */
-  apiKey?: string
-  /** Number of requests in this bucket. */
-  count?: number
-  /** Amount spent in this bucket. */
-  spend?: number
-  /** Number of 4xx (client) errors in this bucket. */
-  clientErrors?: number
-  /** Number of 5xx (server) errors in this bucket. */
-  serverErrors?: number
-  /** Average inference time in seconds, or null when there were no inferences. */
-  avgInferenceTime?: number | null
-  /** 90th-percentile inference time in seconds, or null when there were no inferences. */
-  p90InferenceTime?: number | null
-  /** 99th-percentile inference time in seconds, or null when there were no inferences. */
-  p99InferenceTime?: number | null
-})[]
-  /** Roll-up totals for a breakdown. Which fields are present depends on the operation. */
-  meta: {
-  /** Total requests across the window. */
-  totalRequests?: number
-  /** Total results produced across the window. */
-  totalResults?: number
-  /** Total spend across the window. */
-  totalSpend?: number
-  /** Average spend per day. An estimate that drifts between calls. */
-  avgDailySpend?: number
-  /** Projected 30-day spend extrapolated from the window. An estimate that drifts between calls. */
-  projectedSpend?: number
-  /** Total errors across the window. */
-  totalErrors?: number
-  /** Error rate across the window, as a percentage. */
-  errorRate?: number
-  /** Average inference time in seconds. */
-  avgInferenceTime?: number
-  /** Median inference time in seconds. */
-  p50InferenceTime?: number
-  /** 90th-percentile inference time in seconds. */
-  p90InferenceTime?: number
-  /** 99th-percentile inference time in seconds. */
-  p99InferenceTime?: number
-}
-}
-}
-}
-
-/**
- * Get Task Details Response
- */
-export type GetTaskDetailsResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'getTaskDetails'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** The original request array sent for this task. The structure of each object depends on the task type. */
-  request: Record<string, unknown>[]
-  /** The original API response for this task. Contains a `data` array when the task completed successfully, or an `errors` array when the task failed. */
-  response: Record<string, unknown>
-}
-
-/**
- * Image Upload Response
- */
-export type ImageUploadResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'imageUpload'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** UUID of the output image. */
-  imageUUID: string
-  /** URL of the output image. */
-  imageURL: string
-}
-
-/**
- * Media Storage Response
- */
-export type MediaStorageResult = {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'mediaStorage'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** The media storage operation that produced this response. */
-  operation: 'upload'
-  /** UUID of the stored media. */
-  mediaUUID: string
-  /** URL where the stored media is accessible. */
-  mediaURL: string
-} | {
-  /** Identifier for the type of task this response belongs to. */
-  taskType: 'mediaStorage'
-  /** UUID v4 identifier echoed from the original request, used to match async responses to their tasks. */
-  taskUUID: string
-  /** The media storage operation that produced this response. */
-  operation: 'delete'
-  /** UUID of the stored media. */
-  mediaUUID: string
 }
 
 /**
@@ -4704,15 +4874,16 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'bytedance:5@2': { taskType: 'videoInference', id: 'bytedance-omnihuman-1-5' },
   'bytedance:50@1': { taskType: 'upscale', id: 'bytedance-video-upscaler' },
   'bytedance:seed-audio@1.0': { taskType: 'audioInference', id: 'bytedance-seed-audio-1-0' },
-  'bytedance:seedance@1.5-pro': { taskType: 'videoInference', id: 'bytedance-seedance-1-5-pro' },
   'bytedance:seedance@2.0': { taskType: 'videoInference', id: 'bytedance-seedance-2-0' },
   'bytedance:seedance@2.0-fast': { taskType: 'videoInference', id: 'bytedance-seedance-2-0-fast' },
   'bytedance:seedance@2.0-mini': { taskType: 'videoInference', id: 'bytedance-seedance-2-0-mini' },
   'bytedance:seedance@2.5': { taskType: 'videoInference', id: 'bytedance-seedance-2-5' },
+  'bytedance:seedance@2.5-flash': { taskType: 'videoInference', id: 'bytedance-seedance-2-5-flash' },
   'bytedance:seedream@4.5': { taskType: 'imageInference', id: 'bytedance-seedream-4-5' },
   'bytedance:seedream@5.0-flash': { taskType: 'imageInference', id: 'bytedance-seedream-5-0-flash' },
   'bytedance:seedream@5.0-lite': { taskType: 'imageInference', id: 'bytedance-seedream-5-0-lite' },
   'bytedance:seedream@5.0-pro': { taskType: 'imageInference', id: 'bytedance-seedream-5-0-pro' },
+  'bytedance:seedream@5.5': { taskType: 'imageInference', id: 'bytedance-seedream-5-5' },
   'bytedance:video-enhancement@pro': { taskType: 'upscale', id: 'bytedance-video-enhancement-pro' },
   'bytedance:video-enhancement@standard': { taskType: 'upscale', id: 'bytedance-video-enhancement-standard' },
   'civitai:101055@128078': { taskType: 'imageInference', id: 'stabilityai-stable-diffusion-xl-v1-0-vae-fix' },
@@ -4737,13 +4908,13 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'google:gemini@3.5-flash': { taskType: 'textInference', id: 'google-gemini-3-5-flash' },
   'google:gemini@omni-flash-1.1': { taskType: 'videoInference', id: 'google-gemini-omni-flash-1-1' },
   'google:gemini@omni-flash-1.2': { taskType: 'videoInference', id: 'google-gemini-omni-flash-1-2' },
-  'google:gemma@4-31b': { taskType: 'textInference', id: 'google-gemma-4-31b' },
   'google:nano-banana@2-lite': { taskType: 'imageInference', id: 'google-nano-banana-2-lite' },
   'google:nano-banana@2.1': { taskType: 'imageInference', id: 'google-nano-banana-2-1' },
   'google:veo@3.1-lite': { taskType: 'videoInference', id: 'google-veo-3-1-lite' },
   'heygen:avatar@4': { taskType: 'videoInference', id: 'heygen-avatar-iv' },
   'heygen:avatar@5': { taskType: 'videoInference', id: 'heygen-avatar-v' },
   'heygen:video-agent@0': { taskType: 'videoInference', id: 'heygen-video-agent' },
+  'heygen:video-translate@1.0': { taskType: 'videoInference', id: 'heygen-video-translate-1-0' },
   'heygen:video@1.0': { taskType: 'videoInference', id: 'heygen-video-1-0' },
   'heygen:voice@1.0': { taskType: 'audioInference', id: 'heygen-voice-1-0' },
   'heygen:voice@1.0-turbo': { taskType: 'audioInference', id: 'heygen-voice-1-0-turbo' },
@@ -4767,9 +4938,6 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'ideogram:object-remover@0': { taskType: 'imageInference', id: 'ideogram-object-remover' },
   'ideogram:remove-background@0': { taskType: 'removeBackground', id: 'ideogram-remove-background' },
   'ideogram:vector@1.0': { taskType: 'vectorize', id: 'ideogram-vector-1-0' },
-  'imagineart:1.5-pro@0': { taskType: 'imageInference', id: 'imagineart-1-5-pro' },
-  'imagineart:1@5': { taskType: 'imageInference', id: 'imagineart-1-5' },
-  'imagineart:2.0@0': { taskType: 'imageInference', id: 'imagineart-2-0' },
   'inworld:tts@1.5-max': { taskType: 'audioInference', id: 'inworld-tts-1-5-max' },
   'inworld:tts@1.5-mini': { taskType: 'audioInference', id: 'inworld-tts-1-5-mini' },
   'inworld:tts@2': { taskType: 'audioInference', id: 'inworld-tts-2' },
@@ -4821,6 +4989,8 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'minimax:h3@0': { taskType: 'videoInference', id: 'minimax-h3' },
   'minimax:h3@fast': { taskType: 'videoInference', id: 'minimax-h3-fast' },
   'minimax:h3@highspeed': { taskType: 'videoInference', id: 'minimax-h3-highspeed' },
+  'minimax:h3@image': { taskType: 'imageInference', id: 'minimax-h3-image' },
+  'minimax:h3@image-highspeed': { taskType: 'imageInference', id: 'minimax-h3-image-highspeed' },
   'minimax:h3@lite': { taskType: 'videoInference', id: 'minimax-h3-lite' },
   'minimax:h3@max': { taskType: 'videoInference', id: 'minimax-h3-max' },
   'minimax:h3@max-turbo': { taskType: 'videoInference', id: 'minimax-h3-max-turbo' },
@@ -4972,7 +5142,7 @@ export const models: Record<string, { taskType: string, id: string }> = {
   'runware:flux-2-klein-4b@style-lora-training': { taskType: 'training', id: 'runware-flux-2-klein-4b-style-lora-training' },
   'runware:flux-2-klein-9b@style-lora-training': { taskType: 'training', id: 'runware-flux-2-klein-9b-style-lora-training' },
   'runware:kandinsky-5.0-image-lite@1': { taskType: 'imageInference', id: 'kandinsky-5-0-image-lite' },
-  'runware:llama-3-1-8b@prompt-enhancer': { taskType: 'promptEnhance', id: 'llama-3-1-8b-prompt-enhancer' },
+  'runware:llama-3.1-8b@prompt-enhancer': { taskType: 'promptEnhance', id: 'llama-3-1-8b-prompt-enhancer' },
   'runware:qwen-image@style-lora-training': { taskType: 'training', id: 'runware-qwen-image-style-lora-training' },
   'runware:twinflow-z-image-turbo@0': { taskType: 'imageInference', id: 'twinflow-z-image-turbo' },
   'runware:z-image@0': { taskType: 'imageInference', id: 'alibaba-z-image' },
@@ -5091,15 +5261,16 @@ export type ModelResultMap = {
   'bytedance:5@2': VideoInferenceResult
   'bytedance:50@1': UpscaleResult
   'bytedance:seed-audio@1.0': AudioInferenceResult
-  'bytedance:seedance@1.5-pro': VideoInferenceResult
   'bytedance:seedance@2.0': VideoInferenceResult
   'bytedance:seedance@2.0-fast': VideoInferenceResult
   'bytedance:seedance@2.0-mini': VideoInferenceResult
   'bytedance:seedance@2.5': VideoInferenceResult
+  'bytedance:seedance@2.5-flash': VideoInferenceResult
   'bytedance:seedream@4.5': ImageInferenceResult
   'bytedance:seedream@5.0-flash': ImageInferenceResult
   'bytedance:seedream@5.0-lite': ImageInferenceResult
   'bytedance:seedream@5.0-pro': ImageInferenceResult
+  'bytedance:seedream@5.5': ImageInferenceResult
   'bytedance:video-enhancement@pro': UpscaleResult
   'bytedance:video-enhancement@standard': UpscaleResult
   'civitai:101055@128078': ImageInferenceResult
@@ -5124,13 +5295,13 @@ export type ModelResultMap = {
   'google:gemini@3.5-flash': TextInferenceResult
   'google:gemini@omni-flash-1.1': VideoInferenceResult
   'google:gemini@omni-flash-1.2': VideoInferenceResult
-  'google:gemma@4-31b': TextInferenceResult
   'google:nano-banana@2-lite': ImageInferenceResult
   'google:nano-banana@2.1': ImageInferenceResult
   'google:veo@3.1-lite': VideoInferenceResult
   'heygen:avatar@4': VideoInferenceResult
   'heygen:avatar@5': VideoInferenceResult
   'heygen:video-agent@0': VideoInferenceResult
+  'heygen:video-translate@1.0': VideoInferenceResult
   'heygen:video@1.0': VideoInferenceResult
   'heygen:voice@1.0': AudioInferenceResult
   'heygen:voice@1.0-turbo': AudioInferenceResult
@@ -5154,9 +5325,6 @@ export type ModelResultMap = {
   'ideogram:object-remover@0': ImageInferenceResult
   'ideogram:remove-background@0': RemoveBackgroundResult
   'ideogram:vector@1.0': VectorizeResult
-  'imagineart:1.5-pro@0': ImageInferenceResult
-  'imagineart:1@5': ImageInferenceResult
-  'imagineart:2.0@0': ImageInferenceResult
   'inworld:tts@1.5-max': AudioInferenceResult
   'inworld:tts@1.5-mini': AudioInferenceResult
   'inworld:tts@2': AudioInferenceResult
@@ -5208,6 +5376,8 @@ export type ModelResultMap = {
   'minimax:h3@0': VideoInferenceResult
   'minimax:h3@fast': VideoInferenceResult
   'minimax:h3@highspeed': VideoInferenceResult
+  'minimax:h3@image': ImageInferenceResult
+  'minimax:h3@image-highspeed': ImageInferenceResult
   'minimax:h3@lite': VideoInferenceResult
   'minimax:h3@max': VideoInferenceResult
   'minimax:h3@max-turbo': VideoInferenceResult
@@ -5359,7 +5529,7 @@ export type ModelResultMap = {
   'runware:flux-2-klein-4b@style-lora-training': TrainingResult
   'runware:flux-2-klein-9b@style-lora-training': TrainingResult
   'runware:kandinsky-5.0-image-lite@1': ImageInferenceResult
-  'runware:llama-3-1-8b@prompt-enhancer': PromptEnhanceResult
+  'runware:llama-3.1-8b@prompt-enhancer': PromptEnhanceResult
   'runware:qwen-image@style-lora-training': TrainingResult
   'runware:twinflow-z-image-turbo@0': ImageInferenceResult
   'runware:z-image@0': ImageInferenceResult
