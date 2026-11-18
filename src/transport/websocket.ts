@@ -130,14 +130,15 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
           }
         }
 
-        let delivered = false
         for (const [taskUUID, taskErrors] of errorsByTask) {
           const request = inFlight.get(taskUUID)
           inFlight.delete(taskUUID)
           const callback = taskCallbacks.get(taskUUID)
-          if (!callback) { continue }
+          if (!callback) {
+            config.log.warn(`No callback for taskUUID: ${taskUUID}`, taskErrors)
+            continue
+          }
 
-          delivered = true
           const acceptedResend = request?.resent === true
             && request.task.deliveryMethod === 'async'
             && taskErrors.every((error) => error.code === 'conflictTaskUUID')
@@ -147,10 +148,12 @@ export const createWebSocketTransport = (config: SDKConfig): WebSocketTransport 
           safeCall(callback, frame as WsResponse)
         }
 
-        if (unrouted.length > 0 || !delivered) {
-          config.log.error('Unroutable WebSocket error', errors)
+        // A late task error can outlive its subscription after abort or timeout.
+        // Only errors without a taskUUID belong to every remaining subscriber.
+        if (unrouted.length > 0) {
+          config.log.error('Unroutable WebSocket error', unrouted)
           for (const [, callback] of taskCallbacks) {
-            safeCall(callback, { error: errors } as WsResponse)
+            safeCall(callback, { error: unrouted } as WsResponse)
           }
         }
         return
