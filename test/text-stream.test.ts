@@ -48,7 +48,7 @@ const mockFetch = (lines: string[]) => vi.fn().mockResolvedValue({
 const tasks: TaskPayload[] = [{
   taskType: 'textInference',
   taskUUID: 't1',
-  model: 'minimax:m2.7@0',
+  model: 'minimax:m3@0',
   messages: [{ role: 'user', content: 'hi' }],
 }]
 
